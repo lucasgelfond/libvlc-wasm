@@ -1,0 +1,134 @@
+# @libvlc-wasm/core
+
+VLC 4's playback engine (libvlc) compiled to WebAssembly. It plays the formats browsers
+can't — RealMedia, WMV/WMA, DivX/Xvid AVIs, DVD VOBs, MPEG-TS with AC-3/DTS, FLV,
+QuickTime oddities, Bink/Smacker/RoQ game video, TrueHD/MLP, Musepack/APE/TTA,
+tracker modules, chiptunes, MIDI, MKV with ASS subtitles — through VLC's own demuxers,
+clock, audio pipeline and subtitle renderer, drawing to a `<canvas>`.
+
+```js
+import { createVLC } from '@libvlc-wasm/core';
+
+const vlc = await createVLC();
+const player = await vlc.createPlayer({ canvas: document.querySelector('canvas') });
+
+input.onchange = () => player.open(input.files[0]);   // File, Blob, bytes or URL
+player.on('timeupdate', (t) => (time.textContent = t.toFixed(1)));
+```
+
+## Serving: cross-origin isolation is required
+
+VLC is multithreaded, which in a browser means `SharedArrayBuffer`, which is only
+available on a cross-origin isolated page. Serve your page with:
+
+```
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Embedder-Policy: require-corp
+```
+
+`createVLC()` throws a clear error if the page is not isolated. Vite:
+`server.headers` / `preview.headers` (see `examples/svelte-player/vite.config.js`).
+Netlify/Cloudflare Pages: a `_headers` file. Anything cross-origin you load (media
+URLs, fonts) then needs CORS or `Cross-Origin-Resource-Policy`.
+
+Also serve `libvlc.wasm` with `Content-Type: application/wasm` so it compiles while
+it downloads, and compressed (it is ~25 MB raw, ~7 MB brotli).
+
+## API
+
+### `createVLC(options?) → Promise<VLC>`
+
+Starts a dedicated Worker, compiles the wasm, pre-starts a thread pool and calls
+`libvlc_new()`. One `VLC` can drive many players.
+
+| option | default | |
+|---|---|---|
+| `threads` | `20` | pthreads started up front; more are started on demand, but each costs a Worker boot |
+| `decoderThreads` | `min(cores, 4)` | FFmpeg threads per video decoder |
+| `logLevel` | `'warn'` | what reaches the `'log'` event |
+| `args` | `[]` | extra `libvlc_new()` arguments |
+| `fonts` | bundled Noto Sans | font files for subtitles; `false` to skip |
+| `soundfont` | none | a General MIDI `.sf2` URL — without one `.mid` files do not play |
+| `wasmUrl` / `workerUrl` | next to the module | self-hosting overrides |
+
+### `vlc.createPlayer({ canvas, fit, audio, audioContext, audioDestination, keepAwake })`
+
+`canvas` gets WebGL2 video (you can also `player.attach(canvas)` later). `audio: false`
+plays silently without an `AudioContext`; `audioDestination` routes the output through
+your own Web Audio graph.
+
+### `player.open(source, { autoplay, startTime, subtitles, options })`
+
+`source` is a `File`, `Blob`, `ArrayBuffer`/typed array, an `http(s)` URL or a VLC MRL.
+Files are **not copied**: they are mounted with Emscripten's WORKERFS and VLC reads
+them on demand, so a 4 GB file costs nothing up front. URLs are read with ranged
+requests (the server must allow CORS and `Range`). Pass an array to mount files
+that reference each other — `[idx, sub]`, `[cue, bin]` — the first is opened.
+
+`options` are VLC media options, e.g. `[':sub-track=0']` to show the first subtitle
+track (VLC only auto-selects subtitles flagged default/forced).
+
+### Playback
+
+`play()` (call it from a user gesture the first time so audio can start), `pause()`,
+`togglePause()`, `stop()`, `seek(seconds, { fast })`, `seekToPosition(0..1)`,
+`nextFrame()`; properties `currentTime` (interpolated, settable), `duration`, `state`,
+`paused`, `rate`, `volume` (0–2), `muted`, `audioLevel`.
+
+### Tracks, subtitles, chapters
+
+`player.tracks` (`{ id, type, codec, codecName, language, width, height, fps, channels, rate, selected, … }`),
+`selectTrack(id)`, `disableTrack('text')`, `addSubtitles(file)`, `addAudioTrack(file)`,
+`setSubtitleDelay(s)`, `setAudioDelay(s)`, `player.chapters`, `setChapter(i)`, `setTitle(i)`.
+
+### Video and audio processing
+
+`setDeinterlace(true | false | 'auto', mode)` (yadif, yadif2x, blend, bob, linear, x,
+phosphor, ivtc…), `setAdjust({ brightness, contrast, saturation, hue, gamma })`,
+`setAspectRatio('16:9')`, `setEqualizer('Rock')` (`vlc.equalizerPresets()` lists them),
+`snapshot()` → PNG `Blob` of the frame on screen.
+
+### Without playing
+
+- `vlc.probe(source)` → `{ duration, meta, tracks }` via VLC's demuxers (ffprobe/exiftool-style)
+- `vlc.thumbnail(source, { time | position, width, height, fast })` → `{ blob, width, height }` (JPEG)
+
+### Events
+
+`player.on(type, fn)` returns an unsubscribe function; `player.once(type)` returns a promise.
+`statechange`, `playing`, `paused`, `stopped`, `ended`, `error`, `timeupdate` (~4 Hz),
+`durationchange`, `tracks`, `chapters`, `chapterchange`, `buffering`, `ratechange`,
+`volumechange`, `audiolevel` (~10 Hz), `capabilities`, `meta`. `vlc.on('log', …)`.
+
+### Diagnostics
+
+`player.info()` (metadata, tracks, VLC's input/decoder counters) and `player.stats()`
+(adds frames displayed/drawn, audio frames played, dropped audio, underruns).
+
+## How it works
+
+```
+page                             Worker (Emscripten main thread)        VLC pthreads
+────                             ─────────────────────────────         ────────────
+createVLC ── postMessage ─────▶  engine.js ── wv_submit ──────────────▶ control thread → libvlc_*()
+Player  ◀─── events ───────────  MAIN_THREAD_ASYNC_EM_ASM ◀──────────── player callbacks
+Renderer (WebGL2) ◀── reads I420 frames straight from wasm memory ───── vmem (vout thread)
+AudioWorklet      ◀── reads float PCM ring straight from wasm memory ── webaudio aout (native/webaudio.c)
+                                 WORKERFS/FileReaderSync ◀── proxied reads ─ input thread
+```
+
+- libvlc calls run on a dedicated control pthread, never on the Worker's JS thread,
+  because that thread serves every filesystem read VLC's threads make.
+- Video uses libvlc's public `vmem` callbacks into three shared buffers; the page
+  uploads the newest one each animation frame.
+- Audio uses a small VLC audio output module of ours (`native/webaudio.c`) that
+  reports real playback position back to VLC, so audio is the master clock and A/V
+  sync is VLC's own — not an approximation in JS.
+
+## Size and licensing
+
+The wasm bundles libvlc/libvlccore and 260+ VLC modules with FFmpeg, dav1d, libvpx,
+libass, FreeType, HarfBuzz, libmatroska, libmodplug, game-music-emu, FluidLite,
+libxml2, libarchive and more. libvlc is LGPL-2.1+, but some bundled modules and
+contribs are GPL, so treat the binary as **GPL-2.0-or-later** unless you rebuild
+without them. The bundled Noto Sans font is OFL-1.1 (`fonts/OFL.txt`).

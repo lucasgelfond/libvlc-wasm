@@ -1,0 +1,23 @@
+{
+  "name": "libvlc-wasm-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "./build.sh",
+    "link": "./build.sh link",
+    "dev": "pnpm --filter svelte-player dev",
+    "test:node": "node tests/node-smoke.mjs",
+    "test:browser": "node tests/run-browser.mjs",
+    "corpus": "node corpus/fetch.mjs",
+    "verify": "node tests/verify-corpus.mjs",
+    "bench": "node bench/run.mjs"
+  },
+  "devDependencies": {
+    "@ffmpeg/core": "0.12.10",
+    "@ffmpeg/core-mt": "0.12.10",
+    "@ffmpeg/ffmpeg": "0.12.15",
+    "@ffmpeg/util": "0.12.2",
+    "playwright": "^1.55.0",
+    "vite": "^7.1.0"
+  }
+}

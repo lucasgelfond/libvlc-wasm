@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Play from a URL</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<h1>Play from a URL</h1>
+<p class="lede">http(s) sources are read on demand with <code>Range</code> requests from the worker, so a
+2 GB file starts at once. The server must allow CORS (and, on an isolated page, send
+<code>Cross-Origin-Resource-Policy</code> or CORS headers) and support ranges.</p>
+<div class="row"><input id="url" size="70" value="../../corpus/media/realmedia/realvideo-4-cook-rmvb.rmvb">
+<button id="go" class="primary">Play</button></div>
+<canvas class="video" id="screen"></canvas>
+<pre id="info"></pre>
+<script type="module">
+  import { createVLC } from '../../packages/core/src/index.js';
+
+  const vlc = await createVLC();
+  const player = await vlc.createPlayer({ canvas: document.getElementById('screen') });
+  document.getElementById('go').onclick = async () => {
+    const url = new URL(document.getElementById('url').value, location.href).href;
+    await player.open(url);
+    player.once('tracks').then((tracks) => {
+      document.getElementById('info').textContent = tracks.map((t) => `${t.type}: ${t.codecName}`).join('\n');
+    });
+  };
+</script>
+</body></html>

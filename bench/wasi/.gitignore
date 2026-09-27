@@ -1,0 +1,5 @@
+tools/
+out/
+src/
+build/
+*.cwasm

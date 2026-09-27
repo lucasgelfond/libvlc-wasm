@@ -1,0 +1,119 @@
+# Builds the SDK (VLC for wasm + our bridge), tests it in headless Chromium and
+# uploads the package. Tags (v*) also publish a GitHub release, and to npm when
+# an NPM_TOKEN secret exists. Run it by hand to build against another VLC commit.
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      vlc_commit:
+        description: VLC commit to build (empty = the one pinned in build.sh)
+        required: false
+      profile:
+        description: release or debug
+        default: release
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sdk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    env:
+      CACHE_DIR: ${{ github.workspace }}/.vlc-cache
+      PROFILE: ${{ inputs.profile || 'release' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve the VLC commit
+        id: vlc
+        run: |
+          pinned=$(sed -n 's/^VLC_COMMIT=\${VLC_COMMIT:-\([0-9a-f]*\)}.*/\1/p' build.sh)
+          echo "commit=${{ inputs.vlc_commit }}" | sed "s/=$/=$pinned/" >> "$GITHUB_OUTPUT"
+
+      # Contribs (FFmpeg, dav1d, libass, ...) are the slow part: about an hour
+      # on a hosted runner. Keyed on everything that can change them.
+      - name: Restore VLC build tree
+        uses: actions/cache@v4
+        with:
+          path: .vlc-cache
+          key: vlc-${{ steps.vlc.outputs.commit }}-${{ env.PROFILE }}-${{ hashFiles('build/Dockerfile', 'build/build-vlc.sh', 'build/patches/*') }}
+          restore-keys: vlc-${{ steps.vlc.outputs.commit }}-${{ env.PROFILE }}-
+
+      - name: Build VLC for wasm and link the SDK
+        env:
+          VLC_COMMIT: ${{ steps.vlc.outputs.commit }}
+          JOBS: 4
+        run: |
+          mkdir -p "$CACHE_DIR"
+          ./build.sh all
+          ls -la packages/core/wasm
+
+      - name: Hand the cache back to the runner user
+        if: always()
+        run: sudo chown -R "$(id -u):$(id -g)" .vlc-cache packages/core/wasm || true
+
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+
+      - name: Test fixtures
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          sh tests/make-fixtures.sh
+
+      - name: Node smoke test (parse + thumbnail)
+        run: node tests/node-smoke.mjs
+
+      - name: Browser playback test
+        run: |
+          npx playwright install --with-deps chromium
+          node tests/run-browser.mjs /corpus/media/gen/t_mpeg2_ac3.ts /corpus/media/gen/t_h264_opus_ass.mkv /corpus/media/gen/t_wmv2.wmv /corpus/media/gen/t_xvid_mp3.avi
+
+      - name: Obscure-format corpus
+        if: github.event_name != 'pull_request'
+        run: |
+          node corpus/fetch.mjs
+          node tests/verify-corpus.mjs --engines=chromium
+        continue-on-error: true
+
+      - name: Pack
+        run: |
+          cd packages/core
+          npm version --no-git-tag-version --allow-same-version "$(node -p "require('./package.json').version")"
+          npm pack
+          echo "VLC ${{ steps.vlc.outputs.commit }}" > wasm/VLC_COMMIT
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libvlc-wasm-${{ steps.vlc.outputs.commit }}
+          path: |
+            packages/core/*.tgz
+            packages/core/wasm/
+            corpus/results/
+          if-no-files-found: error
+
+      - name: GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/core/*.tgz
+          body: Built from VLC ${{ steps.vlc.outputs.commit }}.
+
+      - name: Publish to npm
+        if: startsWith(github.ref, 'refs/tags/v') && env.NPM_TOKEN != ''
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cd packages/core
+          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm publish --access public

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio graph and chiptunes</title><link rel="stylesheet" href="style.css">
+<style>canvas.scope { width: 100%; height: 180px; background: #000; border-radius: 8px; display: block; }</style></head>
+<body>
+<h1>Audio graph and chiptunes</h1>
+<p class="lede">VLC decodes and resamples; its output is a node in <em>your</em> Web Audio graph (here: a
+low-pass filter and an analyser). Try trackers (.mod .xm .s3m .it), game music (.spc .nsf .vgm .gbs), .mid,
+or TrueHD / DTS / Musepack / APE.</p>
+<div class="row">
+  <input type="file" id="file" multiple>
+  <label><input type="checkbox" id="midi"> load a General MIDI SoundFont (6 MB, for .mid)</label>
+</div>
+<canvas class="scope" id="scope"></canvas>
+<div class="row">
+  <button id="play" class="primary">Play / pause</button>
+  <label>low-pass <input type="range" id="cutoff" min="200" max="20000" value="20000" step="10"></label>
+  <select id="eq"><option value="">no EQ</option></select>
+  <span id="meter" class="muted"></span>
+</div>
+<ol id="list"></ol>
+<script type="module">
+  import { createVLC } from '../../packages/core/src/index.js';
+
+  const $ = (id) => document.getElementById(id);
+  let vlc = await createVLC();
+  const ctx = new AudioContext();
+  const filter = new BiquadFilterNode(ctx, { type: 'lowpass', frequency: 20000 });
+  const analyser = new AnalyserNode(ctx, { fftSize: 2048 });
+  filter.connect(analyser).connect(ctx.destination);
+  // audio-only: no canvas; our graph instead of the speakers directly
+  let player = await vlc.createPlayer({ audioContext: ctx, audioDestination: filter });
+  const { presets } = await vlc.equalizerPresets();
+  $('eq').append(...presets.map((p, i) => new Option(p, i)));
+
+  $('midi').onchange = async (e) => {
+    // A SoundFont is an engine option, so this makes a new engine.
+    await player.destroy(); await vlc.destroy();
+    vlc = await createVLC(e.target.checked ? { soundfont: '../../corpus/media/assets/TimGM6mb.sf2' } : {});
+    player = await vlc.createPlayer({ audioContext: ctx, audioDestination: filter });
+  };
+  let queue = [];
+  $('file').onchange = (e) => {
+    queue = [...e.target.files];
+    $('list').replaceChildren(...queue.map((f, i) => Object.assign(document.createElement('li'), {
+      textContent: f.name, onclick: () => start(i), style: 'cursor:pointer' })));
+    start(0);
+  };
+  async function start(i) {
+    await ctx.resume();
+    await player.open(queue[i]);
+    player.on('ended', () => queue[i + 1] && start(i + 1));
+  }
+  $('play').onclick = async () => { await ctx.resume(); player.togglePause(); };
+  $('cutoff').oninput = (e) => filter.frequency.setTargetAtTime(+e.target.value, ctx.currentTime, 0.02);
+  $('eq').onchange = (e) => player.setEqualizer(e.target.value === '' ? null : +e.target.value);
+
+  const c = $('scope'), g = c.getContext('2d'), buf = new Float32Array(analyser.fftSize);
+  (function draw() {
+    requestAnimationFrame(draw);
+    c.width = c.clientWidth * devicePixelRatio; c.height = c.clientHeight * devicePixelRatio;
+    analyser.getFloatTimeDomainData(buf);
+    g.strokeStyle = '#ff8800'; g.lineWidth = 2 * devicePixelRatio; g.beginPath();
+    buf.forEach((v, k) => g.lineTo((k / buf.length) * c.width, (0.5 - v * 0.45) * c.height));
+    g.stroke();
+    $('meter').textContent = `peak ${(player.audioLevel?.peak ?? 0).toFixed(2)}`;
+  })();
+</script>
+</body></html>

@@ -1,0 +1,22 @@
+:root {
+  --bg: #f6f6f4;
+  --panel: #ffffff;
+  --line: #deded8;
+  --muted: #6b6b66;
+  color-scheme: light dark;
+  color: #1b1b1a;
+  background: var(--bg);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --panel: #1d1d1c;
+    --line: #333331;
+    --muted: #9a9a94;
+    color: #ececea;
+  }
+}
+
+body { margin: 0; }

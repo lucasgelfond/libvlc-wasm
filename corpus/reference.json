@@ -1,0 +1,222 @@
+{
+ "realvideo-3-cook": {
+  "peakDb": -6,
+  "source": "ffmpeg"
+ },
+ "realvideo-4-cook-rmvb": {
+  "peakDb": -25.2,
+  "source": "ffmpeg"
+ },
+ "realaudio-cook": {
+  "peakDb": -2.9,
+  "source": "ffmpeg"
+ },
+ "realaudio-sipr-8-5k": {
+  "peakDb": -4.2,
+  "source": "ffmpeg"
+ },
+ "realaudio-28-8": {
+  "peakDb": -1.3,
+  "source": "ffmpeg"
+ },
+ "realvideo-2-sipr-a-v-sync-bug": {
+  "peakDb": -1.4,
+  "source": "ffmpeg"
+ },
+ "wmv8-x8-intra": {
+  "peakDb": -17.8,
+  "source": "ffmpeg"
+ },
+ "wmv7": {
+  "peakDb": -8.1,
+  "source": "ffmpeg"
+ },
+ "wma-voice-11k": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "wma-lossless-24-bit": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "xvid-mp3": {
+  "peakDb": -16.9,
+  "source": "ffmpeg"
+ },
+ "divx-5-mp3": {
+  "peakDb": -91,
+  "source": "ffmpeg"
+ },
+ "cinepak": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "indeo-4-partial": {
+  "peakDb": -91,
+  "source": "ffmpeg"
+ },
+ "indeo-5": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "motion-jpeg-mu-law-10-mb": {
+  "peakDb": -0.2,
+  "source": "ffmpeg"
+ },
+ "on2-vp5-speex": {
+  "peakDb": -72.2,
+  "source": "ffmpeg"
+ },
+ "dvd-vob-mpeg-2-ac-3-5-mb": {
+  "peakDb": -15.3,
+  "source": "ffmpeg"
+ },
+ "dts-in-mpeg-ts": {
+  "peakDb": -10.4,
+  "source": "ffmpeg"
+ },
+ "flv-with-h-264-aac": {
+  "peakDb": -18.7,
+  "source": "ffmpeg"
+ },
+ "vp6f-nellymoser": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "3gpp-h-263-amr-nb": {
+  "peakDb": -0.8,
+  "source": "ffmpeg"
+ },
+ "sorenson-video-1": {
+  "peakDb": -0.3,
+  "source": "ffmpeg"
+ },
+ "qdesign-music-2": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "ima4-adpcm": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "mace-3-1": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "smacker": {
+  "peakDb": -1.6,
+  "source": "ffmpeg"
+ },
+ "id-roq-quake-3-logo": {
+  "peakDb": -0.1,
+  "source": "ffmpeg"
+ },
+ "nuppelvideo-mythtv": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "vivo-2-vivoactive": {
+  "peakDb": -41.5,
+  "source": "ffmpeg"
+ },
+ "playstation-str-mdec-xa": {
+  "peakDb": -6.3,
+  "source": "ffmpeg"
+ },
+ "ac-3-5-1-448k": {
+  "peakDb": -74.7,
+  "source": "ffmpeg"
+ },
+ "e-ac-3-5-1-with-spx": {
+  "peakDb": -10.3,
+  "source": "ffmpeg"
+ },
+ "dts-es": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "dolby-truehd-atmos-8ch": {
+  "peakDb": -8,
+  "source": "ffmpeg"
+ },
+ "mlp-440-hz": {
+  "peakDb": -12,
+  "source": "ffmpeg"
+ },
+ "musepack-sv8": {
+  "peakDb": -2,
+  "source": "ffmpeg"
+ },
+ "musepack-sv7": {
+  "peakDb": -2,
+  "source": "ffmpeg"
+ },
+ "monkey-s-audio": {
+  "peakDb": 0,
+  "source": "ffmpeg"
+ },
+ "true-audio-6-6-mb": {
+  "peakDb": -0.2,
+  "source": "ffmpeg"
+ },
+ "amr-nb-12-2k": {
+  "peakDb": -2.9,
+  "source": "ffmpeg"
+ },
+ "shorten": {
+  "peakDb": -2.7,
+  "source": "ffmpeg"
+ },
+ "dvb-subtitles-in-ts": {
+  "peakDb": null,
+  "source": "none"
+ },
+ "mpeg-4-asp-vorbis-16-ass-ssa-tracks": {
+  "peakDb": -5.8,
+  "source": "ffmpeg"
+ },
+ "h-264-2x-mp3-vobsub-in-mkv": {
+  "peakDb": -11.9,
+  "source": "ffmpeg"
+ },
+ "snes-spc": {
+  "peakDb": -7.9,
+  "source": "vlc-native"
+ },
+ "nes-nsf-tetris-gb-rip": {
+  "peakDb": -5.1,
+  "source": "vlc-native"
+ },
+ "sega-genesis-vgz-gzip-vgm": {
+  "peakDb": null,
+  "source": "none"
+ },
+ "c64-sid-rob-hubbard-commando": {
+  "peakDb": -3.3,
+  "source": "vlc-native"
+ },
+ "standard-midi-file": {
+  "peakDb": -4.9,
+  "source": "vlc-native"
+ },
+ "axelf-mod-15-sample-soundtracker-no-m-k-": {
+  "peakDb": -5.3,
+  "source": "vlc-native"
+ },
+ "external-xm": {
+  "peakDb": -14,
+  "source": "vlc-native"
+ },
+ "sandman-s3m": {
+  "peakDb": -10.3,
+  "source": "vlc-native"
+ },
+ "for-a-change-it": {
+  "peakDb": -10.9,
+  "source": "vlc-native"
+ },
+ "openmpt-test-xm": {
+  "peakDb": -91,
+  "source": "vlc-native"
+ }
+}

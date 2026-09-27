@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Power features</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<h1>Power features</h1>
+<p class="lede">The parts of libvlc a &lt;video&gt; element doesn't have. Open a file, then poke at it.</p>
+<div class="row"><input type="file" id="file"> <label>queue next: <input type="file" id="next"></label></div>
+<canvas class="video" id="screen"></canvas>
+<div class="row">
+  <button id="play" class="primary">Play / pause</button>
+  <button id="prev">◀ frame</button><button id="step">frame ▶</button>
+  <button id="ab">AB loop 10–15 s</button><button id="abOff">loop off</button>
+  <button id="snap">Snapshot</button>
+</div>
+<div class="row">
+  <button id="marquee">Marquee clock</button><button id="marqueeOff">no marquee</button>
+  <label>logo image <input type="file" id="logo" accept="image/png"></label><button id="logoOff">no logo</button>
+</div>
+<div class="row">
+  <select id="crop"><option value="">no crop</option><option>16:9</option><option>4:3</option><option>2.35:1</option></select>
+  <select id="stereo"><option>stereo</option><option>mono</option><option>left</option><option>right</option><option>reverse</option></select>
+  <label>subtitle size <input type="range" id="subscale" min="0.5" max="3" step="0.1" value="1"></label>
+  <label>teletext page <input type="number" id="ttx" value="0" min="0" max="899" style="width:70px"></label>
+  <select id="programs"><option value="">programs</option></select>
+</div>
+<pre id="log"></pre>
+<script type="module">
+  import { createVLC } from '../../packages/core/src/index.js';
+
+  const $ = (id) => document.getElementById(id);
+  const log = (s) => { $('log').textContent = `${s}\n${$('log').textContent}`.slice(0, 4000); };
+  const vlc = await createVLC();
+  const player = await vlc.createPlayer({ canvas: $('screen') });
+
+  for (const e of ['statechange', 'chapterchange', 'ended', 'mediachange', 'error'])
+    player.on(e, (d) => log(`${e} ${d instanceof Error ? d.message : JSON.stringify(d ?? '')}`));
+  player.on('programs', async () => {
+    const list = await player.programs();
+    $('programs').replaceChildren(new Option('programs', ''), ...list.map((p) => new Option(`${p.name}${p.scrambled ? ' (scrambled)' : ''}`, p.id)));
+  });
+
+  $('file').onchange = (e) => player.open(e.target.files[0]);
+  $('next').onchange = (e) => { player.queue(e.target.files[0]); log('queued: plays with no gap when this one ends'); };
+  $('play').onclick = () => player.togglePause();
+  $('step').onclick = () => player.nextFrame();
+  $('prev').onclick = () => player.previousFrame();
+  $('ab').onclick = () => player.setABLoop(10, 15);
+  $('abOff').onclick = () => player.setABLoop(null);
+  $('snap').onclick = async () => window.open(URL.createObjectURL(await player.snapshot()));
+  $('marquee').onclick = () => player.setMarquee({ text: 'libvlc-wasm · %H:%M:%S', size: 28, color: 0xff8800, position: 4 + 1, refresh: 1000 });
+  $('marqueeOff').onclick = () => player.setMarquee(null);
+  $('logo').onchange = (e) => player.setLogo({ image: e.target.files[0], position: 4 + 2, opacity: 200 });
+  $('logoOff').onclick = () => player.setLogo(null);
+  $('crop').onchange = (e) => { const v = e.target.value; player.setCrop(v ? { ratio: v.split(':').map(Number) } : null); };
+  $('stereo').onchange = (e) => player.setStereoMode(e.target.value);
+  $('subscale').oninput = (e) => player.setSubtitleScale(+e.target.value);
+  $('ttx').onchange = (e) => player.setTeletext(+e.target.value, { transparent: true });
+  $('programs').onchange = (e) => e.target.value && player.selectProgram(+e.target.value);
+</script>
+</body></html>

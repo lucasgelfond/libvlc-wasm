@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Video wall</title><link rel="stylesheet" href="style.css">
+<style>.wall { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }</style></head>
+<body>
+<h1>Video wall</h1>
+<p class="lede">One engine, several players: pick up to four files. Each gets its own canvas; only the first is audible.</p>
+<input type="file" id="file" multiple>
+<div class="wall" id="wall"></div>
+<script type="module">
+  import { createVLC } from '../../packages/core/src/index.js';
+
+  const vlc = await createVLC({ threads: 32 }); // more files at once need more pthreads
+  let players = [];
+  document.getElementById('file').onchange = async (e) => {
+    await Promise.all(players.map((p) => p.destroy()));
+    const wall = document.getElementById('wall');
+    wall.replaceChildren();
+    players = await Promise.all([...e.target.files].slice(0, 4).map(async (file, i) => {
+      const canvas = Object.assign(document.createElement('canvas'), { className: 'video' });
+      wall.append(canvas);
+      const p = await vlc.createPlayer({ canvas, audio: i === 0 });
+      await p.open(file);
+      return p;
+    }));
+  };
+</script>
+</body></html>

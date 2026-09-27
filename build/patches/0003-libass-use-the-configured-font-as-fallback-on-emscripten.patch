@@ -1,0 +1,28 @@
+diff --git a/modules/codec/libass.c b/modules/codec/libass.c
+index f88e134..5f7007c 100644
+--- a/modules/codec/libass.c
++++ b/modules/codec/libass.c
+@@ -245,6 +245,13 @@ static int Create( vlc_object_t *p_this )
+ #elif defined( __APPLE__ )
+     const char *psz_font = NULL; /* We don't ship a default font with VLC */
+     const char *psz_family = "Helvetica Neue"; /* Use HN if we can't find anything more suitable - Arial is not on all Apple platforms */
++#elif defined( __EMSCRIPTEN__ )
++    /* No font provider exists in a browser, so libass can only use the fonts
++     * it was given: make the configured default font its fallback, or no
++     * style that names an unavailable family (almost all do) renders. */
++    char *psz_font_owned = var_InheritString( p_dec, "freetype-font" );
++    const char *psz_font = psz_font_owned;
++    const char *psz_family = NULL;
+ #else
+     const char *psz_font = NULL; /* We don't ship a default font with VLC */
+     const char *psz_family = "Arial"; /* Use Arial if we can't find anything more suitable */
+@@ -266,6 +273,9 @@ static int Create( vlc_object_t *p_this )
+ #else
+     ass_set_fonts( p_renderer, psz_font, psz_family, ASS_FONTPROVIDER_AUTODETECT, NULL, 0 );
+ #endif
++#if defined( __EMSCRIPTEN__ )
++    free( psz_font_owned );
++#endif
+ 
+     /* Anything else than NONE will break smooth img updating.
+        TODO: List and force ASS_HINTING_LIGHT for known problematic fonts */

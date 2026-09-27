@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inspector</title><link rel="stylesheet" href="style.css">
+<style>.sheet { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
+.sheet figure { margin: 0; } .sheet img { width: 100%; border-radius: 4px; display: block; background: #000; }
+.sheet figcaption { font-size: 11px; color: var(--muted); } table { border-collapse: collapse; width: 100%; }
+td, th { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); font-size: 13px; }</style></head>
+<body>
+<h1>Inspector</h1>
+<p class="lede">What ffprobe or exiftool would tell you, using VLC's demuxers — and a contact sheet from VLC's
+thumbnailer. Nothing plays and nothing is uploaded; files are read on demand, not copied into memory.</p>
+<input type="file" id="file" multiple>
+<div id="out"></div>
+<script type="module">
+  import { createVLC } from '../../packages/core/src/index.js';
+
+  const vlc = await createVLC();
+  const out = document.getElementById('out');
+  const el = (tag, props = {}, ...kids) => {
+    const e = Object.assign(document.createElement(tag), props);
+    e.append(...kids);
+    return e;
+  };
+
+  document.getElementById('file').onchange = async (e) => {
+    out.replaceChildren();
+    for (const file of e.target.files) {
+      const section = el('section', { className: 'card' }, el('h2', { textContent: file.name }));
+      out.append(section);
+      try {
+        const t0 = performance.now();
+        const info = await vlc.probe(file);
+        section.append(el('p', { className: 'muted', textContent:
+          `${info.duration?.toFixed(2) ?? '?'} s · probed in ${(performance.now() - t0).toFixed(0)} ms` }));
+
+        const rows = info.tracks.map((t) => el('tr', {},
+          el('td', { textContent: t.type }),
+          el('td', { textContent: `${t.codecName ?? ''} (${t.codec.trim()})` }),
+          el('td', { textContent: t.width ? `${t.width}×${t.height}${t.fps ? ` @ ${t.fps.toFixed(3)} fps` : ''}`
+            : t.rate ? `${t.rate} Hz · ${t.channels} ch` : '' }),
+          el('td', { textContent: t.language ?? '' })));
+        section.append(el('table', {}, el('tr', {}, ...['type', 'codec', 'format', 'lang'].map((h) => el('th', { textContent: h }))), ...rows));
+        for (const [k, v] of Object.entries(info.meta)) section.append(el('div', { className: 'muted', textContent: `${k}: ${v}` }));
+
+        if (info.tracks.some((t) => t.type === 'video')) {
+          const sheet = el('div', { className: 'sheet' });
+          section.append(el('h3', { textContent: 'Contact sheet' }), sheet);
+          for (let k = 0; k < 12; k++) {
+            const position = (k + 0.5) / 12;
+            try {
+              const { blob } = await vlc.thumbnail(file, { position, width: 320 });
+              const at = info.duration ? `${(position * info.duration).toFixed(1)} s` : `${Math.round(position * 100)}%`;
+              sheet.append(el('figure', {}, el('img', { src: URL.createObjectURL(blob) }), el('figcaption', { textContent: at })));
+            } catch { /* past the end of a truncated file */ }
+          }
+        }
+      } catch (err) {
+        section.append(el('p', { textContent: err.message }));
+      }
+    }
+  };
+</script>
+</body></html>

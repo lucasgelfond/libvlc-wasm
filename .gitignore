@@ -1,0 +1,16 @@
+node_modules/
+.toolchain/
+.research/
+.cache/
+dist/
+corpus/media/
+bench/results/*.raw.json
+*.log
+.DS_Store
+bench/media/
+/corpus/results/shots/
+/tests/out
+# build output: produced by ./build.sh, published by CI
+packages/core/wasm/
+examples/*/dist/
+bench/compare/*.png

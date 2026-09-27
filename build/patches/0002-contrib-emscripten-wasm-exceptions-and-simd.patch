@@ -1,0 +1,17 @@
+diff --git a/contrib/src/main.mak b/contrib/src/main.mak
+index 1fcd41d..6aeb42a 100644
+--- a/contrib/src/main.mak
++++ b/contrib/src/main.mak
+@@ -119,6 +119,12 @@ endif
+ ifdef HAVE_EMSCRIPTEN
+ EXTRA_CFLAGS += -pthread
+ EXTRA_CXXFLAGS += -pthread
++# Native wasm exception handling: libebml/libmatroska throw during ordinary
++# parsing, and with exceptions compiled out every such throw aborts the whole
++# module. setjmp/longjmp (libpng, libjpeg) must use the matching wasm
++# mechanism, since the JS-based one cannot be linked with -fwasm-exceptions.
++EXTRA_CFLAGS += -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm
++EXTRA_CXXFLAGS += -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm
+ endif
+ 
+ CCAS=$(CC) -c

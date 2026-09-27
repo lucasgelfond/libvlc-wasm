@@ -1,0 +1,17 @@
+diff --git a/modules/codec/jpeg.c b/modules/codec/jpeg.c
+index 6aa7781..377ec38 100644
+--- a/modules/codec/jpeg.c
++++ b/modules/codec/jpeg.c
+@@ -123,6 +123,12 @@ vlc_module_begin()
+     set_description(N_("JPEG image encoder"))
+     set_capability("image encoder", 1000)
+     set_callback(OpenEncoder)
++#ifndef ENABLE_SOUT
++    /* OpenEncoder reads this option for both submodules; without sout it
++     * was never declared and var_Create() asserted on the unknown type. */
++    add_integer_with_range(ENC_CFG_PREFIX "quality", 95, 0, 100,
++                           ENC_QUALITY_TEXT, ENC_QUALITY_LONGTEXT)
++#endif
+ vlc_module_end()
+ 
+ 

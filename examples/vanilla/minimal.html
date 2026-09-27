@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Minimal player</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<h1>Minimal player</h1>
+<p class="lede">Try a .rm, .wmv, .vob, .flv, .mkv with ASS subtitles, a .mod…</p>
+<input type="file" id="file">
+<canvas class="video" id="screen"></canvas>
+<div class="row"><button id="toggle">Play / pause</button><span id="time" class="muted"></span></div>
+<script type="module">
+  import { createVLC } from '../../packages/core/src/index.js'; // or '@libvlc-wasm/core'
+
+  const vlc = await createVLC();
+  const player = await vlc.createPlayer({ canvas: document.getElementById('screen') });
+
+  document.getElementById('file').onchange = (e) => player.open(e.target.files[0]);
+  document.getElementById('toggle').onclick = () => player.togglePause();
+  player.on('timeupdate', (t) => {
+    document.getElementById('time').textContent = `${t.toFixed(1)} / ${player.duration.toFixed(1)} s`;
+  });
+</script>
+</body></html>

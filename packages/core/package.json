@@ -1,0 +1,43 @@
+{
+  "name": "@libvlc-wasm/core",
+  "version": "0.1.0",
+  "description": "VLC's playback engine (libvlc 4) compiled to WebAssembly: plays the formats browsers can't.",
+  "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./node": {
+      "types": "./src/node.d.ts",
+      "default": "./src/node.js"
+    },
+    "./wasm/libvlc.wasm": "./wasm/libvlc.wasm",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "wasm/libvlc.js",
+    "wasm/libvlc.wasm",
+    "fonts",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "vlc",
+    "libvlc",
+    "wasm",
+    "webassembly",
+    "video",
+    "player",
+    "codec",
+    "emscripten"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}
