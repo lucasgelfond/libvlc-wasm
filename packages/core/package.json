@@ -19,6 +19,10 @@
       "types": "./src/node.d.ts",
       "default": "./src/node.js"
     },
+    "./vite": {
+      "types": "./src/vite.d.ts",
+      "default": "./src/vite.js"
+    },
     "./coi-serviceworker.js": "./src/coi-serviceworker.js",
     "./wasm/libvlc.wasm": "./wasm/libvlc.wasm",
     "./package.json": "./package.json"

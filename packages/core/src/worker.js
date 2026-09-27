@@ -100,9 +100,12 @@ const methods = {
     engine = await createEngine(factory, {
       threads,
       locateFile: wasmUrl ? (p) => (p.endsWith('.wasm') ? wasmUrl : p) : undefined,
+      // An engine loaded by URL may have been renamed by a bundler
+      // (libvlc-sout-<hash>.js), so its threads must start from that URL,
+      // not from the name Emscripten compiled in.
       mainScriptUrlOrBlob: crossOrigin
         ? new Blob([`import ${JSON.stringify(engineUrl)};`], { type: 'text/javascript' })
-        : undefined,
+        : moduleUrl,
       onEvent,
       printErr: (s) => post({ type: 'event', player: 0, event: EVENT.LOG, a: 3, b: 0, str: s }),
     });

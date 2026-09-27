@@ -156,6 +156,9 @@ export class Renderer {
       if (lastPlane.ptr + lastPlane.pitch * lastPlane.rows > this.memory.byteLength) return 'grow';
 
       const gl = this.gl;
+      // A canvas can carry more than one renderer (re-attached players), and
+      // they share its WebGL context: make sure the uniforms land on ours.
+      gl.useProgram(this.program);
       if (gen !== this.formatGen || code !== this.code) {
         this.formatGen = gen;
         this.code = code;
@@ -218,6 +221,7 @@ export class Renderer {
       const w = Math.round(c.clientWidth * dpr), hgt = Math.round(c.clientHeight * dpr);
       if (w && hgt && (c.width !== w || c.height !== hgt)) { c.width = w; c.height = hgt; }
     }
+    gl.useProgram(this.program);
     gl.viewport(0, 0, c.width, c.height);
     gl.clearColor(...this.background, 1);
     gl.clear(gl.COLOR_BUFFER_BIT);

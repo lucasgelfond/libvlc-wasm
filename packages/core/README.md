@@ -26,8 +26,14 @@ Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Embedder-Policy: require-corp
 ```
 
-`createVLC()` throws a clear error if the page is not isolated. Vite:
-`server.headers` / `preview.headers` (see `examples/svelte-player/vite.config.js`).
+`createVLC()` throws a clear error if the page is not isolated. With Vite, add the plugin, which
+sets both headers on every dev and preview response (`server.headers` misses some, and Safari then
+refuses the worker):
+
+```js
+import coi from 'libvlc-wasm/vite';
+export default defineConfig({ plugins: [coi()] });
+```
 Netlify/Cloudflare Pages: a `_headers` file. Anything cross-origin you load (media
 URLs, fonts) then needs CORS or `Cross-Origin-Resource-Policy`.
 
