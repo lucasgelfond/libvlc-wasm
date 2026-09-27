@@ -9,7 +9,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>Player · libvlc-wasm</title>
+	<title>libvlc-wasm</title>
 </svelte:head>
 
 <ModeWatcher defaultMode="system" />

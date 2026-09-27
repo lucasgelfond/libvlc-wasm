@@ -10,7 +10,7 @@
 <div class="text-muted-foreground flex max-w-3xl flex-col gap-3 text-sm leading-relaxed">
 	<p>
 		libvlc-wasm compiles <a {...a('https://www.videolan.org/vlc/libvlc.html')}>libvlc</a>, the internals of VLC Media Player, into WebAssembly, and
-		hooks it into the browser (video through WebGL, audio outputs through Web Audio, and decoding with WebCodecs). It takes inspiration from several
+		hooks it into the relevant browser APIs (video through WebGL, audio outputs through Web Audio, and decoding with WebCodecs). It takes inspiration from several
 		vlc.js implementations (<a {...a('https://code.videolan.org/jbk/vlc.js')}>1</a>, <a {...a('https://github.com/addyosmani/vlc.js')}>2</a>,
 		<a {...a('https://github.com/Krowemoh/vlc.js')}>3</a>, <a {...a('https://github.com/addyosmani/webvlc')}>4</a>), most of which have incomplete
 		format support or work off of an outdated VLC source. It is inspired by other efforts to port essential media processing libraries to wasm like

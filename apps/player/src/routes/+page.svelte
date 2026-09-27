@@ -10,6 +10,7 @@
 	import FormatsPopover from '$lib/components/FormatsPopover.svelte';
 	import SampleMenu from '$lib/components/SampleMenu.svelte';
 	import About from '$lib/components/About.svelte';
+	import cone from '$lib/assets/cone.svg';
 	import { Session, formatTime } from '$lib/session.svelte';
 	import { SAMPLES, loadSample, type Sample } from '$lib/samples';
 	import { ROWS } from '$lib/compat';
@@ -207,11 +208,7 @@
 				class="flex min-w-0 flex-1 items-center gap-3 text-left"
 				aria-label="Back to the start"
 			>
-				<svg viewBox="0 0 32 32" class="size-8 shrink-0" aria-hidden="true">
-					<rect width="32" height="32" rx="8" class="fill-primary" />
-					<path d="M16 6 8.5 24h15z" class="fill-primary-foreground" />
-					<path d="M10.2 20h11.6" class="stroke-primary" stroke-width="2" />
-				</svg>
+				<img src={cone} alt="" class="size-9 shrink-0" />
 				<span class="min-w-0 flex-1">
 					<span class="font-display block truncate text-lg leading-tight font-semibold tracking-tight">{opened ? session.name : 'libvlc-wasm'}</span>
 					{#if opened && codecs.length}
