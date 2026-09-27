@@ -13,7 +13,7 @@ const samples = resolve(here, '../static/samples');
 const out = `${samples}/thumbs`;
 mkdirSync(out, { recursive: true });
 const src = readFileSync(resolve(here, '../src/lib/samples.ts'), 'utf8');
-const files = [...src.matchAll(/files: \['([^']+)'/g)].map((m) => basename(m[1]));
+const files = [...src.matchAll(/files: \[["']([^"']+)["']/g)].map((m) => basename(m[1]));
 
 const vlc = await createVLC();
 for (const name of files) {

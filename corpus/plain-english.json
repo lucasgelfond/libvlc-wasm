@@ -91,5 +91,6 @@
   "everyday-audio-opus": "Opus, the modern voice and music codec behind WebRTC and Discord.",
   "dvd-video-iso": "A DVD as a disc image: menus with buttons, titles and chapters, played through VLC's own DVD navigation.",
   "bluray-bdmv-iso": "An unencrypted Blu-ray as a disc image: playlists and chapters, read by libbluray.",
-  "cenc-clearkey-mp4": "A DRM-protected MP4 (Common Encryption), played with its ClearKey key; Widevine and FairPlay keys never leave the browser, so those cannot be."
+  "cenc-clearkey-mp4": "A DRM-protected MP4 (Common Encryption), played with its ClearKey key; Widevine and FairPlay keys never leave the browser, so those cannot be.",
+  "psx-str-lunar2": "An anime cutscene from a PlayStation game disc: MDEC video with CD-XA sound."
 }

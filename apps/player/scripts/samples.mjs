@@ -14,7 +14,7 @@ mkdirSync(out, { recursive: true });
 
 const manifest = JSON.parse(readFileSync(`${root}/corpus/manifest.json`, 'utf8'));
 const src = readFileSync(resolve(here, '../src/lib/samples.ts'), 'utf8');
-const files = [...src.matchAll(/files: \[([^\]]+)\]/g)].flatMap((m) => [...m[1].matchAll(/'([^']+)'/g)].map((x) => x[1]));
+const files = [...src.matchAll(/files: \[([^\]]+)\]/g)].flatMap((m) => [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]));
 
 let fetched = 0, copied = 0, kept = 0;
 for (const path of files) {

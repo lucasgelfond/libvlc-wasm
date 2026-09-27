@@ -730,6 +730,20 @@
       "sha256": "f0e9f40dbf82ee21b7bc759b4cf3d1a456f12966d75ecfdc407de4da2bdf34b7"
     },
     {
+      "id": "psx-str-lunar2",
+      "name": "PlayStation STR (Lunar 2 cutscene)",
+      "category": "game-and-oddball-video",
+      "url": "https://samples.ffmpeg.org/game-formats/psx-str/lunar2.str",
+      "file": "game-and-oddball-video/lunar2.str",
+      "bytes": 10920380,
+      "container": "PSX STR (CD-XA)",
+      "video": "MDEC",
+      "audio": "XA ADPCM",
+      "whyBrowserCant": "no browser reads raw PlayStation CD sectors or MDEC video",
+      "notes": "A complete 41 s anime cutscene from Lunar 2: Eternal Blue Complete.",
+      "test": {}
+    },
+    {
       "id": "ac-3-5-1-448k",
       "name": "AC-3 5.1 448k",
       "category": "rare-and-surround-audio",

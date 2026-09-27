@@ -370,5 +370,9 @@
   "cenc-clearkey-mp4": [
     "ClearKey DRM (MP4 cenc)",
     "Encrypted_Media_Extensions"
+  ],
+  "psx-str-lunar2": [
+    "PlayStation STR (anime cutscene)",
+    "PlayStation_(console)"
   ]
 }

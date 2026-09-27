@@ -40,7 +40,7 @@ export const SAMPLES: Sample[] = [
     files: ["bluray.iso"],
     title: "A Blu-ray",
     plain:
-      "A disc image of a small, unencrypted Blu-ray: one playlist in three chapters, read by libbluray the way desktop VLC reads a disc.",
+      "A disc image of an unencrypted Blu-ray: a minute of Big Buck Bunny (Blender Foundation, CC BY 3.0) in three chapters, read by libbluray the way desktop VLC reads a disc.",
     format: "BDMV UDF image · H.264 video + AC-3 audio · chapters",
   },
   {
@@ -170,10 +170,10 @@ export const SAMPLES: Sample[] = [
     id: "playstation",
     label: "PlayStation STR (.str)",
     kind: "video",
-    files: ["game-and-oddball-video/playstation-str-mdec-xa.str"],
-    title: "A PlayStation 1 movie",
+    files: ["game-and-oddball-video/lunar2.str"],
+    title: "Lunar 2: Eternal Blue, an anime cutscene",
     plain:
-      "A full-motion video straight off an original PlayStation game disc. Desktop VLC cannot play this one.",
+      "A 41-second anime cutscene straight off the PlayStation disc of Lunar 2: Eternal Blue Complete (1999). Desktop VLC cannot play these.",
     format: "PSX STR · MDEC video + XA ADPCM audio (via patches/0009)",
   },
   {
