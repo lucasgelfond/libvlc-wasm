@@ -22,6 +22,7 @@ const SUITES = [
   ['app', 'tests/app.mjs', [], 'apps/player/node_modules'],
   ...(quick ? [] : [['corpus', 'tests/corpus-check.mjs', [], 'corpus/media/realmedia']]),
   ...(quick ? [] : [['package', 'tests/package.mjs', [], 'packages/core/wasm/libvlc.wasm']]),
+  ...(quick ? [] : [['bundle', 'tests/bundle.mjs', [], 'packages/sout/wasm/libvlc-sout.wasm']]),
 ].filter(([name]) => !only || only.includes(name));
 
 function runSuite(script, args) {

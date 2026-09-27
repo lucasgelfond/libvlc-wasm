@@ -14,6 +14,8 @@ OUT=/work/packages/core/wasm
 NAME=libvlc
 # The stream-output engine ships as its own package (libvlc-wasm-sout).
 if [ "${VARIANT:-default}" = sout ]; then NAME=libvlc-sout; OUT=/work/packages/sout/wasm; fi
+# OUT_DIR links somewhere else (a size study, say) without touching the packages.
+OUT=${OUT_DIR:-$OUT}
 OBJ=/cache/link$SUFFIX
 PROFILE=${PROFILE:-release}
 STAGE="$OBJ/stage"
@@ -94,6 +96,7 @@ emcc $LINK_OPT -pthread -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm \
   -sFORCE_FILESYSTEM=1 -lworkerfs.js -lnodefs.js \
   -sEXPORTED_FUNCTIONS=_malloc,_free,_wv_submit,_wv_pump,_wv_api_names,_wv_call_layout,_wv_wc_opened,_wv_wc_push,_wv_wc_drained,_wv_wc_error,_wv_wc_free \
   -sEXPORTED_RUNTIME_METHODS=FS,WORKERFS,NODEFS,UTF8ToString,stringToNewUTF8,HEAPU8,HEAP32,HEAPF64,wasmMemory \
+  ${EXTRA_LDFLAGS:-} \
   -o "$STAGE/$NAME.js"
 
 # Exceptions: everything was compiled with the legacy wasm EH encoding

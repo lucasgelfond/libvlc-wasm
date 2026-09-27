@@ -27,7 +27,7 @@ run() {
   docker run --rm -i \
     -v "$PWD":/work -v "$CACHE":/cache \
     -e VLC_COMMIT="$VLC_COMMIT" -e JOBS="${JOBS:-}" -e MODE="${MODE:-1}" \
-    -e PROFILE="${PROFILE:-release}" -e CLEAN="${CLEAN:-0}" -e VARIANT="$VARIANT" \
+    -e PROFILE="${PROFILE:-release}" -e OUT_DIR="${OUT_DIR:-}" -e EXTRA_LDFLAGS="${EXTRA_LDFLAGS:-}" -e CLEAN="${CLEAN:-0}" -e VARIANT="$VARIANT" \
     "$IMAGE" "$@"
 }
 
