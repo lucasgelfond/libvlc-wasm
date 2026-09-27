@@ -250,6 +250,18 @@ const results = await page.evaluate(async () => {
     return 'ArrayBuffer and Blob both play';
   });
 
+  await test('ClearKey (cenc) MP4 decrypts with its key', async () => {
+    const f = await file('t_cenc.mp4');
+    const bad = await p.open(f, { decryptionKey: 'nothex' }).then(() => null, (e) => e);
+    assert(bad && /32 hex digits/.test(bad.message), 'a malformed key is refused');
+    const before = p.renderer.framesDrawn;
+    await p.open(f, { decryptionKey: '76a6c65c5ea762046bd749a2e632ccbb' });
+    await waitFor(() => p.renderer.framesDrawn > before + 10, 6000, 'decrypted frames');
+    const codecs = p.tracks.map((t) => t.codec.trim()).join('+');
+    assert(/h264/.test(codecs), `tracks ${codecs}`);
+    return `${p.renderer.framesDrawn - before} frames, ${codecs}`;
+  });
+
   await test('http(s) URL source (ranged reads)', async () => {
     await p.open(new URL(G + 't_mpeg2_ac3.ts', location.href).href);
     const before = p.renderer.framesDrawn;
@@ -326,6 +338,17 @@ const results = await page.evaluate(async () => {
     await listed;
     await waitFor(() => p.renderer.framesDrawn > before + 2 && p.chapters.titles.length >= 2, 8000, 'frames and titles');
     return p.chapters.titles.map((t) => t.name).join(', ');
+  });
+
+  await test('Blu-ray image: playlist and chapters (libbluray)', async () => {
+    const f = await file('t_bluray.iso');
+    await p.stop();
+    const before = p.renderer.framesDrawn;
+    await p.open(f);
+    await waitFor(() => p.renderer.framesDrawn > before + 5 && p.chapters.chapters.length >= 3, 8000, 'frames and chapters');
+    const codecs = p.tracks.map((t) => t.codec.trim()).join('+');
+    assert(/h264/.test(codecs) && /a52/.test(codecs), `tracks ${codecs}`);
+    return `${p.chapters.titles.length} title(s), ${p.chapters.chapters.length} chapters, ${codecs}`;
   });
 
   await test('two players at once', async () => {

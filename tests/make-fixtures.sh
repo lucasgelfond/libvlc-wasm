@@ -2,7 +2,8 @@
 # Small generated files the smoke tests use (corpus/media/gen). Needs ffmpeg
 # with libx264, libopus and libmp3lame.
 set -eu
-cd "$(dirname "$0")/../corpus/media" && mkdir -p gen && cd gen
+# corpus/media is gitignored, so a fresh clone does not have it yet.
+mkdir -p "$(dirname "$0")/../corpus/media/gen" && cd "$(dirname "$0")/../corpus/media/gen"
 q="-loglevel error -y"
 cat > subs.ass <<'ASS'
 [Script Info]
@@ -25,6 +26,12 @@ ffmpeg $q -f lavfi -i testsrc2=size=320x240:rate=15 -f lavfi -i sine=frequency=5
 ffmpeg $q -f lavfi -i testsrc2=size=320x240:rate=25 -f lavfi -i sine=frequency=500:sample_rate=44100 -t 5 -c:v mpeg4 -vtag XVID -c:a libmp3lame -b:a 128k t_xvid_mp3.avi
 ffmpeg $q $V -frames:v 3 -c:v libx264 t_3frames.mkv
 ffmpeg $q $V -frames:v 1 -c:v libx264 t_1frame.mkv
+# ClearKey DRM: Common Encryption (cenc, AES-CTR) with a known key; the key
+# is also in tests/features.mjs.
+ffmpeg $q $V -f lavfi -i sine=frequency=440 -t 3 -c:v libx264 -c:a aac -f mp4 t_clear.mp4
+ffmpeg $q -i t_clear.mp4 -c copy -encryption_scheme cenc-aes-ctr \
+  -encryption_key 76a6c65c5ea762046bd749a2e632ccbb -encryption_kid a7e61c373e219033c21091fa607bf3b8 t_cenc.mp4
+rm t_clear.mp4
 ls -la
 cat > chapters.txt <<'CH'
 ;FFMETADATA1

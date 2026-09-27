@@ -5,7 +5,8 @@
 # Writes corpus/media/everyday/. Needs ffmpeg with libx264, libx265,
 # libsvtav1, libvpx, libopus and libmp3lame.
 set -eu
-cd "$(dirname "$0")/media" && mkdir -p everyday && cd everyday
+# media/ is gitignored, so a fresh clone does not have it yet.
+mkdir -p "$(dirname "$0")/media/everyday" && cd "$(dirname "$0")/media/everyday"
 q="-loglevel error -y"
 V="-f lavfi -i testsrc2=size=640x360:rate=30"
 A="-f lavfi -i sine=frequency=440:sample_rate=48000"

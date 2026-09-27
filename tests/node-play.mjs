@@ -37,4 +37,5 @@ console.log('stats', info?.stats);
 console.log(`wall ${(performance.now() - t0).toFixed(0)} ms`);
 await engine.call('stop', { i: [p] });
 clearInterval(keepalive);
-process.exit(0);
+engine.dispose();
+engine.Module.PThread?.terminateAllThreads?.();

@@ -50,7 +50,9 @@ const results = await page.evaluate(async () => {
   const cases = [
     // A cut of a longer file: its header claims 2 hours, so no duration check.
     ['realmedia/realvideo-4-cook-rmvb.rmvb', { to: 'webm' }, ['v:VP80', 'a:Opus'], { truncated: true }],
-    ['gen/t_wmv2.wmv', { to: 'mp4' }, ['v:mp4v', 'a:mp4a']],
+    ['gen/t_wmv2.wmv', { to: 'mp4' }, ['v:h264', 'a:mp4a']],
+    ['gen/t_wmv2.wmv', { to: 'mp4', video: 'mp4v' }, ['v:mp4v', 'a:mp4a']],
+    ['gen/t_xvid_mp3.avi', { to: 'mkv', video: 'hevc', width: 320 }, ['v:hevc', 'a:Opus']],
     ['gen/t_h264_opus_ass.mkv', { to: 'webm', width: 320 }, ['v:VP80', 'a:Opus']],
     ['gen/t_xvid_mp3.avi', { to: 'ogg' }, ['a:Opus']],
     ['gen/t_mpeg2_ac3.ts', { to: 'wav' }, ['a:']],

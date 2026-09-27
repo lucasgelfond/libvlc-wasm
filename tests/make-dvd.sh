@@ -7,8 +7,10 @@
 #   docker run --rm -v "$PWD":/w -w /w debian:trixie sh -c \
 #     'apt-get update -qq && apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick >/dev/null && sh tests/make-dvd.sh'
 set -eu
-cd "$(dirname "$0")/../corpus/media" && mkdir -p gen && cd gen
+# corpus/media is gitignored, so a fresh clone does not have it yet.
+mkdir -p "$(dirname "$0")/../corpus/media/gen" && cd "$(dirname "$0")/../corpus/media/gen"
 tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
 q="-loglevel error -y"
 
 # Titles.
@@ -70,5 +72,4 @@ XML
 (cd "$tmp" && VIDEO_FORMAT=NTSC dvdauthor -o dvd -x dvd.xml)
 genisoimage -quiet -dvd-video -V WASM_DVD -o t_dvd.iso "$tmp/dvd"
 rm -rf VIDEO_TS && cp -r "$tmp/dvd/VIDEO_TS" .   # the same disc as a folder
-rm -rf "$tmp"
 ls -la t_dvd.iso VIDEO_TS

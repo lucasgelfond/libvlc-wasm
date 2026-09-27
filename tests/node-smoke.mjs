@@ -51,4 +51,6 @@ for (const f of files) {
   } else console.log('  thumbnail FAILED');
 }
 if (process.env.LOGS) console.log(logs.join('\n'));
-process.exit(0);
+clearInterval(keepalive);
+engine.dispose();
+engine.Module.PThread?.terminateAllThreads?.();

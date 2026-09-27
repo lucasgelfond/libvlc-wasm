@@ -13,7 +13,8 @@
       "audio": "Cook",
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "e448c7720cff6a2eec9c20ce12d577c5d5c2d6748ecd4acc09102e3e08c67106"
     },
     {
       "id": "realvideo-g2-svt",
@@ -27,7 +28,8 @@
       "audio": null,
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "74fec239cbaef85e7ea252ac747684c31e74dfd0fb5b44c9479642155904afe1"
     },
     {
       "id": "realvideo-4-cook-rmvb",
@@ -41,7 +43,8 @@
       "audio": "Cook",
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "e9904307a07c84be11b7e4f35693f9ae8f62867078160f89798599439433d3b7"
     },
     {
       "id": "realaudio-cook",
@@ -55,7 +58,8 @@
       "audio": "Cook",
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "5c7a13412f8cf544896c11fe8bc5440ac21b830e699bd6b14817dfc3745ec577"
     },
     {
       "id": "realaudio-sipr-8-5k",
@@ -69,7 +73,8 @@
       "audio": "SIPR",
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "8b7fde2752752ad1d9f573bff90a307ae68c9c86492187478a82fe74601545a2"
     },
     {
       "id": "realaudio-28-8",
@@ -83,7 +88,8 @@
       "audio": "RealAudio 28.8 (ra_288)",
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "0f5a0f9f302bf698b02cafbd8c793b8b24c0c714fd96d496bf1c61178299c3ee"
     },
     {
       "id": "realvideo-2-in-matroska",
@@ -97,7 +103,8 @@
       "audio": null,
       "whyBrowserCant": "RV20 has no browser decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "ac79afb85942639b70d66ce170ece58554f794c127e06253bc2bf48102f3aef8"
     },
     {
       "id": "realvideo-2-sipr-a-v-sync-bug",
@@ -111,7 +118,8 @@
       "audio": "SIPR",
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "24c97778f77406227418f7692e0e6cefec09510b91746673ebe8ac969a6a19c4"
     },
     {
       "id": "wmv8-x8-intra",
@@ -125,7 +133,8 @@
       "audio": "WMA v2",
       "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "0694e4140214044fbae14116038779dbfb5d96bf82594f00ef30b4578f7ea51e"
     },
     {
       "id": "wmv7",
@@ -139,7 +148,8 @@
       "audio": "WMA v2",
       "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "91939087657d657ec73799c0461bde5647a1998ad836aa152da01455ca5b15de"
     },
     {
       "id": "wmv9-vc-1-simple-main-raw-rcv",
@@ -153,7 +163,8 @@
       "audio": null,
       "whyBrowserCant": "Raw VC-1 RCV stream; no browser VC-1 decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "67baabd762ed35f70cd70c492e83e8744d068a5a567d9b19cc509851bf9f1d44"
     },
     {
       "id": "ms-mpeg4-v3-divx-in-asf",
@@ -167,7 +178,8 @@
       "audio": null,
       "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "3bf1768d1a2b862cb531e6e9bb38e5bd4ba0f652ceb9319cef6d16d0b5eb91cf"
     },
     {
       "id": "wma-voice-11k",
@@ -181,7 +193,8 @@
       "audio": "WMA Voice",
       "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "cf0eb21fb98a5b07bb4db6f46c23224c3c8ed48e361b8baab0b3bdf901715dc6"
     },
     {
       "id": "wma-lossless-24-bit",
@@ -197,7 +210,8 @@
       "notes": null,
       "test": {
         "knownIssue": "this 0.2 s clip only leaves the decoder at end-of-stream drain, already late, so VLC's audio core drops it (native VLC's file output ignores timing)"
-      }
+      },
+      "sha256": "0dbe31e8b7bc8b589df5109cf6e2a1a782cdf8491ecbc1cc1fee887648ff45b7"
     },
     {
       "id": "ms-screen-codec-2-wmv9-screen",
@@ -211,7 +225,8 @@
       "audio": null,
       "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "e2c3de26955936880bcd478372bf4bdbc109eab0df2d618450f0782b3feb0c25"
     },
     {
       "id": "ms-mpeg4-v1",
@@ -225,7 +240,8 @@
       "audio": null,
       "whyBrowserCant": "AVI container unsupported by browsers",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "b410cdbb97c64f2ecf75ace0dc6a7fd941411283bc0972f7cc0cd745d4d3939a"
     },
     {
       "id": "xvid-mp3",
@@ -240,8 +256,9 @@
       "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
       "notes": null,
       "test": {
-        "knownIssue": "known issue: VLC 4 mpegaudio packetizer never syncs on this truncated AVI (VLC 3 does); a clean XviD+MP3 AVI plays"
-      }
+        "knownIssue": "known issue: VLC 4's AVI demuxer hands the MP3 packetizer this truncated, index-less file's audio out of order (its MP3 frames play when extracted, and through FFmpeg's demuxer); a clean XviD+MP3 AVI plays"
+      },
+      "sha256": "fd3040d7c3f93d7a9fe6501df9f1d48f636359af58f9cbcef46eb84e481d4be3"
     },
     {
       "id": "divx-5-mp3",
@@ -256,8 +273,9 @@
       "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
       "notes": null,
       "test": {
-        "expectFail": "native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either"
-      }
+        "expectFail": "native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either (same AVI demuxer issue as the XviD file)"
+      },
+      "sha256": "cffa4bb94f2d50d0f779de52027a38ca62b72e4e5d3d95f3b49f69d092a26330"
     },
     {
       "id": "cinepak",
@@ -271,7 +289,8 @@
       "audio": "PCM u8",
       "whyBrowserCant": "AVI container unsupported by browsers",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "8d449343b021dc65fabdae8e7516f91169fc34139b3736714408231fbf85f2ae"
     },
     {
       "id": "indeo-3",
@@ -285,7 +304,8 @@
       "audio": null,
       "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "1c17bd44f55f3e6f0ee4f82c7c8bdea91160e7416363efc3a1bd7924a7728518"
     },
     {
       "id": "indeo-4-partial",
@@ -299,7 +319,8 @@
       "audio": "PCM u8",
       "whyBrowserCant": "AVI container unsupported by browsers",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "4d5b6afb804b76c72bcc9067145cab4559d2961fd24ee220756ba413963bc75a"
     },
     {
       "id": "indeo-5",
@@ -313,7 +334,8 @@
       "audio": "PCM s16le",
       "whyBrowserCant": "AVI container unsupported by browsers",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "70564f095c92527c5e55f503207d579c5a3e177f4592a9e146e19e98d081d464"
     },
     {
       "id": "motion-jpeg-mu-law-10-mb",
@@ -327,7 +349,8 @@
       "audio": "PCM mu-law",
       "whyBrowserCant": "AVI container unsupported by browsers",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "3d6c35d1579d4a4f6bdf0e0110c3b7e8501b82ee86ccc40dfbb26a66fca5a2d6"
     },
     {
       "id": "dvcpro-hd-720p50",
@@ -341,7 +364,8 @@
       "audio": null,
       "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "bee292c9039c65ef8b8ffedf4ae21ad64b300b843e6d27a3400d03d4cba98f1d"
     },
     {
       "id": "on2-vp5-speex",
@@ -355,7 +379,8 @@
       "audio": "Speex",
       "whyBrowserCant": "AVI container unsupported by browsers",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "9be2d439ea5c7d827321487871a6480537c1f2f38cb4343f4073c5965a3c1307"
     },
     {
       "id": "dvd-vob-single-frame-dvd-subs",
@@ -369,7 +394,8 @@
       "audio": null,
       "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "3054d653e9e575ba0592de2ce223c813d9b8bc593981a1fc184ff6f49790942b"
     },
     {
       "id": "mpeg-1-system-stream",
@@ -383,7 +409,8 @@
       "audio": null,
       "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "85e49a80cd97b0c91a548ffa7ab980575d55c8e6e2c9148a1d7bd8c2ce9b77d1"
     },
     {
       "id": "dvd-vob-mpeg-2-ac-3-5-mb",
@@ -397,7 +424,8 @@
       "audio": "AC-3",
       "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "c2da442accfa9b243546f4cfcb22bef3e95860b8a84bc0dfcef477f4d36ef0be"
     },
     {
       "id": "mpeg-2-field-encoded-ts",
@@ -411,7 +439,8 @@
       "audio": null,
       "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4); also interlaced",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "9688333a145b9e2c2139b9cab6cd4966acd19788fd620b4b31db5c2891547cb8"
     },
     {
       "id": "dts-in-mpeg-ts",
@@ -425,9 +454,8 @@
       "audio": "DTS",
       "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
       "notes": null,
-      "test": {
-        "expectFail": "native VLC 3.0.24 also produces no audio from this sample"
-      }
+      "test": {},
+      "sha256": "749561299cf838d55f52d5697f78c273a6c381c5e6c8300f859dfe23252ae2c2"
     },
     {
       "id": "flash-vp6-sorenson-on2",
@@ -441,7 +469,8 @@
       "audio": null,
       "whyBrowserCant": "FLV container and VP6 unsupported (Flash is gone)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "f61d4a1696000cbb6d1e6a8bd7e4682656da3ad017c49fd6d7c47a7f28d8aefe"
     },
     {
       "id": "flv-with-h-264-aac",
@@ -455,7 +484,8 @@
       "audio": "AAC",
       "whyBrowserCant": "Codecs are fine but browsers cannot demux FLV (needs flv.js-style remux)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "a0b6d22bd69054d1e7082de11a825e72739e3cdd3409a54349365bffcd3a40fb"
     },
     {
       "id": "vp6f-nellymoser",
@@ -469,7 +499,8 @@
       "audio": "Nellymoser",
       "whyBrowserCant": "FLV/VP6/Nellymoser unsupported",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "53e000da3a86eaa181978417b545abfe59b196cd178727714d29b3fcfdbe5b27"
     },
     {
       "id": "3gpp-h-263-amr-nb",
@@ -483,7 +514,8 @@
       "audio": "AMR-NB",
       "whyBrowserCant": "H.263 and AMR-NB are not decoded by desktop Chrome",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "596c920c8bcb22c741004994aaa6d4dfab5b0638b83a78e1203fd10c9686c1f2"
     },
     {
       "id": "3gp-h-263-phone-clip",
@@ -497,7 +529,8 @@
       "audio": null,
       "whyBrowserCant": "H.263 not decoded by Chrome",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "e04983ef60ea9c1da247c0f0fb4030af4bc7000192928f0f3f127e8595abdc40"
     },
     {
       "id": "sorenson-video-1",
@@ -511,7 +544,8 @@
       "audio": "PCM u8",
       "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "e45b8dcf08f11e144b8ee593bb20ad3c3e35316b3af7ebea04ab06f4ab756e27"
     },
     {
       "id": "sorenson-video-3",
@@ -525,7 +559,8 @@
       "audio": null,
       "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "840bba868381dcfe417a01738f2bf38e7c34a7df795cb1d875ef630206040c58"
     },
     {
       "id": "qdesign-music-2",
@@ -539,7 +574,8 @@
       "audio": "QDM2",
       "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "05ab23edd7337b4202a4ad08b52c8370120a5040585c9995736de72adce3df3d"
     },
     {
       "id": "ima4-adpcm",
@@ -553,7 +589,8 @@
       "audio": "ADPCM IMA QT",
       "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "da367607b24630fe5763ea60b6d86e76fa9ec1af9d458ef08c59b5ae24f59c84"
     },
     {
       "id": "mace-3-1",
@@ -567,7 +604,8 @@
       "audio": "MACE3",
       "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "08572e5c2ad094ee2c3fb0473c971617d5f61f78c75047e5e64ccd3b74e46eac"
     },
     {
       "id": "smacker",
@@ -581,7 +619,8 @@
       "audio": "Smacker audio",
       "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "dfba9d646f0889f073edb3c3241115f92b4c84f5c567da3e0f5bc7900f646c49"
     },
     {
       "id": "bink-video",
@@ -595,7 +634,8 @@
       "audio": null,
       "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "d9c576569d6284564a8f35448a5331e92b78f07318b635fa467d6437ffe2bf22"
     },
     {
       "id": "id-roq-quake-3-logo",
@@ -609,7 +649,8 @@
       "audio": "RoQ DPCM",
       "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "1f358ad1dcfc0ba67a37cbc66631e8507f861da3faf05cb7da5d0521e141c87b"
     },
     {
       "id": "autodesk-flic-640x480",
@@ -623,7 +664,8 @@
       "audio": null,
       "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "41038fd05f38115350c4ba09cf05fb20b8f3bc3cc6538b74e23ea4b12499e1a6"
     },
     {
       "id": "autodesk-flc-320x200",
@@ -637,7 +679,8 @@
       "audio": null,
       "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "2dfe6613b3ca0d5bbfbf82010b7e4234c7f26e8eb44d67071fef20ffa3a494c5"
     },
     {
       "id": "nuppelvideo-mythtv",
@@ -651,7 +694,8 @@
       "audio": "PCM s16le",
       "whyBrowserCant": "NuppelVideo container/codec unsupported",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "1821db180d44e4c473c98297a5ebc3cf1ccbbdc14cc5adaf316b28bbab0000e8"
     },
     {
       "id": "vivo-2-vivoactive",
@@ -666,8 +710,9 @@
       "whyBrowserCant": "Vivo unsupported; note ffmpeg cannot decode this video layer either - good negative test",
       "notes": null,
       "test": {
-        "expectFail": "video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010)"
-      }
+        "expectFail": "video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010-0011)"
+      },
+      "sha256": "b69faaac5ca11017bc0e9fa41b37e0803265a8e985320e98fbc4974043ddf061"
     },
     {
       "id": "playstation-str-mdec-xa",
@@ -681,7 +726,8 @@
       "audio": "ADPCM XA",
       "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "f0e9f40dbf82ee21b7bc759b4cf3d1a456f12966d75ecfdc407de4da2bdf34b7"
     },
     {
       "id": "ac-3-5-1-448k",
@@ -695,7 +741,8 @@
       "audio": "AC-3 5.1",
       "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "74fefeef070f663378a0864beb064cf88ee1186152f7ac320984af15be2f22db"
     },
     {
       "id": "e-ac-3-5-1-with-spx",
@@ -709,7 +756,8 @@
       "audio": "E-AC-3",
       "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "84f50317a49a98509bf174ace814b39860e6ab2a1d61bdbd10ada9081f2bb2b3"
     },
     {
       "id": "dts-es",
@@ -723,7 +771,8 @@
       "audio": "DTS-ES",
       "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "2e2530d220d51b914d1e7acb63badb5b2dae1578f3274116206fa1aa5e597638"
     },
     {
       "id": "dolby-truehd-atmos-8ch",
@@ -739,7 +788,8 @@
       "notes": null,
       "test": {
         "knownIssue": "plays about half the time: its 0.1 s of audio only leaves the decoder at end-of-stream drain, right at the lateness limit of VLC's audio core (same as the WMA Lossless clip)"
-      }
+      },
+      "sha256": "020c9b9e67f80de105663af191740f8b60f550107c9f765b632f4cd5efb1c6ab"
     },
     {
       "id": "mlp-440-hz",
@@ -753,7 +803,8 @@
       "audio": "MLP",
       "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "c46b722bbf56c8316a8088cbf1bc7a3f9eeac529699e7fe4600d449f4d0760d9"
     },
     {
       "id": "musepack-sv8",
@@ -767,7 +818,8 @@
       "audio": "Musepack SV8",
       "whyBrowserCant": "No browser Musepack decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "62ee2237bd95e7704d9835abb6bcca694e5a29ba8ea76d34cb6ecdac0e8b5fac"
     },
     {
       "id": "musepack-sv7",
@@ -781,7 +833,8 @@
       "audio": "Musepack SV7",
       "whyBrowserCant": "No browser Musepack decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "0e23d692f39d3c874286ef0b479ec8d1d1586fdcf93b906dee316fc11b694301"
     },
     {
       "id": "monkey-s-audio",
@@ -797,7 +850,8 @@
       "notes": null,
       "test": {
         "knownIssue": "truncated test file: native FFmpeg reports \"Error decoding frame\" too, and how much decodes varies from run to run"
-      }
+      },
+      "sha256": "7ca0fd5ef79665e1a5679ec7ffdbf6533a80839f1c5d3b177839a4ef31bf85da"
     },
     {
       "id": "true-audio-6-6-mb",
@@ -811,7 +865,8 @@
       "audio": "TTA",
       "whyBrowserCant": "No browser TTA decoder",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "8bc3603af61b7a059e064aaca0b93bb5ef43e5a61f249f886bf9cbea3b73a953"
     },
     {
       "id": "amr-nb-12-2k",
@@ -825,7 +880,8 @@
       "audio": "AMR-NB",
       "whyBrowserCant": "AMR not supported by desktop Chrome",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "34445340325350fb5f4e15893c7b1e6bfd3a6f87cd5dc8fc95989f2c3e8164fc"
     },
     {
       "id": "shorten",
@@ -840,8 +896,9 @@
       "whyBrowserCant": "No browser Shorten decoder",
       "notes": null,
       "test": {
-        "expectFail": "native VLC 3.0.24 also cannot play Shorten (no demuxer claims it)"
-      }
+        "expectFail": "native VLC 3.0.24 also cannot play it: VLC's FFmpeg demuxer reaches end of file without a packet from this raw Shorten stream"
+      },
+      "sha256": "bc75e9dfdb21409569b5245b3ca8b97db84e3a869dcfece5a1cee4dadb4ec79d"
     },
     {
       "id": "hevc-main10-dolby-vision-p7-in-mkv",
@@ -855,7 +912,8 @@
       "audio": null,
       "whyBrowserCant": "Chrome decodes HEVC only with platform HW support (Win/macOS/Android/ChromeOS, Chrome 107+), MKV via <video> is unofficial, and DV P7 dual-layer is unsupported everywhere",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "3287bac8deade11e1c57bd65b9c7c8750a1e38e286666cbb4fa39eac264875df"
     },
     {
       "id": "dvb-subtitles-in-ts",
@@ -871,7 +929,8 @@
       "notes": null,
       "test": {
         "expectFail": "a subtitle-only fragment: its video and audio PIDs carry no packets, so there is no picture to show (FFmpeg's DVB-subtitle test fixture)"
-      }
+      },
+      "sha256": "93ad6d0be649bb29697275ff522a983d475a1e58ab070271f912b86799e04a86"
     },
     {
       "id": "vobsub-idx-sub",
@@ -888,14 +947,16 @@
       "companions": [
         {
           "url": "https://fate-suite.ffmpeg.org/sub/vobsub.sub",
-          "file": "subtitles-and-captions/vobsub.sub"
+          "file": "subtitles-and-captions/vobsub.sub",
+          "sha256": "5f6ac43324e5a35c6e525aa0c76bafa9dd965a17ce0880fd7eb69e19b6853c8b"
         }
       ],
       "test": {
         "mode": "subtitles-over",
         "video": "gen/t_mpeg2_ac3.ts"
       },
-      "subtitles": "VobSub (DVD bitmap)"
+      "subtitles": "VobSub (DVD bitmap)",
+      "sha256": "c4d073e2bbf515409e9ee8bf32114b81c1a11178d3bf0d52d88ebab0615525e2"
     },
     {
       "id": "mpeg-2-es-with-eia-608-closed-captions",
@@ -909,7 +970,8 @@
       "audio": null,
       "whyBrowserCant": "Raw MPEG-2 ES + embedded CEA-608 unsupported",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "d03cfbc04957d8672ffb4910de0f3fcee22e2b204d76b848d1473f1ba9ae9afa"
     },
     {
       "id": "mpeg-4-asp-vorbis-16-ass-ssa-tracks",
@@ -923,7 +985,8 @@
       "audio": "Vorbis + ASS subs",
       "whyBrowserCant": "ASS/SSA styling needs libass; MPEG-4 ASP not decoded by Chrome",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "fda97ce05c7da6bf21370037cc3d4933ce0f616de95f6779fd2e048a13721d0e"
     },
     {
       "id": "h-264-2x-mp3-vobsub-in-mkv",
@@ -937,7 +1000,8 @@
       "audio": "MP3 x2 + dvd_subtitle",
       "whyBrowserCant": "Bitmap VobSub in MKV unsupported; multiple audio tracks not switchable in <video>",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "9e7bad1400a472e37b7e5b271d90ea0c5b4ad99aa19ad16ab7295c904b4042ed"
     },
     {
       "id": "snes-spc",
@@ -951,7 +1015,8 @@
       "audio": "SPC700 (gme)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "728832fb36f6e92a893530ad66d09ffafe2889178d05d748ad00ea831cf9e319"
     },
     {
       "id": "nes-nsf-tetris-gb-rip",
@@ -965,7 +1030,8 @@
       "audio": "NES APU (gme)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "a8015d01d67f78c4fd6f5dd02a5dd04239e5aeeb2f90f8717050b4ed85effbe5"
     },
     {
       "id": "sega-genesis-vgz-gzip-vgm",
@@ -979,9 +1045,8 @@
       "audio": "YM2612/SN76489 (gme)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {
-        "expectFail": "native VLC 3.0.24 also fails: after gunzip, the AIFF probe claims the stream before gme"
-      }
+      "test": {},
+      "sha256": "98161e274d4ac92d972d9005cbdb9dbe9b36afe2f71cefb4dff2aa8acb56768e"
     },
     {
       "id": "c64-sid-rob-hubbard-commando",
@@ -995,9 +1060,8 @@
       "audio": "MOS 6581 (sidplay2)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec; NOTE upstream wasm build.sh passes --disable-sidplay2",
       "notes": null,
-      "test": {
-        "expectFail": "sidplay2 is disabled in VLC's upstream emscripten contrib set"
-      }
+      "test": {},
+      "sha256": "5295378dacb06593a9c1853ce11a325ce885a16e26d56274d424e06492948de8"
     },
     {
       "id": "standard-midi-file",
@@ -1013,7 +1077,8 @@
       "notes": null,
       "test": {
         "needs": "soundfont"
-      }
+      },
+      "sha256": "701441778a02f1b63d2d9c8d6406899fa224fdea5247362d1527fb37cc84c7f6"
     },
     {
       "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
@@ -1027,7 +1092,8 @@
       "audio": "MOD (modplug/openmpt)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "6a3270a492a8da932cfc45debb9d992be2ce9aa8d2662fb5b78ca17e6e09cb64"
     },
     {
       "id": "external-xm",
@@ -1041,7 +1107,8 @@
       "audio": "FastTracker 2 (modplug)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "2b7ce3c9efa7bb94067c1c7b00ed8b43433120f2ac2992903b09afd3d33739e3"
     },
     {
       "id": "sandman-s3m",
@@ -1055,7 +1122,8 @@
       "audio": "ScreamTracker 3 (modplug)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "b7fa35bcb12da01c5a4ecb2e8bd277ee9b25ba5f0ef1395cfd7066e666587edc"
     },
     {
       "id": "for-a-change-it",
@@ -1069,7 +1137,8 @@
       "audio": "Impulse Tracker (modplug)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "afd7e251d645ce80891ebffef172dc8140a6644f0a7031a4b557243eb146a48b"
     },
     {
       "id": "openmpt-test-xm",
@@ -1083,7 +1152,8 @@
       "audio": "FastTracker 2 (modplug)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {}
+      "test": {},
+      "sha256": "38995d872538fcf469efd9ef46840f397bdf6220f393cb7f849fe5258a208293"
     },
     {
       "id": "everyday-mp4-h264-aac",
@@ -1316,7 +1386,8 @@
       "id": "soundfont",
       "name": "TimGM6mb General MIDI SoundFont (GPL-2.0, via pretty-midi)",
       "url": "https://github.com/craffel/pretty-midi/raw/main/pretty_midi/TimGM6mb.sf2",
-      "file": "assets/TimGM6mb.sf2"
+      "file": "assets/TimGM6mb.sf2",
+      "sha256": "82475b91a76de15cb28a104707d3247ba932e228bada3f47bba63c6b31aaf7a1"
     }
   ]
 }

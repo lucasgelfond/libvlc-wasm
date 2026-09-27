@@ -1,7 +1,8 @@
 # Builds the SDK (VLC for wasm + our bridge and modules) in both variants,
 # tests it in headless browsers and packages it. Tags (v*) also publish a
-# GitHub release, and to npm when an NPM_TOKEN secret exists. Run it by hand
-# to build against another VLC commit.
+# GitHub release, and to npm from the `npm` environment (trusted publishing,
+# or an NPM_TOKEN secret there). Run it by hand to build against another VLC
+# commit.
 name: build
 
 on:
@@ -22,6 +23,10 @@ concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 
+# Read-only unless a job asks for more.
+permissions:
+  contents: read
+
 jobs:
   wasm:
     name: wasm (${{ matrix.variant }})
@@ -39,18 +44,27 @@ jobs:
     outputs:
       vlc_commit: ${{ steps.vlc.outputs.commit }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
+      # The input arrives through env, never spliced into the script, and has
+      # to be a full commit hash before it goes anywhere near a shell.
       - name: Resolve the VLC commit
         id: vlc
+        env:
+          INPUT_VLC_COMMIT: ${{ inputs.vlc_commit }}
         run: |
           pinned=$(sed -n 's/^VLC_COMMIT=\${VLC_COMMIT:-\([0-9a-f]*\)}.*/\1/p' build.sh)
-          echo "commit=${{ inputs.vlc_commit }}" | sed "s/=$/=$pinned/" >> "$GITHUB_OUTPUT"
+          commit=${INPUT_VLC_COMMIT:-$pinned}
+          if ! printf '%s' "$commit" | grep -Eqx '[0-9a-f]{40}'; then
+            echo "::error::vlc_commit must be a full 40-character lowercase commit hash"
+            exit 1
+          fi
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
 
       # Contribs (FFmpeg, dav1d, libass, ...) are the slow part: about an hour
       # on a hosted runner. Keyed on everything that can change them.
       - name: Restore the VLC build tree
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: .vlc-cache
           key: vlc-${{ matrix.variant }}-${{ steps.vlc.outputs.commit }}-${{ env.PROFILE }}-${{ hashFiles('build/Dockerfile', 'build/build-vlc.sh', 'build/patches/*') }}
@@ -68,7 +82,7 @@ jobs:
           ls -la "$out"
           echo "WASM_OUT=$out" >> "$GITHUB_ENV"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: wasm-${{ matrix.variant }}
           path: ${{ env.WASM_OUT }}/
@@ -79,21 +93,22 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with: { name: wasm-default, path: packages/core/wasm }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with: { name: wasm-sout, path: packages/sout/wasm }
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
         with: { version: 10 }
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - name: Fixtures
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick curl unzip
           sh tests/make-fixtures.sh
           sh tests/make-dvd.sh
+          sh tests/make-bluray.sh
       - run: npx playwright install --with-deps chromium webkit firefox
       - name: Node smoke test (probe + thumbnail)
         run: node tests/node-smoke.mjs
@@ -114,7 +129,7 @@ jobs:
         run: |
           node corpus/fetch.mjs
           node tests/verify-corpus.mjs --engines=chromium
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: test-results
@@ -126,40 +141,59 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write   # the GitHub release
-      id-token: write   # npm provenance
-    env:
-      # Job level: a step's `if` cannot see that step's own env.
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with: { name: wasm-default, path: packages/core/wasm }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with: { name: wasm-sout, path: packages/sout/wasm }
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
         with: { version: 10 }
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with: { node-version: 22 }
       - name: Pack
+        env:
+          VLC_COMMIT: ${{ needs.wasm.outputs.vlc_commit }}
         run: |
+          printf '%s' "$VLC_COMMIT" | grep -Eqx '[0-9a-f]{40}' || { echo "::error::bad VLC commit '$VLC_COMMIT'"; exit 1; }
           for p in core sout; do
-            echo "${{ needs.wasm.outputs.vlc_commit }}" > packages/$p/wasm/VLC_COMMIT
+            echo "$VLC_COMMIT" > packages/$p/wasm/VLC_COMMIT
             (cd packages/$p && pnpm pack)
           done
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: npm-package
           path: packages/*/*.tgz
       - name: GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           files: packages/*/*.tgz
           body: Built from VLC ${{ needs.wasm.outputs.vlc_commit }}.
+
+  # Its own job so the npm credentials live in one environment (which can
+  # require approval) and nothing else in the workflow can reach them.
+  publish:
+    needs: package
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write   # npm provenance and trusted publishing
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with: { name: npm-package, path: packages }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 22 }
+      # Trusted publishing (OIDC, no stored token) needs npm 11.5.1 or later.
+      - run: npm install -g npm@^11.5.1
       - name: Publish to npm
-        if: startsWith(github.ref, 'refs/tags/v') && env.NPM_TOKEN != ''
+        env:
+          # Only a fallback: without it npm authenticates with the OIDC token.
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
-          # core first: sout names it as a peer dependency.
-          # pnpm rewrites the workspace: specifier sout's package.json uses.
-          for p in core sout; do (cd packages/$p && pnpm publish --access public --provenance --no-git-checks); done
+          if [ -n "$NPM_TOKEN" ]; then npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"; fi
+          # The tarballs the release carries, as packed (pnpm already rewrote
+          # sout's workspace: specifier). core first: sout names it as a peer.
+          for p in core sout; do npm publish packages/$p/*.tgz --access public --provenance; done
