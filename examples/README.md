@@ -12,7 +12,7 @@ the servers used below set it for you.
 | [`vanilla/audio.html`](vanilla/audio.html) | VLC's output as a node in your Web Audio graph; trackers, chiptunes, MIDI with a SoundFont; EQ | same |
 | [`vanilla/wall.html`](vanilla/wall.html) | several players on one engine | same |
 | [`vanilla/url.html`](vanilla/url.html) | playing an http(s) URL through range requests | same |
-| [`svelte-player/`](svelte-player/) | a reusable Svelte `<VlcPlayer>` component and a playlist app with every option | `pnpm --filter svelte-player dev` |
+| [`svelte-player/`](svelte-player/) | a reusable Svelte `<VlcPlayer>` component in the smallest possible app (the full demo is [`apps/player`](../apps/player)) | `pnpm example:svelte` |
 | [`../apps/player/`](../apps/player/) | a polished minimal player on SvelteKit + shadcn-svelte | `pnpm --filter player dev` |
 | [`node/probe.mjs`](node/probe.mjs) | headless probing and thumbnails under Node (`libvlc-wasm/node`) | `node examples/node/probe.mjs file.rm --thumbs=out` |
 

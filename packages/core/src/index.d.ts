@@ -172,6 +172,8 @@ export declare class Player extends Emitter<PlayerEvents> {
   setChapter(index: number): Promise<unknown>;
   /** Plays title `index` of `chapters.titles` (a DVD title, or the menu). */
   setTitle(index: number): Promise<unknown>;
+  /** Display aspect ratio of the picture on screen (pixel shape, aspect override and crop included); null before a frame. */
+  readonly aspect: number | null;
   /** Index of the title playing (`chapters.title`). */
   readonly title: number;
   /** Index of the chapter playing (`chapters.chapter`). */

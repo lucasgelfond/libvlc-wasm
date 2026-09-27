@@ -1,8 +1,12 @@
 /**
  * One-click samples for the empty player: files no browser plays by itself,
- * served from the test corpus at /media/ (see vite.config.ts).
+ * shipped with the app in static/samples/ (see scripts/samples.mjs).
  */
 export type Sample = {
+	/** For links: /?sample=<id>. */
+	id: string;
+	/** What the gallery card shows: a thumbnail (video, disc) or a tile (audio). */
+	kind: 'video' | 'audio' | 'disc';
 	/** Files to open together (a DVD folder is several); the first is the one shown. */
 	files: string[];
 	title: string;
@@ -16,6 +20,8 @@ export type Sample = {
 
 export const SAMPLES: Sample[] = [
 	{
+		id: 'dvd',
+		kind: 'disc',
 		files: ['gen/t_dvd.iso'],
 		title: 'A DVD, with its menu',
 		plain: 'A disc image of a small DVD: a menu with two buttons, each playing a title. Click a button, or use the arrow keys and Enter.',
@@ -23,61 +29,81 @@ export const SAMPLES: Sample[] = [
 		hint: 'Click a button on the menu'
 	},
 	{
+		id: 'realmedia',
+		kind: 'video',
 		files: ['realmedia/realvideo-3-cook.rm'],
 		title: 'A RealPlayer video',
 		plain: 'The streaming video format of the late-90s web: what you got from a news site in 2001, before Flash took over.',
 		format: 'RealMedia (.rm) · RealVideo 3 + Cook audio'
 	},
 	{
+		id: 'bink',
+		kind: 'video',
 		files: ['game-and-oddball-video/bink-video.bik'],
 		title: 'A video game cutscene',
 		plain: 'The format behind thousands of PC and console game cutscenes: Bink, from RAD Game Tools.',
 		format: 'Bink (.bik) · Bink video'
 	},
 	{
+		id: 'tracker',
+		kind: 'audio',
 		files: ['chiptune-tracker-midi/sandman-s3m.s3m'],
 		title: 'A tracker module',
 		plain: 'Demoscene music from the 90s: the song file carries its own instrument samples and a score that VLC plays live.',
 		format: 'Scream Tracker 3 module (.s3m)'
 	},
 	{
+		id: 'snes',
+		kind: 'audio',
 		files: ['chiptune-tracker-midi/snes-spc.spc'],
 		title: 'Super Nintendo music',
 		plain: "A snapshot of a SNES sound chip's memory: VLC emulates the chip to play the game's soundtrack.",
 		format: 'SNES SPC700 dump (.spc), via game-music-emu'
 	},
 	{
+		id: 'subtitles',
+		kind: 'video',
 		files: ['subtitles-and-captions/mpeg-4-asp-vorbis-16-ass-ssa-tracks.mkv'],
 		title: 'Anime fansub, 16 subtitle tracks',
-		plain: 'A Matroska file with styled, positioned karaoke-style subtitles in sixteen languages. Pick them in Settings → Subtitles.',
+		plain: 'A Matroska file with styled, positioned karaoke-style subtitles in sixteen languages. Pick one in the Tracks tab.',
 		format: 'Matroska · MPEG-4 ASP + Vorbis · 16 ASS/SSA tracks (libass)',
-		hint: 'Settings → Subtitles'
+		hint: 'Tracks → Subtitles'
 	},
 	{
+		id: 'wmv',
+		kind: 'video',
 		files: ['windows-media/wmv7.wmv'],
 		title: 'An early-2000s Windows Media clip',
 		plain: 'What Windows Media Player made in 2000: a format browsers never adopted outside Internet Explorer plugins.',
 		format: 'ASF (.wmv) · WMV7 + WMA'
 	},
 	{
+		id: 'truehd',
+		kind: 'audio',
 		files: ['rare-and-surround-audio/dolby-truehd-atmos-8ch.thd'],
 		title: 'Blu-ray surround audio',
 		plain: 'The lossless 8-channel soundtrack format of Blu-ray discs, mixed down to your speakers.',
 		format: 'Dolby TrueHD with Atmos (.thd), 7.1'
 	},
 	{
+		id: 'quake',
+		kind: 'video',
 		files: ['game-and-oddball-video/id-roq-quake-3-logo.roq'],
 		title: 'The Quake III intro',
 		plain: "id Software's own video format, used for the logo and cutscenes of Quake III Arena (1999).",
 		format: 'id RoQ (.roq) · RoQ video + RoQ DPCM audio'
 	},
 	{
+		id: 'playstation',
+		kind: 'video',
 		files: ['game-and-oddball-video/playstation-str-mdec-xa.str'],
 		title: 'A PlayStation 1 movie',
 		plain: 'A full-motion video straight off an original PlayStation game disc. Desktop VLC cannot play this one.',
 		format: 'PSX STR · MDEC video + XA ADPCM audio (via patches/0009)'
 	},
 	{
+		id: 'flash',
+		kind: 'video',
 		files: ['flash/vp6f-nellymoser.flv'],
 		title: 'A Flash video',
 		plain: 'A 2000s web video recorded through a Flash webcam app, with the Nellymoser voice codec Flash used for microphones.',
@@ -85,13 +111,23 @@ export const SAMPLES: Sample[] = [
 	}
 ];
 
-/** Fetches a sample's files from /media/ as Files. */
+/** The gallery thumbnail, drawn by scripts/thumbs.mjs (none for audio, or where VLC's thumbnailer finds no frame). */
+export const thumbOf = (s: Sample) => (s.kind === 'audio' || s.id === 'quake' ? null : `/samples/thumbs/${s.files[0].split('/').pop()}.jpg`);
+
+/**
+ * Fetches a sample's files as Files: the app ships them in /samples/
+ * (scripts/samples.mjs); /media/ (the whole corpus) is a dev-server fallback.
+ */
 export async function loadSample(s: Sample): Promise<File[]> {
 	return Promise.all(
 		s.files.map(async (path) => {
-			const r = await fetch(`/media/${path}`);
-			if (!r.ok) throw new Error(`${path}: HTTP ${r.status} (run node corpus/fetch.mjs)`);
-			return new File([await r.blob()], path.split('/').pop()!);
+			const name = path.split('/').pop()!;
+			// A missing file comes back as the app's index.html, not a 404.
+			const found = (r: Response) => r.ok && !(r.headers.get('content-type') ?? '').includes('text/html');
+			let r = await fetch(`/samples/${name}`);
+			if (!found(r)) r = await fetch(`/media/${path}`);
+			if (!found(r)) throw new Error(`${name} is missing: run node scripts/samples.mjs`);
+			return new File([await r.blob()], name);
 		})
 	);
 }

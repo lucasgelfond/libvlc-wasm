@@ -4,7 +4,7 @@
   "nativeVlc": "3.0.24",
   "ffmpeg": "ffmpeg version 9.0.2",
   "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
-  "libvlcWasm": "corpus/results/results.json (2026-09-27T14:10:21.265Z)",
+  "libvlcWasm": "corpus/results/results.json (2026-09-27T14:26:03.908Z)",
   "browsers": [
    "chromium",
    "webkit",
@@ -1860,12 +1860,12 @@
     "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 warning/error lines logged"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "video": false,
-     "audio": false
+     "video": true,
+     "audio": true
     },
-    "note": "timeout"
+    "note": null
    },
    "browsers": {
     "chromium": false,

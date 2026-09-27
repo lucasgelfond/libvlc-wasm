@@ -116,7 +116,7 @@
   {#if controls}
     <div class="bar">
       <button onclick={() => player?.togglePause()} aria-label="play/pause" disabled={!player}>
-        {status.state === 'playing' ? '❚❚' : '▶'}
+        {#if status.state === 'playing'}<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>{:else}<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14Z"/></svg>{/if}
       </button>
       <span class="time">{fmt(seeking ? seekValue : status.time)}</span>
       <input
@@ -129,11 +129,11 @@
       />
       <span class="time">{fmt(status.duration)}</span>
       <button onclick={() => player && (player.muted = !player.muted)} aria-label="mute">
-        {status.muted || status.volume === 0 ? '🔇' : '🔊'}
+        {#if status.muted || status.volume === 0}<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.3 3 2.85-2.85-1.3-1.3L15 10.7l-2.85-2.85-1.3 1.3L13.7 12l-2.85 2.85 1.3 1.3L15 13.3l2.85 2.85 1.3-1.3L16.3 12Z"/></svg>{:else}<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.5 4.5 0 0 0 16.5 12Zm-2.5-9.23v2.06a7 7 0 0 1 0 14.34v2.06a9 9 0 0 0 0-18.46Z"/></svg>{/if}
       </button>
       <input class="vol" type="range" min="0" max="2" step="0.01" value={status.volume}
         oninput={(e) => player && (player.volume = +e.currentTarget.value)} />
-      <button onclick={fullscreen} aria-label="fullscreen">⛶</button>
+      <button onclick={fullscreen} aria-label="fullscreen"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4 4h6v2H6v4H4V4Zm10 0h6v6h-2V6h-4V4ZM4 14h2v4h4v2H4v-6Zm14 0h2v6h-6v-2h4v-4Z"/></svg></button>
     </div>
   {/if}
 </div>

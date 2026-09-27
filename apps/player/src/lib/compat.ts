@@ -93,3 +93,32 @@ export function count(rows: Row[], pick: (r: Row) => Cell) {
 	const tested = rows.filter((r) => pick(r).verdict !== 'untested');
 	return { yes: tested.filter((r) => pick(r).verdict === 'yes').length, tested: tested.length };
 }
+
+/** Where a file stands, most distinctive first. */
+export const SECTIONS = [
+	{ key: 'only', title: 'Only libvlc-wasm plays these in a web page', blurb: 'No browser plays them and vlc.js fails on them; ffmpeg.wasm can only convert them first.' },
+	{ key: 'better', title: "Browsers can't play these; libvlc-wasm can", blurb: 'Other in-browser tools manage some of them, usually by converting the whole file first.' },
+	{ key: 'common', title: 'Common formats browsers play too', blurb: 'For completeness: at least one of Chrome, Safari or Firefox plays these on its own.' },
+	{ key: 'none', title: 'Not fully playable yet', blurb: 'Truncated test files, formats no decoder handles, and a video whose picture nothing decodes (its sound plays).' }
+] as const;
+export type SectionKey = (typeof SECTIONS)[number]['key'];
+
+const inBrowser = (r: Row) => r.browsers.chromium || r.browsers.webkit || r.browsers.firefox;
+
+export function sectionOf(r: Row): SectionKey {
+	if (r.libvlcWasm.verdict !== 'yes') return 'none';
+	if (inBrowser(r)) return 'common';
+	// ffmpeg.wasm only converts, so it never plays in the page; vlc.js has
+	// to have been tried and failed (it was only measured on video files).
+	if (r.vlcjs.verdict === 'no') return 'only';
+	return 'better';
+}
+
+/** Rows grouped by section, the rarest first: nothing-else-decodes ahead of everything-decodes. */
+export function bySection(rows: Row[]) {
+	const others = (r: Row) => [r.nativeVlc, r.ffmpegWasm, r.vlcjs].filter((c) => c.verdict === 'yes').length;
+	return SECTIONS.map((s) => ({
+		...s,
+		rows: rows.filter((r) => sectionOf(r) === s.key).sort((a, b) => others(a) - others(b) || a.name.localeCompare(b.name))
+	})).filter((s) => s.rows.length);
+}

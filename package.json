@@ -5,13 +5,13 @@
   "scripts": {
     "build": "./build.sh",
     "link": "./build.sh link",
-    "dev": "pnpm --filter svelte-player dev",
+    "dev": "pnpm --filter player dev",
     "test:node": "node tests/node-smoke.mjs",
     "test:browser": "node tests/run-browser.mjs",
     "corpus": "node corpus/fetch.mjs",
     "verify": "node tests/verify-corpus.mjs",
     "bench": "node bench/run.mjs",
-    "player": "pnpm --filter player dev"
+    "example:svelte": "pnpm --filter svelte-player dev"
   },
   "devDependencies": {
     "@ffmpeg/core": "0.12.10",

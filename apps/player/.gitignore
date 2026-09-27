@@ -21,3 +21,7 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+# Downloaded or copied by scripts/samples.mjs; the generated DVD image is committed.
+static/samples/*
+!static/samples/t_dvd.iso
+!static/samples/thumbs/

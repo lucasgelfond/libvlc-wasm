@@ -298,6 +298,13 @@ export class Player extends Emitter {
   /** Plays title `index` of `player.chapters.titles` (DVD titles, or editions in some MKVs). */
   setTitle(index) { return this._call('set_title', { i: [0, index] }); }
 
+  /**
+   * Display aspect ratio of the picture on screen (pixel shape, forced
+   * aspect ratio and crop included), or null before the first frame. Size
+   * your container by it to avoid bars.
+   */
+  get aspect() { return this.renderer?.width ? this.renderer.aspect : null; }
+
   /** Index of the title playing, -1 if the media has none. */
   get title() { return this.chapters.title; }
   /** Index of the chapter playing within the title, -1 if none. */
