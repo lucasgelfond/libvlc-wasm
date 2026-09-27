@@ -204,7 +204,19 @@ export class Player extends Emitter {
     if (decryptionKey) media.push(':demux=avformat', `:avformat-options={decryption_key=${decryptionKey}}`);
     this.duration = 0;
     this.tracks = [];
-    this._setTime(0);
+    this._setTime(0, { snap: true });
+    // Track and chapter lists fetched for the previous file can still be on
+    // their way back: they are dropped by generation (_refreshTracks/_refreshChapters).
+    this._mediaGen = (this._mediaGen ?? 0) + 1;
+    // So are clock points: none counts until this file reports it is opening,
+    // or (replacing a file while playing, where VLC stays 'playing') until its
+    // tracks or length arrive -- the old file's last points can still follow
+    // the media-changed event.
+    this._staleTime = true;
+    this.chapters = { titles: [], chapters: [], title: -1, chapter: -1 };
+    // A new file must not show the last picture of the previous one (an audio
+    // file draws nothing that would cover it).
+    this.renderer?.clear();
     // If VLC's own demuxer finds no stream, or nothing it found could be
     // decoded, open() tries once more with FFmpeg's (see STOPPING) -- unless
     // the caller chose a demuxer, or this is a transcode.
@@ -237,7 +249,7 @@ export class Player extends Emitter {
    * @param {{ fast?: boolean }} [opts] fast = nearest keyframe
    */
   seek(seconds, { fast = false } = {}) {
-    this._setTime(Math.max(0, seconds));
+    this._setTime(Math.max(0, seconds), { snap: true });
     this.emit('timeupdate', this.currentTime);
     return this._call('set_time', { d: [Math.max(0, seconds) * 1e6], i: [0, fast ? 1 : 0] });
   }
@@ -251,10 +263,26 @@ export class Player extends Emitter {
   nextFrame() { return this._call('next_frame'); }
 
   /** Seconds, interpolated between VLC's position updates for smooth UIs. */
+  /**
+   * Seconds, for a playhead. VLC's clock reports a point every few hundred ms,
+   * and each arrives a little late, so jumping to it would jerk the playhead
+   * back and forth. Between points the time advances at the playback rate
+   * and eases toward the clock, never backwards while playing; a seek or a
+   * jump of more than half a second is followed at once.
+   */
   get currentTime() {
     if (this.state !== 'playing') return this._time;
-    const t = this._time + ((performance.now() - this._timeAt) / 1000) * this._rate;
-    return this.duration ? Math.min(t, this.duration) : t;
+    const now = performance.now();
+    const target = this._time + ((now - this._timeAt) / 1000) * this._rate;
+    if (this._shown == null || Math.abs(target - this._shown) > 0.5) {
+      this._shown = target;
+    } else {
+      const dt = Math.max(0, (now - this._shownAt) / 1000);
+      const free = this._shown + dt * this._rate;
+      this._shown = Math.max(this._shown, free + (target - free) * Math.min(1, dt * 4));
+    }
+    this._shownAt = now;
+    return this.duration ? Math.min(this._shown, this.duration) : this._shown;
   }
 
   set currentTime(s) { this.seek(s).catch(() => {}); }
@@ -573,9 +601,11 @@ export class Player extends Emitter {
     return this.vlc._call(name, { ...args, i }, ret);
   }
 
-  _setTime(t) {
+  /** A clock point from VLC; { snap } for a seek, so the playhead jumps rather than eases. */
+  _setTime(t, { snap = false } = {}) {
     this._time = t;
     this._timeAt = performance.now();
+    if (snap) this._shown = null;
   }
 
   /** Pictures shown plus audio frames written, from the shared counters: 0 change = nothing decoded. */
@@ -603,7 +633,9 @@ export class Player extends Emitter {
   }
 
   async _refreshTracks() {
+    const gen = this._mediaGen;
     const { value } = await this._call('tracks', {}, 'json');
+    if (gen !== this._mediaGen) return;
     this.tracks = value ?? [];
     const v = this.tracks.find((t) => t.type === 'video' && t.selected);
     // The renderer takes the SAR from the video output; this only covers the
@@ -613,7 +645,9 @@ export class Player extends Emitter {
   }
 
   async _refreshChapters() {
+    const gen = this._mediaGen;
     const { value } = await this._call('chapters', {}, 'json');
+    if (gen !== this._mediaGen) return;
     this.chapters = value ?? { titles: [], chapters: [], title: -1, chapter: -1 };
     // VLC's Matroska demuxer prefixes chapter names with a space.
     for (const c of [...this.chapters.titles, ...this.chapters.chapters]) c.name = c.name?.trim() ?? null;
@@ -631,15 +665,18 @@ export class Player extends Emitter {
         if (this.state === 'paused') this._setTime(this._currentTimeAt(prev));
         // Like <video>, keep the last picture when the media ended by itself.
         if (this.state === 'stopped' && !this._ended) this.renderer?.clear();
+        if (this.state === 'opening' || this.state === 'playing') this._staleTime = false;
         if (this.state === 'opening') this._ended = false;
         this.emit('statechange', this.state);
         this.emit(this.state);
         break;
       }
       case EVENT.POSITION:
+        if (this._staleTime) break;
         this._setTime(a / 1e6);
         break;
       case EVENT.LENGTH:
+        this._staleTime = false;
         this.duration = a / 1e6;
         this.emit('durationchange', this.duration);
         break;
@@ -648,6 +685,7 @@ export class Player extends Emitter {
       case EVENT.CAPS: this.seekable = !!(a & 1); this.emit('capabilities', { seekable: !!(a & 1), pausable: !!(a & 2) }); break;
       case EVENT.TRACKS:
         this._sawStreams = true;
+        this._staleTime = false;
         // fall through
       case EVENT.TRACK_SELECTED:
         // A file with many tracks announces them one by one; refetch once.

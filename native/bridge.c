@@ -156,11 +156,15 @@ static void on_caps(void *o, libvlc_capability_t old, libvlc_capability_t caps)
  * forth. The page interpolates between points. */
 static void on_time_update(void *o, const libvlc_media_player_time_point_t *v)
 {
-    /* Points from before the demuxer's normal time was known are negative. */
-    if (v->ts_us < 0)
+    libvlc_time_t ts;
+    double pos;
+    /* Interpolated to now: a point can be dated in the past or future (the
+     * picture it belongs to), and just after a rate change it runs at the
+     * new rate from its own date. Points from before the demuxer's normal
+     * time was known are negative. */
+    if (libvlc_media_player_time_point_interpolate(v, libvlc_clock(), &ts, &pos) != 0 || ts < 0)
         return;
-    emit(((wv_player_t *)o)->id, EV_POSITION, (double)v->ts_us, v->position,
-         NULL);
+    emit(((wv_player_t *)o)->id, EV_POSITION, (double)ts, pos, NULL);
 }
 static void on_time_paused(void *o, libvlc_time_t system_date_us)
 { (void) o; (void) system_date_us; }

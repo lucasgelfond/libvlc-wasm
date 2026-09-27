@@ -114,17 +114,23 @@ const methods = {
     // Where the engine script lives, for its pthread Workers (see engine.js).
     const engineUrl = moduleUrl ?? new URL('../wasm/libvlc.js', import.meta.url).href;
     const crossOrigin = new URL(engineUrl, self.location.href).origin !== self.location.origin;
-    // Subtitles need a font file: there is no fontconfig and no system font
-    // directory in wasm. Fetched alongside the wasm, so it costs no latency.
-    const sfData = soundfont ? fetch(soundfont).then(async (r) => {
-      if (!r.ok) throw new Error(`soundfont ${soundfont}: HTTP ${r.status}`);
-      return new Uint8Array(await r.arrayBuffer());
-    }) : null;
-    const fontData = Promise.all(fonts.map(async (u) => {
+    // Subtitles need a font file (there is no fontconfig and no system font
+    // directory in wasm) and MIDI a SoundFont. http(s) ones become lazy files,
+    // downloaded the first time VLC reads them: a page that never shows a
+    // subtitle never fetches the 600 KB font. blob:/data: ones are read now.
+    const lazy = (u) => /^https?:/.test(new URL(u, self.location.href).protocol);
+    const nameOf = (u, fallback) => {
+      let n = new URL(u, self.location.href).pathname.split('/').pop();
+      try { n = decodeURIComponent(n); } catch { /* keep it raw */ }
+      return safeName(n, fallback);
+    };
+    const bytesOf = async (u, what) => {
       const r = await fetch(u);
-      if (!r.ok) throw new Error(`font ${u}: HTTP ${r.status}`);
-      return [decodeURIComponent(new URL(u).pathname.split('/').pop()), new Uint8Array(await r.arrayBuffer())];
-    }));
+      if (!r.ok) throw new Error(`${what} ${u}: HTTP ${r.status}`);
+      return new Uint8Array(await r.arrayBuffer());
+    };
+    const sfData = soundfont && !lazy(soundfont) ? bytesOf(soundfont, 'soundfont') : null;
+    const fontData = Promise.all(fonts.filter((u) => !lazy(u)).map(async (u) => [nameOf(u, 'font.ttf'), await bytesOf(u, 'font')]));
     engine = await createEngine(factory, {
       threads,
       locateFile: wasmUrl ? (p) => (p.endsWith('.wasm') ? wasmUrl : p) : undefined,
@@ -142,16 +148,23 @@ const methods = {
     FS.mkdir('/recordings');
     FS.mkdir('/out');
     const installed = [];
+    for (const u of fonts) {
+      if (!lazy(u)) continue;
+      const name = nameOf(u, 'font.ttf');
+      FS.createLazyFile('/fonts', name, new URL(u, self.location.href).href, true, false);
+      installed.push(`/fonts/${name}`);
+    }
     for (const [name, bytes] of await fontData) {
       FS.writeFile(`/fonts/${name}`, bytes);
       installed.push(`/fonts/${name}`);
     }
     const { value: version } = await engine.call('version', {}, 'json');
     let soundfontPath = null;
-    if (sfData) {
+    if (soundfont) {
       FS.mkdir('/soundfonts');
       soundfontPath = '/soundfonts/default.sf2';
-      FS.writeFile(soundfontPath, await sfData);
+      if (sfData) FS.writeFile(soundfontPath, await sfData);
+      else FS.createLazyFile('/soundfonts', 'default.sf2', new URL(soundfont, self.location.href).href, true, false);
     }
     return { version, layout: engine.layout, fonts: installed, soundfont: soundfontPath };
   },

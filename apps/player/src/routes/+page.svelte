@@ -308,8 +308,8 @@
 								type="single"
 								min={0}
 								max={session.duration || 1}
-								step={0.1}
-								value={scrub ?? session.time}
+								step={0.001}
+								value={session.duration ? (scrub ?? session.time) : 0}
 								onValueChange={(v) => {
 									if (scrubbing) scrub = v;
 								}}
@@ -356,7 +356,7 @@
 								</Popover.Content>
 							</Popover.Root>
 							<span class="ml-1 text-xs text-white/85 tabular-nums">
-								{formatTime(scrub ?? session.time)} <span class="text-white/50">/ {formatTime(session.duration)}</span>
+								{formatTime(scrub ?? session.time)}{#if session.duration}<span class="text-white/50"> / {formatTime(session.duration)}</span>{/if}
 							</span>
 							{#if session.rate !== 1}<span class="ml-2 rounded bg-white/15 px-1.5 py-0.5 text-[10px] font-medium">{session.rate}×</span>{/if}
 							<div class="ml-auto flex items-center gap-1">

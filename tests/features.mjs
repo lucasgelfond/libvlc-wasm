@@ -100,6 +100,9 @@ const results = await page.evaluate(async () => {
     await p.seek(0.5); await sleep(300);
     p.rate = 2;
     await waitFor(() => p.rate === 2, 2000, 'ratechange');
+    // Audio already queued for the speakers still plays at 1x: the clock,
+    // which follows what is heard, turns 2x once it has drained.
+    await sleep(600);
     const t0 = p._time, w0 = performance.now();
     await sleep(1200);
     const speed = (p._time - t0) / ((performance.now() - w0) / 1000);
