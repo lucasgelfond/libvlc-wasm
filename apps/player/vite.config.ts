@@ -65,6 +65,8 @@ export default defineConfig({
 				'../../corpus/compat/compat.json',
 				'../../corpus/compat/fate-summary.json',
 				'../../corpus/compat/fate-matrix.json',
+				'../../corpus/compat/suites',
+				'../../corpus/suites',
 				'../../corpus/plain-english.json',
 				'../../corpus/formats.json'
 			]

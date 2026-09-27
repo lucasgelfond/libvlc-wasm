@@ -100,9 +100,14 @@ export const ROWS: Row[] = compat.samples.map(row);
 export const TOOLS = compat.tools as Record<string, unknown>;
 export const MEASURED = compat.date as string;
 
-export function count(rows: Row[], pick: (r: Row) => Cell) {
-	const tested = rows.filter((r) => pick(r).verdict !== 'untested');
-	return { yes: tested.filter((r) => pick(r).verdict === 'yes').length, tested: tested.length };
+/** How many rows a tool plays, of those it was tried on. A browser's cell is a plain boolean. */
+export function count(rows: Row[], pick: (r: Row) => Cell | boolean | null) {
+	const verdict = (r: Row) => {
+		const v = pick(r);
+		return v == null ? 'untested' : typeof v === 'boolean' ? (v ? 'yes' : 'no') : v.verdict;
+	};
+	const tested = rows.filter((r) => verdict(r) !== 'untested');
+	return { yes: tested.filter((r) => verdict(r) === 'yes').length, tested: tested.length };
 }
 
 /** Where a file stands, most distinctive first. */

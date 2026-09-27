@@ -2,7 +2,8 @@
 	import { Input } from '$lib/components/ui/input';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
-	import FateTable from '$lib/components/FateTable.svelte';
+	import SuiteView from '$lib/components/SuiteView.svelte';
+	import { SUITES } from '$lib/suites';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 	import RiDownload2Line from 'remixicon-svelte/icons/download-2-line';
 	import RiSearchLine from 'remixicon-svelte/icons/search-line';
@@ -21,17 +22,8 @@
 		{ label: 'Safari', pick: (r) => r.browsers.webkit },
 		{ label: 'Firefox', pick: (r) => r.browsers.firefox }
 	];
-	const SUMMARY: [string, string, { yes: number; tested: number }][] = [
-		['libvlc-wasm', 'plays in the page', count(ROWS, (r) => r.libvlcWasm)],
-		['VLC desktop', 'the native app', count(ROWS, (r) => r.nativeVlc)],
-		['ffmpeg.wasm', 'decodes, then must convert', count(ROWS, (r) => r.ffmpegWasm)],
-		['vlc.js', 'video files only', count(ROWS, (r) => r.vlcjs)],
-		[
-			'A browser alone',
-			'Chrome, Safari or Firefox',
-			{ yes: ROWS.filter((r) => r.browsers.chromium || r.browsers.webkit || r.browsers.firefox).length, tested: ROWS.length }
-		]
-	];
+	const SUMMARY: [string, { yes: number; tested: number }][] = COLUMNS.map((c) => [c.label, count(ROWS, c.pick)]);
+	let suite = $state(SUITES[0]?.key ?? '');
 
 	const rows = $derived(
 		ROWS.filter((r) => (kind === 'all' ? true : kind === 'video' ? r.hasVideo : !r.hasVideo)).filter((r) => {
@@ -71,9 +63,9 @@
 			<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
 		</header>
 
-		<section class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-3 lg:grid-cols-5">
-			{#each SUMMARY as [label, sub, c], i (label)}
-				<div class="bg-card flex flex-col gap-3 p-5 {i === SUMMARY.length - 1 ? 'col-span-2 sm:col-span-1' : ''}">
+		<section class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-4 lg:grid-cols-7">
+			{#each SUMMARY as [label, c], i (label)}
+				<div class="bg-card flex flex-col gap-3 p-5">
 					<div class="flex items-baseline gap-1.5">
 						<span class="font-display text-4xl leading-none font-semibold tracking-tight tabular-nums {i === 0 ? 'text-primary' : ''}">{c.yes}</span>
 						<span class="text-muted-foreground text-sm tabular-nums">of {c.tested}</span>
@@ -81,10 +73,7 @@
 					<div class="bg-muted h-1 overflow-hidden rounded-full">
 						<div class="h-full rounded-full {i === 0 ? 'bg-primary' : 'bg-foreground/35'}" style="width: {(c.yes / c.tested) * 100}%"></div>
 					</div>
-					<div>
-						<p class="text-sm font-medium">{label}</p>
-						<p class="text-muted-foreground text-xs">{sub}</p>
-					</div>
+					<p class="text-sm font-medium">{label}</p>
 				</div>
 			{/each}
 		</section>
@@ -151,5 +140,17 @@
 			</table>
 		</div>
 
-		<FateTable {query} />
+		{#if SUITES.length}
+			<section class="flex flex-col gap-4">
+				<h2 class="font-display text-2xl font-semibold tracking-tight">Test suites</h2>
+				<Tabs.Root bind:value={suite}>
+					<Tabs.List class="h-auto flex-wrap">
+						{#each SUITES as s (s.key)}<Tabs.Trigger value={s.key}>{s.title}</Tabs.Trigger>{/each}
+					</Tabs.List>
+					{#each SUITES as s (s.key)}
+						<Tabs.Content value={s.key} class="pt-4"><SuiteView suite={s} {query} /></Tabs.Content>
+					{/each}
+				</Tabs.Root>
+			</section>
+		{/if}
 	</main>
