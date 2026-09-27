@@ -138,13 +138,20 @@ export class VLC extends Emitter {
    * @param {File|Blob|ArrayBuffer|Uint8Array|string} source
    * @returns {Promise<{ duration?: number, meta: Record<string,string>, tracks: object[], status: number }>}
    */
-  async probe(source) {
+  async probe(source, { timeout = 10000 } = {}) {
     const mrl = await this._mount(source);
+    let timer;
     try {
-      const { i, value } = await this._call('parse', { i: [this._instance], s: [mrl] }, 'json');
+      // VLC's preparser has been seen to stall (about 1 in 100 in WebKit);
+      // give up rather than hang. A late answer is dropped.
+      const { i, value } = await Promise.race([
+        this._call('parse', { i: [this._instance], s: [mrl] }, 'json'),
+        new Promise((_, reject) => { timer = setTimeout(() => reject(new Error(`probe timed out after ${timeout} ms`)), timeout); }),
+      ]);
       if (i !== 0 && !value?.tracks?.length) throw new Error('VLC could not parse this source');
       return value;
     } finally {
+      clearTimeout(timer);
       this._unmount(mrl);
     }
   }
@@ -256,9 +263,10 @@ export class VLC extends Emitter {
     // of handing back a file that is silently missing its video.
     if (!opts.remux && input) {
       const kinds = (info) => new Set(info?.tracks.map((t) => t.type));
-      const had = kinds(input), got = kinds(await this.probe(file).catch(() => null));
+      const out = await this.probe(file).catch(() => null);
+      const had = kinds(input), got = kinds(out);
       for (const [kind, codec] of [['video', v], ['audio', a]]) {
-        if (codec && had.has(kind) && !got.has(kind)) {
+        if (out && codec && had.has(kind) && !got.has(kind)) {
           throw new Error(`transcode: VLC could not encode ${kind} as "${codec}" into ${to} (see the 'log' event)`);
         }
       }

@@ -217,8 +217,8 @@ export declare class VLC extends Emitter<VLCEvents> {
     /** Hold a screen wake lock while playing (default true). */
     keepAwake?: boolean;
   }): Promise<Player>;
-  /** Container, tracks and metadata, without playing. */
-  probe(source: Source | SourceGroup): Promise<MediaInfo>;
+  /** Container, tracks and metadata, without playing. Rejects after `timeout` ms (default 10000). */
+  probe(source: Source | SourceGroup, opts?: { timeout?: number }): Promise<MediaInfo>;
   /** One decoded frame as a JPEG. */
   thumbnail(source: Source | SourceGroup, opts?: {
     time?: number; position?: number; width?: number; height?: number; crop?: boolean; fast?: boolean;

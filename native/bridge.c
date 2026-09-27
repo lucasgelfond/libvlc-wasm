@@ -644,6 +644,8 @@ static void api_record(wv_call_t *c) { libvlc_media_player_record(MP, c->i[1], c
 static libvlc_parser_t *get_parser(wv_instance_t *wi)
 {
     if (!wi->parser) {
+        /* No timeout here: probe() times out in JS (default 10 s, longer
+         * than VLC's 5 s preparse-timeout, which is short for slow URLs). */
         struct libvlc_parser_cfg cfg = {
             .version = 0, .max_parser_threads = 2, .max_thumbnailer_threads = 1, .timeout = 0,
         };
