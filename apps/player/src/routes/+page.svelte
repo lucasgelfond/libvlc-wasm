@@ -8,8 +8,9 @@
 	import SidePanel from '$lib/components/SidePanel.svelte';
 	import Playlist from '$lib/components/Playlist.svelte';
 	import FormatsPopover from '$lib/components/FormatsPopover.svelte';
+	import SampleMenu from '$lib/components/SampleMenu.svelte';
 	import { Session, formatTime } from '$lib/session.svelte';
-	import { SAMPLES, loadSample, thumbOf, type Sample } from '$lib/samples';
+	import { SAMPLES, loadSample, type Sample } from '$lib/samples';
 	import { ROWS } from '$lib/compat';
 	import RiPlayFill from 'remixicon-svelte/icons/play-fill';
 	import RiPauseFill from 'remixicon-svelte/icons/pause-fill';
@@ -225,6 +226,7 @@
 			</div>
 			<FormatsPopover />
 			{#if session.playlist.length}
+				<SampleMenu onpick={openSample} disabled={!session.ready || !!loadingSample} loading={loadingSample} />
 				<Button size="sm" onclick={() => fileInput.click()}><RiAddLine /> Add files</Button>
 			{/if}
 		</header>
@@ -362,20 +364,35 @@
 				</div>
 
 				{#if !opened}
-					<button
-						type="button"
-						onclick={() => fileInput.click()}
-						disabled={!session.ready}
-						class="group border-border hover:border-primary/60 hover:bg-primary/5 flex min-h-72 flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-8 text-center transition-colors disabled:cursor-wait {dragging
+					<div
+						role="button"
+						tabindex="0"
+						aria-label="Choose files to play"
+						onclick={() => session.ready && fileInput.click()}
+						onkeydown={(e) => {
+							if ((e.key === 'Enter' || e.key === ' ') && e.target === e.currentTarget) {
+								e.preventDefault();
+								fileInput.click();
+							}
+						}}
+						class="group border-border hover:border-primary/60 hover:bg-primary/5 focus-visible:ring-ring flex min-h-80 cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-8 text-center transition-colors outline-none focus-visible:ring-2 {dragging
 							? 'border-primary bg-primary/10'
-							: ''}"
+							: ''} {session.ready ? '' : 'cursor-wait opacity-70'}"
 					>
 						<span class="bg-muted group-hover:bg-primary/15 grid size-14 place-items-center rounded-full transition-colors">
 							<RiUploadCloud2Line class="text-muted-foreground group-hover:text-primary size-7 transition-colors" />
 						</span>
-						<span class="font-medium">{session.ready ? (dragging ? 'Drop to play' : 'Drop videos, music or folders here') : 'Starting VLC…'}</span>
-						<span class="text-muted-foreground text-sm">or click to choose files · they're read from your disk and never uploaded</span>
-					</button>
+						<span class="flex flex-col gap-1.5">
+							<span class="font-display text-xl font-semibold tracking-tight">
+								{session.ready ? (dragging ? 'Drop to play' : 'Drop videos, music or folders here') : 'Starting VLC…'}
+							</span>
+							<span class="text-muted-foreground text-sm">Nothing is uploaded, all playback occurs totally in your browser.</span>
+						</span>
+						<span class="text-muted-foreground mt-2 flex flex-wrap items-center justify-center gap-2 text-sm">
+							or use a
+							<SampleMenu onpick={openSample} disabled={!session.ready || !!loadingSample} loading={loadingSample} />
+						</span>
+					</div>
 					<p class="text-muted-foreground -mt-2 text-center text-xs">
 						A whole folder, such as a DVD's VIDEO_TS or a season of episodes?
 						<button type="button" class="text-primary font-medium hover:underline" onclick={() => folderInput.click()} disabled={!session.ready}>Choose a folder</button>
@@ -389,39 +406,6 @@
 					</section>
 				{/if}
 
-				<section class="flex flex-col gap-3">
-					<h2 class="text-muted-foreground font-mono text-[11px] tracking-widest uppercase">{opened ? 'More to try' : 'Or try one no browser can play'}</h2>
-					<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-						{#each SAMPLES as s (s.id)}
-							{@const thumb = thumbOf(s)}
-							<button
-								type="button"
-								disabled={!session.ready || !!loadingSample}
-								onclick={() => openSample(s)}
-								class="group border-border bg-card hover:border-primary/50 flex flex-col overflow-hidden rounded-2xl border text-left transition-all hover:-translate-y-0.5 hover:shadow-md disabled:cursor-wait disabled:opacity-60"
-							>
-								<span class="relative block aspect-[16/9] overflow-hidden bg-neutral-900">
-									{#if thumb}
-										<img src={thumb} alt="" loading="lazy" class="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-									{:else}
-										<span class="bg-primary/90 absolute inset-0 grid place-items-center">
-											<RiMusic2Line class="size-10 text-white/90" />
-										</span>
-									{/if}
-									<span class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"></span>
-									<span class="font-display absolute right-4 bottom-3 left-4 text-xl leading-tight font-semibold tracking-tight text-white">{s.title}</span>
-									{#if loadingSample === s.title}
-										<span class="absolute top-3 right-3 size-5 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>
-									{/if}
-								</span>
-								<span class="flex flex-1 flex-col gap-2 p-4">
-									<span class="text-muted-foreground text-xs leading-relaxed">{s.plain}</span>
-									<span class="text-muted-foreground/80 mt-auto font-mono text-[10px] leading-snug">{s.format}</span>
-								</span>
-							</button>
-						{/each}
-					</div>
-				</section>
 			</div>
 
 			<aside class="bg-card border-border flex max-h-[calc(100svh-6rem)] min-h-96 flex-col rounded-xl border p-3 lg:sticky lg:top-4">

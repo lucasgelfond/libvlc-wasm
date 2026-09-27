@@ -141,8 +141,14 @@
 					<tbody>
 						<tr class="border-border border-t">
 							<th colspan={COLUMNS.length + 2} class="bg-muted/50 px-4 py-2.5 text-left">
-								<span class="font-display text-sm font-semibold">{s.title}</span>
-								<span class="text-muted-foreground ml-2 text-xs font-normal">{s.rows.length} · {s.blurb}</span>
+								<Tooltip.Root>
+									<Tooltip.Trigger>
+										{#snippet child({ props })}
+											<span {...props} class="font-display cursor-help text-sm font-semibold underline decoration-current/30 decoration-dotted underline-offset-4">{s.title}</span>
+										{/snippet}
+									</Tooltip.Trigger>
+									<Tooltip.Content class="max-w-72">{s.blurb}</Tooltip.Content>
+								</Tooltip.Root>
 							</th>
 						</tr>
 						{#each s.rows as r (r.id)}
@@ -162,8 +168,9 @@
 									<td class="px-1 py-2.5 text-center">{@render mark(c.pick(r), c.label)}</td>
 								{/each}
 								<td class="px-4 py-2.5">
-									<a href={r.url} target="_blank" rel="noreferrer" class="text-primary inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap hover:underline">
-										Sample <span class="text-muted-foreground font-normal">({size(r.bytes)}&nbsp;<RiDownload2Line class="inline size-3.5 align-[-2px]" />)</span>
+									<a href={r.url} target="_blank" rel="noreferrer" class="group/sample text-primary inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap">
+										<span class="underline-offset-2 group-hover/sample:underline">Sample</span>
+										<span class="text-muted-foreground font-normal">({size(r.bytes)}&nbsp;<RiDownload2Line class="inline size-3.5 align-[-2px]" />)</span>
 									</a>
 								</td>
 							</tr>
@@ -173,20 +180,5 @@
 			</table>
 		</div>
 
-		<section class="border-border bg-card grid gap-2 rounded-2xl border p-5 text-sm sm:grid-cols-[auto_1fr] sm:gap-8">
-			<h2 class="font-display text-lg font-semibold">And everything else</h2>
-			<p class="text-muted-foreground leading-relaxed">
-				These {ROWS.length} are a hard sample, not the whole list. The build carries FFmpeg's 500 decoders and 355 demuxers, plus VLC's own 44 demuxers
-				and 40 decoders: DVD menus, libass subtitles, game-music emulators, trackers, MIDI with a SoundFont. MP4, WebM, MKV, MP3, FLAC and the other
-				everyday formats play as a matter of course.
-			</p>
-		</section>
-
-		<footer class="text-muted-foreground flex flex-col gap-1 pb-6 text-xs">
-			<p>
-				"Plays" means picture and sound were checked where the file has them. ffmpeg.wasm decodes but cannot play: it converts first, then hands the
-				result to the browser. Several files are deliberately short or truncated test fixtures.
-			</p>
-		</footer>
 	</main>
 </Tooltip.Provider>
