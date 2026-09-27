@@ -25,6 +25,9 @@ const LEVEL_NAMES = ['debug', 'debug', 'info', 'warn', 'error'];
  * @property {string[]} [args] extra libvlc_new() arguments, e.g. ['--deinterlace=1']
  * @property {string|URL} [wasmUrl] where libvlc.wasm is served, if not next to libvlc.js
  * @property {string|URL} [workerUrl] override the worker script (bundlers normally resolve it)
+ * @property {'default'|'sout'} [variant] 'sout' loads the build with VLC's stream output, for
+ *   transcode(), remuxing and recording (a separate, larger wasm).
+ * @property {string|URL} [moduleUrl] load the engine from this libvlc*.js instead (self-hosting).
  * @property {string|URL} [soundfont] a General MIDI .sf2 file; without one, .mid files
  *   do not play (VLC synthesises MIDI with FluidSynth). Fetched once at startup.
  * @property {(string|URL)[]|false} [fonts] font files for subtitles; the first is the
@@ -78,8 +81,12 @@ export class VLC extends Emitter {
     const logLevel = LOG_LEVELS[this.opts.logLevel ?? 'warn'] ?? 3;
     const fonts = this.opts.fonts === false ? []
       : (this.opts.fonts ?? [new URL('../fonts/NotoSans-Regular.ttf', import.meta.url)]).map(String);
+    // The sout build (transcoding) ships next to the default one; either can
+    // also be self-hosted with moduleUrl.
+    const moduleUrl = this.opts.moduleUrl ? String(this.opts.moduleUrl)
+      : this.opts.variant === 'sout' ? new URL('../wasm/libvlc-sout.js', import.meta.url).href : undefined;
     const { version, layout, fonts: fontFiles, soundfont } = await this._rpc('init', {
-      threads, fonts,
+      threads, fonts, moduleUrl,
       soundfont: this.opts.soundfont ? String(this.opts.soundfont) : undefined,
       wasmUrl: this.opts.wasmUrl ? String(this.opts.wasmUrl) : undefined,
     });
@@ -165,6 +172,99 @@ export class VLC extends Emitter {
     } finally {
       this._unmount(mrl);
     }
+  }
+
+  /**
+   * Converts media with VLC's stream output. Needs `createVLC({ variant: 'sout' })`.
+   *
+   * @param {File|Blob|ArrayBuffer|Uint8Array|string} source
+   * @param {{ to?: 'webm'|'mkv'|'mp4'|'ogg'|'ts'|'wav'|'mp3',
+   *           remux?: boolean, video?: string|false, audio?: string|false,
+   *           videoBitrate?: number, audioBitrate?: number, width?: number, height?: number,
+   *           name?: string, onProgress?: (fraction: number) => void }} [opts]
+   *   `remux` copies the streams into the new container without re-encoding (fast,
+   *   lossless). Otherwise defaults are browser-playable: WebM = VP8 + Opus,
+   *   MP4 = MPEG-4 Part 2 + AAC. `video`/`audio` take VLC codec names ('VP80', 'VP90',
+   *   'mp4v', 'mjpg', 'opus', 'mp4a', 'mpga', 'flac', 's16l') or false to drop the stream.
+   * @returns {Promise<File>}
+   */
+  async transcode(source, opts = {}) {
+    if (!this.features.sout) {
+      throw new Error("transcode() needs the stream-output build: createVLC({ variant: 'sout' })");
+    }
+    const to = opts.to ?? 'webm';
+    const MUX = { webm: 'avformat{mux=webm}', mkv: 'mkv', mp4: 'mp4', ogg: 'ogg', ts: 'ts', wav: 'wav', mp3: 'dummy' };
+    const DEFAULTS = {
+      webm: ['VP80', 'opus'], mkv: ['VP80', 'opus'], mp4: ['mp4v', 'mp4a'], ogg: [false, 'opus'],
+      ts: ['mp2v', 'mpga'], wav: [false, 's16l'], mp3: [false, 'mp3'],
+    };
+    // Encoders named outright, so VLC does not first try FFmpeg's (absent) ones.
+    const ENCODERS = { VP80: 'vpx', VP90: 'vpx' };
+    if (!MUX[to]) throw new Error(`unknown container "${to}"`);
+    const base = (opts.name ?? (source?.name ?? 'output').replace(/\.[^.]+$/, '')).replace(/[^\w.-]+/g, '_');
+    const dst = `/out/${base}-${Date.now().toString(36)}.${to}`;
+    const [dv, da] = DEFAULTS[to];
+    const v = opts.video === undefined ? dv : opts.video;
+    const a = opts.audio === undefined ? da : opts.audio;
+    let chain;
+    if (opts.remux) {
+      chain = `#std{access=file,mux=${MUX[to]},dst=${dst}}`;
+    } else {
+      const parts = [];
+      if (v) parts.push(`vcodec=${v}`, ...(ENCODERS[v] ? [`venc=${ENCODERS[v]}`] : []), `vb=${opts.videoBitrate ?? 2000}`,
+        ...(opts.width ? [`width=${opts.width}`] : []), ...(opts.height ? [`height=${opts.height}`] : []));
+      if (a) parts.push(`acodec=${a}`, `ab=${opts.audioBitrate ?? 128}`, 'channels=2', ...(a === 'opus' ? ['samplerate=48000'] : []));
+      chain = `#transcode{${parts.join(',')}}:std{access=file,mux=${MUX[to]},dst=${dst}}`;
+    }
+    // Streams asked to be dropped (or with no codec for the container) stay out.
+    const drop = [...(!opts.remux && !v ? [':no-sout-video'] : []), ...(!opts.remux && !a ? [':no-sout-audio'] : [])];
+    const input = opts.remux ? null : await this.probe(source).catch(() => null);
+    const player = await this.createPlayer({ audio: false, keepAwake: false });
+    try {
+      const done = new Promise((resolve, reject) => {
+        player.on('ended', resolve);
+        player.on('error', reject);
+      });
+      const progress = opts.onProgress
+        ? setInterval(async () => opts.onProgress(Math.max(0, Math.min(1, (await player.stats()).position))), 250)
+        : 0;
+      try {
+        // Frame-threaded FFmpeg decoding feeding the transcoder races at the
+        // end of the stream (a wasm OOB in about 1 run in 3, RealVideo 4 in
+        // WebKit); playback does not. Encoding dominates here anyway. It has
+        // to be set on the player: the transcoder's decoders hang off the sout
+        // chain, which a media option (on the input) never reaches.
+        await player._call('set_int_option', { i: [0, 1], s: ['avcodec-threads'] });
+        // A stream's encoder opens on its first decoded frame, and most
+        // muxers cannot add a stream once the header is out: give late
+        // streams (RealMedia's audio, say) longer than the default 1.5 s.
+        await player._call('set_int_option', { i: [0, 5000], s: ['sout-mux-caching'] });
+        await player.open(source, { options: [`:sout=${chain}`, ':no-sout-all', ...drop], name: opts.name });
+        await done;
+      } finally {
+        clearInterval(progress);
+      }
+    } finally {
+      // Releasing the player tears the sout chain down, which is when muxers
+      // that index at the end (MP4's moov, MKV's cues) finish the file.
+      await player.destroy();
+    }
+    const { name, data } = await this._rpc('takeFile', { path: dst });
+    const TYPES = { webm: 'video/webm', mkv: 'video/x-matroska', mp4: 'video/mp4', ogg: 'audio/ogg', ts: 'video/mp2t', wav: 'audio/wav', mp3: 'audio/mpeg' };
+    const file = new File([data], name, { type: TYPES[to] });
+    // VLC drops a stream it has no encoder for and carries on; say so instead
+    // of handing back a file that is silently missing its video.
+    if (!opts.remux && input) {
+      const kinds = (info) => new Set(info?.tracks.map((t) => t.type));
+      const had = kinds(input), got = kinds(await this.probe(file).catch(() => null));
+      for (const [kind, codec] of [['video', v], ['audio', a]]) {
+        if (codec && had.has(kind) && !got.has(kind)) {
+          throw new Error(`transcode: VLC could not encode ${kind} as "${codec}" into ${to} (see the 'log' event)`);
+        }
+      }
+    }
+    opts.onProgress?.(1);
+    return file;
   }
 
   /** The equalizer presets and band frequencies VLC ships. */

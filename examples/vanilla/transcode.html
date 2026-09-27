@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Convert</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<h1>Convert anything to something a browser plays</h1>
+<p class="lede">VLC's stream output in the browser: transcode a RealMedia, WMV, AVI or VOB to WebM
+(VP8 + Opus), or remux an MKV to MP4 without re-encoding. Uses the <code>sout</code> build:
+<code>createVLC({ variant: 'sout' })</code>. Nothing is uploaded.</p>
+<div class="row">
+  <input type="file" id="file">
+  <select id="to"><option value="webm">WebM (VP8 + Opus)</option><option value="mp4">MP4 (MPEG-4 + AAC)</option>
+    <option value="ogg">Ogg audio (Opus)</option><option value="wav">WAV</option></select>
+  <label><input type="checkbox" id="remux"> remux only (no re-encode)</label>
+  <button id="go" class="primary">Convert</button>
+</div>
+<progress id="bar" max="1" value="0" style="width:100%"></progress>
+<p id="status" class="muted"></p>
+<p><a id="save" hidden>Download</a></p>
+<video id="out" controls style="width:100%;border-radius:8px;display:none"></video>
+<script type="module">
+  import { createVLC } from '../../packages/core/src/index.js';
+
+  const $ = (id) => document.getElementById(id);
+  const vlc = await createVLC({ variant: 'sout' });
+  $('status').textContent = `ready (${vlc.features.sout ? 'with' : 'without'} stream output)`;
+  $('go').onclick = async () => {
+    const file = $('file').files[0];
+    if (!file) return;
+    const t0 = performance.now();
+    $('go').disabled = true;
+    $('status').textContent = 'converting…';
+    try {
+      const out = await vlc.transcode(file, {
+        to: $('to').value,
+        remux: $('remux').checked,
+        onProgress: (f) => { $('bar').value = f; },
+      });
+      $('status').textContent = `${out.name}: ${(out.size / 1e6).toFixed(2)} MB in ${((performance.now() - t0) / 1000).toFixed(1)} s`;
+      URL.revokeObjectURL($('out').src);
+      const url = URL.createObjectURL(out);
+      Object.assign($('out'), { src: url }).style.display = 'block';
+      Object.assign($('save'), { href: url, download: out.name, hidden: false, textContent: `Download ${out.name}` });
+    } catch (e) {
+      $('status').textContent = `failed: ${e.message}`;
+    } finally {
+      $('go').disabled = false;
+    }
+  };
+</script>
+</body></html>

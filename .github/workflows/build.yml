@@ -1,6 +1,7 @@
-# Builds the SDK (VLC for wasm + our bridge), tests it in headless Chromium and
-# uploads the package. Tags (v*) also publish a GitHub release, and to npm when
-# an NPM_TOKEN secret exists. Run it by hand to build against another VLC commit.
+# Builds the SDK (VLC for wasm + our bridge and modules) in both variants,
+# tests it in headless browsers and packages it. Tags (v*) also publish a
+# GitHub release, and to npm when an NPM_TOKEN secret exists. Run it by hand
+# to build against another VLC commit.
 name: build
 
 on:
@@ -22,12 +23,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  sdk:
+  wasm:
+    name: wasm (${{ matrix.variant }})
     runs-on: ubuntu-24.04
     timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        # default: the player. sout: + VLC's stream output (transcode, remux, record).
+        variant: [default, sout]
     env:
       CACHE_DIR: ${{ github.workspace }}/.vlc-cache
       PROFILE: ${{ inputs.profile || 'release' }}
+      VARIANT: ${{ matrix.variant }}
+    outputs:
+      vlc_commit: ${{ steps.vlc.outputs.commit }}
     steps:
       - uses: actions/checkout@v4
 
@@ -39,80 +49,102 @@ jobs:
 
       # Contribs (FFmpeg, dav1d, libass, ...) are the slow part: about an hour
       # on a hosted runner. Keyed on everything that can change them.
-      - name: Restore VLC build tree
+      - name: Restore the VLC build tree
         uses: actions/cache@v4
         with:
           path: .vlc-cache
-          key: vlc-${{ steps.vlc.outputs.commit }}-${{ env.PROFILE }}-${{ hashFiles('build/Dockerfile', 'build/build-vlc.sh', 'build/patches/*') }}
-          restore-keys: vlc-${{ steps.vlc.outputs.commit }}-${{ env.PROFILE }}-
+          key: vlc-${{ matrix.variant }}-${{ steps.vlc.outputs.commit }}-${{ env.PROFILE }}-${{ hashFiles('build/Dockerfile', 'build/build-vlc.sh', 'build/patches/*') }}
+          restore-keys: vlc-${{ matrix.variant }}-${{ steps.vlc.outputs.commit }}-${{ env.PROFILE }}-
 
-      - name: Build VLC for wasm and link the SDK
+      - name: Build VLC for wasm and link
         env:
           VLC_COMMIT: ${{ steps.vlc.outputs.commit }}
           JOBS: 4
         run: |
           mkdir -p "$CACHE_DIR"
           ./build.sh all
+          sudo chown -R "$(id -u):$(id -g)" .vlc-cache packages/core/wasm
           ls -la packages/core/wasm
 
-      - name: Hand the cache back to the runner user
-        if: always()
-        run: sudo chown -R "$(id -u):$(id -g)" .vlc-cache packages/core/wasm || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wasm-${{ matrix.variant }}
+          path: packages/core/wasm/
+          if-no-files-found: error
 
+  test:
+    needs: wasm
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { pattern: wasm-*, path: packages/core/wasm, merge-multiple: true }
       - uses: pnpm/action-setup@v4
         with: { version: 10 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
-
-      - name: Test fixtures
+      - name: Fixtures
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
           sh tests/make-fixtures.sh
-
-      - name: Node smoke test (parse + thumbnail)
+      - run: npx playwright install --with-deps chromium webkit firefox
+      - name: Node smoke test (probe + thumbnail)
         run: node tests/node-smoke.mjs
-
-      - name: Browser playback test
+      - name: Feature suite in three engines
         run: |
-          npx playwright install --with-deps chromium
-          node tests/run-browser.mjs /corpus/media/gen/t_mpeg2_ac3.ts /corpus/media/gen/t_h264_opus_ass.mkv /corpus/media/gen/t_wmv2.wmv /corpus/media/gen/t_xvid_mp3.avi
-
+          node tests/features.mjs --engine=chromium
+          node tests/features.mjs --engine=firefox
+          node tests/features.mjs --engine=webkit
+      - name: Stream output (transcode, remux, record) in three engines
+        run: |
+          node corpus/fetch.mjs realvideo-4-cook-rmvb
+          node tests/sout.mjs --engine=chromium
+          node tests/sout.mjs --engine=firefox
+          node tests/sout.mjs --engine=webkit
       - name: Obscure-format corpus
         if: github.event_name != 'pull_request'
+        continue-on-error: true
         run: |
           node corpus/fetch.mjs
           node tests/verify-corpus.mjs --engines=chromium
-        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: corpus/results/
+          if-no-files-found: ignore
 
+  package:
+    needs: [wasm, test]
+    runs-on: ubuntu-24.04
+    env:
+      # Job level: a step's `if` cannot see that step's own env.
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { pattern: wasm-*, path: packages/core/wasm, merge-multiple: true }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
       - name: Pack
         run: |
           cd packages/core
-          npm version --no-git-tag-version --allow-same-version "$(node -p "require('./package.json').version")"
+          echo "${{ needs.wasm.outputs.vlc_commit }}" > wasm/VLC_COMMIT
           npm pack
-          echo "VLC ${{ steps.vlc.outputs.commit }}" > wasm/VLC_COMMIT
-
       - uses: actions/upload-artifact@v4
         with:
-          name: libvlc-wasm-${{ steps.vlc.outputs.commit }}
-          path: |
-            packages/core/*.tgz
-            packages/core/wasm/
-            corpus/results/
-          if-no-files-found: error
-
+          name: npm-package
+          path: packages/core/*.tgz
       - name: GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: packages/core/*.tgz
-          body: Built from VLC ${{ steps.vlc.outputs.commit }}.
-
+          body: Built from VLC ${{ needs.wasm.outputs.vlc_commit }}.
       - name: Publish to npm
         if: startsWith(github.ref, 'refs/tags/v') && env.NPM_TOKEN != ''
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd packages/core
           npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"

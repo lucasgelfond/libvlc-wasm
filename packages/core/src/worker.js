@@ -1,7 +1,7 @@
 // The dedicated Worker that owns the wasm instance. The page talks to it with
 // {id, method, args} messages (see client.js); frames and audio never pass
 // through here — the page reads them straight out of shared wasm memory.
-import createLibVLCModule from '../wasm/libvlc.js';
+import createDefaultModule from '../wasm/libvlc.js';
 import { createEngine, EVENT } from './engine.js';
 
 let engine = null;
@@ -72,7 +72,10 @@ function release(mrl) {
 }
 
 const methods = {
-  async init({ threads, wasmUrl, fonts = [], soundfont }) {
+  async init({ threads, wasmUrl, fonts = [], soundfont, moduleUrl }) {
+    // Another build of the engine (e.g. libvlc-sout.js, the transcoding
+    // variant) is loaded from a URL, so bundlers do not have to know about it.
+    const factory = moduleUrl ? (await import(/* @vite-ignore */ moduleUrl)).default : createDefaultModule;
     // Subtitles need a font file: there is no fontconfig and no system font
     // directory in wasm. Fetched alongside the wasm, so it costs no latency.
     const sfData = soundfont ? fetch(soundfont).then(async (r) => {
@@ -84,7 +87,7 @@ const methods = {
       if (!r.ok) throw new Error(`font ${u}: HTTP ${r.status}`);
       return [decodeURIComponent(new URL(u).pathname.split('/').pop()), new Uint8Array(await r.arrayBuffer())];
     }));
-    engine = await createEngine(createLibVLCModule, {
+    engine = await createEngine(factory, {
       threads,
       locateFile: wasmUrl ? (p) => (p.endsWith('.wasm') ? wasmUrl : p) : undefined,
       onEvent,
@@ -93,6 +96,7 @@ const methods = {
     FS = engine.Module.FS;
     FS.mkdir('/fonts');
     FS.mkdir('/recordings');
+    FS.mkdir('/out');
     const installed = [];
     for (const [name, bytes] of await fontData) {
       FS.writeFile(`/fonts/${name}`, bytes);

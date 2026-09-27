@@ -430,6 +430,15 @@ static void api_set_chapter(wv_call_t *c) { libvlc_media_player_set_chapter(MP, 
 static void api_set_title(wv_call_t *c) { libvlc_media_player_set_title(MP, c->i[1]); }
 static void api_set_spu_delay(wv_call_t *c) { c->ret_i = libvlc_video_set_spu_delay(MP, (libvlc_time_t)c->d[0]); }
 static void api_set_audio_delay(wv_call_t *c) { c->ret_i = libvlc_audio_set_delay(MP, (libvlc_time_t)c->d[0]); }
+/* An integer VLC option for everything this player creates from now on
+ * (decoders, the sout chain): VLC objects inherit variables from parents. */
+static void api_set_int_option(wv_call_t *c)
+{
+    vlc_object_t *obj = (vlc_object_t *)MP;
+    c->ret_i = var_Create(obj, c->s[0], VLC_VAR_INTEGER);
+    if (c->ret_i == VLC_SUCCESS)
+        var_SetInteger(obj, c->s[0], c->i[1]);
+}
 static void api_set_aspect(wv_call_t *c) { libvlc_video_set_aspect_ratio(MP, c->s[0]); }
 static void api_set_deinterlace(wv_call_t *c) { c->ret_i = libvlc_video_set_deinterlace(MP, c->i[1], c->s[0]); }
 static void api_set_adjust(wv_call_t *c)
@@ -733,7 +742,7 @@ static void api_thumbnail(wv_call_t *c)
     X(equalizer_presets) X(parse) X(thumbnail) X(set_next) X(set_abloop) \
     X(programs) X(select_program) X(previous_frame) X(navigate) X(set_teletext) \
     X(marquee) X(logo) X(set_stereomode) X(set_mixmode) X(set_spu_scale) \
-    X(set_crop) X(record)
+    X(set_crop) X(record) X(set_int_option)
 
 #define X_FN(name) api_##name,
 #define X_NAME(name) #name ","

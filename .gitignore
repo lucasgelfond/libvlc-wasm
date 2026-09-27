@@ -16,3 +16,4 @@ examples/*/dist/
 bench/compare/*.png
 .svelte-kit/
 /corpus/results/partial-*.json
+.scratch/

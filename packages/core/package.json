@@ -27,6 +27,9 @@
     "src",
     "wasm/libvlc.js",
     "wasm/libvlc.wasm",
+    "wasm/libvlc-sout.js",
+    "wasm/libvlc-sout.wasm",
+    "wasm/VLC_COMMIT",
     "fonts",
     "README.md"
   ],

@@ -2,6 +2,7 @@
 # Links VLC's static archives, our webaudio module and the bridge into
 # libvlc.js + libvlc.wasm. Runs inside the build container (./build.sh link).
 set -eu
+SUFFIX=; [ "${VARIANT:-default}" = sout ] && SUFFIX=-sout
 
 . /opt/emsdk/emsdk_env.sh >/dev/null 2>&1
 
@@ -10,7 +11,9 @@ B=$S/build-emscripten
 C=$S/contrib/wasm32-unknown-emscripten
 N=/work/native
 OUT=/work/packages/core/wasm
-OBJ=/cache/link
+NAME=libvlc
+[ "${VARIANT:-default}" = sout ] && NAME=libvlc-sout
+OBJ=/cache/link$SUFFIX
 PROFILE=${PROFILE:-release}
 mkdir -p "$OBJ" "$OUT"
 
@@ -88,7 +91,7 @@ emcc $LINK_OPT -pthread -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm \
   -sFORCE_FILESYSTEM=1 -lworkerfs.js -lnodefs.js \
   -sEXPORTED_FUNCTIONS=_malloc,_free,_wv_submit,_wv_api_names,_wv_call_layout,_wv_wc_opened,_wv_wc_push,_wv_wc_drained,_wv_wc_error,_wv_wc_free \
   -sEXPORTED_RUNTIME_METHODS=FS,WORKERFS,NODEFS,UTF8ToString,stringToNewUTF8,HEAPU8,HEAP32,HEAPF64,wasmMemory \
-  -o "$OUT/libvlc.js"
+  -o "$OUT/$NAME.js"
 
 # Exceptions: everything was compiled with the legacy wasm EH encoding
 # (try/catch). Firefox warns that it is deprecated, and linking with
@@ -99,11 +102,11 @@ echo "==> translating exception handling to exnref (try_table)"
 # The feature flags must be explicit: with --detect-features the pass finds no
 # EH feature in the (stripped) target_features section and silently does nothing.
 # -g keeps the function names that --profiling-funcs put there.
-wasm-opt "$OUT/libvlc.wasm" -g --translate-to-exnref \
+wasm-opt "$OUT/$NAME.wasm" -g --translate-to-exnref \
   --enable-threads --enable-bulk-memory --enable-bulk-memory-opt --enable-exception-handling \
   --enable-simd --enable-nontrapping-float-to-int --enable-sign-ext --enable-mutable-globals \
   --enable-reference-types --enable-multivalue \
-  -o "$OUT/libvlc.wasm.tmp" && mv "$OUT/libvlc.wasm.tmp" "$OUT/libvlc.wasm"
+  -o "$OUT/$NAME.wasm.tmp" && mv "$OUT/$NAME.wasm.tmp" "$OUT/$NAME.wasm"
 
-cp "$OBJ/vlc-modules.c" "$OUT/modules.generated.c"
+cp "$OBJ/vlc-modules.c" "$OUT/$NAME.modules.c"
 ls -la "$OUT"

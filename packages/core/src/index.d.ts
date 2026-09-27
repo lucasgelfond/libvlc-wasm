@@ -18,6 +18,10 @@ export interface VLCOptions {
   workerUrl?: string | URL;
   /** Font files for subtitles; the first is the default face. `false` = none. Default: bundled Noto Sans. */
   fonts?: (string | URL)[] | false;
+  /** 'sout' loads the build with VLC's stream output (transcode/remux/record). */
+  variant?: 'default' | 'sout';
+  /** Load the engine from this libvlc*.js URL instead (self-hosting). */
+  moduleUrl?: string | URL;
   /** A General MIDI SoundFont (.sf2); needed to play .mid files. */
   soundfont?: string | URL;
 }
@@ -220,6 +224,32 @@ export declare class VLC extends Emitter<VLCEvents> {
     time?: number; position?: number; width?: number; height?: number; crop?: boolean; fast?: boolean;
   }): Promise<{ blob: Blob; width: number; height: number }>;
   equalizerPresets(): Promise<{ presets: string[]; bands: number[] }>;
+  /**
+   * Converts media with VLC's stream output (needs `variant: 'sout'`).
+   * Defaults: webm/mkv VP8 + Opus, mp4 MPEG-4 Part 2 + AAC, ogg Opus,
+   * ts MPEG-2 + MP2, wav PCM. WebM is the one every browser plays back.
+   */
+  transcode(source: Source | SourceGroup, opts?: {
+    /** Container; default 'webm'. */
+    to?: 'webm' | 'mkv' | 'mp4' | 'ogg' | 'ts' | 'wav' | 'mp3';
+    /** Copy the streams as they are into the new container (no re-encoding). */
+    remux?: boolean;
+    /** VLC fourcc of the video encoder ('VP80', 'mp4v', 'mp2v'…), or false to drop video. Throws if there is no such encoder. */
+    video?: string | false;
+    /** VLC fourcc of the audio encoder ('opus', 'vorb', 'mp4a', 'mp3', 'flac', 's16l'…), or false to drop audio. */
+    audio?: string | false;
+    /** kbit/s; default 2000. */
+    videoBitrate?: number;
+    /** kbit/s; default 128. */
+    audioBitrate?: number;
+    /** Scale to this width (height follows the aspect ratio unless given). */
+    width?: number;
+    height?: number;
+    /** Base name of the output file. */
+    name?: string;
+    /** 0..1, about 4 times a second, and 1 when the file is ready. */
+    onProgress?: (fraction: number) => void;
+  }): Promise<File>;
   setLogLevel(level: VLCOptions['logLevel']): Promise<unknown>;
   destroy(): Promise<void>;
 }

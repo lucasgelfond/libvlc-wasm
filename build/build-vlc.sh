@@ -6,12 +6,13 @@
 # VLC builds touch tens of thousands of files and a macOS bind mount makes that
 # several times slower. Only the finished archives are copied to /work/.cache/vlc-out.
 set -eu
+SUFFIX=; [ "${VARIANT:-default}" = sout ] && SUFFIX=-sout
 
 VLC_REPO=${VLC_REPO:-https://code.videolan.org/videolan/vlc.git}
 VLC_COMMIT=${VLC_COMMIT:?}
 JOBS=${JOBS:-$(nproc)}
 SRC=/cache/vlc
-OUT=/work/.cache/vlc-out
+OUT=/work/.cache/vlc-out$SUFFIX
 PATCHES=/work/build/patches
 
 . /opt/emsdk/emsdk_env.sh >/dev/null 2>&1
@@ -50,20 +51,33 @@ done
 # The upstream script is the source of truth for contrib/configure flags; we only
 # feed it our overrides through the environment (see patches/ for the rest).
 cd "$SRC"
+OPT_FLAGS=
 if [ "${PROFILE:-release}" = release ]; then
   # Upstream always configures --enable-debug, which means -Og and assertions
   # on every hot path: fine for CI, several times too slow to benchmark.
   sed -i 's/--enable-debug/--disable-debug/' extras/package/wasm-emscripten/build.sh
-  export CFLAGS="-O3" CXXFLAGS="-O3"
+  OPT_FLAGS="-O3"
 fi
-# Must match the contribs (patches/0002) and the link (link.sh).
+# Must match the contribs (patches/0002) and the link (link.sh). Given to
+# VLC's configure only: exported globally they would also reach the native
+# host tools (extras/tools, built with gcc), which reject them.
 WASM_FLAGS="-msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm"
-export CFLAGS="${CFLAGS:-} $WASM_FLAGS" CXXFLAGS="${CXXFLAGS:-} $WASM_FLAGS" LDFLAGS="${LDFLAGS:-} $WASM_FLAGS"
+export VLC_CFLAGS="$OPT_FLAGS $WASM_FLAGS" VLC_LDFLAGS="$WASM_FLAGS"
+grep -q 'VLC_CFLAGS' extras/package/wasm-emscripten/build.sh ||
+  sed -i 's|    emconfigure "$VLC_SRCPATH"/configure|    CFLAGS="$VLC_CFLAGS" CXXFLAGS="$VLC_CFLAGS" LDFLAGS="$VLC_LDFLAGS" emconfigure "$VLC_SRCPATH"/configure|' extras/package/wasm-emscripten/build.sh
 # soxr's CMake mistakes -msimd128 for x86 SIMD and compiles CPUID inline asm;
 # VLC has other resamplers (samplerate, speex, ugly), so it is simply left out.
 grep -q -- '--disable-soxr' extras/package/wasm-emscripten/build.sh ||
   sed -i 's/--disable-goom \\/--disable-goom --disable-soxr \\/' extras/package/wasm-emscripten/build.sh
-step "running extras/package/wasm-emscripten/build.sh ($PROFILE)"
+if [ "${VARIANT:-default}" = sout ]; then
+  # Keep VLC's stream output and FFmpeg's encoders/muxers.
+  sed -i 's/ --disable-sout//; s/--disable-sout --disable-vlm/--disable-vlm/' extras/package/wasm-emscripten/build.sh
+  # x264/x265 do not configure for an emscripten host; transcodes target
+  # WebM (libvpx VP8/VP9 + Opus/Vorbis) and FFmpeg's own encoders instead.
+  grep -q -- '--disable-x264' extras/package/wasm-emscripten/build.sh ||
+    sed -i 's/--disable-goom /--disable-goom --disable-x264 --disable-x26410b --disable-x265 --disable-twolame --disable-shout /' extras/package/wasm-emscripten/build.sh
+fi
+step "running extras/package/wasm-emscripten/build.sh ($PROFILE, ${VARIANT:-default})"
 MODE=${MODE:-1}
 sh extras/package/wasm-emscripten/build.sh --mode="$MODE"
 
