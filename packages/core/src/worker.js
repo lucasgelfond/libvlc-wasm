@@ -45,6 +45,13 @@ function toMrl(src) {
     const files = src.filter((f) => f instanceof File);
     const blobs = src.filter((f) => !(f instanceof File)).map((b, k) => ({ name: b.name || `part${k}`, data: b }));
     FS.mount(engine.Module.WORKERFS, { files, blobs }, dir);
+    // The files of a VIDEO_TS folder are a disc: open the folder with
+    // dvdnav (menus, titles) rather than one of its files.
+    if (src.some((f) => /^video_ts\.ifo$/i.test(f.name ?? ''))) {
+      const mrl = `dvd://${dir}`;
+      mounts.set(mrl, { dir, kind: 'workerfs' });
+      return mrl;
+    }
     name = src[0].name || 'part0';
     mounts.set(`file://${dir}/${encodeURIComponent(name)}`, { dir, kind: 'workerfs' });
   } else if (src instanceof Blob) {

@@ -87,8 +87,9 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Fixtures
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg dvdauthor genisoimage
           sh tests/make-fixtures.sh
+          sh tests/make-dvd.sh
       - run: npx playwright install --with-deps chromium webkit firefox
       - name: Node smoke test (probe + thumbnail)
         run: node tests/node-smoke.mjs

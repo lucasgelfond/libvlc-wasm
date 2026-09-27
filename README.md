@@ -68,6 +68,10 @@ multi-file groups, VLC MRLs. Also runs headless under Node for probing/thumbnail
 **WebCodecs** (hardware) for H.264, HEVC, VP9, AV1 when the browser can, with automatic,
 lossless fallback to software when it can't.
 
+**DVD**: ISO images and VIDEO_TS folders through dvdnav — menus, titles, chapters and the
+disc's own navigation commands. No libdvdcss, so CSS-encrypted discs do not play; unencrypted
+ones and decrypted images do.
+
 Not available in a browser: raw sockets (RTSP/UDP multicast), optical drives, hardware
 passthrough of Dolby/DTS, and an H.264/HEVC *encoder* (x264/x265 do not build for wasm).
 
@@ -136,11 +140,14 @@ pnpm install && node tests/node-smoke.mjs && node tests/features.mjs
 sh tests/make-fixtures.sh && node corpus/fetch.mjs && node tests/verify-corpus.mjs
 ```
 
-The four VLC patches (`build/patches/`) are small and upstreamable: a `jpeg` option declared only
+The six VLC patches (`build/patches/`) are small and upstreamable: a `jpeg` option declared only
 under `ENABLE_SOUT` (asserts in no-sout builds), native wasm exceptions for contribs (libmatroska
-throws during ordinary parsing), a libass fallback font on emscripten, and a fix for an
+throws during ordinary parsing), a libass fallback font on emscripten, a fix for an
 out-of-bounds index and use-after-free in the transcoder's PCR sync (`pcr_sync.c`), hidden by
-asserts in debug builds and a crash in about 1 transcode in 3 of RealMedia without it.
+asserts in debug builds and a crash in about 1 transcode in 3 of RealMedia without it,
+dvdread built without libdvdcss (plus musl's missing `off64_t`), and the A-B loop deadline
+computed in integer ticks: `now + float` has a 134 s step when the clock counts from the Unix
+epoch, as emscripten's does, so loops fired tens of seconds early or late.
 
 ## Serving
 

@@ -65,6 +65,11 @@ them on demand, so a 4 GB file costs nothing up front. URLs are read with ranged
 requests (the server must allow CORS and `Range`). Pass an array to mount files
 that reference each other — `[idx, sub]`, `[cue, bin]` — the first is opened.
 
+DVDs: open an `.iso`, or the files of a `VIDEO_TS` folder (from `<input webkitdirectory>`) as an
+array with `VIDEO_TS.IFO` first. `player.chapters.titles` lists the menu and titles; menus are
+driven with `player.navigate('up' | 'down' | 'left' | 'right' | 'activate' | 'popup')`.
+Encrypted (CSS) discs are not supported: libdvdcss is not in the build.
+
 `options` are VLC media options, e.g. `[':sub-track=0']` to show the first subtitle
 track (VLC only auto-selects subtitles flagged default/forced).
 

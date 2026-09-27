@@ -69,6 +69,10 @@ grep -q 'VLC_CFLAGS' extras/package/wasm-emscripten/build.sh ||
 # VLC has other resamplers (samplerate, speex, ugly), so it is simply left out.
 grep -q -- '--disable-soxr' extras/package/wasm-emscripten/build.sh ||
   sed -i 's/--disable-goom \\/--disable-goom --disable-soxr \\/' extras/package/wasm-emscripten/build.sh
+# DVD images and VIDEO_TS folders (dvdnav, with menus, and dvdread), but not
+# libdvdcss: unencrypted discs play, CSS-encrypted ones do not (patches/0005).
+grep -q -- '--enable-dvdnav' extras/package/wasm-emscripten/build.sh ||
+  sed -i 's/--disable-disc /--disable-disc --enable-dvdread --enable-dvdnav --disable-dvdcss /' extras/package/wasm-emscripten/build.sh
 if [ "${VARIANT:-default}" = sout ]; then
   # Keep VLC's stream output and FFmpeg's encoders/muxers.
   sed -i 's/ --disable-sout//; s/--disable-sout --disable-vlm/--disable-vlm/' extras/package/wasm-emscripten/build.sh

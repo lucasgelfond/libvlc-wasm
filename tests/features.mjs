@@ -13,7 +13,7 @@ const results = await page.evaluate(async () => {
   const vlc = await window.harness.ensureVLC();
   const canvas = document.getElementById('c');
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  const file = async (name) => new File([await (await fetch(G + name)).blob()], name);
+  const file = async (name) => new File([await (await fetch(G + name)).blob()], name.split('/').pop());
   const out = [];
   async function test(name, fn) {
     const t0 = performance.now();
@@ -255,6 +255,29 @@ const results = await page.evaluate(async () => {
     const before = p.renderer.framesDrawn;
     await waitFor(() => p.tracks.some((t) => t.codec === 'mpgv') && p.renderer.framesDrawn > before + 5, 6000, 'frames from the URL');
     return `${p.renderer.framesDrawn - before} new frames, ${p.tracks.map((t) => t.codec.trim()).join('+')}`;
+  });
+
+  await test('DVD image: titles, chapters, playback (dvdnav)', async () => {
+    await p.open(await file('t_dvd.iso'));
+    await waitFor(() => p.renderer.framesDrawn > 2, 8000, 'first frame from the DVD');
+    await waitFor(() => p.chapters.titles.length >= 2 && p.chapters.chapters.length === 3, 4000,
+      `titles/chapters (have ${p.chapters.titles.length}/${p.chapters.chapters.length})`);
+    await p.setChapter(2);
+    await waitFor(() => p.currentTime >= 3.8, 3000, `chapter 3 at 4 s (at ${p.currentTime.toFixed(2)})`);
+    const v = p.tracks.find((t) => t.type === 'video');
+    return `${p.chapters.titles.length} titles, ${p.chapters.chapters.length} chapters, ${v?.codec.trim()} ${v?.width}x${v?.height}, jumped to ${p.currentTime.toFixed(2)} s`;
+  });
+
+  await test('DVD folder: VIDEO_TS files as a group', async () => {
+    const names = ['VIDEO_TS.IFO', 'VIDEO_TS.BUP', 'VTS_01_0.IFO', 'VTS_01_0.BUP', 'VTS_01_1.VOB'];
+    const files = await Promise.all(names.map((n) => file(`VIDEO_TS/${n}`)));
+    await p.stop();
+    const listed = p.once('chapters');
+    const before = p.renderer.framesDrawn;
+    await p.open(files);
+    await listed;
+    await waitFor(() => p.renderer.framesDrawn > before + 2 && p.chapters.titles.length >= 2, 8000, 'frames and titles');
+    return p.chapters.titles.map((t) => t.name).join(', ');
   });
 
   await test('two players at once', async () => {
