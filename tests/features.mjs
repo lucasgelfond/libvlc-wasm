@@ -257,15 +257,26 @@ const results = await page.evaluate(async () => {
     return `${p.renderer.framesDrawn - before} new frames, ${p.tracks.map((t) => t.codec.trim()).join('+')}`;
   });
 
-  await test('DVD image: titles, chapters, playback (dvdnav)', async () => {
+  await test('DVD image: menu by mouse and keys, titles, chapters (dvdnav)', async () => {
     await p.open(await file('t_dvd.iso'));
-    await waitFor(() => p.renderer.framesDrawn > 2, 8000, 'first frame from the DVD');
-    await waitFor(() => p.chapters.titles.length >= 2 && p.chapters.chapters.length === 3, 4000,
-      `titles/chapters (have ${p.chapters.titles.length}/${p.chapters.chapters.length})`);
+    await waitFor(() => p.renderer.framesDrawn > 2 && p.inMenu, 8000, 'the disc menu');
+    const names = p.chapters.titles.map((t) => t.name).join(', ');
+    // Click the right-hand button (x 400-640, y 300-380 of 720x480): title 2.
+    // pointer() is false until the menu's video window exists.
+    await waitFor(() => p.pointer('move', 520 / 720, 340 / 480), 4000, 'a video window to point at');
+    await sleep(100);
+    await p.pointer('down', 520 / 720, 340 / 480);
+    await p.pointer('up', 520 / 720, 340 / 480);
+    await waitFor(() => p.title === 2 && !p.inMenu, 4000, `title 2 after the click (title ${p.title})`);
+    // Back to the menu, then the keyboard route: left button, activate: title 1.
+    assert(await p.menu(), 'menu() found no menu');
+    await waitFor(() => p.inMenu, 4000, 'back in the menu');
+    await p.navigate('left');
+    await p.navigate('activate');
+    await waitFor(() => p.title === 1 && p.chapters.chapters.length === 3, 4000, `title 1 with 3 chapters (title ${p.title})`);
     await p.setChapter(2);
     await waitFor(() => p.currentTime >= 3.8, 3000, `chapter 3 at 4 s (at ${p.currentTime.toFixed(2)})`);
-    const v = p.tracks.find((t) => t.type === 'video');
-    return `${p.chapters.titles.length} titles, ${p.chapters.chapters.length} chapters, ${v?.codec.trim()} ${v?.width}x${v?.height}, jumped to ${p.currentTime.toFixed(2)} s`;
+    return `${names}; click → title 2, menu(), keys → title 1, chapter 3 at ${p.currentTime.toFixed(2)} s`;
   });
 
   await test('DVD folder: VIDEO_TS files as a group', async () => {

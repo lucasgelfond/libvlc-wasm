@@ -1,0 +1,3044 @@
+{
+ "date": "2026-09-27",
+ "tools": {
+  "nativeVlc": "3.0.24",
+  "ffmpeg": "ffmpeg version 9.0.2",
+  "ffmpegWasm": null,
+  "libvlcWasm": "corpus/results/results.json (2026-09-27T06:37:31.283Z)",
+  "browsers": [
+   "chromium",
+   "webkit",
+   "firefox"
+  ],
+  "vlcjs": "addyosmani/vlc.js, bench/compare/vlcjs-results.json (2026-09-27T06:32:24.893Z)"
+ },
+ "samples": [
+  {
+   "id": "realvideo-3-cook",
+   "name": "RealVideo 3 + Cook",
+   "category": "realmedia",
+   "container": "RM",
+   "video": "RV30",
+   "audio": "Cook",
+   "file": "realmedia/realvideo-3-cook.rm",
+   "url": "https://fate-suite.ffmpeg.org/real/rv30.rm",
+   "bytes": 201000,
+   "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "109 video frames; 161792 audio samples, peak -6 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "realvideo-g2-svt",
+   "name": "RealVideo G2 (SVT)",
+   "category": "realmedia",
+   "container": "RM",
+   "video": "RV20",
+   "audio": null,
+   "file": "realmedia/realvideo-g2-svt.rm",
+   "url": "https://fate-suite.ffmpeg.org/real/G2_with_SVT_320_240.rm",
+   "bytes": 726206,
+   "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "144 video frames; 74 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "realvideo-4-cook-rmvb",
+   "name": "RealVideo 4 + Cook (rmvb)",
+   "category": "realmedia",
+   "container": "RMVB",
+   "video": "RV40",
+   "audio": "Cook",
+   "file": "realmedia/realvideo-4-cook-rmvb.rmvb",
+   "url": "https://fate-suite.ffmpeg.org/real/spygames-2MB.rmvb",
+   "bytes": 2097152,
+   "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "240 video frames; 884736 audio samples, peak -24.3 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "realaudio-cook",
+   "name": "RealAudio Cook",
+   "category": "realmedia",
+   "container": "RM",
+   "video": null,
+   "audio": "Cook",
+   "file": "realmedia/realaudio-cook.rm",
+   "url": "https://fate-suite.ffmpeg.org/real/ra_cook.rm",
+   "bytes": 50000,
+   "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "487424 audio samples, peak -2.5 dB; 3 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "realaudio-sipr-8-5k",
+   "name": "RealAudio SIPR 8.5k",
+   "category": "realmedia",
+   "container": "RM",
+   "video": "RV20",
+   "audio": "SIPR",
+   "file": "realmedia/realaudio-sipr-8-5k.rm",
+   "url": "https://fate-suite.ffmpeg.org/sipr/sipr_8k5.rm",
+   "bytes": 100000,
+   "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "88 video frames; 80352 audio samples, peak -4.2 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "realaudio-28-8",
+   "name": "RealAudio 28.8",
+   "category": "realmedia",
+   "container": "RA",
+   "video": null,
+   "audio": "RealAudio 28.8 (ra_288)",
+   "file": "realmedia/realaudio-28-8.ra",
+   "url": "https://fate-suite.ffmpeg.org/realaudio/ra4_288.ra",
+   "bytes": 2809,
+   "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "11520 audio samples, peak -1.3 dB; 3 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "realvideo-2-in-matroska",
+   "name": "RealVideo 2 in Matroska",
+   "category": "realmedia",
+   "container": "MKV",
+   "video": "RV20",
+   "audio": null,
+   "file": "realmedia/realvideo-2-in-matroska.mkv",
+   "url": "https://samples.ffmpeg.org/Matroska/rv20.mkv",
+   "bytes": 5993060,
+   "whyBrowserCant": "RV20 has no browser decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "196 video frames; 9 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "realvideo-2-sipr-a-v-sync-bug",
+   "name": "RealVideo 2 + SIPR (A/V sync bug)",
+   "category": "realmedia",
+   "container": "RM",
+   "video": "RV20",
+   "audio": "SIPR",
+   "file": "realmedia/realvideo-2-sipr-a-v-sync-bug.rm",
+   "url": "https://samples.ffmpeg.org/real/real-bug/A-V_sync/broken_rv20_1mb_.rm",
+   "bytes": 1048576,
+   "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "124 video frames; 80352 audio samples, peak 0 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "wmv8-x8-intra",
+   "name": "WMV8 X8 intra",
+   "category": "windows-media",
+   "container": "ASF",
+   "video": "WMV2 (WMV8)",
+   "audio": "WMA v2",
+   "file": "windows-media/wmv8-x8-intra.wmv",
+   "url": "https://fate-suite.ffmpeg.org/wmv8/wmv8_x8intra.wmv",
+   "bytes": 449508,
+   "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "124 video frames; 167424 audio samples, peak -14.9 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "wmv7",
+   "name": "WMV7",
+   "category": "windows-media",
+   "container": "ASF",
+   "video": "WMV1",
+   "audio": "WMA v2",
+   "file": "windows-media/wmv7.wmv",
+   "url": "https://samples.ffmpeg.org/archive/video/wmv1/asf+wmv1+wmav2++anti-theft.wmv",
+   "bytes": 2236865,
+   "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "149 video frames; 334848 audio samples, peak -5.1 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "wmv9-vc-1-simple-main-raw-rcv",
+   "name": "WMV9 / VC-1 simple/main raw (.rcv)",
+   "category": "windows-media",
+   "container": "RCV",
+   "video": "WMV3",
+   "audio": null,
+   "file": "windows-media/wmv9-vc-1-simple-main-raw-rcv.rcv",
+   "url": "https://fate-suite.ffmpeg.org/vc1/SMM0015.rcv",
+   "bytes": 437157,
+   "whyBrowserCant": "Raw VC-1 RCV stream; no browser VC-1 decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "25 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "ms-mpeg4-v3-divx-in-asf",
+   "name": "MS-MPEG4 v3 (DivX ;-) ) in ASF",
+   "category": "windows-media",
+   "container": "ASF",
+   "video": "MSMPEG4v3",
+   "audio": null,
+   "file": "windows-media/ms-mpeg4-v3-divx-in-asf.asf",
+   "url": "https://fate-suite.ffmpeg.org/asf/bug821-2.asf",
+   "bytes": 115867,
+   "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "14 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "wma-voice-11k",
+   "name": "WMA Voice 11k",
+   "category": "windows-media",
+   "container": "ASF",
+   "video": null,
+   "audio": "WMA Voice",
+   "file": "windows-media/wma-voice-11k.wma",
+   "url": "https://fate-suite.ffmpeg.org/wmavoice/streaming_CBR-11K.wma",
+   "bytes": 22706,
+   "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "80160 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "wma-lossless-24-bit",
+   "name": "WMA Lossless 24-bit",
+   "category": "windows-media",
+   "container": "ASF",
+   "video": null,
+   "audio": "WMA Lossless",
+   "file": "windows-media/wma-lossless-24-bit.wma",
+   "url": "https://fate-suite.ffmpeg.org/lossless-audio/g2_24bit.wma",
+   "bytes": 72187,
+   "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "20286 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "audio": false
+    },
+    "note": "this 0.2 s clip only leaves the decoder at end-of-stream drain, already late, so VLC's audio core drops it (native VLC's file output ignores timing)"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "ms-screen-codec-2-wmv9-screen",
+   "name": "MS Screen Codec 2 (WMV9 Screen)",
+   "category": "windows-media",
+   "container": "ASF",
+   "video": "MSS2",
+   "audio": null,
+   "file": "windows-media/ms-screen-codec-2-wmv9-screen.wmv",
+   "url": "https://fate-suite.ffmpeg.org/mss2/mss2_2.wmv",
+   "bytes": 29914,
+   "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "2 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": false
+    },
+    "note": "known issue: frame decodes (RV24) but EOS stops playback before it is shown"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "ms-mpeg4-v1",
+   "name": "MS-MPEG4 v1",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "MSMPEG4v1",
+   "audio": null,
+   "file": "avi-era-codecs/ms-mpeg4-v1.avi",
+   "url": "https://fate-suite.ffmpeg.org/msmpeg4v1/mpg4.avi",
+   "bytes": 317440,
+   "whyBrowserCant": "AVI container unsupported by browsers",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "50 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "xvid-mp3",
+   "name": "XviD + MP3",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "MPEG-4 ASP (XVID)",
+   "audio": "MP3",
+   "file": "avi-era-codecs/xvid-mp3.avi",
+   "url": "https://samples.ffmpeg.org/V-codecs/XVID/ttm1.avi",
+   "bytes": 2097152,
+   "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "234 video frames; 940032 audio samples, peak -15.4 dB; 425 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": true,
+     "audio": false
+    },
+    "note": "known issue: VLC 4 mpegaudio packetizer never syncs on this truncated AVI (VLC 3 does); a clean XviD+MP3 AVI plays"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "divx-5-mp3",
+   "name": "DivX 5 + MP3",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "MPEG-4 ASP (DX50)",
+   "audio": "MP3",
+   "file": "avi-era-codecs/divx-5-mp3.avi",
+   "url": "https://samples.ffmpeg.org/V-codecs/DX50-DivX5/cats.avi",
+   "bytes": 5242880,
+   "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "248 video frames; 4608 audio samples, peak -59.2 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": true,
+     "audio": false
+    },
+    "note": "expected failure: native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "cinepak",
+   "name": "Cinepak",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "Cinepak",
+   "audio": "PCM u8",
+   "file": "avi-era-codecs/cinepak.avi",
+   "url": "https://fate-suite.ffmpeg.org/cvid/pcitva15.avi",
+   "bytes": 509584,
+   "whyBrowserCant": "AVI container unsupported by browsers",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "50 video frames; 115763 audio samples, peak 0 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "indeo-3",
+   "name": "Indeo 3",
+   "category": "quicktime-and-3gp",
+   "container": "MOV",
+   "video": "Indeo 3 (IV32)",
+   "audio": null,
+   "file": "quicktime-and-3gp/indeo-3.mov",
+   "url": "https://fate-suite.ffmpeg.org/iv32/cubes.mov",
+   "bytes": 121458,
+   "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "40 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "indeo-4-partial",
+   "name": "Indeo 4 (partial)",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "Indeo 4 (IV41)",
+   "audio": "PCM u8",
+   "file": "avi-era-codecs/indeo-4-partial.avi",
+   "url": "https://fate-suite.ffmpeg.org/iv41/indeo41-partial.avi",
+   "bytes": 1048576,
+   "whyBrowserCant": "AVI container unsupported by browsers",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "100 video frames; 163170 audio samples, peak -1 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "indeo-5",
+   "name": "Indeo 5",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "Indeo 5 (IV50)",
+   "audio": "PCM s16le",
+   "file": "avi-era-codecs/indeo-5.avi",
+   "url": "https://fate-suite.ffmpeg.org/iv50/Educ_Movie_DeadlyForce.avi",
+   "bytes": 939260,
+   "whyBrowserCant": "AVI container unsupported by browsers",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "133 video frames; 196972 audio samples, peak 0 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "motion-jpeg-mu-law-10-mb",
+   "name": "Motion-JPEG + mu-law (10 MB)",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "MJPEG",
+   "audio": "PCM mu-law",
+   "file": "avi-era-codecs/motion-jpeg-mu-law-10-mb.avi",
+   "url": "https://samples.ffmpeg.org/archive/video/mjpeg/avi+mjpeg+pcm_mulaw++mjpg-mencoder-crash.avi",
+   "bytes": 10240000,
+   "whyBrowserCant": "AVI container unsupported by browsers",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "257 video frames; 192828 audio samples, peak -0.2 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "dvcpro-hd-720p50",
+   "name": "DVCPRO HD 720p50",
+   "category": "quicktime-and-3gp",
+   "container": "MOV",
+   "video": "DV (DVCPRO HD)",
+   "audio": null,
+   "file": "quicktime-and-3gp/dvcpro-hd-720p50.mov",
+   "url": "https://fate-suite.ffmpeg.org/dv/dvcprohd_720p50.mov",
+   "bytes": 294364,
+   "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "1 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "on2-vp5-speex",
+   "name": "On2 VP5 + Speex",
+   "category": "avi-era-codecs",
+   "container": "AVI",
+   "video": "VP5",
+   "audio": "Speex",
+   "file": "avi-era-codecs/on2-vp5-speex.avi",
+   "url": "https://fate-suite.ffmpeg.org/vp5/potter512-400-partial.avi",
+   "bytes": 409600,
+   "whyBrowserCant": "AVI container unsupported by browsers",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "240 video frames; 320640 audio samples, peak -16.3 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "dvd-vob-single-frame-dvd-subs",
+   "name": "DVD VOB single frame + DVD subs",
+   "category": "subtitles-and-captions",
+   "container": "MPEG-PS (VOB)",
+   "video": "MPEG-2",
+   "audio": null,
+   "file": "subtitles-and-captions/dvd-vob-single-frame-dvd-subs.vob",
+   "url": "https://fate-suite.ffmpeg.org/mpeg2/dvd_single_frame.vob",
+   "bytes": 122880,
+   "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "1 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "mpeg-1-system-stream",
+   "name": "MPEG-1 system stream",
+   "category": "mpeg-ps-ts",
+   "container": "MPEG-PS",
+   "video": "MPEG-1/2 video",
+   "audio": null,
+   "file": "mpeg-ps-ts/mpeg-1-system-stream.mpg",
+   "url": "https://fate-suite.ffmpeg.org/mpeg2/matrixbench_mpeg2.lq1.mpg",
+   "bytes": 210944,
+   "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "25 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "dvd-vob-mpeg-2-ac-3-5-mb",
+   "name": "DVD VOB MPEG-2 + AC-3 (5 MB)",
+   "category": "mpeg-ps-ts",
+   "container": "MPEG-PS (VOB)",
+   "video": "MPEG-2",
+   "audio": "AC-3",
+   "file": "mpeg-ps-ts/dvd-vob-mpeg-2-ac-3-5-mb.vob",
+   "url": "https://samples.ffmpeg.org/archive/audio/ac3/mpeg+mpeg2video+ac3++dvd_dump_small.vob",
+   "bytes": 5242880,
+   "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "181 video frames; 728064 audio samples, peak -14.2 dB; 1 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "mpeg-2-field-encoded-ts",
+   "name": "MPEG-2 field-encoded TS",
+   "category": "mpeg-ps-ts",
+   "container": "MPEG-TS",
+   "video": "MPEG-2 (interlaced fields)",
+   "audio": null,
+   "file": "mpeg-ps-ts/mpeg-2-field-encoded-ts.ts",
+   "url": "https://fate-suite.ffmpeg.org/mpeg2/mpeg2_field_encoding.ts",
+   "bytes": 800000,
+   "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4); also interlaced",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "31 video frames; 4 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "dts-in-mpeg-ts",
+   "name": "DTS in MPEG-TS",
+   "category": "mpeg-ps-ts",
+   "container": "MPEG-TS",
+   "video": null,
+   "audio": "DTS",
+   "file": "mpeg-ps-ts/dts-in-mpeg-ts.ts",
+   "url": "https://fate-suite.ffmpeg.org/dts/dts.ts",
+   "bytes": 301176,
+   "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "777216 audio samples, peak -10.4 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "audio": false
+    },
+    "note": "expected failure: native VLC 3.0.24 also produces no audio from this sample"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "flash-vp6-sorenson-on2",
+   "name": "Flash VP6 (Sorenson/On2)",
+   "category": "quicktime-and-3gp",
+   "container": "FLV",
+   "video": "VP6F",
+   "audio": null,
+   "file": "quicktime-and-3gp/flash-vp6-sorenson-on2.flv",
+   "url": "https://fate-suite.ffmpeg.org/flash-vp6/clip1024.flv",
+   "bytes": 111648,
+   "whyBrowserCant": "FLV container and VP6 unsupported (Flash is gone)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "100 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "flv-with-h-264-aac",
+   "name": "FLV with H.264/AAC",
+   "category": "flash",
+   "container": "FLV",
+   "video": "H.264",
+   "audio": "AAC",
+   "file": "flash/flv-with-h-264-aac.flv",
+   "url": "https://fate-suite.ffmpeg.org/flv/Enigma_Principles_of_Lust-part.flv",
+   "bytes": 512000,
+   "whyBrowserCant": "Codecs are fine but browsers cannot demux FLV (needs flv.js-style remux)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "299 video frames; 444416 audio samples, peak -14.1 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "vp6f-nellymoser",
+   "name": "VP6F + Nellymoser",
+   "category": "flash",
+   "container": "FLV",
+   "video": "VP6F",
+   "audio": "Nellymoser",
+   "file": "flash/vp6f-nellymoser.flv",
+   "url": "https://samples.ffmpeg.org/archive/video/vp6f/flv+vp6f+nellymoser++nellymosertag.flv",
+   "bytes": 1935067,
+   "whyBrowserCant": "FLV/VP6/Nellymoser unsupported",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "63 video frames; 280832 audio samples, peak 0 dB; 46 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "3gpp-h-263-amr-nb",
+   "name": "3GPP H.263 + AMR-NB",
+   "category": "quicktime-and-3gp",
+   "container": "3GP/MOV",
+   "video": "H.263",
+   "audio": "AMR-NB",
+   "file": "quicktime-and-3gp/3gpp-h-263-amr-nb.mov",
+   "url": "https://samples.ffmpeg.org/archive/audio/samr/mov+h263+samr++lavf-wrong-fps.mov",
+   "bytes": 766902,
+   "whyBrowserCant": "H.263 and AMR-NB are not decoded by desktop Chrome",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "101 video frames; 80160 audio samples, peak -0.4 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "3gp-h-263-phone-clip",
+   "name": "3GP H.263 phone clip",
+   "category": "quicktime-and-3gp",
+   "container": "3GP",
+   "video": "H.263",
+   "audio": null,
+   "file": "quicktime-and-3gp/3gp-h-263-phone-clip.3gp",
+   "url": "https://samples.ffmpeg.org/mobileVideo_3gp/3650.3gp",
+   "bytes": 22214,
+   "whyBrowserCant": "H.263 not decoded by Chrome",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "29 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "sorenson-video-1",
+   "name": "Sorenson Video 1",
+   "category": "quicktime-and-3gp",
+   "container": "MOV",
+   "video": "SVQ1",
+   "audio": "PCM u8",
+   "file": "quicktime-and-3gp/sorenson-video-1.mov",
+   "url": "https://fate-suite.ffmpeg.org/svq1/marymary-shackles.mov",
+   "bytes": 1878652,
+   "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "150 video frames; 221524 audio samples, peak -0.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "sorenson-video-3",
+   "name": "Sorenson Video 3",
+   "category": "quicktime-and-3gp",
+   "container": "MOV",
+   "video": "SVQ3",
+   "audio": null,
+   "file": "quicktime-and-3gp/sorenson-video-3.mov",
+   "url": "https://fate-suite.ffmpeg.org/svq3/svq3_watermark.mov",
+   "bytes": 77201,
+   "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "10 video frames; 3 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "qdesign-music-2",
+   "name": "QDesign Music 2",
+   "category": "quicktime-and-3gp",
+   "container": "MOV",
+   "video": null,
+   "audio": "QDM2",
+   "file": "quicktime-and-3gp/qdesign-music-2.mov",
+   "url": "https://fate-suite.ffmpeg.org/qt-surge-suite/surge-2-16-B-QDM2.mov",
+   "bytes": 52387,
+   "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "892928 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "ima4-adpcm",
+   "name": "IMA4 ADPCM",
+   "category": "quicktime-and-3gp",
+   "container": "MOV",
+   "video": null,
+   "audio": "ADPCM IMA QT",
+   "file": "quicktime-and-3gp/ima4-adpcm.mov",
+   "url": "https://fate-suite.ffmpeg.org/qt-surge-suite/surge-2-16-B-ima4.mov",
+   "bytes": 615631,
+   "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "882176 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "mace-3-1",
+   "name": "MACE 3:1",
+   "category": "quicktime-and-3gp",
+   "container": "MOV",
+   "video": null,
+   "audio": "MACE3",
+   "file": "quicktime-and-3gp/mace-3-1.mov",
+   "url": "https://fate-suite.ffmpeg.org/qt-surge-suite/surge-1-8-MAC3.mov",
+   "bytes": 194233,
+   "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "442020 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "smacker",
+   "name": "Smacker",
+   "category": "game-and-oddball-video",
+   "container": "SMK",
+   "video": "Smacker",
+   "audio": "Smacker audio",
+   "file": "game-and-oddball-video/smacker.smk",
+   "url": "https://fate-suite.ffmpeg.org/smacker/wetlogo.smk",
+   "bytes": 724092,
+   "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "100 video frames; 156552 audio samples, peak 0 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "bink-video",
+   "name": "Bink video",
+   "category": "game-and-oddball-video",
+   "container": "BIK",
+   "video": "Bink",
+   "audio": null,
+   "file": "game-and-oddball-video/bink-video.bik",
+   "url": "https://fate-suite.ffmpeg.org/bink/hol2br.bik",
+   "bytes": 466944,
+   "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "20 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "id-roq-quake-3-logo",
+   "name": "id RoQ (Quake 3 logo)",
+   "category": "game-and-oddball-video",
+   "container": "RoQ",
+   "video": "RoQ",
+   "audio": "RoQ DPCM",
+   "file": "game-and-oddball-video/id-roq-quake-3-logo.roq",
+   "url": "https://fate-suite.ffmpeg.org/idroq/idlogo.roq",
+   "bytes": 2895296,
+   "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "210 video frames; 258300 audio samples, peak -0.1 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "autodesk-flic-640x480",
+   "name": "Autodesk FLIC 640x480",
+   "category": "game-and-oddball-video",
+   "container": "FLI",
+   "video": "FLIC",
+   "audio": null,
+   "file": "game-and-oddball-video/autodesk-flic-640x480.fli",
+   "url": "https://fate-suite.ffmpeg.org/fli/jj00c2.fli",
+   "bytes": 901390,
+   "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "27 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "autodesk-flc-320x200",
+   "name": "Autodesk FLC 320x200",
+   "category": "game-and-oddball-video",
+   "container": "FLC",
+   "video": "FLIC",
+   "audio": null,
+   "file": "game-and-oddball-video/autodesk-flc-320x200.flc",
+   "url": "https://samples.ffmpeg.org/fli-flc/2422.FLC",
+   "bytes": 14572,
+   "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "28 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "nuppelvideo-mythtv",
+   "name": "NuppelVideo (MythTV)",
+   "category": "game-and-oddball-video",
+   "container": "NUV",
+   "video": "NuppelVideo/RTJpeg",
+   "audio": "PCM s16le",
+   "file": "game-and-oddball-video/nuppelvideo-mythtv.nuv",
+   "url": "https://fate-suite.ffmpeg.org/nuv/Today.nuv",
+   "bytes": 355076,
+   "whyBrowserCant": "NuppelVideo container/codec unsupported",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "vivo-2-vivoactive",
+   "name": "Vivo 2 (VivoActive)",
+   "category": "game-and-oddball-video",
+   "container": "VIV",
+   "video": "Vivo v2 (ffprobe: unknown; demux+audio only likely)",
+   "audio": "Siren",
+   "file": "game-and-oddball-video/vivo-2-vivoactive.viv",
+   "url": "https://streams.videolan.org/samples/vivo/5TH_1.VIV",
+   "bytes": 5675040,
+   "whyBrowserCant": "Vivo unsupported; note ffmpeg cannot decode this video layer either - good negative test",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": false,
+    "audio": true,
+    "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [in#0/vivo @ 0x7aec24000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": false,
+     "audio": false
+    },
+    "note": "expected failure: FFmpeg (and so VLC) cannot decode Vivo 2 video either"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "playstation-str-mdec-xa",
+   "name": "PlayStation STR (MDEC + XA)",
+   "category": "game-and-oddball-video",
+   "container": "STR",
+   "video": "MDEC",
+   "audio": "ADPCM XA",
+   "file": "game-and-oddball-video/playstation-str-mdec-xa.str",
+   "url": "https://fate-suite.ffmpeg.org/psx-str/descent-partial.str",
+   "bytes": 2097152,
+   "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": false,
+     "audio": false
+    },
+    "note": "expected failure: native VLC 3.0.24 also shows no picture; VLC has no PSX STR demuxer"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "ac-3-5-1-448k",
+   "name": "AC-3 5.1 448k",
+   "category": "rare-and-surround-audio",
+   "container": "raw AC-3",
+   "video": null,
+   "audio": "AC-3 5.1",
+   "file": "rare-and-surround-audio/ac-3-5-1-448k.ac3",
+   "url": "https://fate-suite.ffmpeg.org/ac3/monsters_inc_5.1_448_small.ac3",
+   "bytes": 100000,
+   "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "516096 audio samples, peak -74.7 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "e-ac-3-5-1-with-spx",
+   "name": "E-AC-3 5.1 with SPX",
+   "category": "rare-and-surround-audio",
+   "container": "raw E-AC-3",
+   "video": null,
+   "audio": "E-AC-3",
+   "file": "rare-and-surround-audio/e-ac-3-5-1-with-spx.eac3",
+   "url": "https://fate-suite.ffmpeg.org/eac3/csi_miami_5.1_256_spx_small.eac3",
+   "bytes": 48128,
+   "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "433152 audio samples, peak -10.3 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "dts-es",
+   "name": "DTS-ES",
+   "category": "rare-and-surround-audio",
+   "container": "raw DTS",
+   "video": null,
+   "audio": "DTS-ES",
+   "file": "rare-and-surround-audio/dts-es.dts",
+   "url": "https://fate-suite.ffmpeg.org/dts/dts_es.dts",
+   "bytes": 503000,
+   "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "896000 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "dolby-truehd-atmos-8ch",
+   "name": "Dolby TrueHD Atmos (8ch)",
+   "category": "rare-and-surround-audio",
+   "container": "raw TrueHD",
+   "video": null,
+   "audio": "TrueHD",
+   "file": "rare-and-surround-audio/dolby-truehd-atmos-8ch.thd",
+   "url": "https://fate-suite.ffmpeg.org/truehd/atmos.thd",
+   "bytes": 58738,
+   "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere); ffprobe needs -f truehd",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "40960 audio samples, peak -8 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "audio": false
+    },
+    "note": "plays about half the time: its 0.1 s of audio only leaves the decoder at end-of-stream drain, right at the lateness limit of VLC's audio core (same as the WMA Lossless clip)"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "mlp-440-hz",
+   "name": "MLP 440 Hz",
+   "category": "rare-and-surround-audio",
+   "container": "raw MLP",
+   "video": null,
+   "audio": "MLP",
+   "file": "rare-and-surround-audio/mlp-440-hz.mlp",
+   "url": "https://samples.ffmpeg.org/A-codecs/lossless/mlp/440hz.mlp",
+   "bytes": 390966,
+   "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "882000 audio samples, peak -12 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "musepack-sv8",
+   "name": "Musepack SV8",
+   "category": "rare-and-surround-audio",
+   "container": "MPC",
+   "video": null,
+   "audio": "Musepack SV8",
+   "file": "rare-and-surround-audio/musepack-sv8.mpc",
+   "url": "https://fate-suite.ffmpeg.org/musepack/inside-mp8.mpc",
+   "bytes": 243306,
+   "whyBrowserCant": "No browser Musepack decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "884736 audio samples, peak -1.5 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "musepack-sv7",
+   "name": "Musepack SV7",
+   "category": "rare-and-surround-audio",
+   "container": "MPC",
+   "video": null,
+   "audio": "Musepack SV7",
+   "file": "rare-and-surround-audio/musepack-sv7.mpc",
+   "url": "https://fate-suite.ffmpeg.org/musepack/inside-mp7.mpc",
+   "bytes": 249701,
+   "whyBrowserCant": "No browser Musepack decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "884736 audio samples, peak -1.5 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "monkey-s-audio",
+   "name": "Monkey's Audio",
+   "category": "rare-and-surround-audio",
+   "container": "APE",
+   "video": null,
+   "audio": "APE",
+   "file": "rare-and-surround-audio/monkey-s-audio.ape",
+   "url": "https://fate-suite.ffmpeg.org/lossless-audio/NoLegacy-cut.ape",
+   "bytes": 100000,
+   "whyBrowserCant": "No browser APE decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "27648 audio samples, peak 0 dB; 4 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "audio": false
+    },
+    "note": "truncated test file: native FFmpeg reports \"Error decoding frame\" too, and how much decodes varies from run to run"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "true-audio-6-6-mb",
+   "name": "True Audio (6.6 MB)",
+   "category": "rare-and-surround-audio",
+   "container": "TTA",
+   "video": null,
+   "audio": "TTA",
+   "file": "rare-and-surround-audio/true-audio-6-6-mb.tta",
+   "url": "https://samples.ffmpeg.org/A-codecs/lossless/luckynight.tta",
+   "bytes": 6595217,
+   "whyBrowserCant": "No browser TTA decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "1013760 audio samples, peak -0.2 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "amr-nb-12-2k",
+   "name": "AMR-NB 12.2k",
+   "category": "rare-and-surround-audio",
+   "container": "AMR",
+   "video": null,
+   "audio": "AMR-NB",
+   "file": "rare-and-surround-audio/amr-nb-12-2k.amr",
+   "url": "https://fate-suite.ffmpeg.org/amrnb/12.2k.amr",
+   "bytes": 9094,
+   "whyBrowserCant": "AMR not supported by desktop Chrome",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "45440 audio samples, peak -2.9 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "shorten",
+   "name": "Shorten",
+   "category": "rare-and-surround-audio",
+   "container": "SHN",
+   "video": null,
+   "audio": "Shorten",
+   "file": "rare-and-surround-audio/shorten.shn",
+   "url": "https://samples.ffmpeg.org/archive/audio/shorten/shn++shorten++Track01.shn",
+   "bytes": 1731745,
+   "whyBrowserCant": "No browser Shorten decoder",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "882688 audio samples, peak -2.7 dB; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "audio": false
+    },
+    "note": "expected failure: native VLC 3.0.24 also cannot play Shorten (no demuxer claims it)"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "hevc-main10-dolby-vision-p7-in-mkv",
+   "name": "HEVC Main10 Dolby Vision P7 in MKV",
+   "category": "modern-codecs",
+   "container": "MKV",
+   "video": "HEVC Main 10 (DV profile 7)",
+   "audio": null,
+   "file": "modern-codecs/hevc-main10-dolby-vision-p7-in-mkv.mkv",
+   "url": "https://fate-suite.ffmpeg.org/mkv/dovi-p7-hvce.mkv",
+   "bytes": 673212,
+   "whyBrowserCant": "Chrome decodes HEVC only with platform HW support (Win/macOS/Android/ChromeOS, Chrome 107+), MKV via <video> is unofficial, and DV P7 dual-layer is unsupported everywhere",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "1 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": false
+    },
+    "note": "known issue: the single 4K Main10 frame decodes but misses its display deadline"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": true
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "dvb-subtitles-in-ts",
+   "name": "DVB subtitles in TS",
+   "category": "subtitles-and-captions",
+   "container": "MPEG-TS",
+   "video": "MPEG-2",
+   "audio": "MP3 + DVB subtitles",
+   "file": "subtitles-and-captions/dvb-subtitles-in-ts.ts",
+   "url": "https://fate-suite.ffmpeg.org/sub/dvbsubtest_filter.ts",
+   "bytes": 78960,
+   "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4); DVB bitmap subtitles never rendered by browsers",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": false,
+    "audio": false,
+    "note": "0 video frames; no audio decoded; error: [in#0/mpegts @ 0xc79004000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": false,
+     "audio": false
+    },
+    "note": "expected failure: native VLC 3.0.24 also shows no picture for this 77 KB fragment"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": false
+  },
+  {
+   "id": "vobsub-idx-sub",
+   "name": "VobSub (.idx + .sub) over a video",
+   "category": "subtitles-and-captions",
+   "container": "VobSub (MPEG-PS)",
+   "video": null,
+   "audio": null,
+   "file": "subtitles-and-captions/vobsub.idx",
+   "url": "https://fate-suite.ffmpeg.org/sub/vobsub.idx",
+   "bytes": 2591,
+   "whyBrowserCant": "VobSub bitmap subtitles unsupported; companion https://fate-suite.ffmpeg.org/sub/vobsub.idx (2591 bytes, verified)",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": null,
+    "subtitles": true,
+    "note": "73 KiB of subpictures decoded"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "subtitle track": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": null,
+    "webkit": null,
+    "firefox": null
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "mpeg-2-es-with-eia-608-closed-captions",
+   "name": "MPEG-2 ES with EIA-608 closed captions",
+   "category": "subtitles-and-captions",
+   "container": "MPEG-2 ES",
+   "video": "MPEG-2",
+   "audio": null,
+   "file": "subtitles-and-captions/mpeg-2-es-with-eia-608-closed-captions.m2v",
+   "url": "https://fate-suite.ffmpeg.org/sub/Closedcaption_rollup.m2v",
+   "bytes": 1580076,
+   "whyBrowserCant": "Raw MPEG-2 ES + embedded CEA-608 unsupported",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "135 video frames; 2 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "mpeg-4-asp-vorbis-16-ass-ssa-tracks",
+   "name": "MPEG-4 ASP + Vorbis + 16 ASS/SSA tracks",
+   "category": "subtitles-and-captions",
+   "container": "MKV",
+   "video": "MPEG-4 ASP",
+   "audio": "Vorbis + ASS subs",
+   "file": "subtitles-and-captions/mpeg-4-asp-vorbis-16-ass-ssa-tracks.mkv",
+   "url": "https://streams.videolan.org/samples/Matroska/mewmew/mewmew-vorbis-ssa.mkv",
+   "bytes": 8136447,
+   "whyBrowserCant": "ASS/SSA styling needs libass; MPEG-4 ASP not decoded by Chrome",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "240 video frames; 961664 audio samples, peak 0 dB; 46 decode warnings/errors logged"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": false,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "h-264-2x-mp3-vobsub-in-mkv",
+   "name": "H.264 + 2x MP3 + VobSub in MKV",
+   "category": "subtitles-and-captions",
+   "container": "MKV",
+   "video": "H.264",
+   "audio": "MP3 x2 + dvd_subtitle",
+   "file": "subtitles-and-captions/h-264-2x-mp3-vobsub-in-mkv.mkv",
+   "url": "https://samples.ffmpeg.org/archive/subtitles/dvdsub/matroska+h264+mp3+dvdsub+reddwarf-vobsub.mkv",
+   "bytes": 5763403,
+   "whyBrowserCant": "Bitmap VobSub in MKV unsupported; multiple audio tracks not switchable in <video>",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "250 video frames; 963072 audio samples, peak -11.5 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": false,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "snes-spc",
+   "name": "SNES SPC",
+   "category": "chiptune-tracker-midi",
+   "container": "SPC",
+   "video": null,
+   "audio": "SPC700 (gme)",
+   "file": "chiptune-tracker-midi/snes-spc.spc",
+   "url": "https://streams.videolan.org/samples/game-formats/snes/spc/forest_miku.spc",
+   "bytes": 66048,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0x8fd00c000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "nes-nsf-tetris-gb-rip",
+   "name": "NES NSF (Tetris GB rip)",
+   "category": "chiptune-tracker-midi",
+   "container": "NSF",
+   "video": null,
+   "audio": "NES APU (gme)",
+   "file": "chiptune-tracker-midi/nes-nsf-tetris-gb-rip.nsf",
+   "url": "https://raw.githubusercontent.com/libgme/game-music-emu/master/test.nsf",
+   "bytes": 749,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0xb8d00c000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "sega-genesis-vgz-gzip-vgm",
+   "name": "Sega Genesis VGZ (gzip VGM)",
+   "category": "chiptune-tracker-midi",
+   "container": "VGZ",
+   "video": null,
+   "audio": "YM2612/SN76489 (gme)",
+   "file": "chiptune-tracker-midi/sega-genesis-vgz-gzip-vgm.vgz",
+   "url": "https://raw.githubusercontent.com/libgme/game-music-emu/master/test.vgz",
+   "bytes": 32857,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0x8fcc28000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "audio": false
+    },
+    "note": "expected failure: native VLC 3.0.24 also fails: after gunzip, the AIFF probe claims the stream before gme"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "c64-sid-rob-hubbard-commando",
+   "name": "C64 SID (Rob Hubbard - Commando)",
+   "category": "chiptune-tracker-midi",
+   "container": "SID",
+   "video": null,
+   "audio": "MOS 6581 (sidplay2)",
+   "file": "chiptune-tracker-midi/c64-sid-rob-hubbard-commando.sid",
+   "url": "https://hvsc.brona.dk/HVSC/C64Music/MUSICIANS/H/Hubbard_Rob/Commando.sid",
+   "bytes": 4165,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec; NOTE upstream wasm build.sh passes --disable-sidplay2",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0xbc6c28000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "audio": false
+    },
+    "note": "expected failure: sidplay2 is disabled in VLC's upstream emscripten contrib set"
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "standard-midi-file",
+   "name": "Standard MIDI file",
+   "category": "chiptune-tracker-midi",
+   "container": "MID",
+   "video": null,
+   "audio": "MIDI (fluidsynth + soundfont)",
+   "file": "chiptune-tracker-midi/standard-midi-file.mid",
+   "url": "https://samples.ffmpeg.org/A-codecs/suite/MIDI/canyon.mid",
+   "bytes": 33883,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec; VLC needs a SoundFont (.sf2) supplied",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0x8a0c28000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
+   "name": "AXELF.MOD (15-sample Soundtracker, no M.K. tag)",
+   "category": "chiptune-tracker-midi",
+   "container": "MOD",
+   "video": null,
+   "audio": "MOD (modplug/openmpt)",
+   "file": "chiptune-tracker-midi/axelf-mod-15-sample-soundtracker-no-m-k-.mod",
+   "url": "https://api.modarchive.org/downloads.php?moduleid=32394",
+   "bytes": 113192,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0x77ac28000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "external-xm",
+   "name": "external.xm",
+   "category": "chiptune-tracker-midi",
+   "container": "XM",
+   "video": null,
+   "audio": "FastTracker 2 (modplug)",
+   "file": "chiptune-tracker-midi/external-xm.xm",
+   "url": "https://api.modarchive.org/downloads.php?moduleid=66187",
+   "bytes": 51355,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0x98cc28000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "sandman-s3m",
+   "name": "Sandman.s3m",
+   "category": "chiptune-tracker-midi",
+   "container": "S3M",
+   "video": null,
+   "audio": "ScreamTracker 3 (modplug)",
+   "file": "chiptune-tracker-midi/sandman-s3m.s3m",
+   "url": "https://api.modarchive.org/downloads.php?moduleid=190000",
+   "bytes": 207392,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0xa2700c000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "for-a-change-it",
+   "name": "For A Change.it",
+   "category": "chiptune-tracker-midi",
+   "container": "IT",
+   "video": null,
+   "audio": "Impulse Tracker (modplug)",
+   "file": "chiptune-tracker-midi/for-a-change-it.it",
+   "url": "https://api.modarchive.org/downloads.php?moduleid=45000",
+   "bytes": 23055,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0x93ac28000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "openmpt-test-xm",
+   "name": "OpenMPT test.xm",
+   "category": "chiptune-tracker-midi",
+   "container": "XM",
+   "video": null,
+   "audio": "FastTracker 2 (modplug)",
+   "file": "chiptune-tracker-midi/openmpt-test-xm.xm",
+   "url": "https://raw.githubusercontent.com/OpenMPT/openmpt/master/test/test.xm",
+   "bytes": 6279,
+   "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; error: [in#0 @ 0xc5300c000] Error opening input: Invalid data found when processing input"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  }
+ ]
+}

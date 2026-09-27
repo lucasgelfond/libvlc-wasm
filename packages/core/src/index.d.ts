@@ -88,6 +88,10 @@ export type PlayerState = 'idle' | 'opening' | 'playing' | 'paused' | 'stopped' 
 export interface Chapters {
   titles: { name: string | null; duration: number; menu: boolean }[];
   chapters: { name: string | null; time: number; duration: number }[];
+  /** Index into `titles` of the title playing, -1 if none. */
+  title: number;
+  /** Index into `chapters` of the chapter playing, -1 if none. */
+  chapter: number;
 }
 
 export interface PlayerEvents {
@@ -166,7 +170,18 @@ export declare class Player extends Emitter<PlayerEvents> {
   setSubtitleDelay(seconds: number): Promise<unknown>;
   setAudioDelay(seconds: number): Promise<unknown>;
   setChapter(index: number): Promise<unknown>;
+  /** Plays title `index` of `chapters.titles` (a DVD title, or the menu). */
   setTitle(index: number): Promise<unknown>;
+  /** Index of the title playing (`chapters.title`). */
+  readonly title: number;
+  /** Index of the chapter playing (`chapters.chapter`). */
+  readonly chapter: number;
+  /** True while a disc menu is on screen; navigate() and the canvas's mouse drive it. */
+  readonly inMenu: boolean;
+  /** Goes to the disc's menu; false if it has none. */
+  menu(): Promise<boolean>;
+  /** Pointer input over the picture (0..1), for UIs that draw it themselves; attach() wires its canvas. */
+  pointer(type: 'move' | 'down' | 'up', x: number, y: number): Promise<boolean>;
   setAspectRatio(ratio: string | null): Promise<unknown>;
   setDeinterlace(enabled: boolean | 'auto', mode?: string): Promise<unknown>;
   setAdjust(values: { brightness?: number; contrast?: number; saturation?: number; hue?: number; gamma?: number } | null): Promise<unknown>;

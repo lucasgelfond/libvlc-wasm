@@ -31,6 +31,8 @@
 #endif
 #include <vlc_common.h>
 #include <vlc_variables.h>
+#include <vlc_window.h>
+#include <vlc_mouse.h>
 
 #include "json.h"
 #include "shared.h"
@@ -118,6 +120,7 @@ typedef struct
     wv_instance_t *inst;
     wv_ring_t ring;
     wv_video_t video;
+    wv_window_t window;
 } wv_player_t;
 
 /* --- audio: selected webaudio module reads p->ring through "amem-data" ------ */
@@ -390,6 +393,13 @@ static void api_player_new(wv_call_t *c)
     var_Create(obj, "webframe-data", VLC_VAR_ADDRESS);
     var_SetAddress(obj, "webframe-data", &p->video);
     var_SetString(obj, "vout", "webframe");
+    /* ...and its window is ours too (native/webwindow.c), so the page's mouse
+     * reaches VLC: DVD menus are clickable. */
+    vlc_mutex_init(&p->window.lock);
+    var_Create(obj, "webwindow-data", VLC_VAR_ADDRESS);
+    var_SetAddress(obj, "webwindow-data", &p->window);
+    var_Create(obj, "window", VLC_VAR_STRING);
+    var_SetString(obj, "window", "webwindow");
     libvlc_audio_set_callbacks(p->mp, audio_unused_play, NULL, NULL, NULL, NULL, r);
     libvlc_audio_output_set(p->mp, "webaudio");
     c->ret_i = (int32_t)(intptr_t)p;
@@ -524,6 +534,8 @@ static void api_chapters(wv_call_t *c)
     }
     json_end_arr(&j);
     if (nc > 0) libvlc_chapter_descriptions_release(ch, nc);
+    json_knum(&j, "title", libvlc_media_player_get_title(MP));
+    json_knum(&j, "chapter", libvlc_media_player_get_chapter(MP));
     json_end_obj(&j);
     c->ret_s = json_take(&j);
 }
@@ -607,6 +619,25 @@ static void api_programs(wv_call_t *c)
 static void api_select_program(wv_call_t *c) { libvlc_media_player_select_program_id(MP, c->i[1]); }
 static void api_previous_frame(wv_call_t *c) { libvlc_media_player_previous_frame(MP); }
 static void api_navigate(wv_call_t *c) { libvlc_media_player_navigate(MP, (unsigned)c->i[1]); }
+/* i1 0 move, 1 press, 2 release; d0, d1 position over the picture, 0..1.
+ * ret 0 when there is a video window to report to. */
+static void api_mouse(wv_call_t *c)
+{
+    wv_window_t *w = &P->window;
+    vlc_mutex_lock(&w->lock);
+    c->ret_i = -1;
+    if (w->wnd != NULL && w->width && w->height) {
+        int x = (int)(c->d[0] * w->width), y = (int)(c->d[1] * w->height);
+        switch (c->i[1]) {
+        case 0: vlc_window_ReportMouseMoved(w->wnd, x, y); break;
+        case 1: vlc_window_ReportMouseMoved(w->wnd, x, y);
+                vlc_window_ReportMousePressed(w->wnd, MOUSE_BUTTON_LEFT); break;
+        case 2: vlc_window_ReportMouseReleased(w->wnd, MOUSE_BUTTON_LEFT); break;
+        }
+        c->ret_i = 0;
+    }
+    vlc_mutex_unlock(&w->lock);
+}
 static void api_set_teletext(wv_call_t *c)
 {
     if (c->i[2] >= 0) libvlc_video_set_teletext_transparency(MP, c->i[2]);
@@ -744,7 +775,7 @@ static void api_thumbnail(wv_call_t *c)
     X(equalizer_presets) X(parse) X(thumbnail) X(set_next) X(set_abloop) \
     X(programs) X(select_program) X(previous_frame) X(navigate) X(set_teletext) \
     X(marquee) X(logo) X(set_stereomode) X(set_mixmode) X(set_spu_scale) \
-    X(set_crop) X(record) X(set_int_option)
+    X(set_crop) X(record) X(set_int_option) X(mouse)
 
 #define X_FN(name) api_##name,
 #define X_NAME(name) #name ","

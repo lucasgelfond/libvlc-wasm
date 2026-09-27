@@ -15,7 +15,8 @@ NAME=libvlc
 [ "${VARIANT:-default}" = sout ] && NAME=libvlc-sout
 OBJ=/cache/link$SUFFIX
 PROFILE=${PROFILE:-release}
-mkdir -p "$OBJ" "$OUT"
+STAGE="$OBJ/stage"
+mkdir -p "$OBJ" "$OUT" "$STAGE"
 
 case "$PROFILE" in
   release) OPT="-O3"; LINK_OPT="-O3 --profiling-funcs -sASSERTIONS=0" ;;
@@ -35,15 +36,12 @@ emscripten_inhibit'
 
 echo "==> compiling native/"
 CFLAGS="$OPT -pthread -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm -std=gnu17 -Wall -Wno-unused-parameter"
-emcc $CFLAGS -DHAVE_CONFIG_H -I"$B" -I"$S/include" \
-  -DMODULE_NAME=webaudio -DMODULE_STRING='"webaudio"' \
-  -c "$N/webaudio.c" -o "$OBJ/webaudio.o"
-emcc $CFLAGS -DHAVE_CONFIG_H -I"$B" -I"$S/include" \
-  -DMODULE_NAME=webcodecs -DMODULE_STRING='"webcodecs"' \
-  -c "$N/webcodecs.c" -o "$OBJ/webcodecs.o"
-emcc $CFLAGS -DHAVE_CONFIG_H -I"$B" -I"$S/include" \
-  -DMODULE_NAME=webframe -DMODULE_STRING='"webframe"' \
-  -c "$N/webframe.c" -o "$OBJ/webframe.o"
+# Our own VLC modules, registered as static modules below.
+OURS="webaudio webcodecs webframe webwindow"
+for m in $OURS; do
+  emcc $CFLAGS -DHAVE_CONFIG_H -I"$B" -I"$S/include" \
+    -DMODULE_NAME=$m -DMODULE_STRING="\"$m\"" -c "$N/$m.c" -o "$OBJ/$m.o"
+done
 # sout (transcoding, remuxing, recording) is present when VLC was configured with it.
 HAS_SOUT=$(grep -q '^#define ENABLE_SOUT 1' "$B/config.h" && echo 1 || echo 0)
 emcc $CFLAGS -DWV_HAS_SOUT=$HAS_SOUT -DHAVE_CONFIG_H -I"$B" -I"$S/include" -c "$N/bridge.c" -o "$OBJ/bridge.o"
@@ -62,7 +60,7 @@ for a in "$B"/modules/.libs/lib*_plugin.a; do
   PROTOS="${PROTOS}VLC_ENTRY_FUNC($entry);\n"
   LIST="${LIST}    $entry,\n"
 done
-for ours in webaudio webcodecs webframe; do
+for ours in $OURS; do
   PROTOS="${PROTOS}VLC_ENTRY_FUNC(vlc_entry__$ours);\n"
   LIST="${LIST}    vlc_entry__$ours,\n"
 done
@@ -78,7 +76,7 @@ CONTRIB=$(ls "$C"/lib/*.a | grep -v -e opencv -e glslang -e SPIRV -e HLSL -e OGL
 
 echo "==> linking"
 emcc $LINK_OPT -pthread -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm \
-  "$OBJ/bridge.o" "$OBJ/compat.o" "$OBJ/webaudio.o" "$OBJ/webcodecs.o" "$OBJ/webframe.o" "$OBJ/vlc-modules.o" \
+  "$OBJ/bridge.o" "$OBJ/compat.o" $(for m in $OURS; do printf '%s ' "$OBJ/$m.o"; done) "$OBJ/vlc-modules.o" \
   -Wl,--start-group $PLUGINS $HELPERS \
   "$B/lib/.libs/libvlc.a" "$B/src/.libs/libvlccore.a" "$B/compat/.libs/libcompat.a" \
   $CONTRIB -Wl,--end-group \
@@ -91,7 +89,7 @@ emcc $LINK_OPT -pthread -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm \
   -sFORCE_FILESYSTEM=1 -lworkerfs.js -lnodefs.js \
   -sEXPORTED_FUNCTIONS=_malloc,_free,_wv_submit,_wv_api_names,_wv_call_layout,_wv_wc_opened,_wv_wc_push,_wv_wc_drained,_wv_wc_error,_wv_wc_free \
   -sEXPORTED_RUNTIME_METHODS=FS,WORKERFS,NODEFS,UTF8ToString,stringToNewUTF8,HEAPU8,HEAP32,HEAPF64,wasmMemory \
-  -o "$OUT/$NAME.js"
+  -o "$STAGE/$NAME.js"
 
 # Exceptions: everything was compiled with the legacy wasm EH encoding
 # (try/catch). Firefox warns that it is deprecated, and linking with
@@ -102,11 +100,16 @@ echo "==> translating exception handling to exnref (try_table)"
 # The feature flags must be explicit: with --detect-features the pass finds no
 # EH feature in the (stripped) target_features section and silently does nothing.
 # -g keeps the function names that --profiling-funcs put there.
-wasm-opt "$OUT/$NAME.wasm" -g --translate-to-exnref \
+wasm-opt "$STAGE/$NAME.wasm" -g --translate-to-exnref \
   --enable-threads --enable-bulk-memory --enable-bulk-memory-opt --enable-exception-handling \
   --enable-simd --enable-nontrapping-float-to-int --enable-sign-ext --enable-mutable-globals \
   --enable-reference-types --enable-multivalue \
-  -o "$OUT/$NAME.wasm.tmp" && mv "$OUT/$NAME.wasm.tmp" "$OUT/$NAME.wasm"
+  -o "$STAGE/$NAME.wasm.tmp" && mv "$STAGE/$NAME.wasm.tmp" "$STAGE/$NAME.wasm"
 
+# Only now replace what is served, wasm first: a page that loads while this
+# script runs must not get a new loader with the old module (or an untranslated
+# one) -- that fails with 'Import #0 "env": module is not an object'.
+mv "$STAGE/$NAME.wasm" "$OUT/$NAME.wasm"
+mv "$STAGE/$NAME.js" "$OUT/$NAME.js"
 cp "$OBJ/vlc-modules.c" "$OUT/$NAME.modules.c"
 ls -la "$OUT"

@@ -1,0 +1,42 @@
+From: libvlc-wasm <noreply@libvlc-wasm>
+Subject: [PATCH] dvdnav: selecting title 0 falls back to the title menu
+
+Selecting title 0 ("the menu") only called the root menu, so on discs whose
+only menu is the VMG title menu it failed with "cannot set title/chapter"
+and there was no way back to the menu. Fall back to DVD_MENU_Title, as
+CallRootTitleMenu() already does when the disc is opened.
+---
+--- a/modules/access/dvdnav.c
++++ b/modules/access/dvdnav.c
+@@ -808,11 +808,20 @@
+ 
+         case DEMUX_SET_TITLE:
+             i = va_arg( args, int );
++            /* Title 0 is "the menu": the root menu of the title set, or,
++             * on discs that only have one, the VMG title menu -- the same
++             * fallback as when the disc is opened. */
++            DVDMenuID_t menu = DVD_MENU_Root;
+             if( i == 0 && dvdnav_menu_call( p_sys->dvdnav, DVD_MENU_Root )
+                   != DVDNAV_STATUS_OK )
+             {
+-                msg_Warn( p_demux, "cannot set title/chapter" );
+-                return VLC_EGENERIC;
++                menu = DVD_MENU_Title;
++                if( dvdnav_menu_call( p_sys->dvdnav, DVD_MENU_Title )
++                      != DVDNAV_STATUS_OK )
++                {
++                    msg_Warn( p_demux, "cannot set title/chapter" );
++                    return VLC_EGENERIC;
++                }
+             }
+ 
+             if( i != 0 )
+@@ -830,7 +839,7 @@
+             if( i != 0 )
+                 p_sys->cur_seekpoint = 0;
+             else
+-                MenuIDToSeekpoint( DVD_MENU_Root, &p_sys->cur_seekpoint );
++                MenuIDToSeekpoint( menu, &p_sys->cur_seekpoint );
+             RandomAccessCleanup( p_sys );
+             return VLC_SUCCESS;
+ 

@@ -25,7 +25,7 @@ export class Player extends Emitter {
     this.state = 'idle';
     this.duration = 0;
     this.tracks = [];
-    this.chapters = { titles: [], chapters: [] };
+    this.chapters = { titles: [], chapters: [], title: -1, chapter: -1 };
     this.seekable = false;
     this._time = 0;
     this._timeAt = 0;
@@ -100,10 +100,56 @@ export class Player extends Emitter {
    */
   attach(canvas, opts = {}) {
     this.renderer?.destroy();
+    this._unlistenPointer?.();
     this.canvas = canvas;
     this.renderer = new Renderer(canvas, opts);
     this.renderer.bind(this.vlc._memory, this.videoPtr);
     this._startLoop();
+    this._listenPointer(canvas);
+  }
+
+  // DVD menus take the mouse: while one is on screen, pointer events on the
+  // canvas go to VLC (hover highlights a button, a click activates it).
+  _listenPointer(canvas) {
+    if (typeof canvas.addEventListener !== 'function' || typeof canvas.getBoundingClientRect !== 'function') return;
+    let pending = null;
+    const send = (type, e) => {
+      if (!this.inMenu) return;
+      const at = this._pictureCoords(e.clientX, e.clientY);
+      if (!at) return;
+      if (type === 'move') {
+        // At most one move per frame: each is a round trip to VLC.
+        if (!pending) requestAnimationFrame(() => { const p = pending; pending = null; this.pointer('move', p.x, p.y).catch(() => {}); });
+        pending = at;
+      } else {
+        this.pointer(type, at.x, at.y).catch(() => {});
+      }
+    };
+    const move = (e) => send('move', e);
+    const down = (e) => { if (e.button === 0) send('down', e); };
+    const up = (e) => { if (e.button === 0) send('up', e); };
+    canvas.addEventListener('pointermove', move);
+    canvas.addEventListener('pointerdown', down);
+    canvas.addEventListener('pointerup', up);
+    this._unlistenPointer = () => {
+      canvas.removeEventListener('pointermove', move);
+      canvas.removeEventListener('pointerdown', down);
+      canvas.removeEventListener('pointerup', up);
+    };
+  }
+
+  /** Page coordinates to 0..1 over the drawn picture, or null outside it. */
+  _pictureCoords(clientX, clientY) {
+    const r = this.renderer;
+    if (!r?.width || !this.canvas) return null;
+    const box = this.canvas.getBoundingClientRect();
+    const src = (r.width * r.sar) / r.height, dst = box.width / box.height;
+    let w = box.width, h = box.height;
+    if (r.fit === 'contain') { if (src > dst) h = w / src; else w = h * src; }
+    else if (r.fit === 'cover') { if (src > dst) w = h * src; else h = w / src; }
+    const x = (clientX - box.left - (box.width - w) / 2) / w;
+    const y = (clientY - box.top - (box.height - h) / 2) / h;
+    return x >= 0 && x <= 1 && y >= 0 && y <= 1 ? { x, y } : null;
   }
 
   _startLoop() {
@@ -249,7 +295,34 @@ export class Player extends Emitter {
   setAudioDelay(s) { return this._call('set_audio_delay', { d: [s * 1e6] }); }
 
   setChapter(index) { return this._call('set_chapter', { i: [0, index] }); }
+  /** Plays title `index` of `player.chapters.titles` (DVD titles, or editions in some MKVs). */
   setTitle(index) { return this._call('set_title', { i: [0, index] }); }
+
+  /** Index of the title playing, -1 if the media has none. */
+  get title() { return this.chapters.title; }
+  /** Index of the chapter playing within the title, -1 if none. */
+  get chapter() { return this.chapters.chapter; }
+  /** True while a disc menu is on screen: navigate() and the mouse drive it. */
+  get inMenu() { return !!this.chapters.titles[this.chapters.title]?.menu; }
+
+  /** Goes to the disc's menu (the first menu title), if it has one. */
+  async menu() {
+    const i = this.chapters.titles.findIndex((t) => t.menu);
+    if (i < 0) return false;
+    await this.setTitle(i);
+    return true;
+  }
+
+  /**
+   * Reports pointer input over the picture to VLC, for UIs that draw it
+   * themselves (attach() does this on its canvas). x, y are 0..1 over the
+   * picture. Resolves false when there is no video to point at.
+   * @param {'move'|'down'|'up'} type
+   */
+  async pointer(type, x, y) {
+    const { i } = await this._call('mouse', { i: [0, { move: 0, down: 1, up: 2 }[type] ?? 0], d: [x, y] });
+    return i === 0;
+  }
 
   /** '16:9', '4:3', ... or null for the source's own. */
   setAspectRatio(ratio) { return this._call('set_aspect', { s: [ratio] }); }
@@ -420,6 +493,7 @@ export class Player extends Emitter {
 
   async destroy() {
     cancelAnimationFrame(this._raf);
+    this._unlistenPointer?.();
     this._wakeLock(false);
     this.renderer?.destroy();
     this.renderer = null;
@@ -461,7 +535,7 @@ export class Player extends Emitter {
 
   async _refreshChapters() {
     const { value } = await this._call('chapters', {}, 'json');
-    this.chapters = value ?? { titles: [], chapters: [] };
+    this.chapters = value ?? { titles: [], chapters: [], title: -1, chapter: -1 };
     // VLC's Matroska demuxer prefixes chapter names with a space.
     for (const c of [...this.chapters.titles, ...this.chapters.chapters]) c.name = c.name?.trim() ?? null;
     this.emit('chapters', this.chapters);

@@ -11,6 +11,9 @@
 #include <stdatomic.h>
 #include <stdint.h>
 
+#include <vlc_common.h>
+#include <vlc_threads.h> /* vlc_mutex_t */
+
 #define WV_RING_MAGIC 0x57564152u /* "WVAR" */
 
 typedef struct wv_ring
@@ -58,5 +61,15 @@ typedef struct wv_video
     uint32_t sar_num;             /* 24 sample aspect ratio of the picture */
     uint32_t sar_den;             /* 25 */
 } wv_video_t;
+
+/* Pointer input for the picture: webwindow.c is the vout's window, and the
+ * bridge reports the page's mouse through it, so VLC maps it onto the video
+ * (DVD menu buttons, and anything else that listens to vout mouse events). */
+typedef struct wv_window
+{
+    vlc_mutex_t lock;
+    struct vlc_window *wnd;       /* NULL while no video output is open */
+    unsigned width, height;       /* the window VLC asked for (picture size) */
+} wv_window_t;
 
 #endif

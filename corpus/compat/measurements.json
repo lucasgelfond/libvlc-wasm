@@ -1,0 +1,1445 @@
+{
+ "tools": {
+  "ffmpeg": "ffmpeg version 9.0.2"
+ },
+ "vlc": {},
+ "ffmpeg": {
+  "realvideo-3-cook": {
+   "video": {
+    "streams": [
+     "audio:cook",
+     "video:rv30"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 109
+   },
+   "audio": {
+    "streams": [
+     "audio:cook",
+     "video:rv30"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 161792,
+    "peakDb": -6
+   }
+  },
+  "realvideo-g2-svt": {
+   "video": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": "[in#0 @ 0x957004000] Invalid stream index 1 for index at pos 726206",
+    "errorLines": 71,
+    "frames": 144
+   },
+   "audio": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": "[in#0 @ 0x839004000] Invalid stream index 1 for index at pos 726206",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "realvideo-4-cook-rmvb": {
+   "video": {
+    "streams": [
+     "audio:cook",
+     "video:rv40"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 240
+   },
+   "audio": {
+    "streams": [
+     "audio:cook",
+     "video:rv40"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 884736,
+    "peakDb": -24.3
+   }
+  },
+  "realaudio-cook": {
+   "video": {
+    "streams": [
+     "audio:cook"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:cook"
+    ],
+    "firstError": "[in#0/rm @ 0x8bd004000] Failed to fully read block",
+    "errorLines": 1,
+    "samples": 487424,
+    "peakDb": -2.5
+   }
+  },
+  "realaudio-sipr-8-5k": {
+   "video": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 88
+   },
+   "audio": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 80352,
+    "peakDb": -4.2
+   }
+  },
+  "realaudio-28-8": {
+   "video": {
+    "streams": [
+     "audio:ra_288"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:ra_288"
+    ],
+    "firstError": "[in#0/rm @ 0xa31004000] Failed to fully read block",
+    "errorLines": 1,
+    "samples": 11520,
+    "peakDb": -1.3
+   }
+  },
+  "realvideo-2-in-matroska": {
+   "video": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": "[null @ 0x844c24280] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 114 >= 114",
+    "errorLines": 7,
+    "frames": 196
+   },
+   "audio": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "realvideo-2-sipr-a-v-sync-bug": {
+   "video": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 124
+   },
+   "audio": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 80352,
+    "peakDb": 0
+   }
+  },
+  "wmv8-x8-intra": {
+   "video": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 124
+   },
+   "audio": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 167424,
+    "peakDb": -14.9
+   }
+  },
+  "wmv7": {
+   "video": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv1"
+    ],
+    "firstError": "[in#0/asf @ 0x856c28000] packet fragment position invalid 0,0 not in 0",
+    "errorLines": 1,
+    "frames": 149
+   },
+   "audio": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv1"
+    ],
+    "firstError": "[in#0/asf @ 0x756c24000] packet fragment position invalid 0,0 not in 0",
+    "errorLines": 1,
+    "samples": 334848,
+    "peakDb": -5.1
+   }
+  },
+  "wmv9-vc-1-simple-main-raw-rcv": {
+   "video": {
+    "streams": [
+     "video:wmv3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 25
+   },
+   "audio": {
+    "streams": [
+     "video:wmv3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "ms-mpeg4-v3-divx-in-asf": {
+   "video": {
+    "streams": [
+     "video:msmpeg4v3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 14
+   },
+   "audio": {
+    "streams": [
+     "video:msmpeg4v3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "wma-voice-11k": {
+   "video": {
+    "streams": [
+     "audio:wmavoice"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:wmavoice"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 80160,
+    "peakDb": 0
+   }
+  },
+  "wma-lossless-24-bit": {
+   "video": {
+    "streams": [
+     "audio:wmalossless"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:wmalossless"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 20286,
+    "peakDb": 0
+   }
+  },
+  "ms-screen-codec-2-wmv9-screen": {
+   "video": {
+    "streams": [
+     "video:mss2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 2
+   },
+   "audio": {
+    "streams": [
+     "video:mss2"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "ms-mpeg4-v1": {
+   "video": {
+    "streams": [
+     "video:msmpeg4v1"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 50
+   },
+   "audio": {
+    "streams": [
+     "video:msmpeg4v1"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "xvid-mp3": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "[mpeg4 @ 0x708c70e00] Error at MB: 60",
+    "errorLines": 424,
+    "frames": 234
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "[aist#0:1/mp3 @ 0xb17004600] [dec:mp3float @ 0xb1700c280] Error submitting packet to decoder: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 940032,
+    "peakDb": -15.4
+   }
+  },
+  "divx-5-mp3": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "[in#0/avi @ 0xc18c24000] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
+    "errorLines": 1,
+    "frames": 248
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "[in#0/avi @ 0x910c24000] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
+    "errorLines": 1,
+    "samples": 4608,
+    "peakDb": -59.2
+   }
+  },
+  "cinepak": {
+   "video": {
+    "streams": [
+     "video:cinepak",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 50
+   },
+   "audio": {
+    "streams": [
+     "video:cinepak",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 115763,
+    "peakDb": 0
+   }
+  },
+  "indeo-3": {
+   "video": {
+    "streams": [
+     "video:indeo3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 40
+   },
+   "audio": {
+    "streams": [
+     "video:indeo3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "indeo-4-partial": {
+   "video": {
+    "streams": [
+     "video:indeo4",
+     "audio:pcm_u8"
+    ],
+    "firstError": "[indeo4 @ 0xc48c31500] Error while decoding band: 0, plane: 0",
+    "errorLines": 2,
+    "frames": 100
+   },
+   "audio": {
+    "streams": [
+     "video:indeo4",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 163170,
+    "peakDb": -1
+   }
+  },
+  "indeo-5": {
+   "video": {
+    "streams": [
+     "video:indeo5",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 133
+   },
+   "audio": {
+    "streams": [
+     "video:indeo5",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 196972,
+    "peakDb": 0
+   }
+  },
+  "motion-jpeg-mu-law-10-mb": {
+   "video": {
+    "streams": [
+     "video:mjpeg",
+     "audio:pcm_mulaw"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 257
+   },
+   "audio": {
+    "streams": [
+     "video:mjpeg",
+     "audio:pcm_mulaw"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 192828,
+    "peakDb": -0.2
+   }
+  },
+  "dvcpro-hd-720p50": {
+   "video": {
+    "streams": [
+     "video:dvvideo"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 1
+   },
+   "audio": {
+    "streams": [
+     "video:dvvideo"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "on2-vp5-speex": {
+   "video": {
+    "streams": [
+     "video:vp5",
+     "audio:speex"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 240
+   },
+   "audio": {
+    "streams": [
+     "video:vp5",
+     "audio:speex"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 320640,
+    "peakDb": -16.3
+   }
+  },
+  "dvd-vob-single-frame-dvd-subs": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 1
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "mpeg-1-system-stream": {
+   "video": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 25
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "dvd-vob-mpeg-2-ac-3-5-mb": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3"
+    ],
+    "firstError": "[mpeg2video @ 0xb86801500] concealing 315 DC, 315 AC, 315 MV errors in I frame",
+    "errorLines": 1,
+    "frames": 181
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 728064,
+    "peakDb": -14.2
+   }
+  },
+  "mpeg-2-field-encoded-ts": {
+   "video": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": "[mpeg2video @ 0x70cc50380] Invalid frame dimensions 0x0.",
+    "errorLines": 1,
+    "frames": 31
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": "[mpeg2video @ 0xc87024380] Invalid frame dimensions 0x0.",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "dts-in-mpeg-ts": {
+   "video": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 777216,
+    "peakDb": -10.4
+   }
+  },
+  "flash-vp6-sorenson-on2": {
+   "video": {
+    "streams": [
+     "video:vp6f"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 100
+   },
+   "audio": {
+    "streams": [
+     "video:vp6f"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "flv-with-h-264-aac": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": "[in#0/flv @ 0x7a9004000] Found invalid index entries, clearing the index.",
+    "errorLines": 1,
+    "frames": 299
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": "[in#0/flv @ 0xa34c24000] Found invalid index entries, clearing the index.",
+    "errorLines": 1,
+    "samples": 444416,
+    "peakDb": -14.1
+   }
+  },
+  "vp6f-nellymoser": {
+   "video": {
+    "streams": [
+     "video:vp6f",
+     "audio:nellymoser"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 63
+   },
+   "audio": {
+    "streams": [
+     "video:vp6f",
+     "audio:nellymoser"
+    ],
+    "firstError": "[aist#0:1/nellymoser @ 0x8c4c20300] [dec:nellymoser @ 0x8c4c28280] Error submitting packet to decoder: Invalid data found when processing input",
+    "errorLines": 46,
+    "samples": 280832,
+    "peakDb": 0
+   }
+  },
+  "3gpp-h-263-amr-nb": {
+   "video": {
+    "streams": [
+     "video:h263",
+     "audio:amr_nb"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 101
+   },
+   "audio": {
+    "streams": [
+     "video:h263",
+     "audio:amr_nb"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 80160,
+    "peakDb": -0.4
+   }
+  },
+  "3gp-h-263-phone-clip": {
+   "video": {
+    "streams": [
+     "video:h263"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 29
+   },
+   "audio": {
+    "streams": [
+     "video:h263"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "sorenson-video-1": {
+   "video": {
+    "streams": [
+     "video:svq1",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 150
+   },
+   "audio": {
+    "streams": [
+     "video:svq1",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 221524,
+    "peakDb": -0.1
+   }
+  },
+  "sorenson-video-3": {
+   "video": {
+    "streams": [
+     "video:svq3"
+    ],
+    "firstError": "[null @ 0xb32c24500] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 9 >= 8",
+    "errorLines": 1,
+    "frames": 10
+   },
+   "audio": {
+    "streams": [
+     "video:svq3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "qdesign-music-2": {
+   "video": {
+    "streams": [
+     "audio:qdm2"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:qdm2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 892928,
+    "peakDb": 0
+   }
+  },
+  "ima4-adpcm": {
+   "video": {
+    "streams": [
+     "audio:adpcm_ima_qt"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:adpcm_ima_qt"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 882176,
+    "peakDb": 0
+   }
+  },
+  "mace-3-1": {
+   "video": {
+    "streams": [
+     "audio:mace3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:mace3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 442020,
+    "peakDb": 0
+   }
+  },
+  "smacker": {
+   "video": {
+    "streams": [
+     "video:smackvideo",
+     "audio:smackaudio"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 100
+   },
+   "audio": {
+    "streams": [
+     "video:smackvideo",
+     "audio:smackaudio"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 156552,
+    "peakDb": 0
+   }
+  },
+  "bink-video": {
+   "video": {
+    "streams": [
+     "video:binkvideo"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 20
+   },
+   "audio": {
+    "streams": [
+     "video:binkvideo"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "id-roq-quake-3-logo": {
+   "video": {
+    "streams": [
+     "audio:roq_dpcm",
+     "video:roq"
+    ],
+    "firstError": "[in#0/roq @ 0x7b900c000] Error during demuxing: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 210
+   },
+   "audio": {
+    "streams": [
+     "audio:roq_dpcm",
+     "video:roq"
+    ],
+    "firstError": "[in#0/roq @ 0x737004000] Error during demuxing: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 258300,
+    "peakDb": -0.1
+   }
+  },
+  "autodesk-flic-640x480": {
+   "video": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 27
+   },
+   "audio": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "autodesk-flc-320x200": {
+   "video": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 28
+   },
+   "audio": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "nuppelvideo-mythtv": {
+   "video": {
+    "streams": [
+     "video:nuv",
+     "audio:pcm_s16le"
+    ],
+    "firstError": "[in#0/nuv @ 0xa1100c000] Error during demuxing: Invalid data found when processing input",
+    "errorLines": 4,
+    "frames": 8
+   },
+   "audio": {
+    "streams": [
+     "video:nuv",
+     "audio:pcm_s16le"
+    ],
+    "firstError": "[null @ 0xbdcc24500] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 662 >= 662",
+    "errorLines": 2,
+    "samples": 36864,
+    "peakDb": 0
+   }
+  },
+  "vivo-2-vivoactive": {
+   "video": {
+    "streams": [
+     "video:none",
+     "audio:siren"
+    ],
+    "firstError": "[in#0/vivo @ 0x7aec24000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
+    "errorLines": 4,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "video:none",
+     "audio:siren"
+    ],
+    "firstError": "[in#0/vivo @ 0xb58c24000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
+    "errorLines": 2,
+    "samples": 159360,
+    "peakDb": -39.6
+   }
+  },
+  "playstation-str-mdec-xa": {
+   "video": {
+    "streams": [
+     "video:mdec",
+     "audio:adpcm_xa"
+    ],
+    "firstError": "[in#0/psxstr @ 0xa2700c000] Error during demuxing: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 89
+   },
+   "audio": {
+    "streams": [
+     "video:mdec",
+     "audio:adpcm_xa"
+    ],
+    "firstError": "[in#0/psxstr @ 0x7acc28000] Error during demuxing: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 447552,
+    "peakDb": -6.3
+   }
+  },
+  "ac-3-5-1-448k": {
+   "video": {
+    "streams": [
+     "audio:ac3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:ac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 516096,
+    "peakDb": -74.7
+   }
+  },
+  "e-ac-3-5-1-with-spx": {
+   "video": {
+    "streams": [
+     "audio:eac3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:eac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 433152,
+    "peakDb": -10.3
+   }
+  },
+  "dts-es": {
+   "video": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 896000,
+    "peakDb": 0
+   }
+  },
+  "dolby-truehd-atmos-8ch": {
+   "video": {
+    "streams": [
+     "audio:truehd"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:truehd"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 40960,
+    "peakDb": -8
+   }
+  },
+  "mlp-440-hz": {
+   "video": {
+    "streams": [
+     "audio:mlp"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:mlp"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 882000,
+    "peakDb": -12
+   }
+  },
+  "musepack-sv8": {
+   "video": {
+    "streams": [
+     "audio:musepack8"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:musepack8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 884736,
+    "peakDb": -1.5
+   }
+  },
+  "musepack-sv7": {
+   "video": {
+    "streams": [
+     "audio:musepack7"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:musepack7"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 884736,
+    "peakDb": -1.5
+   }
+  },
+  "monkey-s-audio": {
+   "video": {
+    "streams": [
+     "audio:ape"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:ape"
+    ],
+    "firstError": "[ape @ 0x73ac70e00] Error decoding frame",
+    "errorLines": 2,
+    "samples": 27648,
+    "peakDb": 0
+   }
+  },
+  "true-audio-6-6-mb": {
+   "video": {
+    "streams": [
+     "audio:tta"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:tta"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 1013760,
+    "peakDb": -0.2
+   }
+  },
+  "amr-nb-12-2k": {
+   "video": {
+    "streams": [
+     "audio:amr_nb"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:amr_nb"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 45440,
+    "peakDb": -2.9
+   }
+  },
+  "shorten": {
+   "video": {
+    "streams": [
+     "audio:shorten"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:shorten"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 882688,
+    "peakDb": -2.7
+   }
+  },
+  "hevc-main10-dolby-vision-p7-in-mkv": {
+   "video": {
+    "streams": [
+     "video:hevc"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 1
+   },
+   "audio": {
+    "streams": [
+     "video:hevc"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "dvb-subtitles-in-ts": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:mp3",
+     "subtitle:dvb_subtitle"
+    ],
+    "firstError": "[in#0/mpegts @ 0xc79004000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
+    "errorLines": 8,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:mp3",
+     "subtitle:dvb_subtitle"
+    ],
+    "firstError": "[in#0/mpegts @ 0xb62c24000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
+    "errorLines": 9,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "vobsub-idx-sub": {
+   "subs": {
+    "streams": [
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "subtitleKiB": 73
+   }
+  },
+  "mpeg-2-es-with-eia-608-closed-captions": {
+   "video": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 135
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "mpeg-4-asp-vorbis-16-ass-ssa-tracks": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:vorbis",
+     "subtitle:ass"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 240
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:vorbis",
+     "subtitle:ass"
+    ],
+    "firstError": "[null @ 0x766c24780] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 39432 >= 39264",
+    "errorLines": 46,
+    "samples": 961664,
+    "peakDb": 0
+   }
+  },
+  "h-264-2x-mp3-vobsub-in-mkv": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:mp3",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 250
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:mp3",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 963072,
+    "peakDb": -11.5
+   }
+  },
+  "snes-spc": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x8d4c28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x8fd00c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "nes-nsf-tetris-gb-rip": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x7bf00c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0xb8d00c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "sega-genesis-vgz-gzip-vgm": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x714c10000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x8fcc28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "c64-sid-rob-hubbard-commando": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x8c300c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0xbc6c28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "standard-midi-file": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0xbc4c28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x8a0c28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "axelf-mod-15-sample-soundtracker-no-m-k-": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x7fb00c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x77ac28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "external-xm": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0xcab00c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x98cc28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "sandman-s3m": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x9c1408000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0xa2700c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "for-a-change-it": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x92cc28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0x93ac28000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  },
+  "openmpt-test-xm": {
+   "video": {
+    "streams": [],
+    "firstError": "[in#0 @ 0xc4900c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "[in#0 @ 0xc5300c000] Error opening input: Invalid data found when processing input",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null
+   }
+  }
+ },
+ "wasm": {}
+}
