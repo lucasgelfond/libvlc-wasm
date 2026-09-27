@@ -13,6 +13,7 @@ type Failure = {
   audio: string | null;
   ffmpeg: boolean;
   vlc: boolean;
+  vlc4?: boolean | null;
   wasmAvformat: boolean | null;
   cause: string;
   wasmError: string;

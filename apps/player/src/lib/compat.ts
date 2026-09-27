@@ -31,6 +31,7 @@ export type Row = {
 	whyBrowserCant: string;
 	libvlcWasm: Cell;
 	nativeVlc: Cell;
+	nativeVlc4: Cell;
 	ffmpegWasm: Cell;
 	ffmpeg: Cell;
 	vlcjs: Cell;
@@ -86,6 +87,7 @@ function row(s: Sample): Row {
 		whyBrowserCant: s.whyBrowserCant ?? '',
 		libvlcWasm: { verdict: lvVerdict, note: lv.note ?? (lv.passed ? 'picture and sound verified' : '') },
 		nativeVlc: decodeCell(s.nativeVlc as Decode, wantVideo, wantAudio),
+		nativeVlc4: decodeCell((s as { nativeVlc4?: Decode }).nativeVlc4, wantVideo, wantAudio),
 		ffmpegWasm: decodeCell(s.ffmpegWasm as Decode, wantVideo, wantAudio),
 		ffmpeg: decodeCell(s.ffmpeg as Decode, wantVideo, wantAudio),
 		vlcjs:

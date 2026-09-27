@@ -15,7 +15,7 @@
 		files: () => Promise<FileRow[]>;
 		subset?: string;
 		license?: string;
-		failures: { path: string; video: string | null; audio: string | null; ffmpeg: boolean; vlc: boolean; wasmAvformat: boolean | null; cause: string; wasmError: string }[];
+		failures: { path: string; video: string | null; audio: string | null; ffmpeg: boolean; vlc: boolean; vlc4?: boolean | null; wasmAvformat: boolean | null; cause: string; wasmError: string }[];
 		unplayable: number;
 	};
 	type FileRow = { path: string; folder: string; video: string | null; audio: string | null } & Record<string, unknown>;
@@ -24,7 +24,8 @@
 
 	const TOOLS: [key: string, label: string][] = [
 		['wasm', 'libvlc-wasm'],
-		['vlc', 'VLC desktop'],
+		['vlc', 'VLC 3 (native)'],
+		['vlc4', 'VLC 4 (native)'],
 		['ffmpeg', 'FFmpeg'],
 		['chromium', 'Chrome'],
 		['webkit', 'Safari'],
@@ -59,10 +60,10 @@
 	<p class="text-muted-foreground max-w-3xl text-sm">
 		{suite.description}
 		{#if suite.source}<a href={suite.source} target="_blank" rel="noreferrer" class="text-foreground underline decoration-foreground/30 underline-offset-2">Source</a>.{/if}
-		Counted: the {suite.overall.union.toLocaleString()} files native FFmpeg or native VLC can play.
+		Counted: the {suite.overall.union.toLocaleString()} files native FFmpeg or native VLC 3 can play.
 	</p>
 
-	<div class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-3 lg:grid-cols-6">
+	<div class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-3 lg:grid-cols-7">
 		{#each tools as [key, label], i (key)}
 			<div class="bg-card flex flex-col gap-2 p-4">
 				<span class="font-display text-2xl leading-none font-semibold tabular-nums {i === 0 ? 'text-primary' : ''}"
@@ -116,7 +117,7 @@
 		<p class="text-muted-foreground max-w-3xl text-xs">
 			{#if suite.subset}Taken: {suite.subset}.{/if}
 			{#if suite.license}Licence: {suite.license}.{/if}
-			{#if suite.unplayable}{suite.unplayable} files neither FFmpeg nor VLC plays are not counted.{/if}
+			{#if suite.unplayable}{suite.unplayable} files neither FFmpeg nor VLC 3 plays are not counted.{/if}
 		</p>
 	{/if}
 
@@ -143,6 +144,7 @@
 										<span class="font-mono">{f.path.split('/').slice(1).join('/')}
 											<span class="text-muted-foreground">{[f.video, f.audio].filter(Boolean).join(' + ')}</span>
 											{#if f.wasmAvformat}<span class="text-emerald-500"> · plays with :demux=avformat</span>{/if}
+											{#if f.vlc4}<span class="text-muted-foreground"> · VLC 4 (native) plays it</span>{/if}
 										</span>
 										{#if f.wasmError}<span class="text-muted-foreground truncate font-mono">{f.wasmError}</span>{/if}
 									</li>

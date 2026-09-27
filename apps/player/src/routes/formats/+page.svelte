@@ -15,7 +15,8 @@
 	type Column = { label: string; pick: (r: Row) => Cell | boolean | null };
 	const COLUMNS: Column[] = [
 		{ label: 'libvlc-wasm', pick: (r) => r.libvlcWasm },
-		{ label: 'VLC desktop', pick: (r) => r.nativeVlc },
+		{ label: 'VLC 3 (native)', pick: (r) => r.nativeVlc },
+		{ label: 'VLC 4 (native)', pick: (r) => r.nativeVlc4 },
 		{ label: 'ffmpeg.wasm', pick: (r) => r.ffmpegWasm },
 		{ label: 'vlc.js', pick: (r) => r.vlcjs },
 		{ label: 'Chrome', pick: (r) => r.browsers.chromium },
@@ -67,7 +68,7 @@
 			</p>
 		</header>
 
-		<section class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-4 lg:grid-cols-7">
+		<section class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-4 lg:grid-cols-8">
 			{#each SUMMARY as [label, c], i (label)}
 				<div class="bg-card flex flex-col gap-3 p-5">
 					<div class="flex items-baseline gap-1.5">

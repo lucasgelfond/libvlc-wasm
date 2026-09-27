@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Tabs from '$lib/components/ui/tabs';
-	import { SPEED, SPEED_TOOLS, codecOf, median, WASI, PACKAGES, PORTS, PORTS_MATRIX } from '$lib/benchmarks';
+	import { SPEED, SPEED_TOOLS, codecOf, median, WASI, PACKAGES, PORTS, PORTS_MATRIX, PARITY } from '$lib/benchmarks';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 
 	let threads = $state('1');
@@ -169,6 +169,39 @@
 				</table>
 			</div>
 		{/if}
+	</section>
+
+	<section class="flex flex-col gap-4">
+		<div>
+			<h2 class="font-display text-2xl font-semibold tracking-tight">Parity with native VLC</h2>
+			<p class="text-muted-foreground max-w-3xl text-sm">
+				Files that play, per test suite. VLC 4 (native) is a macOS nightly of the same VLC master libvlc-wasm is built from; each suite counts the
+				files native FFmpeg or native VLC 3 plays. Details per file are on the <a href="/formats#test-suites" class="text-foreground underline underline-offset-2">formats page</a>.
+			</p>
+		</div>
+		<div class="border-border bg-card overflow-x-auto rounded-2xl border">
+			<table class="w-full min-w-[720px] text-sm">
+				<thead class="text-muted-foreground text-left text-xs">
+					<tr>
+						<th class="px-4 py-3 font-medium">Suite</th><th class="px-3 py-3 text-right font-medium">Files</th>
+						<th class="px-3 py-3 text-right font-medium">libvlc-wasm</th><th class="px-3 py-3 text-right font-medium">VLC 4 (native)</th>
+						<th class="px-3 py-3 text-right font-medium">VLC 3 (native)</th><th class="px-3 py-3 text-right font-medium">VLC 4 plays, libvlc-wasm not</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each PARITY as p (p.name)}
+						<tr class="border-border border-t">
+							<td class="px-4 py-2.5 font-medium">{p.title}</td>
+							<td class="text-muted-foreground px-3 py-2.5 text-right tabular-nums">{p.of}</td>
+							<td class="text-primary px-3 py-2.5 text-right tabular-nums">{p.wasm}</td>
+							<td class="px-3 py-2.5 text-right tabular-nums">{p.vlc4 ?? '—'}</td>
+							<td class="px-3 py-2.5 text-right tabular-nums">{p.vlc3}</td>
+							<td class="px-3 py-2.5 text-right tabular-nums">{p.vlc4NotWasm ?? '—'}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
 	</section>
 
 	<section class="flex flex-col gap-4">
