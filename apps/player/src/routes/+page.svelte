@@ -3,6 +3,7 @@
 	import { toast } from 'svelte-sonner';
 	import { Button } from '$lib/components/ui/button';
 	import { Slider } from '$lib/components/ui/slider';
+	import SeekBar from '$lib/components/SeekBar.svelte';
 	import * as Popover from '$lib/components/ui/popover';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import SidePanel from '$lib/components/SidePanel.svelte';
@@ -37,7 +38,6 @@
 	let dragging = $state(false);
 	let fullscreen = $state(false);
 	let scrub = $state<number | null>(null);
-	let scrubbing = false;
 	let loadingSample = $state<string | null>(null);
 	let volumeOpen = $state(false);
 
@@ -58,16 +58,10 @@
 	});
 
 	const opened = $derived(session.current >= 0);
-	// The stage takes the shape of what is drawn (pixel aspect, forced aspect
-	// ratio and crop included); audio gets a 16:9 card.
-	const aspect = $derived.by(() => {
-		void session.shape;
-		return session.hasVideo ? (session.player?.aspect ?? 16 / 9) : 16 / 9;
-	});
-	const codecs = $derived([
-		...new Set(session.tracks.filter((t) => t.type !== 'text').map((t) => (t.codecName ?? t.codec).replace(/\s*\(.*\)$/, '')))
-	]);
-	const video = $derived(session.video.find((t) => t.selected) ?? session.video[0]);
+	// The stage stays 16:9 whatever plays, and the renderer letterboxes the
+	// picture inside it: resizing to each file's shape made the page jump
+	// between files, and between a disc's menus and its titles.
+	const aspect = 16 / 9;
 	const iconButton = 'text-white hover:bg-white/15 hover:text-white';
 	// Only when real time is missing: short clips end a frame or two before their stated length.
 	const shortEnd = $derived(session.duration - session.time > Math.max(2, session.duration * 0.05));
@@ -226,11 +220,6 @@
 				<img src={cone} alt="" class="size-9 shrink-0" />
 				<span class="min-w-0 flex-1">
 					<span class="font-display block truncate text-lg leading-tight font-semibold tracking-tight">{opened ? session.name : 'libvlc-wasm'}</span>
-					{#if opened && codecs.length}
-						<span class="text-muted-foreground block truncate font-mono text-[11px]">
-							{codecs.join(' · ')}{#if video?.width}&nbsp;· {video.width}×{video.height}{/if}
-						</span>
-					{/if}
 				</span>
 			</button>
 			<FormatsPopover />
@@ -301,30 +290,18 @@
 
 					<div class="flex flex-col gap-0.5 border-t border-white/10 bg-neutral-950 px-3 pt-1 pb-1.5 text-white"
 					>
-						<!-- The slider also reports programmatic value changes, so only a
-						     pointer or key actually on it counts as scrubbing. -->
-						<div role="presentation" onpointerdowncapture={() => (scrubbing = true)} onkeydowncapture={() => (scrubbing = true)}>
-							<Slider
-								type="single"
-								min={0}
-								max={session.duration || 1}
-								step={0.001}
-								value={session.duration ? (scrub ?? session.time) : 0}
-								onValueChange={(v) => {
-									if (scrubbing) scrub = v;
-								}}
-								onValueCommit={async (v) => {
-									if (!scrubbing) return;
-									scrubbing = false;
-									await session.seek(v);
-									scrub = null;
-								}}
-								disabled={!session.duration}
-								loaded={session.loaded}
-								class="py-2 **:data-[slot=slider-loaded]:bg-white/30 **:data-[slot=slider-track]:bg-white/15"
-								aria-label="Seek"
-							/>
-						</div>
+						<SeekBar
+							max={session.duration || 1}
+							value={session.duration ? (scrub ?? session.time) : 0}
+							loaded={session.loaded}
+							disabled={!session.duration}
+							onscrub={(v) => (scrub = v)}
+							oncommit={async (v) => {
+								scrub = v;
+								await session.seek(v);
+								scrub = null;
+							}}
+						/>
 						<div class="flex items-center gap-1">
 							<Button variant="ghost" size="icon" class={iconButton} onclick={() => session.toggle()} aria-label={session.playing ? 'Pause' : 'Play'}>
 								{#if session.playing}<RiPauseFill class="size-5" />{:else}<RiPlayFill class="size-5" />{/if}

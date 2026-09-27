@@ -64,6 +64,7 @@ export class Session {
 	/** How far VLC has read into the file, 0..1, for the seek bar; null when that means nothing (discs, URLs). */
 	loaded = $state<number | null>(null);
 
+
 	#raf = 0;
 	#destroyed = false;
 
