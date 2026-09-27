@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: lucas gelfond <lucasgelfond@gmail.com>
 Date: Sun, 27 Sep 2026 18:00:00 +0000
-Subject: [PATCH 15/17] avcodec: decode codecs VLC has no fourcc for
+Subject: [PATCH 15/18] avcodec: decode codecs VLC has no fourcc for
 
 The avformat demuxer dropped any stream whose libavcodec id had no VLC
 fourcc, though libavcodec could decode it: most image formats (EXR, DDS,

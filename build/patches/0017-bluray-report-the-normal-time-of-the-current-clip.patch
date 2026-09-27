@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: lucas gelfond <lucasgelfond@gmail.com>
 Date: Sun, 27 Sep 2026 18:30:00 +0000
-Subject: [PATCH 17/17] bluray: report the normal time of the current clip
+Subject: [PATCH 17/18] bluray: report the normal time of the current clip
 
 Without DEMUX_GET_NORMAL_TIME the player clock counts in raw clip
 timestamps, which start at 600 s or anywhere, while DEMUX_GET_TIME answers

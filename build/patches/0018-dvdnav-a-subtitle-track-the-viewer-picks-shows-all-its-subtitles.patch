@@ -1,0 +1,48 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 19:00:00 +0000
+Subject: [PATCH 18/18] dvdnav: a subtitle track the viewer picks shows all its subtitles
+
+A disc that starts with its subtitles hidden makes the active subtitle
+track forced-only, so that only forced captions show. Picking that track
+kept the flag and nothing appeared. Clear it when the viewer selects the
+track (DEMUX_SET_ES), unless the disc marks the track as forced captions.
+---
+ modules/access/dvdnav.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/modules/access/dvdnav.c b/modules/access/dvdnav.c
+index ec417e9..3f953b8 100644
+--- a/modules/access/dvdnav.c
++++ b/modules/access/dvdnav.c
+@@ -783,6 +783,27 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+             return VLC_SUCCESS;
+         }
+ 
++        case DEMUX_SET_ES:
++        {
++            /* A subtitle track the disc hides plays forced-only (ESNew). The
++             * viewer choosing it asks for all of its subtitles: restart its
++             * decoder without the flag. A track the disc itself marks as
++             * forced captions keeps it. */
++            int i_id = va_arg( args, int );
++            if( (i_id & ~0x1f) != PS_SPU_ID_OFFSET )
++                return VLC_EGENERIC;
++            ps_track_t *tk = &p_sys->tk[ps_id_to_tk( i_id )];
++            subp_attr_t attr;
++            if( tk->es && tk->fmt.subs.b_forced &&
++                (dvdnav_get_spu_attr( p_sys->dvdnav, i_id & 0x1f, &attr ) != DVDNAV_STATUS_OK ||
++                 attr.code_extension != DVD_SUBP_CODE_EXT_FORCED) )
++            {
++                tk->fmt.subs.b_forced = false;
++                es_out_Control( p_sys->p_tf_out, ES_OUT_SET_ES_FMT, tk->es, &tk->fmt );
++            }
++            return VLC_SUCCESS;
++        }
++
+         case DEMUX_GET_TITLE_INFO:
+             ppp_title = va_arg( args, input_title_t*** );
+ 
+-- 
+2.47.3
+

@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: lucas gelfond <lucasgelfond@gmail.com>
 Date: Sun, 27 Sep 2026 18:00:00 +0000
-Subject: [PATCH 16/17] avcodec: convert output VLC has no chroma for
+Subject: [PATCH 16/18] avcodec: convert output VLC has no chroma for
 
 A decoder whose output pixel format has no VLC chroma (float EXR, 16-bit
 or float TIFF, some JPEG 2000 layouts) failed in get_buffer(). Convert such
