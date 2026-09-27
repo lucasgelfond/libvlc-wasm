@@ -2,7 +2,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import * as Tooltip from '$lib/components/ui/tooltip';
-	import { ROWS, MEASURED, bySection, count, type Cell, type Row } from '$lib/compat';
+	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 	import RiCheckLine from 'remixicon-svelte/icons/check-line';
 	import RiCloseLine from 'remixicon-svelte/icons/close-line';
@@ -84,21 +84,23 @@
 			<a href="/" class="text-muted-foreground hover:text-foreground inline-flex w-fit items-center gap-1 text-xs">
 				<RiArrowLeftLine class="size-3.5" /> Back to the player
 			</a>
-			<div>
-				<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
-				<p class="text-muted-foreground mt-3 max-w-2xl text-sm leading-relaxed">
-					{ROWS.length} hard files, from 90s CD-ROM video to Blu-ray audio, each decoded by every tool below. The ones where libvlc-wasm stands
-					alone come first. Hover a name for what it is; every row links to its test file.
-				</p>
-			</div>
+			<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
 		</header>
 
-		<section class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+		<section class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-3 lg:grid-cols-5">
 			{#each SUMMARY as [label, sub, c], i (label)}
-				<div class="border-border rounded-2xl border p-4 {i === 0 ? 'border-primary/40 bg-primary/5' : 'bg-card'}">
-					<p class="text-muted-foreground font-mono text-[11px] tracking-wider uppercase">{label}</p>
-					<p class="font-display mt-2 text-3xl font-semibold tabular-nums">{c.yes}<span class="text-muted-foreground text-base font-normal"> / {c.tested}</span></p>
-					<p class="text-muted-foreground mt-1 text-xs">{sub}</p>
+				<div class="bg-card flex flex-col gap-3 p-5 {i === SUMMARY.length - 1 ? 'col-span-2 sm:col-span-1' : ''}">
+					<div class="flex items-baseline gap-1.5">
+						<span class="font-display text-4xl leading-none font-semibold tracking-tight tabular-nums {i === 0 ? 'text-primary' : ''}">{c.yes}</span>
+						<span class="text-muted-foreground text-sm tabular-nums">of {c.tested}</span>
+					</div>
+					<div class="bg-muted h-1 overflow-hidden rounded-full">
+						<div class="h-full rounded-full {i === 0 ? 'bg-primary' : 'bg-foreground/35'}" style="width: {(c.yes / c.tested) * 100}%"></div>
+					</div>
+					<div>
+						<p class="text-sm font-medium">{label}</p>
+						<p class="text-muted-foreground text-xs">{sub}</p>
+					</div>
 				</div>
 			{/each}
 		</section>
@@ -115,7 +117,6 @@
 					<Tabs.Trigger value="audio">Audio only</Tabs.Trigger>
 				</Tabs.List>
 			</Tabs.Root>
-			<p class="text-muted-foreground font-mono text-[11px] sm:ml-auto">{rows.length} shown · measured {MEASURED}</p>
 		</div>
 
 		<div class="border-border bg-card overflow-x-auto rounded-2xl border">
@@ -162,8 +163,7 @@
 								{/each}
 								<td class="px-4 py-2.5">
 									<a href={r.url} target="_blank" rel="noreferrer" class="text-primary inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap hover:underline">
-										<RiDownload2Line class="size-3.5" /> Test video
-										<span class="text-muted-foreground font-normal">· {size(r.bytes)}</span>
+										Sample <span class="text-muted-foreground font-normal">({size(r.bytes)}&nbsp;<RiDownload2Line class="inline size-3.5 align-[-2px]" />)</span>
 									</a>
 								</td>
 							</tr>
