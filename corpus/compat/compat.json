@@ -2,6 +2,7 @@
  "date": "2026-09-27",
  "tools": {
   "nativeVlc": "3.0.24",
+  "nativeVlc4": "4.0.0-dev (4.0.0-dev-39188-gb11917943e)",
   "ffmpeg": "ffmpeg version 9.0.2",
   "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
   "libvlcWasm": "corpus/results/results.json (2026-09-27T18:42:11.412Z)",
@@ -28,6 +29,11 @@
     "video": true,
     "audio": true,
     "note": "87 pictures displayed; 3.669 s audio, peak -6 dB; decoders audio:avcodec, video:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "109 pictures displayed; 3.669 s audio, peak -6 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -70,6 +76,11 @@
     "audio": null,
     "note": "144 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "158 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -110,6 +121,11 @@
     "audio": true,
     "note": "265 pictures displayed; 9.52 s audio, peak -24.5 dB; decoders audio:avcodec, video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "273 pictures displayed; 9.985 s audio, peak -24.5 dB; decoders audio:avcodec, video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -147,6 +163,11 @@
    "bytes": 50000,
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "5.526 s audio, peak -2.5 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "5.526 s audio, peak -2.5 dB; decoders audio:avcodec"
@@ -191,6 +212,11 @@
     "audio": true,
     "note": "135 pictures displayed; 10.35 s audio, peak -4.2 dB; decoders audio:avcodec, video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "125 pictures displayed; 10.35 s audio, peak -4.2 dB; decoders audio:avcodec, video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -228,6 +254,11 @@
    "bytes": 2809,
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "1.44 s audio, peak -1.3 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "1.44 s audio, peak -1.3 dB; decoders audio:avcodec"
@@ -272,6 +303,11 @@
     "audio": null,
     "note": "218 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "286 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -311,6 +347,11 @@
     "video": true,
     "audio": true,
     "note": "122 pictures displayed; 10.35 s audio, peak 0 dB; decoders audio:avcodec, video:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "126 pictures displayed; 10.35 s audio, peak 0 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -353,6 +394,11 @@
     "audio": true,
     "note": "149 pictures displayed; 10.24 s audio, peak -14.9 dB; decoders audio:avcodec, video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "147 pictures displayed; 10.24 s audio, peak -14.9 dB; decoders audio:avcodec, video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -393,6 +439,11 @@
     "video": true,
     "audio": true,
     "note": "150 pictures displayed; 10.176 s audio, peak -5.1 dB; decoders audio:avcodec, video:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "164 pictures displayed; 10.176 s audio, peak -5.1 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -435,6 +486,11 @@
     "audio": null,
     "note": "24 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "40 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -475,6 +531,11 @@
     "audio": null,
     "note": "22 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "34 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -511,6 +572,11 @@
    "bytes": 22706,
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "10.2 s audio, peak 0 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "10.2 s audio, peak 0 dB; decoders audio:avcodec"
@@ -555,6 +621,11 @@
     "audio": true,
     "note": "0.23 s audio, peak 0 dB; decoders audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "0.23 s audio, peak 0 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -591,6 +662,11 @@
    "bytes": 29914,
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
+    "video": true,
+    "audio": null,
+    "note": "1 pictures displayed; decoders video:avcodec"
+   },
+   "nativeVlc4": {
     "video": true,
     "audio": null,
     "note": "1 pictures displayed; decoders video:avcodec"
@@ -635,6 +711,11 @@
     "audio": null,
     "note": "50 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "65 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -674,6 +755,11 @@
     "video": true,
     "audio": true,
     "note": "234 pictures displayed; 0.072 s audio, peak -21.5 dB; decoders video:avcodec, audio:mpg123"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "236 pictures displayed; 0.48 s audio, peak -18.1 dB; decoders video:avcodec, audio:mpg123"
    },
    "ffmpeg": {
     "video": true,
@@ -716,6 +802,11 @@
     "audio": false,
     "note": "249 pictures displayed; no audio decoded; decoders video:avcodec, audio:mpg123"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": false,
+    "note": "253 pictures displayed; no audio decoded; decoders video:avcodec, audio:mpg123"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -756,6 +847,11 @@
     "video": true,
     "audio": true,
     "note": "143 pictures displayed; 9.975 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "150 pictures displayed; 9.975 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -798,6 +894,11 @@
     "audio": null,
     "note": "75 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "86 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -837,6 +938,11 @@
     "video": true,
     "audio": true,
     "note": "100 pictures displayed; 1.155 s audio, peak -1 dB; decoders video:avcodec, audio:araw"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "115 pictures displayed; 0.58 s audio, peak -1 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -879,6 +985,11 @@
     "audio": true,
     "note": "133 pictures displayed; 8.925 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "149 pictures displayed; 8.921 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -919,6 +1030,11 @@
     "video": true,
     "audio": true,
     "note": "257 pictures displayed; 8.725 s audio, peak -0.2 dB; decoders video:avcodec, audio:g711"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "274 pictures displayed; 8.725 s audio, peak -0.2 dB; decoders video:avcodec, audio:g711"
    },
    "ffmpeg": {
     "video": true,
@@ -961,6 +1077,11 @@
     "audio": null,
     "note": "1 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "2 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1001,6 +1122,11 @@
     "audio": false,
     "note": "239 pictures displayed; no audio decoded; decoders video:avcodec, audio:speex"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": false,
+    "note": "256 pictures displayed; no audio decoded; decoders video:avcodec, audio:speex"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -1038,6 +1164,11 @@
    "bytes": 122880,
    "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
    "nativeVlc": {
+    "video": true,
+    "audio": null,
+    "note": "2 pictures displayed; decoders video:avcodec"
+   },
+   "nativeVlc4": {
     "video": true,
     "audio": null,
     "note": "2 pictures displayed; decoders video:avcodec"
@@ -1082,6 +1213,11 @@
     "audio": null,
     "note": "24 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "45 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1121,6 +1257,11 @@
     "video": true,
     "audio": true,
     "note": "180 pictures displayed; 7.552 s audio, peak -14.2 dB; decoders video:avcodec, audio:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "197 pictures displayed; 7.552 s audio, peak -14.2 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1163,6 +1304,11 @@
     "audio": null,
     "note": "31 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "45 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1199,6 +1345,11 @@
    "bytes": 301176,
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": false,
     "note": "no audio decoded"
@@ -1243,6 +1394,11 @@
     "audio": null,
     "note": "197 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "212 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1282,6 +1438,11 @@
     "video": true,
     "audio": true,
     "note": "296 pictures displayed; 10.031 s audio, peak -14.1 dB; decoders video:videotoolbox, audio:faad"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "302 pictures displayed; 10.031 s audio, peak -14.1 dB; decoders video:videotoolbox, audio:faad"
    },
    "ffmpeg": {
     "video": true,
@@ -1324,6 +1485,11 @@
     "audio": true,
     "note": "162 pictures displayed; 13.003 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "157 pictures displayed; 12.98 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -1364,6 +1530,11 @@
     "video": true,
     "audio": true,
     "note": "199 pictures displayed; 10.32 s audio, peak -0.4 dB; decoders video:avcodec, audio:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "203 pictures displayed; 10.02 s audio, peak -0.4 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1406,6 +1577,11 @@
     "audio": null,
     "note": "55 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "59 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1445,6 +1621,11 @@
     "video": true,
     "audio": true,
     "note": "150 pictures displayed; 10.5 s audio, peak -0.1 dB; decoders video:avcodec, audio:araw"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "163 pictures displayed; 10.025 s audio, peak -0.1 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -1487,6 +1668,11 @@
     "audio": null,
     "note": "10 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "16 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1526,6 +1712,11 @@
     "video": null,
     "audio": true,
     "note": "10.124 s audio, peak 0 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10.031 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
@@ -1567,6 +1758,11 @@
     "audio": true,
     "note": "10.249 s audio, peak 0 dB; decoders audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10.001 s audio, peak 0 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -1607,6 +1803,11 @@
     "audio": true,
     "note": "10.25 s audio, peak 0 dB; decoders audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10 s audio, peak 0 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -1646,6 +1847,11 @@
     "video": true,
     "audio": true,
     "note": "99 pictures displayed; 7.1 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "110 pictures displayed; 7.1 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1688,6 +1894,11 @@
     "audio": null,
     "note": "19 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "35 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1727,6 +1938,11 @@
     "video": true,
     "audio": true,
     "note": "210 pictures displayed; 5.857 s audio, peak -0.1 dB; decoders audio:avcodec, video:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "215 pictures displayed; 5.857 s audio, peak -0.1 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1769,6 +1985,11 @@
     "audio": null,
     "note": "27 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "28 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -1808,6 +2029,11 @@
     "video": true,
     "audio": null,
     "note": "77 pictures displayed; decoders video:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "65 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1849,6 +2075,11 @@
     "audio": true,
     "note": "7 pictures displayed; 0.418 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "17 pictures displayed; 0.418 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -1886,6 +2117,11 @@
    "bytes": 5675040,
    "whyBrowserCant": "Vivo unsupported; note ffmpeg cannot decode this video layer either - good negative test",
    "nativeVlc": {
+    "video": false,
+    "audio": false,
+    "note": "0 pictures displayed; no audio decoded; with software decoding forced (--codec=avcodec,none): 0 pictures"
+   },
+   "nativeVlc4": {
     "video": false,
     "audio": false,
     "note": "0 pictures displayed; no audio decoded; with software decoding forced (--codec=avcodec,none): 0 pictures"
@@ -1931,6 +2167,11 @@
     "audio": false,
     "note": "0 pictures displayed; no audio decoded; decoders audio:mpg123, video:avcodec; with software decoding forced (--codec=avcodec,none): 0 pictures"
    },
+   "nativeVlc4": {
+    "video": false,
+    "audio": false,
+    "note": "0 pictures displayed; no audio decoded; with software decoding forced (--codec=avcodec,none): 0 pictures; no demuxer claimed the file"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -1968,6 +2209,11 @@
    "bytes": 100000,
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "1.76 s audio, peak -74.7 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "1.76 s audio, peak -74.7 dB; decoders audio:avcodec"
@@ -2012,6 +2258,11 @@
     "audio": true,
     "note": "1.504 s audio, peak -10.3 dB; decoders audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "1.504 s audio, peak -10.3 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -2048,6 +2299,11 @@
    "bytes": 503000,
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "2.667 s audio, peak 0 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "2.667 s audio, peak 0 dB; decoders audio:avcodec"
@@ -2092,6 +2348,11 @@
     "audio": true,
     "note": "0.107 s audio, peak -7.9 dB; decoders audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "0.107 s audio, peak -7.9 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -2128,6 +2389,11 @@
    "bytes": 390966,
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "9.997 s audio, peak -12 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "9.997 s audio, peak -12 dB; decoders audio:avcodec"
@@ -2172,6 +2438,11 @@
     "audio": true,
     "note": "10.02 s audio, peak -1.5 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "11.703 s audio, peak -1.5 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -2212,6 +2483,11 @@
     "audio": true,
     "note": "10.02 s audio, peak -1.5 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10.031 s audio, peak -1.5 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -2248,6 +2524,11 @@
    "bytes": 100000,
    "whyBrowserCant": "No browser APE decoder",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "0.313 s audio, peak 0 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "0.313 s audio, peak 0 dB; decoders audio:avcodec"
@@ -2292,6 +2573,11 @@
     "audio": true,
     "note": "10.449 s audio, peak -0.2 dB; decoders audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10.449 s audio, peak -0.2 dB; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -2328,6 +2614,11 @@
    "bytes": 9094,
    "whyBrowserCant": "AMR not supported by desktop Chrome",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "5.68 s audio, peak -2.9 dB; decoders audio:avcodec"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "5.68 s audio, peak -2.9 dB; decoders audio:avcodec"
@@ -2372,6 +2663,11 @@
     "audio": false,
     "note": "no audio decoded; decoders audio:avcodec"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; decoders audio:avcodec"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -2412,6 +2708,11 @@
     "audio": null,
     "note": "0 pictures displayed; decoders video:videotoolbox; with software decoding forced (--codec=avcodec,none): 1 pictures"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "1 pictures displayed; decoders video:videotoolbox"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -2448,6 +2749,11 @@
    "bytes": 78960,
    "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4); DVB bitmap subtitles never rendered by browsers",
    "nativeVlc": {
+    "video": false,
+    "audio": false,
+    "note": "0 pictures displayed; no audio decoded; decoders video:avcodec, audio:mpg123; with software decoding forced (--codec=avcodec,none): 0 pictures"
+   },
+   "nativeVlc4": {
     "video": false,
     "audio": false,
     "note": "0 pictures displayed; no audio decoded; decoders video:avcodec, audio:mpg123; with software decoding forced (--codec=avcodec,none): 0 pictures"
@@ -2494,6 +2800,12 @@
     "subtitles": true,
     "note": "vobsub track demuxed and spudec decoder opened as --sub-file over gen/t_mpeg2_ac3.ts (0 pictures); 2 subpictures could not be output; blending onto the picture is not verified"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": null,
+    "subtitles": true,
+    "note": "vobsub track demuxed and spudec decoder opened as --sub-file over gen/t_mpeg2_ac3.ts (146 pictures); blending onto the picture is not verified"
+   },
    "ffmpeg": {
     "video": null,
     "audio": null,
@@ -2536,6 +2848,11 @@
     "audio": null,
     "note": "135 pictures displayed; decoders video:avcodec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "137 pictures displayed; decoders video:avcodec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": null,
@@ -2575,6 +2892,11 @@
     "video": true,
     "audio": true,
     "note": "242 pictures displayed; 10.039 s audio, peak 0 dB; decoders video:avcodec, audio:vorbis, spu:libass"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "245 pictures displayed; 10.039 s audio, peak 0 dB; decoders video:avcodec, audio:vorbis, spu:libass"
    },
    "ffmpeg": {
     "video": true,
@@ -2617,6 +2939,11 @@
     "audio": true,
     "note": "248 pictures displayed; 10.272 s audio, peak -11.5 dB; decoders video:videotoolbox, audio:mpg123, spu:spudec"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "260 pictures displayed; 10.272 s audio, peak -11.5 dB; decoders video:videotoolbox, audio:mpg123, spu:spudec"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -2654,6 +2981,11 @@
    "bytes": 66048,
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "10 s audio, peak -4.6 dB; decoders audio:araw"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "10 s audio, peak -4.6 dB; decoders audio:araw"
@@ -2698,6 +3030,11 @@
     "audio": true,
     "note": "10 s audio, peak -4.7 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10 s audio, peak -4.7 dB; decoders audio:araw"
+   },
    "ffmpeg": {
     "video": null,
     "audio": false,
@@ -2737,6 +3074,11 @@
     "video": null,
     "audio": false,
     "note": "no audio decoded"
+   },
+   "nativeVlc4": {
+    "video": null,
+    "audio": false,
+    "note": "no audio decoded; no demuxer claimed the file"
    },
    "ffmpeg": {
     "video": null,
@@ -2778,6 +3120,11 @@
     "audio": true,
     "note": "10.1 s audio, peak -2.9 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10.1 s audio, peak -3 dB; decoders audio:araw"
+   },
    "ffmpeg": {
     "video": null,
     "audio": false,
@@ -2814,6 +3161,11 @@
    "bytes": 33883,
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec; VLC needs a SoundFont (.sf2) supplied",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "9.99 s audio, peak -3.8 dB; decoders audio:audiotoolbox_midi; VLC.app renders MIDI with its AudioToolbox synth (built-in GM bank), no soundfont needed"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "9.99 s audio, peak -3.8 dB; decoders audio:audiotoolbox_midi; VLC.app renders MIDI with its AudioToolbox synth (built-in GM bank), no soundfont needed"
@@ -2858,6 +3210,11 @@
     "audio": true,
     "note": "10 s audio, peak -5.3 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10 s audio, peak -5.3 dB; decoders audio:araw"
+   },
    "ffmpeg": {
     "video": null,
     "audio": false,
@@ -2894,6 +3251,11 @@
    "bytes": 51355,
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "10 s audio, peak -10.2 dB; decoders audio:araw"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "10 s audio, peak -10.2 dB; decoders audio:araw"
@@ -2938,6 +3300,11 @@
     "audio": true,
     "note": "10 s audio, peak -9.2 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "10 s audio, peak -9.2 dB; decoders audio:araw"
+   },
    "ffmpeg": {
     "video": null,
     "audio": false,
@@ -2974,6 +3341,11 @@
    "bytes": 23055,
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "10 s audio, peak -9.2 dB; decoders audio:araw"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "10 s audio, peak -9.2 dB; decoders audio:araw"
@@ -3018,6 +3390,11 @@
     "audio": true,
     "note": "8.8 s audio, peak -91 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "8.8 s audio, peak -91 dB; decoders audio:araw"
+   },
    "ffmpeg": {
     "video": null,
     "audio": false,
@@ -3057,6 +3434,11 @@
     "video": true,
     "audio": true,
     "note": "84 pictures displayed; 2.987 s audio, peak -17.7 dB; decoders video:videotoolbox, audio:faad"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "92 pictures displayed; 3.008 s audio, peak -16.1 dB; decoders video:videotoolbox, audio:faad"
    },
    "ffmpeg": {
     "video": true,
@@ -3099,6 +3481,11 @@
     "audio": true,
     "note": "84 pictures displayed; 2.987 s audio, peak -17.7 dB; decoders video:videotoolbox, audio:faad"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "92 pictures displayed; 3.008 s audio, peak -16.1 dB; decoders video:videotoolbox, audio:faad"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -3139,6 +3526,11 @@
     "video": true,
     "audio": true,
     "note": "89 pictures displayed; 2.987 s audio, peak -17.7 dB; decoders video:dav1d, audio:faad"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "94 pictures displayed; 3.008 s audio, peak -16.1 dB; decoders video:dav1d, audio:faad"
    },
    "ffmpeg": {
     "video": true,
@@ -3181,6 +3573,11 @@
     "audio": true,
     "note": "90 pictures displayed; 3.02 s audio, peak -17.9 dB; decoders video:avcodec, audio:opus"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "100 pictures displayed; 3.02 s audio, peak -17.9 dB; decoders video:avcodec, audio:opus"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -3221,6 +3618,11 @@
     "video": true,
     "audio": true,
     "note": "90 pictures displayed; 3.02 s audio, peak -17.9 dB; decoders video:dav1d, audio:opus"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "95 pictures displayed; 3.02 s audio, peak -17.9 dB; decoders video:dav1d, audio:opus"
    },
    "ffmpeg": {
     "video": true,
@@ -3263,6 +3665,11 @@
     "audio": true,
     "note": "90 pictures displayed; 3.008 s audio, peak -21 dB; decoders video:avcodec, audio:vorbis"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "101 pictures displayed; 3.008 s audio, peak -21 dB; decoders video:avcodec, audio:vorbis"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -3303,6 +3710,11 @@
     "video": true,
     "audio": true,
     "note": "83 pictures displayed; 3.008 s audio, peak -16.1 dB; decoders video:videotoolbox, audio:faad"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "91 pictures displayed; 3.008 s audio, peak -16.1 dB; decoders video:videotoolbox, audio:faad"
    },
    "ffmpeg": {
     "video": true,
@@ -3345,6 +3757,11 @@
     "audio": true,
     "note": "83 pictures displayed; 3 s audio, peak -18.1 dB; decoders video:videotoolbox, audio:araw"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "91 pictures displayed; 3 s audio, peak -18.1 dB; decoders video:videotoolbox, audio:araw"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -3385,6 +3802,11 @@
     "video": true,
     "audio": true,
     "note": "90 pictures displayed; 3.024 s audio, peak -18.4 dB; decoders video:avcodec, audio:mpg123"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "94 pictures displayed; 3.024 s audio, peak -18.4 dB; decoders video:avcodec, audio:mpg123"
    },
    "ffmpeg": {
     "video": true,
@@ -3427,6 +3849,11 @@
     "audio": true,
     "note": "3 s audio, peak -18.3 dB; decoders audio:mpg123"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "3.024 s audio, peak -18.3 dB; decoders audio:mpg123"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -3467,6 +3894,11 @@
     "audio": true,
     "note": "2.987 s audio, peak -17.9 dB; decoders audio:faad"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "3.008 s audio, peak -17.9 dB; decoders audio:faad"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -3503,6 +3935,11 @@
    "bytes": 59168,
    "whyBrowserCant": null,
    "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "3 s audio, peak -18.1 dB; decoders audio:flac"
+   },
+   "nativeVlc4": {
     "video": null,
     "audio": true,
     "note": "3 s audio, peak -18.1 dB; decoders audio:flac"
@@ -3547,6 +3984,11 @@
     "audio": true,
     "note": "3 s audio, peak -18.1 dB; decoders audio:araw"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "3 s audio, peak -18.1 dB; decoders audio:araw"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -3586,6 +4028,11 @@
     "video": null,
     "audio": true,
     "note": "2.965 s audio, peak -21 dB; decoders audio:vorbis"
+   },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "3.008 s audio, peak -21 dB; decoders audio:vorbis"
    },
    "ffmpeg": {
     "video": null,
@@ -3627,6 +4074,11 @@
     "audio": true,
     "note": "2.926 s audio, peak -18 dB; decoders audio:opus"
    },
+   "nativeVlc4": {
+    "video": null,
+    "audio": true,
+    "note": "3 s audio, peak -17.9 dB; decoders audio:opus"
+   },
    "ffmpeg": {
     "video": null,
     "audio": true,
@@ -3666,6 +4118,11 @@
     "video": true,
     "audio": null,
     "note": "588 pictures displayed; decoders spu:spudec, video:avcodec, audio:avcodec; no demuxer claimed the file; killed after 45 s"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": null,
+    "note": "568 pictures displayed; decoders spu:spudec, video:avcodec, audio:avcodec; no demuxer claimed the file; killed after 45 s"
    },
    "ffmpeg": {
     "video": true,
@@ -3707,6 +4164,11 @@
     "audio": true,
     "note": "181 pictures displayed; 8.992 s audio, peak -21.1 dB; decoders video:videotoolbox, audio:avcodec; killed after 45 s"
    },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "208 pictures displayed; 9.024 s audio, peak -21.1 dB; decoders video:videotoolbox, audio:avcodec; killed after 45 s"
+   },
    "ffmpeg": {
     "video": true,
     "audio": true,
@@ -3747,6 +4209,11 @@
     "video": true,
     "audio": false,
     "note": "11 pictures displayed; no audio decoded; decoders video:videotoolbox, audio:faad, video:avcodec"
+   },
+   "nativeVlc4": {
+    "video": true,
+    "audio": true,
+    "note": "76 pictures displayed; 3.019 s audio, peak -17.7 dB; decoders video:videotoolbox, audio:faad"
    },
    "ffmpeg": {
     "video": true,
