@@ -103,32 +103,20 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
-      - name: Fixtures
+      - name: Fixtures and corpus
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick curl unzip
           sh tests/make-fixtures.sh
           sh tests/make-dvd.sh
           sh tests/make-bluray.sh
-      - run: npx playwright install --with-deps chromium webkit firefox
-      - name: Node smoke test (probe + thumbnail)
-        run: node tests/node-smoke.mjs
-      - name: Feature suite in three engines
-        run: |
-          node tests/features.mjs --engine=chromium
-          node tests/features.mjs --engine=firefox
-          node tests/features.mjs --engine=webkit
-      - name: Stream output (transcode, remux, record) in three engines
-        run: |
-          node corpus/fetch.mjs realvideo-4-cook-rmvb
-          node tests/sout.mjs --engine=chromium
-          node tests/sout.mjs --engine=firefox
-          node tests/sout.mjs --engine=webkit
-      - name: Obscure-format corpus
-        if: github.event_name != 'pull_request'
-        continue-on-error: true
-        run: |
+          sh tests/make-colors.sh
           node corpus/fetch.mjs
-          node tests/verify-corpus.mjs --engines=chromium
+      - run: npx playwright install --with-deps chromium webkit firefox
+      # Every suite: node, features and sout in three engines, colours, the
+      # app end to end, the corpus against its baseline, and the packed
+      # tarballs in a fresh Vite app (tests/all.mjs).
+      - name: pnpm test
+        run: pnpm test
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

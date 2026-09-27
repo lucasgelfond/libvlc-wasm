@@ -1,11 +1,12 @@
 // For every sample in corpus/manifest.json: can the browser play it natively,
 // and does libvlc-wasm actually play it (frames with content, audible sound)?
 //
-//   node tests/verify-corpus.mjs [--engines=chromium,webkit,firefox] [--only=category-or-id]
+//   node tests/verify-corpus.mjs [--engines=chromium,webkit,firefox] [--only=category-or-id] [--out=dir]
 //
 // Writes corpus/results/results.json, corpus/results/RESULTS.md and a
 // snapshot per video sample.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { startServer, openHarness, root } from './lib/browser.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => a.replace(/^--/, '').split('=')));
@@ -17,7 +18,8 @@ const manifest = JSON.parse(readFileSync(`${root}/corpus/manifest.json`, 'utf8')
 let reference = {};
 try { reference = JSON.parse(readFileSync(`${root}/corpus/reference.json`, 'utf8')); } catch { console.warn('no corpus/reference.json; run node corpus/reference.mjs'); }
 const samples = manifest.samples.filter((s) => !only || s.category === only || s.id === only);
-const outDir = `${root}/corpus/results`;
+// --out keeps a test run's results out of the committed corpus/results.
+const outDir = args.out ? resolve(args.out) : `${root}/corpus/results`;
 mkdirSync(`${outDir}/shots`, { recursive: true });
 
 const { server, url } = await startServer();

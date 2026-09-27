@@ -20,14 +20,19 @@ const ENGINES = { chromium, webkit, firefox };
  * @param {'chromium'|'webkit'|'firefox'} engine
  * @param {{ headless?: boolean, channel?: string }} opts channel 'chrome' uses installed Chrome
  */
-export async function openHarness(baseUrl, engine = 'chromium', opts = {}) {
+/** A browser that never makes a sound: every test and benchmark launches through here. */
+export function launchMuted(engine = 'chromium', opts = {}) {
   const launch = { headless: opts.headless ?? true };
   if (engine === 'chromium') {
     launch.args = ['--autoplay-policy=no-user-gesture-required', '--mute-audio', '--enable-features=SharedArrayBuffer'];
     if (opts.channel) launch.channel = opts.channel;
   }
   if (engine === 'firefox') launch.firefoxUserPrefs = { 'media.volume_scale': '0.0' };
-  const browser = await ENGINES[engine].launch(launch);
+  return ENGINES[engine].launch(launch);
+}
+
+export async function openHarness(baseUrl, engine = 'chromium', opts = {}) {
+  const browser = await launchMuted(engine, opts);
   const page = await browser.newPage({ viewport: { width: 800, height: 600 } });
   const consoleLines = [];
   page.on('console', (m) => consoleLines.push(`${m.type()}: ${m.text()}`));
