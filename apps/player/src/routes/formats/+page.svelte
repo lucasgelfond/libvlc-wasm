@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
 	import * as Tabs from '$lib/components/ui/tabs';
-	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 	import RiDownload2Line from 'remixicon-svelte/icons/download-2-line';
@@ -11,15 +10,15 @@
 	let query = $state('');
 	let kind = $state<Kind>('all');
 
-	type Column = { label: string; hint: string; pick: (r: Row) => Cell | boolean | null };
+	type Column = { label: string; pick: (r: Row) => Cell | boolean | null };
 	const COLUMNS: Column[] = [
-		{ label: 'libvlc-wasm', hint: 'This project: VLC 4 in the page', pick: (r) => r.libvlcWasm },
-		{ label: 'VLC desktop', hint: 'VLC 3.0.24 for macOS, the reference', pick: (r) => r.nativeVlc },
-		{ label: 'ffmpeg.wasm', hint: 'Decodes, but only by converting the file before anything can be shown', pick: (r) => r.ffmpegWasm },
-		{ label: 'vlc.js', hint: "The 2024 VideoLabs build of VLC for the web; measured on video files only", pick: (r) => r.vlcjs },
-		{ label: 'Chrome', hint: 'Chrome on its own, with <video> or <audio>', pick: (r) => r.browsers.chromium },
-		{ label: 'Safari', hint: 'Safari (WebKit) on its own', pick: (r) => r.browsers.webkit },
-		{ label: 'Firefox', hint: 'Firefox on its own', pick: (r) => r.browsers.firefox }
+		{ label: 'libvlc-wasm', pick: (r) => r.libvlcWasm },
+		{ label: 'VLC desktop', pick: (r) => r.nativeVlc },
+		{ label: 'ffmpeg.wasm', pick: (r) => r.ffmpegWasm },
+		{ label: 'vlc.js', pick: (r) => r.vlcjs },
+		{ label: 'Chrome', pick: (r) => r.browsers.chromium },
+		{ label: 'Safari', pick: (r) => r.browsers.webkit },
+		{ label: 'Firefox', pick: (r) => r.browsers.firefox }
 	];
 	const SUMMARY: [string, string, { yes: number; tested: number }][] = [
 		['libvlc-wasm', 'plays in the page', count(ROWS, (r) => r.libvlcWasm)],
@@ -41,7 +40,6 @@
 	);
 	const sections = $derived(bySection(rows));
 	const verdict = (v: Cell | boolean | null) => (v == null ? 'untested' : typeof v === 'boolean' ? (v ? 'yes' : 'no') : v.verdict);
-	const note = (v: Cell | boolean | null) => (v && typeof v === 'object' ? v.note : '');
 	const size = (b: number) => (b >= 1e6 ? `${(b / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(b / 1e3))} KB`);
 </script>
 
@@ -50,11 +48,7 @@
 {#snippet mark(v: Cell | boolean | null, label: string)}
 	{@const k = verdict(v)}
 	{@const text = { yes: 'plays', partial: 'partly (one of its streams)', no: 'does not play', untested: 'not tested' }[k]}
-	<Tooltip.Root>
-		<Tooltip.Trigger>
-			{#snippet child({ props })}
-				<td
-					{...props}
+	<td
 					class="border-background border-x-2 px-1 py-2.5 text-center {k === 'yes'
 						? 'bg-emerald-500/35 dark:bg-emerald-500/30'
 						: k === 'partial'
@@ -65,17 +59,9 @@
 					aria-label="{label}: {text}"
 				>
 					{#if k === 'untested'}<span class="text-muted-foreground/40 text-xs">n/a</span>{/if}
-				</td>
-			{/snippet}
-		</Tooltip.Trigger>
-		<Tooltip.Content class="block max-w-72">
-			<span class="block font-medium">{label}: {text}</span>
-			{#if note(v)}<span class="mt-0.5 block opacity-75">{note(v)}</span>{/if}
-		</Tooltip.Content>
-	</Tooltip.Root>
+	</td>
 {/snippet}
 
-<Tooltip.Provider delayDuration={150}>
 	<main class="mx-auto flex min-h-svh max-w-6xl flex-col gap-8 px-4 py-6 sm:px-6">
 		<header class="flex flex-col gap-4">
 			<a href="/" class="text-muted-foreground hover:text-foreground inline-flex w-fit items-center gap-1 text-xs">
@@ -121,7 +107,6 @@
 			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-amber-500/60"></span>partly (one of its streams)</span>
 			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-red-500/50"></span>does not play</span>
 			<span class="inline-flex items-center gap-1.5"><span class="text-muted-foreground/50">n/a</span>not tested</span>
-			<span class="sm:ml-auto">Hover any cell for what was measured</span>
 		</div>
 
 		<div class="border-border bg-card overflow-x-auto rounded-2xl border">
@@ -131,12 +116,7 @@
 						<th class="px-4 py-3 font-medium">Format</th>
 						{#each COLUMNS as c (c.label)}
 							<th class="w-20 px-1 py-3 text-center font-medium">
-								<Tooltip.Root>
-									<Tooltip.Trigger>
-										{#snippet child({ props })}<span {...props} class="cursor-help">{c.label}</span>{/snippet}
-									</Tooltip.Trigger>
-									<Tooltip.Content class="max-w-60">{c.hint}</Tooltip.Content>
-								</Tooltip.Root>
+								{c.label}
 							</th>
 						{/each}
 						<th class="w-28 px-4 py-3 font-medium"></th>
@@ -146,30 +126,13 @@
 					<tbody>
 						<tr class="border-border border-t">
 							<th colspan={COLUMNS.length + 2} class="bg-muted/50 px-4 py-2.5 text-left">
-								<Tooltip.Root>
-									<Tooltip.Trigger>
-										{#snippet child({ props })}
-											<span {...props} class="font-display cursor-help text-sm font-semibold underline decoration-current/30 decoration-dotted underline-offset-4">{s.title}</span>
-										{/snippet}
-									</Tooltip.Trigger>
-									<Tooltip.Content class="max-w-72">{s.blurb}</Tooltip.Content>
-								</Tooltip.Root>
+								<span class="font-display text-sm font-semibold">{s.title}</span>
 							</th>
 						</tr>
 						{#each s.rows as r (r.id)}
 							<tr class="border-border hover:bg-muted/30 border-t">
 								<td class="px-4 py-2.5">
-									<Tooltip.Root>
-										<Tooltip.Trigger>
-											{#snippet child({ props })}
-												<a {...props} href={r.wiki} target="_blank" rel="noreferrer" class="hover:text-primary font-medium underline-offset-4 hover:underline">{r.short}</a>
-											{/snippet}
-										</Tooltip.Trigger>
-										<Tooltip.Content side="right" class="block max-w-72">
-											<span class="block">{r.plain}</span>
-											<span class="mt-1 block font-mono text-[10px] opacity-70">{r.format}</span>
-										</Tooltip.Content>
-									</Tooltip.Root>
+									<a href={r.wiki} target="_blank" rel="noreferrer" class="hover:text-primary font-medium underline-offset-4 hover:underline">{r.short}</a>
 								</td>
 								{#each COLUMNS as c (c.label)}
 									{@render mark(c.pick(r), c.label)}
@@ -188,4 +151,3 @@
 		</div>
 
 	</main>
-</Tooltip.Provider>
