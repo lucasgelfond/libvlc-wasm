@@ -10,7 +10,8 @@
     "test:browser": "node tests/run-browser.mjs",
     "corpus": "node corpus/fetch.mjs",
     "verify": "node tests/verify-corpus.mjs",
-    "bench": "node bench/run.mjs"
+    "bench": "node bench/run.mjs",
+    "player": "pnpm --filter player dev"
   },
   "devDependencies": {
     "@ffmpeg/core": "0.12.10",

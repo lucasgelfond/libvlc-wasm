@@ -46,3 +46,20 @@ END=6000
 title=End
 CH
 ffmpeg $q $V -f lavfi -i sine=frequency=660 -i chapters.txt -t 6 -map 0 -map 1 -map_metadata 2 -c:v libx264 -c:a libopus t_chapters.mkv
+# 30 s with a subtitle line every 3 s: long enough for UI tests to click around in.
+python3 - > long.ass <<'PY'
+print("""[Script Info]
+ScriptType: v4.00+
+PlayResX: 1280
+PlayResY: 720
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,44,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,0,2,20,20,40,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text""")
+for k in range(10):
+    print(f"Dialogue: 0,0:00:{k*3:02d}.00,0:00:{k*3+3:02d}.00,Default,,0,0,0,,Line {k+1}: rendered by libass inside libvlc-wasm")
+PY
+ffmpeg $q -f lavfi -i testsrc2=size=1280x720:rate=30 -f lavfi -i sine=frequency=440 -i long.ass -t 30 -map 0 -map 1 -map 2 -c:v libx264 -preset veryfast -c:a libopus -c:s ass -disposition:s:0 default t_long_subs.mkv
