@@ -39,15 +39,18 @@ and production builds. See [what works](#what-it-does), [numbers](#performance) 
 Upstream VLC has the emscripten *plumbing* (a build script, threads, a JS file access module, a
 logger) but no audio output, video output or WebCodecs decoder; the only implementation of those
 was a 77-patch stack in `code.videolan.org/jbk/vlc.js` last touched in 2022. This project does
-not use it: it drives libvlc 4 through its **public** API and adds two small out-of-tree VLC
-modules of its own, so it builds against current VLC master with only three small patches.
+not use it: it drives libvlc 4 through its public API plus three small out-of-tree VLC modules
+of its own — an audio output (`webaudio`), a video output (`webframe`) and a WebCodecs decoder —
+so it builds against current VLC master with only three small patches.
 
 ## What it does
 
 **Playback**: play/pause/stop, precise and fast seek, rate 0.25–4× (pitch-preserving), frame
 stepping both ways, AB-loop, gapless next-media queue, volume up to 200%, several players at
 once, screen wake lock.
-**Video**: WebGL2 rendering with correct aspect ratio, fit modes, aspect/crop override,
+**Video**: WebGL2 rendering of the decoder's native layout (4:2:0/4:2:2/4:4:4, NV12, 10-bit,
+RGB) with the stream's colour range and matrix — exact to 1–2/255 in every engine — correct
+sample aspect ratio, fit modes, aspect/crop override,
 deinterlacing (yadif, bob, ivtc, …), picture adjustments, marquee and logo overlays, snapshots,
 teletext, program selection for multi-program TS.
 **Audio**: VLC's A/V clock driven by the real playback position of an AudioWorklet,
@@ -68,8 +71,32 @@ remuxing, recording) — see [build profiles](#build-profiles).
 
 ## Performance
 
-<!-- filled by bench/run.mjs -->
-See [bench/results/RESULTS.md](bench/results/RESULTS.md) for the full table and method.
+Apple M5, Chrome 153, 1080p30 clips; full tables and method in
+[bench/results/RESULTS.md](bench/results/RESULTS.md).
+
+- **Startup**: `createVLC()` is ready in **~105 ms** (worker, wasm compile, 20 pthreads,
+  `libvlc_new`). First frame of a file typically **20–100 ms** after `open()`.
+- **Hardware path**: with WebCodecs, H.264, HEVC, VP9 and AV1 play through at **480–610 fps**,
+  i.e. the player's pacing ceiling, not the decoder — faster than native *software* FFmpeg.
+- **Software path** (everything else, or when the browser lacks a codec), full player vs the same
+  player natively (VLC 3, software):
+
+  | 1080p, 1 thread | native VLC | libvlc-wasm | ratio | ffmpeg.wasm (decode only) |
+  |---|---|---|---|---|
+  | H.264 | 118 fps | 75 fps | 1.6× | 67 fps |
+  | HEVC | 250 fps | 197 fps | 1.3× | 125 fps |
+  | VP9 | 296 fps | 161 fps | 1.8× | 150 fps |
+  | AV1 (dav1d) | 240 fps | 89 fps | 2.7× | no decoder |
+  | MPEG-4 ASP | 570 fps | 341 fps | 1.7× | 450 fps |
+
+  Even the slowest cases are several times real time at 1080p30. Where native has hand-written
+  NEON (dav1d, parts of FFmpeg) the gap is widest, since wasm can only autovectorize C.
+- **vs transcoding**: showing the first frame of a RealVideo file takes libvlc-wasm **21 ms**;
+  with ffmpeg.wasm you transcode first (0.2 s load + ~0.7 s for 10 s of video at ~20× real time,
+  so minutes for a feature film).
+- **Size**: 24.7 MB wasm, 9.9 MB gzip, 7.6 MB brotli (ffmpeg.wasm-mt: 31.2 / 9.8 / 7.0 MB).
+- **WASI runtimes**: the same FFmpeg decoder C code in wasm on WAVM, WAMR, WasmEdge, wasm2c,
+  Wasmer, Wasmtime, Wazero, Node and Bun vs native: [bench/wasi](bench/wasi/).
 
 ## Compared with other browser media projects
 
@@ -82,7 +109,7 @@ hls.js/shaka/dash.js and chiptune players.
 ```
 build.sh, build/           Docker toolchain (Debian + emsdk), VLC build, link, patches/
 native/                    the C side: bridge.c (API + threading), webaudio.c (aout),
-                           webcodecs.c (decoder), shared.h (memory layouts shared with JS)
+                           webframe.c (vout), webcodecs.c (decoder), shared.h (layouts shared with JS)
 packages/core/             the npm package: src/ (JS SDK), wasm/ (built), fonts/
 examples/                  vanilla HTML pages, a Svelte app, a Node CLI
 tests/                     Node smoke test, browser harness, feature suite, corpus verifier

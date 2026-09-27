@@ -102,6 +102,9 @@ export interface PlayerEvents {
   audiolevel: { peak: number; rms: number };
   capabilities: { seekable: boolean; pausable: boolean };
   meta: undefined; parsed: undefined; mediachange: undefined; vout: number; destroy: undefined;
+  recording: { recording: boolean; path: string | null };
+  programs: undefined;
+  framestep: number;
 }
 
 declare class Emitter<E> {
@@ -164,6 +167,25 @@ export declare class Player extends Emitter<PlayerEvents> {
   setDeinterlace(enabled: boolean | 'auto', mode?: string): Promise<unknown>;
   setAdjust(values: { brightness?: number; contrast?: number; saturation?: number; hue?: number; gamma?: number } | null): Promise<unknown>;
   setEqualizer(preset: string | number | null, opts?: { preamp?: number }): Promise<unknown>;
+  /** Plays `source` right after the current media ends, with no gap. `null` clears. */
+  queue(source: Source | SourceGroup | null, opts?: { name?: string }): Promise<unknown>;
+  /** Loops between two times (seconds); `null` stops looping. */
+  setABLoop(a: number | null, b?: number): Promise<unknown>;
+  programs(): Promise<{ id: number; name: string | null; selected: boolean; scrambled: boolean }[]>;
+  selectProgram(id: number): Promise<unknown>;
+  previousFrame(): Promise<unknown>;
+  navigate(action: 'activate' | 'up' | 'down' | 'left' | 'right' | 'popup'): Promise<unknown>;
+  setTeletext(page: number, opts?: { transparent?: boolean }): Promise<unknown>;
+  setMarquee(m: { text: string; color?: number; opacity?: number; position?: number; size?: number;
+    timeout?: number; x?: number; y?: number; refresh?: number } | null): Promise<unknown>;
+  setLogo(l: { image: Blob | File | string; x?: number; y?: number; opacity?: number; position?: number } | null): Promise<unknown>;
+  setStereoMode(mode: 'stereo' | 'reverse' | 'left' | 'right' | 'dolby' | 'mono'): Promise<unknown>;
+  setSubtitleScale(scale: number): Promise<unknown>;
+  setCrop(c: { ratio: [number, number] } | { window: [number, number, number, number] } |
+    { border: [number, number, number, number] } | null): Promise<unknown>;
+  /** Needs a build with sout (`vlc.features.sout`). */
+  startRecording(): Promise<void>;
+  stopRecording(): Promise<File>;
   info(): Promise<MediaInfo | null>;
   stats(): Promise<PlayerStats>;
   snapshot(type?: string, quality?: number): Promise<Blob>;
@@ -177,6 +199,8 @@ export interface VLCEvents {
 
 export declare class VLC extends Emitter<VLCEvents> {
   readonly version: { version: string; compiler: string; changeset: string };
+  /** What this build can do; `sout` = transcoding, remuxing, recording. */
+  readonly features: { sout: boolean };
   /** createVLC() to ready, in milliseconds. */
   readonly startupMs: number;
   createPlayer(opts?: {

@@ -116,6 +116,9 @@ const results = await page.evaluate(async () => {
     await p.setABLoop(null);
     const max = Math.max(...seen), min = Math.min(...seen.slice(5));
     assert(max < 2.4 && min >= 0.9, `range ${min.toFixed(2)}–${max.toFixed(2)}`);
+    // It must actually play through the loop, and wrap back at least once.
+    const wrapped = seen.some((t, k) => k && t < seen[k - 1] - 0.5);
+    assert(max > 1.6 && wrapped, `did not loop: range ${min.toFixed(2)}–${max.toFixed(2)}`);
     return `stayed in ${min.toFixed(2)}–${max.toFixed(2)} s for 2.5 s`;
   });
 
@@ -249,8 +252,9 @@ const results = await page.evaluate(async () => {
 
   await test('http(s) URL source (ranged reads)', async () => {
     await p.open(new URL(G + 't_mpeg2_ac3.ts', location.href).href);
-    await waitFor(() => p.state === 'playing' && p.renderer.framesDrawn > 0, 5000, 'playing from URL');
-    return 'played through lazy ranged reads';
+    const before = p.renderer.framesDrawn;
+    await waitFor(() => p.tracks.some((t) => t.codec === 'mpgv') && p.renderer.framesDrawn > before + 5, 6000, 'frames from the URL');
+    return `${p.renderer.framesDrawn - before} new frames, ${p.tracks.map((t) => t.codec.trim()).join('+')}`;
   });
 
   await test('two players at once', async () => {

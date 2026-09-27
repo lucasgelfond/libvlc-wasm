@@ -25,6 +25,13 @@
 
 #include <vlc/vlc.h>
 
+/* VLC's internal variable API: see api_player_new (selecting our vout). */
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+#include <vlc_common.h>
+#include <vlc_variables.h>
+
 #include "json.h"
 #include "shared.h"
 
@@ -111,93 +118,7 @@ typedef struct
     wv_instance_t *inst;
     wv_ring_t ring;
     wv_video_t video;
-    uint8_t *video_mem;
 } wv_player_t;
-
-/* --- video: libvlc vmem callbacks ------------------------------------------ */
-
-static unsigned align_up(unsigned v, unsigned a) { return (v + a - 1) & ~(a - 1); }
-
-static unsigned video_format(void **opaque, char *chroma, unsigned *width,
-                             unsigned *height, unsigned *pitches, unsigned *lines)
-{
-    wv_player_t *p = *opaque;
-    wv_video_t *v = &p->video;
-
-    /* Everything is converted to 8-bit I420: three single-channel textures
-     * the page can upload as-is. VLC's chroma converters (swscale) handle
-     * 10-bit, 4:2:2, 4:4:4, RGB and palettised sources on the way. */
-    memcpy(chroma, "I420", 4);
-    /* Since 4.0 width/height are two-element arrays: [0] the decoder's padded
-     * buffer, [1] the visible picture. vmem treats what we return as fully
-     * visible, so returning [0] made VLC *rescale* every frame (360 -> 386
-     * lines for 640x360 H.264). Asking for the visible size only crops. */
-    unsigned w = width[1] ? width[1] : width[0];
-    unsigned h = height[1] ? height[1] : height[0];
-    width[0] = w;
-    height[0] = h;
-    /* Chroma pitch is exactly half the luma pitch, so one texture-coordinate
-     * crop (width / pitch) is right for all three planes on the page. */
-    pitches[0] = align_up(w, 64);
-    pitches[1] = pitches[2] = pitches[0] / 2;
-    lines[0] = align_up(h, 16);
-    lines[1] = lines[2] = lines[0] / 2;
-
-    size_t plane_sz[3], frame = 0;
-    for (int k = 0; k < 3; k++) { plane_sz[k] = (size_t)pitches[k] * lines[k]; frame += plane_sz[k]; }
-    uint8_t *mem = aligned_alloc(64, frame * WV_VIDEO_BUFFERS);
-    if (mem == NULL)
-        return 0;
-    memset(mem, 0, frame * WV_VIDEO_BUFFERS);
-    for (int b = 0; b < WV_VIDEO_BUFFERS; b++) {
-        uint8_t *base = mem + frame * b;
-        for (int k = 0; k < 3; k++) { v->planes[b][k] = base; base += plane_sz[k]; }
-    }
-    p->video_mem = mem;
-    v->width = w; v->height = h; v->chroma = 0;
-    for (int k = 0; k < 3; k++) { v->pitch[k] = pitches[k]; v->lines[k] = lines[k]; }
-    v->locked = -1;
-    atomic_store(&v->front, -1);
-    atomic_fetch_add(&v->format_gen, 1);
-    return WV_VIDEO_BUFFERS;
-}
-
-static void video_cleanup(void *opaque)
-{
-    wv_player_t *p = opaque;
-    wv_video_t *v = &p->video;
-    atomic_store(&v->front, -1);
-    atomic_fetch_add(&v->format_gen, 1);
-    /* Let an upload in progress finish before the memory goes away. */
-    for (int spin = 0; spin < 100 && atomic_load(&v->reading) >= 0; spin++)
-        usleep(1000);
-    free(p->video_mem);
-    p->video_mem = NULL;
-    memset(v->planes, 0, sizeof v->planes);
-}
-
-static void *video_lock(void *opaque, void **planes)
-{
-    wv_player_t *p = opaque;
-    wv_video_t *v = &p->video;
-    int front = atomic_load(&v->front), reading = atomic_load(&v->reading);
-    int idx = 0;
-    while (idx == front || idx == reading)
-        idx++;
-    v->locked = idx;
-    for (int k = 0; k < 3; k++)
-        planes[k] = v->planes[idx][k];
-    return (void *)(intptr_t)idx;
-}
-
-static void video_display(void *opaque, void *picture)
-{
-    wv_player_t *p = opaque;
-    wv_video_t *v = &p->video;
-    atomic_store(&v->front, (int32_t)(intptr_t)picture);
-    atomic_fetch_add(&v->seq, 1);
-    atomic_fetch_add(&v->displayed, 1);
-}
 
 /* --- audio: selected webaudio module reads p->ring through "amem-data" ------ */
 
@@ -461,8 +382,14 @@ static void api_player_new(wv_call_t *c)
 
     p->mp = libvlc_media_player_new(wi->vlc, &player_cbs, p);
     if (!p->mp) { free(r->data); free(p); c->ret_i = 0; return; }
-    libvlc_video_set_callbacks(p->mp, video_lock, NULL, video_display, p);
-    libvlc_video_set_format_callbacks(p->mp, video_format, video_cleanup);
+    /* Video goes to our webframe display (native/webframe.c), not libvlc's
+     * vmem: it sees the full format (colour range/matrix, SAR) and keeps the
+     * decoder's pixel layout. libvlc has no public setter for the vout, but a
+     * media player is a VLC object, so its variables can be set directly. */
+    vlc_object_t *obj = (vlc_object_t *)p->mp;
+    var_Create(obj, "webframe-data", VLC_VAR_ADDRESS);
+    var_SetAddress(obj, "webframe-data", &p->video);
+    var_SetString(obj, "vout", "webframe");
     libvlc_audio_set_callbacks(p->mp, audio_unused_play, NULL, NULL, NULL, NULL, r);
     libvlc_audio_output_set(p->mp, "webaudio");
     c->ret_i = (int32_t)(intptr_t)p;

@@ -17,6 +17,13 @@ const clips = readdirSync(`${root}/bench/media`).filter((f) => !f.startsWith('.'
 const out = `${root}/bench/results`;
 mkdirSync(out, { recursive: true });
 
+if ('report-only' in args) {
+  const d = JSON.parse(readFileSync(`${out}/results.json`, 'utf8'));
+  writeFileSync(`${out}/RESULTS.md`, report(d));
+  console.log(`rewrote ${out}/RESULTS.md`);
+  process.exit(0);
+}
+
 const machine = {
   cpu: cpus()[0].model, cores: cpus().length, memGB: Math.round(totalmem() / 2 ** 30),
   os: execSync('sw_vers -productVersion 2>/dev/null || uname -r').toString().trim(),
@@ -58,7 +65,7 @@ async function newPage(context) {
 // Cold: fresh profile, nothing cached, wasm compiled from scratch. Warm: same
 // context again, so the HTTP cache and V8's compiled-code cache can apply.
 const startup = { cold: [], warm: [] };
-for (let k = 0; k < 3; k++) {
+for (let k = 0; k < ('showdown-only' in args ? 0 : 3); k++) {
   const ctx = await browser.newContext();
   const p1 = await newPage(ctx);
   startup.cold.push(await p1.evaluate(() => window.bench.startup()));
@@ -70,8 +77,10 @@ for (let k = 0; k < 3; k++) {
 console.log('startup', startup);
 
 const page = await newPage();
-const results = [];
-for (const clip of clips) {
+const showdownOnly = 'showdown-only' in args;
+const previous = showdownOnly ? JSON.parse(readFileSync(`${out}/results.json`, 'utf8')) : null;
+const results = previous?.results ?? [];
+for (const clip of showdownOnly ? [] : clips) {
   const file = `${root}/bench/media/${clip}`;
   const media = `/bench/media/${clip}`;
   const row = { clip, bytes: statSync(file).size, runs: {} };
@@ -98,12 +107,22 @@ for (const clip of clips) {
   row.probe = await page.evaluate((u) => window.bench.vlcProbeAndThumb(u), media).catch((e) => ({ error: e.message }));
   results.push(row);
 }
+// Time to first frame for a file the browser can't play: RealVideo 4 + Cook,
+// 2 MB, header says two hours (so "whole file" means the 2 MB actually there).
+// Save the sweep first: the showdown drives ffmpeg.wasm, which can hang.
+writeFileSync(`${out}/results.json`, JSON.stringify({ date: new Date().toISOString(), machine, size, startup, results }, null, 1));
+const showdown = await Promise.race([
+  page.evaluate(() => window.bench.firstFrameShowdown('/corpus/media/realmedia/realvideo-4-cook-rmvb.rmvb')),
+  new Promise((_, rej) => setTimeout(() => rej(new Error('timed out')), 300000)),
+]).catch((e) => ({ error: e.message }));
+console.log('first frame showdown', showdown);
 const memoryBytes = await page.evaluate(() => window.bench.memory()).catch(() => null);
 const browserVersion = browser.version();
 await browser.close();
 await server.close();
 
-const data = { date: new Date().toISOString(), machine, browser: `${(args.browser ?? 'chrome') === 'chrome' ? 'Chrome' : 'Chromium'} ${browserVersion}`, size, startup, memoryBytes, results };
+if (previous) { startup.cold = previous.startup.cold; startup.warm = previous.startup.warm; }
+const data = { showdown, date: previous?.date ?? new Date().toISOString(), machine, browser: `${(args.browser ?? 'chrome') === 'chrome' ? 'Chrome' : 'Chromium'} ${browserVersion}`, size, startup, memoryBytes, results };
 writeFileSync(`${out}/results.json`, JSON.stringify(data, null, 1));
 writeFileSync(`${out}/RESULTS.md`, report(data));
 console.log(`\nwrote ${out}/RESULTS.md`);
@@ -127,18 +146,36 @@ function report(d) {
     '',
     '## Decode throughput, 1080p30, 5 s (frames per second, higher is better)',
     '',
-    'libvlc-wasm runs the whole player (demux, decode, frame copy, WebGL upload) at 32x with frame dropping off;',
-    'native VLC.app the same way with a dummy output; FFmpeg with `-f null`. Wasm/native = libvlc-wasm ÷ native FFmpeg.',
+    'The VLC columns run the whole player at 32x with frame dropping off, counting frames as the video output shows them:',
+    'demux, decode, frame copy and (wasm) the WebGL upload, so they include player overhead and top out near the',
+    'vout\'s pacing ceiling (~550 fps). The FFmpeg and ffmpeg.wasm columns are decode only (`-f null`).',
+    'Native VLC 3 is forced to software decoding (`--codec=avcodec|dav1d`). WebCodecs is the browser\'s decoder',
+    '(VideoToolbox on this Mac) driven through VLC. The last column compares like with like — the same player,',
+    'native vs wasm, both in software; † marks results at the pacing ceiling, where the decoder is not the limit.',
     '',
-    '| clip | threads | native FFmpeg | native VLC 3 | libvlc-wasm (software) | libvlc-wasm + WebCodecs | ffmpeg.wasm | software wasm vs native |',
+    '| clip | threads | native FFmpeg | native VLC 3 | libvlc-wasm (software) | libvlc-wasm + WebCodecs | ffmpeg.wasm | native VLC ÷ libvlc-wasm |',
     '|---|---|---|---|---|---|---|---|',
   ];
   for (const r of d.results) {
     for (const [t, x] of Object.entries(r.runs)) {
       const f = (v) => (v?.fps ? v.fps.toFixed(1) : v?.error ? 'error' : '—');
-      const ratio = x.libvlcWasm?.fps && x.ffmpegNative?.fps ? `${(x.ffmpegNative.fps / x.libvlcWasm.fps).toFixed(2)}× slower` : '—';
+      const capped = (v) => v?.fps >= 450;
+      const ratio = x.libvlcWasm?.fps && x.vlcNative?.fps
+        ? `${(x.vlcNative.fps / x.libvlcWasm.fps).toFixed(2)}×${capped(x.vlcNative) && capped(x.libvlcWasm) ? ' †' : ''}` : '—';
       L.push(`| ${r.clip} | ${t} | ${f(x.ffmpegNative)} | ${f(x.vlcNative)} | ${f(x.libvlcWasm)} | ${f(x.libvlcWebCodecs)} | ${f(x.ffmpegWasm)} | ${ratio} |`);
     }
+  }
+  const sd = d.showdown ?? {};
+  if (sd.vlcFirstFrameMs) {
+    const ms = (v) => (v == null ? '—' : v < 1000 ? `${Math.round(v)} ms` : `${(v / 1000).toFixed(1)} s`);
+    L.push('', '## Time to first frame for a file the browser can\'t play', '',
+      'RealVideo 4 + Cook (`.rmvb`, 2 MB). libvlc-wasm plays it directly; with ffmpeg.wasm it must first be',
+      'transcoded to H.264/AAC MP4 (`-preset ultrafast`, 4 threads) and handed to `<video>`.', '',
+      '| path | time to first frame |', '|---|---|',
+      `| libvlc-wasm \`player.open(file)\` | **${ms(sd.vlcFirstFrameMs)}** |`,
+      `| ffmpeg.wasm load (once per page) | ${ms(sd.ffmpegLoadMs)} |`,
+      `| ffmpeg.wasm transcode first 10 s → \`<video>\` | ${ms(sd.ffmpegWasm_first10s_Ms)} |`,
+      `| ffmpeg.wasm transcode whole file → \`<video>\` | ${ms(sd.ffmpegWasm_whole_Ms)} |`);
   }
   L.push('', '## Probe and thumbnail (libvlc-wasm)', '', '| clip | probe | thumbnail |', '|---|---|---|');
   for (const r of d.results) L.push(`| ${r.clip} | ${r.probe?.probeMs?.toFixed(0) ?? '—'} ms | ${r.probe?.thumbnailMs?.toFixed(0) ?? '—'} ms |`);

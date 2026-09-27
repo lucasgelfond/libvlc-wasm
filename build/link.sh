@@ -38,9 +38,12 @@ emcc $CFLAGS -DHAVE_CONFIG_H -I"$B" -I"$S/include" \
 emcc $CFLAGS -DHAVE_CONFIG_H -I"$B" -I"$S/include" \
   -DMODULE_NAME=webcodecs -DMODULE_STRING='"webcodecs"' \
   -c "$N/webcodecs.c" -o "$OBJ/webcodecs.o"
+emcc $CFLAGS -DHAVE_CONFIG_H -I"$B" -I"$S/include" \
+  -DMODULE_NAME=webframe -DMODULE_STRING='"webframe"' \
+  -c "$N/webframe.c" -o "$OBJ/webframe.o"
 # sout (transcoding, remuxing, recording) is present when VLC was configured with it.
 HAS_SOUT=$(grep -q '^#define ENABLE_SOUT 1' "$B/config.h" && echo 1 || echo 0)
-emcc $CFLAGS -DWV_HAS_SOUT=$HAS_SOUT -I"$S/include" -c "$N/bridge.c" -o "$OBJ/bridge.o"
+emcc $CFLAGS -DWV_HAS_SOUT=$HAS_SOUT -DHAVE_CONFIG_H -I"$B" -I"$S/include" -c "$N/bridge.c" -o "$OBJ/bridge.o"
 emcc $CFLAGS -c "$N/compat.c" -o "$OBJ/compat.o"
 
 echo "==> generating the static module table"
@@ -56,7 +59,7 @@ for a in "$B"/modules/.libs/lib*_plugin.a; do
   PROTOS="${PROTOS}VLC_ENTRY_FUNC($entry);\n"
   LIST="${LIST}    $entry,\n"
 done
-for ours in webaudio webcodecs; do
+for ours in webaudio webcodecs webframe; do
   PROTOS="${PROTOS}VLC_ENTRY_FUNC(vlc_entry__$ours);\n"
   LIST="${LIST}    vlc_entry__$ours,\n"
 done
@@ -72,7 +75,7 @@ CONTRIB=$(ls "$C"/lib/*.a | grep -v -e opencv -e glslang -e SPIRV -e HLSL -e OGL
 
 echo "==> linking"
 emcc $LINK_OPT -pthread -msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm \
-  "$OBJ/bridge.o" "$OBJ/compat.o" "$OBJ/webaudio.o" "$OBJ/webcodecs.o" "$OBJ/vlc-modules.o" \
+  "$OBJ/bridge.o" "$OBJ/compat.o" "$OBJ/webaudio.o" "$OBJ/webcodecs.o" "$OBJ/webframe.o" "$OBJ/vlc-modules.o" \
   -Wl,--start-group $PLUGINS $HELPERS \
   "$B/lib/.libs/libvlc.a" "$B/src/.libs/libvlccore.a" "$B/compat/.libs/libcompat.a" \
   $CONTRIB -Wl,--end-group \

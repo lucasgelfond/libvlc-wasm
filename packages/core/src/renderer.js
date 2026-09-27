@@ -20,22 +20,45 @@ void main() {
 }`;
 
 const FS = `#version 300 es
-precision mediump float;
+precision highp float;
 in vec2 uv;
 out vec4 color;
 uniform sampler2D y, u, v;
-uniform mat3 yuv2rgb;
-uniform vec3 offset;
+uniform int mode;          // 0: 8-bit planar, 1: NV12 (u holds interleaved UV), 2: 10-bit planar (RG8 = little-endian 16-bit), 3: RGBX, 4: BGRX
+uniform vec4 range;        // y offset, y scale, c offset, c scale
+uniform vec2 k;            // Kr, Kb of the colour matrix
+float s16(sampler2D t) { vec2 p = texture(t, uv).rg; return (p.r + p.g * 256.0) * 255.0 / 1023.0; }
 void main() {
-  vec3 yuv = vec3(texture(y, uv).r, texture(u, uv).r, texture(v, uv).r) - offset;
-  color = vec4(clamp(yuv2rgb * yuv, 0.0, 1.0), 1.0);
+  if (mode == 3) { color = vec4(texture(y, uv).rgb, 1.0); return; }
+  if (mode == 4) { color = vec4(texture(y, uv).bgr, 1.0); return; }
+  vec3 c;
+  if (mode == 1) c = vec3(texture(y, uv).r, texture(u, uv).rg);
+  else if (mode == 2) c = vec3(s16(y), s16(u), s16(v));
+  else c = vec3(texture(y, uv).r, texture(u, uv).r, texture(v, uv).r);
+  float Y = (c.x - range.x) * range.y;
+  float Cb = (c.y - range.z) * range.w, Cr = (c.z - range.z) * range.w;
+  float r = Y + 2.0 * (1.0 - k.x) * Cr;
+  float b = Y + 2.0 * (1.0 - k.y) * Cb;
+  float g = (Y - k.x * r - k.y * b) / (1.0 - k.x - k.y);
+  color = vec4(clamp(vec3(r, g, b), 0.0, 1.0), 1.0);
 }`;
 
-// Limited-range matrices (column-major for GLSL). Height is the usual proxy
-// for the colour space when the stream does not say; vmem does not pass it.
-const BT601 = [1.164, 1.164, 1.164, 0, -0.392, 2.017, 1.596, -0.813, 0];
-const BT709 = [1.164, 1.164, 1.164, 0, -0.213, 2.112, 1.793, -0.533, 0];
-const OFFSET = [16 / 255, 128 / 255, 128 / 255];
+// Header chroma codes (native/bridge.c video_format): low byte = layout,
+// bit 8 = full range.
+const LAYOUTS = {
+  0: { cw: 2, ch: 2, planes: 3, bpp: 1, mode: 0 }, // I420
+  1: { cw: 2, ch: 1, planes: 3, bpp: 1, mode: 0 }, // I422
+  2: { cw: 1, ch: 1, planes: 3, bpp: 1, mode: 0 }, // I444
+  3: { cw: 2, ch: 2, planes: 2, bpp: 1, mode: 1 }, // NV12
+  4: { cw: 2, ch: 2, planes: 3, bpp: 2, mode: 2 }, // I420 10-bit
+  5: { cw: 1, ch: 1, planes: 1, bpp: 4, mode: 3 }, // RGBX (browser-converted frames)
+  6: { cw: 1, ch: 1, planes: 1, bpp: 4, mode: 4 }, // BGRX (Firefox's hardware frames)
+};
+// Bytes per texel -> [internal format, format]
+const TEXEL_FORMATS = { 1: ['R8', 'RED'], 2: ['RG8', 'RG'], 4: ['RGBA8', 'RGBA'] };
+
+// Kr, Kb per matrix code (bits 12-15 of the header's chroma word).
+const KR_KB = [[0.299, 0.114], [0.2126, 0.0722], [0.2627, 0.0593]];
 
 export class Renderer {
   /**
@@ -77,10 +100,10 @@ export class Renderer {
     this.u = {
       scale: gl.getUniformLocation(this.program, 'scale'),
       crop: gl.getUniformLocation(this.program, 'crop'),
-      yuv2rgb: gl.getUniformLocation(this.program, 'yuv2rgb'),
-      offset: gl.getUniformLocation(this.program, 'offset'),
+      mode: gl.getUniformLocation(this.program, 'mode'),
+      range: gl.getUniformLocation(this.program, 'range'),
+      k: gl.getUniformLocation(this.program, 'k'),
     };
-    gl.uniform3fv(this.u.offset, OFFSET);
   }
 
   /** Points the renderer at a player's video struct in wasm memory. */
@@ -114,36 +137,58 @@ export class Renderer {
     try {
       const gen = Atomics.load(h, VIDEO.FORMAT_GEN);
       const width = h[VIDEO.WIDTH], height = h[VIDEO.HEIGHT];
-      const planes = [0, 1, 2].map((k) => ({
-        ptr: h[VIDEO.PLANES + front * 3 + k] >>> 0,
-        pitch: h[VIDEO.PITCH + k],
-        w: k ? (width + 1) >> 1 : width,
-        h: k ? (height + 1) >> 1 : height,
-      }));
-      const end = planes[2].ptr + planes[2].pitch * planes[2].h;
+      const code = h[VIDEO.CHROMA];
+      const L = LAYOUTS[code & 0xff] ?? LAYOUTS[0];
+      const planes = [];
+      for (let k = 0; k < L.planes; k++) {
+        const pitch = h[VIDEO.PITCH + k];
+        const rows = k ? Math.ceil(height / L.ch) : height;
+        // Texel layout: 8-bit planes are R8; NV12's UV plane and 10-bit
+        // planes are RG8 (two bytes per texel).
+        const twoByte = L.bpp === 2 || (L.mode === 1 && k === 1);
+        const texel = L.bpp === 4 ? 4 : twoByte ? 2 : 1;
+        planes.push({ ptr: h[VIDEO.PLANES + front * 3 + k] >>> 0, pitch, rows, texel, texW: pitch / texel });
+      }
+      const lastPlane = planes[planes.length - 1];
       if (!planes[0].ptr) return 'idle';
-      if (end > this.memory.byteLength) return 'grow';
+      if (lastPlane.ptr + lastPlane.pitch * lastPlane.rows > this.memory.byteLength) return 'grow';
 
       const gl = this.gl;
-      if (gen !== this.formatGen) {
+      if (gen !== this.formatGen || code !== this.code) {
         this.formatGen = gen;
+        this.code = code;
         this.width = width;
         this.height = height;
-        gl.uniformMatrix3fv(this.u.yuv2rgb, false, height >= 720 ? BT709 : BT601);
+        const full = (code & 0x100) !== 0;
+        const matrix = (code >> 12) & 0xf;
+        const sarNum = h[VIDEO.SAR_NUM], sarDen = h[VIDEO.SAR_DEN];
+        if (sarNum && sarDen) this.sar = sarNum / sarDen;
+        const tenBit = L.bpp === 2;
+        // Limited range is 16-235 (64-940 in 10-bit) for luma and 16-240 for
+        // chroma, all around a half-scale chroma zero.
+        const max = tenBit ? 1023 : 255;
+        const range = full ? [0, 1, (tenBit ? 512 : 128) / max, 1]
+          : [(tenBit ? 64 : 16) / max, max / (tenBit ? 876 : 219), (tenBit ? 512 : 128) / max, max / (tenBit ? 896 : 224)];
+        gl.uniform4fv(this.u.range, range);
+        // The display module sends the stream's matrix (or the by-size
+        // convention when the stream does not say).
+        gl.uniform2fv(this.u.k, KR_KB[matrix] ?? KR_KB[1]);
+        gl.uniform1i(this.u.mode, L.mode);
         planes.forEach((p, k) => {
           gl.activeTexture(gl.TEXTURE0 + k);
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.R8, p.pitch, p.h, 0, gl.RED, gl.UNSIGNED_BYTE, null);
-          this.scratch[k] = new Uint8Array(p.pitch * p.h);
+          const [internal, fmt] = TEXEL_FORMATS[p.texel];
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl[internal], p.texW, p.rows, 0, gl[fmt], gl.UNSIGNED_BYTE, null);
+          this.scratch[k] = new Uint8Array(p.pitch * p.rows);
         });
-        // Textures are pitch wide; sample only the visible part.
-        gl.uniform2f(this.u.crop, width / planes[0].pitch, 1);
+        // Textures are pitch wide; sample only the visible part. Every plane
+        // has the same visible/pitch ratio by construction.
+        gl.uniform2f(this.u.crop, (width * L.bpp) / planes[0].pitch, 1);
       }
       planes.forEach((p, k) => {
-        const n = p.pitch * p.h;
         const dst = this.scratch[k];
-        dst.set(new Uint8Array(this.memory, p.ptr, n));
+        dst.set(new Uint8Array(this.memory, p.ptr, p.pitch * p.rows));
         gl.activeTexture(gl.TEXTURE0 + k);
-        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, p.pitch, p.h, gl.RED, gl.UNSIGNED_BYTE, dst);
+        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, p.texW, p.rows, gl[TEXEL_FORMATS[p.texel][1]], gl.UNSIGNED_BYTE, dst);
       });
     } finally {
       Atomics.store(h, VIDEO.READING, -1);

@@ -112,15 +112,22 @@ page                             Worker (Emscripten main thread)        VLC pthr
 ────                             ─────────────────────────────         ────────────
 createVLC ── postMessage ─────▶  engine.js ── wv_submit ──────────────▶ control thread → libvlc_*()
 Player  ◀─── events ───────────  MAIN_THREAD_ASYNC_EM_ASM ◀──────────── player callbacks
-Renderer (WebGL2) ◀── reads I420 frames straight from wasm memory ───── vmem (vout thread)
+Renderer (WebGL2) ◀── reads frames straight from wasm memory ─────────── webframe vout (native/webframe.c)
 AudioWorklet      ◀── reads float PCM ring straight from wasm memory ── webaudio aout (native/webaudio.c)
                                  WORKERFS/FileReaderSync ◀── proxied reads ─ input thread
 ```
 
 - libvlc calls run on a dedicated control pthread, never on the Worker's JS thread,
   because that thread serves every filesystem read VLC's threads make.
-- Video uses libvlc's public `vmem` callbacks into three shared buffers; the page
-  uploads the newest one each animation frame.
+- Video goes through a small VLC video output of ours (`native/webframe.c`) into three shared
+  buffers; the page uploads the newest one each animation frame. It keeps the decoder's own pixel
+  layout (4:2:0, 4:2:2, 4:4:4, NV12, 10-bit, RGB) and passes the stream's colour range and matrix,
+  so YUV→RGB happens in the shader, exactly (measured within 1–2/255 in Chrome, Safari and
+  Firefox), with no per-frame conversion in wasm.
+- H.264, HEVC, VP9 and AV1 go to the browser's decoder through WebCodecs when it can decode them
+  (`native/webcodecs.c`); the first frame is verified on a throwaway decoder, and anything it
+  refuses — or can only return as GPU-only frames — falls back to FFmpeg/dav1d without losing a
+  frame. `createVLC({ args: ['--no-webcodecs'] })` turns it off.
 - Audio uses a small VLC audio output module of ours (`native/webaudio.c`) that
   reports real playback position back to VLC, so audio is the master clock and A/V
   sync is VLC's own — not an approximation in JS.

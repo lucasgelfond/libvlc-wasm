@@ -741,7 +741,9 @@
       "audio": "TrueHD",
       "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere); ffprobe needs -f truehd",
       "notes": null,
-      "test": {}
+      "test": {
+        "knownIssue": "plays about half the time: its 0.1 s of audio only leaves the decoder at end-of-stream drain, right at the lateness limit of VLC's audio core (same as the WMA Lossless clip)"
+      }
     },
     {
       "id": "mlp-440-hz",

@@ -234,7 +234,9 @@ for (const f of readdirSync(MEDIA).sort()) {
     console.log(`skip ${f}: not decodable by this FFmpeg build (e.g. no AV1 decoder)`);
     continue;
   }
-  clips.push({ file: f, short, codec: ref.codec, frames: ref.frames, checksum: ref.checksum });
+  // Several clips share a codec (mpeg2 at three sizes): label with the size.
+  const size = /_(\d+x\d+|\d+p)\./.exec(f)?.[1] ?? '';
+  clips.push({ file: f, short, codec: size ? `${ref.codec} ${size}` : ref.codec, frames: ref.frames, checksum: ref.checksum });
 }
 if (!clips.length) {
   console.error('no clips');

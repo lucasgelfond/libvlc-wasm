@@ -1,0 +1,2188 @@
+{
+  "meta": {
+    "date": "2026-09-27T05:31:40.752Z",
+    "host": "Darwin 25.6.0 arm64, Apple M5, 10 cpus",
+    "iterations": 3,
+    "versions": {
+      "native": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+      "wavm": "nightly-2026-04-05 (WAVM version 0.0.0-prerelease)",
+      "wamr": "iwasm 2.4.5",
+      "wasmedge": "/opt/homebrew/bin/wasmedge version 0.17.1",
+      "wasm2c": "wabt 1.0.42, Apple clang version 17.0.0 (clang-1700.6.3.2)",
+      "wasmer-llvm": "wasmer 7.4.2",
+      "wasmer": "wasmer 7.4.2",
+      "wasmtime": "wasmtime 49.0.1 (46c23a87d 2026-09-24)",
+      "wazero": "wazero 1.12.0",
+      "node": "node v22.21.1",
+      "node-noliftoff": "node v22.21.1",
+      "bun": "bun 1.4.2",
+      "ffmpeg_brew": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers"
+    },
+    "compileSeconds": {
+      "native/base": null,
+      "wavm/base": 22.310619083,
+      "wavm/simd": 25.371982333,
+      "wamr/base": 37.118589834,
+      "wamr/simd": 38.313322375,
+      "wasmedge/base": 17.937346917,
+      "wasmedge/simd": 20.809354417,
+      "wasm2c/base": null,
+      "wasm2c/simd": null,
+      "wasmer-llvm/base": 4.4534215,
+      "wasmer-llvm/simd": 5.0663335,
+      "wasmer/base": 0.282102,
+      "wasmer/simd": 0.332360791,
+      "wasmtime/base": 0.267194833,
+      "wasmtime/simd": 0.273734875,
+      "wazero/base": null,
+      "wazero/simd": null,
+      "node/base": null,
+      "node/simd": null,
+      "node-noliftoff/base": null,
+      "node-noliftoff/simd": null,
+      "bun/base": null,
+      "bun/simd": null
+    }
+  },
+  "clips": [
+    {
+      "file": "h264_1080p.mkv",
+      "short": "h264",
+      "codec": "h264",
+      "frames": 150,
+      "checksum": "d1002568"
+    },
+    {
+      "file": "hevc_1080p.mkv",
+      "short": "hevc",
+      "codec": "hevc",
+      "frames": 150,
+      "checksum": "390f01a3"
+    },
+    {
+      "file": "mjpeg_1080p.avi",
+      "short": "mjpeg",
+      "codec": "mjpeg",
+      "frames": 150,
+      "checksum": "76c1ff17"
+    },
+    {
+      "file": "mpeg2_1080p.mpg",
+      "short": "mpeg2",
+      "codec": "mpeg2video",
+      "frames": 150,
+      "checksum": "4e24bfa2"
+    },
+    {
+      "file": "mpeg2_1280x720.mpg",
+      "short": "mpeg2_1280x720.mpg",
+      "codec": "mpeg2video",
+      "frames": 150,
+      "checksum": "5192428d"
+    },
+    {
+      "file": "mpeg2_640x360.mpg",
+      "short": "mpeg2_640x360.mpg",
+      "codec": "mpeg2video",
+      "frames": 150,
+      "checksum": "ec6c31f7"
+    },
+    {
+      "file": "mpeg4asp_1080p.avi",
+      "short": "mpeg4asp",
+      "codec": "mpeg4",
+      "frames": 150,
+      "checksum": "9cc49fd2"
+    },
+    {
+      "file": "msmpeg4_1080p.avi",
+      "short": "msmpeg4",
+      "codec": "msmpeg4",
+      "frames": 150,
+      "checksum": "3afeb23e"
+    },
+    {
+      "file": "vp9_1080p.webm",
+      "short": "vp9",
+      "codec": "vp9",
+      "frames": 150,
+      "checksum": "78c24381"
+    }
+  ],
+  "native_fps": {
+    "h264": 83.693,
+    "hevc": 182.664,
+    "mjpeg": 356.302,
+    "mpeg2": 852.942,
+    "mpeg2_1280x720.mpg": 1602.615,
+    "mpeg2_640x360.mpg": 1747.172,
+    "mpeg4asp": 616.153,
+    "msmpeg4": 567.975,
+    "vp9": 192.642
+  },
+  "homebrew_ffmpeg_fps": {
+    "h264": 127.44265080713679,
+    "hevc": 300,
+    "mjpeg": 714.2857142857143,
+    "mpeg2": 1260.5042016806724,
+    "mpeg2_1280x720.mpg": 2380.9523809523807,
+    "mpeg2_640x360.mpg": 2678.5714285714284,
+    "mpeg4asp": 882.3529411764705,
+    "msmpeg4": 833.3333333333334,
+    "vp9": 340.90909090909093
+  },
+  "results": [
+    {
+      "runtime": "native",
+      "label": "native C (clang -O3, no asm)",
+      "variant": "base",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            83.696,
+            83.693,
+            83.507
+          ],
+          "median_fps": 83.693,
+          "slowdown": 1
+        },
+        "hevc": {
+          "runs": [
+            182.664,
+            182.674,
+            181.889
+          ],
+          "median_fps": 182.664,
+          "slowdown": 1
+        },
+        "mjpeg": {
+          "runs": [
+            350.887,
+            359.508,
+            356.302
+          ],
+          "median_fps": 356.302,
+          "slowdown": 1
+        },
+        "mpeg2": {
+          "runs": [
+            857.118,
+            852.942,
+            837.507
+          ],
+          "median_fps": 852.942,
+          "slowdown": 1
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1594.862,
+            1604.81,
+            1602.615
+          ],
+          "median_fps": 1602.615,
+          "slowdown": 1
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1747.172,
+            1744.227,
+            1765.017
+          ],
+          "median_fps": 1747.172,
+          "slowdown": 1
+        },
+        "mpeg4asp": {
+          "runs": [
+            612.442,
+            616.153,
+            617.81
+          ],
+          "median_fps": 616.153,
+          "slowdown": 1
+        },
+        "msmpeg4": {
+          "runs": [
+            565.974,
+            567.975,
+            568.488
+          ],
+          "median_fps": 567.975,
+          "slowdown": 1
+        },
+        "vp9": {
+          "runs": [
+            192.642,
+            186.237,
+            195.211
+          ],
+          "median_fps": 192.642,
+          "slowdown": 1
+        }
+      },
+      "geomean_slowdown": 1
+    },
+    {
+      "runtime": "wavm",
+      "label": "WAVM (nightly, LLVM AOT)",
+      "variant": "base",
+      "compile_seconds": 22.310619083,
+      "clips": {
+        "h264": {
+          "runs": [
+            73.098,
+            72.728,
+            72.901
+          ],
+          "median_fps": 72.901,
+          "slowdown": 1.1480363781018093
+        },
+        "hevc": {
+          "runs": [
+            122.922,
+            120.889,
+            121.627
+          ],
+          "median_fps": 121.627,
+          "slowdown": 1.5018375854045565
+        },
+        "mjpeg": {
+          "runs": [
+            295.339,
+            294.904,
+            295.491
+          ],
+          "median_fps": 295.339,
+          "slowdown": 1.2064170326302994
+        },
+        "mpeg2": {
+          "runs": [
+            681.271,
+            677.573,
+            688.127
+          ],
+          "median_fps": 681.271,
+          "slowdown": 1.2519863607874107
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1307.564,
+            1309.361,
+            1301.82
+          ],
+          "median_fps": 1307.564,
+          "slowdown": 1.2256493754799
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1426.201,
+            1433.859,
+            1432.666
+          ],
+          "median_fps": 1432.666,
+          "slowdown": 1.2195249974523024
+        },
+        "mpeg4asp": {
+          "runs": [
+            497.56,
+            494.593,
+            494.051
+          ],
+          "median_fps": 494.593,
+          "slowdown": 1.2457778415788334
+        },
+        "msmpeg4": {
+          "runs": [
+            454.253,
+            450.832,
+            454.917
+          ],
+          "median_fps": 454.253,
+          "slowdown": 1.25034947485212
+        },
+        "vp9": {
+          "runs": [
+            161.408,
+            162.119,
+            163.236
+          ],
+          "median_fps": 162.119,
+          "slowdown": 1.1882752792701656
+        }
+      },
+      "geomean_slowdown": 1.2453496450301622
+    },
+    {
+      "runtime": "wavm",
+      "label": "WAVM (nightly, LLVM AOT)",
+      "variant": "simd",
+      "compile_seconds": 25.371982333,
+      "clips": {
+        "h264": {
+          "runs": [
+            75.931,
+            74.421,
+            75.912
+          ],
+          "median_fps": 75.912,
+          "slowdown": 1.102500263462957
+        },
+        "hevc": {
+          "runs": [
+            157.966,
+            158.393,
+            158.441
+          ],
+          "median_fps": 158.393,
+          "slowdown": 1.1532327817517187
+        },
+        "mjpeg": {
+          "runs": [
+            277.779,
+            276.927,
+            278.767
+          ],
+          "median_fps": 277.779,
+          "slowdown": 1.2826815562011529
+        },
+        "mpeg2": {
+          "runs": [
+            679.785,
+            678.233,
+            684.214
+          ],
+          "median_fps": 679.785,
+          "slowdown": 1.2547231845362872
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1292.535,
+            1293.22,
+            1298.875
+          ],
+          "median_fps": 1293.22,
+          "slowdown": 1.239243902816226
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1426.153,
+            1430.408,
+            1421.015
+          ],
+          "median_fps": 1426.153,
+          "slowdown": 1.225094362245846
+        },
+        "mpeg4asp": {
+          "runs": [
+            489.545,
+            490.842,
+            491.107
+          ],
+          "median_fps": 490.842,
+          "slowdown": 1.2552980388801285
+        },
+        "msmpeg4": {
+          "runs": [
+            439.875,
+            438.219,
+            439.136
+          ],
+          "median_fps": 439.136,
+          "slowdown": 1.2933920243387014
+        },
+        "vp9": {
+          "runs": [
+            182.309,
+            180.29,
+            185.227
+          ],
+          "median_fps": 182.309,
+          "slowdown": 1.056678496398971
+        }
+      },
+      "geomean_slowdown": 1.2043297353790212
+    },
+    {
+      "runtime": "wamr",
+      "label": "WAMR (wamrc AOT, -O3)",
+      "variant": "base",
+      "compile_seconds": 37.118589834,
+      "clips": {
+        "h264": {
+          "runs": [
+            71.865,
+            71.541,
+            71.79
+          ],
+          "median_fps": 71.79,
+          "slowdown": 1.1658030366346286
+        },
+        "hevc": {
+          "runs": [
+            161.844,
+            161.5,
+            162.475
+          ],
+          "median_fps": 161.844,
+          "slowdown": 1.128642396381701
+        },
+        "mjpeg": {
+          "runs": [
+            298.971,
+            297.445,
+            295.993
+          ],
+          "median_fps": 297.445,
+          "slowdown": 1.1978752374388544
+        },
+        "mpeg2": {
+          "runs": [
+            729.171,
+            724.393,
+            724.582
+          ],
+          "median_fps": 724.582,
+          "slowdown": 1.1771504122376764
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1372.558,
+            1382.578,
+            1369.05
+          ],
+          "median_fps": 1372.558,
+          "slowdown": 1.1676118604823986
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1531.675,
+            1521.854,
+            1536.759
+          ],
+          "median_fps": 1531.675,
+          "slowdown": 1.1406936850180358
+        },
+        "mpeg4asp": {
+          "runs": [
+            510.633,
+            510.32,
+            510.936
+          ],
+          "median_fps": 510.633,
+          "slowdown": 1.2066454772801603
+        },
+        "msmpeg4": {
+          "runs": [
+            470.25,
+            470.194,
+            471.277
+          ],
+          "median_fps": 470.25,
+          "slowdown": 1.2078149920255183
+        },
+        "vp9": {
+          "runs": [
+            177.431,
+            177.704,
+            180.299
+          ],
+          "median_fps": 177.704,
+          "slowdown": 1.0840611353711789
+        }
+      },
+      "geomean_slowdown": 1.1633895730989225
+    },
+    {
+      "runtime": "wamr",
+      "label": "WAMR (wamrc AOT, -O3)",
+      "variant": "simd",
+      "compile_seconds": 38.313322375,
+      "clips": {
+        "h264": {
+          "error": "wrong output: 150 frames / a4e801c3, native 150 / d1002568"
+        },
+        "hevc": {
+          "error": "wrong output: 150 frames / 3fec3008, native 150 / 390f01a3"
+        },
+        "mjpeg": {
+          "runs": [
+            269.197,
+            268.754,
+            269.184
+          ],
+          "median_fps": 269.184,
+          "slowdown": 1.3236373632905374
+        },
+        "mpeg2": {
+          "runs": [
+            680.896,
+            681.239,
+            682.578
+          ],
+          "median_fps": 681.239,
+          "slowdown": 1.2520451706376177
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1328.292,
+            1310.662,
+            1317.951
+          ],
+          "median_fps": 1317.951,
+          "slowdown": 1.215989820562373
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1480.794,
+            1482.008,
+            1482.624
+          ],
+          "median_fps": 1482.008,
+          "slowdown": 1.1789221110817216
+        },
+        "mpeg4asp": {
+          "runs": [
+            492.501,
+            492.928,
+            490.64
+          ],
+          "median_fps": 492.501,
+          "slowdown": 1.2510695409755515
+        },
+        "msmpeg4": {
+          "runs": [
+            453.426,
+            456.22,
+            452.584
+          ],
+          "median_fps": 453.426,
+          "slowdown": 1.2526299771076208
+        },
+        "vp9": {
+          "error": "wrong output: 150 frames / 9bf95c4f, native 150 / 78c24381"
+        }
+      },
+      "geomean_slowdown": null
+    },
+    {
+      "runtime": "wasmedge",
+      "label": "WasmEdge (AOT, --run-mode=aot)",
+      "variant": "base",
+      "compile_seconds": 17.937346917,
+      "clips": {
+        "h264": {
+          "runs": [
+            63.17,
+            63.219,
+            62.809
+          ],
+          "median_fps": 63.17,
+          "slowdown": 1.3248852303308531
+        },
+        "hevc": {
+          "runs": [
+            115.631,
+            115.669,
+            116.051
+          ],
+          "median_fps": 115.669,
+          "slowdown": 1.5791958087300833
+        },
+        "mjpeg": {
+          "runs": [
+            216.875,
+            217.078,
+            223.143
+          ],
+          "median_fps": 217.078,
+          "slowdown": 1.6413547204230738
+        },
+        "mpeg2": {
+          "runs": [
+            525.352,
+            524.743,
+            525.516
+          ],
+          "median_fps": 525.352,
+          "slowdown": 1.6235628683244758
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1042.746,
+            1034.297,
+            1030.517
+          ],
+          "median_fps": 1034.297,
+          "slowdown": 1.5494727336538732
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1321.062,
+            1308.821,
+            1325.287
+          ],
+          "median_fps": 1321.062,
+          "slowdown": 1.3225510990400149
+        },
+        "mpeg4asp": {
+          "runs": [
+            380.24,
+            381.516,
+            378.873
+          ],
+          "median_fps": 380.24,
+          "slowdown": 1.6204318325268252
+        },
+        "msmpeg4": {
+          "runs": [
+            341.4,
+            349.649,
+            345.863
+          ],
+          "median_fps": 345.863,
+          "slowdown": 1.6421964766395944
+        },
+        "vp9": {
+          "runs": [
+            155.541,
+            153.688,
+            157.684
+          ],
+          "median_fps": 155.541,
+          "slowdown": 1.2385287480471388
+        }
+      },
+      "geomean_slowdown": 1.4965588412848807
+    },
+    {
+      "runtime": "wasmedge",
+      "label": "WasmEdge (AOT, --run-mode=aot)",
+      "variant": "simd",
+      "compile_seconds": 20.809354417,
+      "clips": {
+        "h264": {
+          "runs": [
+            66.101,
+            65.882,
+            65.899
+          ],
+          "median_fps": 65.899,
+          "slowdown": 1.270019271916114
+        },
+        "hevc": {
+          "runs": [
+            154.426,
+            155.459,
+            153.942
+          ],
+          "median_fps": 154.426,
+          "slowdown": 1.1828578089181874
+        },
+        "mjpeg": {
+          "runs": [
+            149.105,
+            149.654,
+            150.177
+          ],
+          "median_fps": 149.654,
+          "slowdown": 2.380838467398132
+        },
+        "mpeg2": {
+          "runs": [
+            446.411,
+            463.175,
+            451.961
+          ],
+          "median_fps": 451.961,
+          "slowdown": 1.887202656866411
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            901.063,
+            904.977,
+            886.546
+          ],
+          "median_fps": 901.063,
+          "slowdown": 1.7785826296274512
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1159.707,
+            1168.534,
+            1170.476
+          ],
+          "median_fps": 1168.534,
+          "slowdown": 1.4951828530449263
+        },
+        "mpeg4asp": {
+          "runs": [
+            333.036,
+            328.687,
+            334.057
+          ],
+          "median_fps": 333.036,
+          "slowdown": 1.8501092974933642
+        },
+        "msmpeg4": {
+          "runs": [
+            309.001,
+            303.38,
+            305.137
+          ],
+          "median_fps": 305.137,
+          "slowdown": 1.8613770208136018
+        },
+        "vp9": {
+          "runs": [
+            176.042,
+            171.585,
+            177.821
+          ],
+          "median_fps": 176.042,
+          "slowdown": 1.0942956794401335
+        }
+      },
+      "geomean_slowdown": 1.597196886889725
+    },
+    {
+      "runtime": "wasm2c",
+      "label": "wasm2c (clang -O3 -mcpu=native)",
+      "variant": "base",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            73.277,
+            73.16,
+            73.237
+          ],
+          "median_fps": 73.237,
+          "slowdown": 1.1427693652115734
+        },
+        "hevc": {
+          "runs": [
+            120.049,
+            119.626,
+            119.914
+          ],
+          "median_fps": 119.914,
+          "slowdown": 1.5232916923795385
+        },
+        "mjpeg": {
+          "runs": [
+            315.329,
+            312.78,
+            316.263
+          ],
+          "median_fps": 315.329,
+          "slowdown": 1.1299373035781677
+        },
+        "mpeg2": {
+          "runs": [
+            732.776,
+            729.434,
+            737.55
+          ],
+          "median_fps": 732.776,
+          "slowdown": 1.1639873576645525
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1396.817,
+            1397.455,
+            1396.648
+          ],
+          "median_fps": 1396.817,
+          "slowdown": 1.1473335447664226
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1533.444,
+            1520.974,
+            1527.557
+          ],
+          "median_fps": 1527.557,
+          "slowdown": 1.1437687758951056
+        },
+        "mpeg4asp": {
+          "runs": [
+            537.75,
+            535.269,
+            535.068
+          ],
+          "median_fps": 535.269,
+          "slowdown": 1.1511090685244243
+        },
+        "msmpeg4": {
+          "runs": [
+            487.527,
+            487.348,
+            489.994
+          ],
+          "median_fps": 487.527,
+          "slowdown": 1.1650123993132688
+        },
+        "vp9": {
+          "runs": [
+            157.894,
+            158.849,
+            160.689
+          ],
+          "median_fps": 158.849,
+          "slowdown": 1.2127366240895443
+        }
+      },
+      "geomean_slowdown": 1.1927624778933241
+    },
+    {
+      "runtime": "wasm2c",
+      "label": "wasm2c (clang -O3 -mcpu=native)",
+      "variant": "simd",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            75.501,
+            75.446,
+            75.655
+          ],
+          "median_fps": 75.501,
+          "slowdown": 1.1085018741473622
+        },
+        "hevc": {
+          "runs": [
+            161.87,
+            161.094,
+            160.906
+          ],
+          "median_fps": 161.094,
+          "slowdown": 1.1338969794033298
+        },
+        "mjpeg": {
+          "runs": [
+            333.467,
+            335.103,
+            333.34
+          ],
+          "median_fps": 333.467,
+          "slowdown": 1.0684775405062572
+        },
+        "mpeg2": {
+          "runs": [
+            758.242,
+            762.811,
+            761.035
+          ],
+          "median_fps": 761.035,
+          "slowdown": 1.120765799207658
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1387.129,
+            1443.085,
+            1433.829
+          ],
+          "median_fps": 1433.829,
+          "slowdown": 1.1177169662491135
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1550.997,
+            1551.558,
+            1583.03
+          ],
+          "median_fps": 1551.558,
+          "slowdown": 1.1260758540769988
+        },
+        "mpeg4asp": {
+          "runs": [
+            536.882,
+            536.241,
+            538.119
+          ],
+          "median_fps": 536.882,
+          "slowdown": 1.14765069419351
+        },
+        "msmpeg4": {
+          "runs": [
+            486.293,
+            487.681,
+            485.198
+          ],
+          "median_fps": 486.293,
+          "slowdown": 1.1679686937710394
+        },
+        "vp9": {
+          "runs": [
+            177.409,
+            177.953,
+            179.351
+          ],
+          "median_fps": 177.953,
+          "slowdown": 1.082544267306536
+        }
+      },
+      "geomean_slowdown": 1.1189157195639226
+    },
+    {
+      "runtime": "wasmer-llvm",
+      "label": "Wasmer (LLVM)",
+      "variant": "base",
+      "compile_seconds": 4.4534215,
+      "clips": {
+        "h264": {
+          "runs": [
+            73.36,
+            73.079,
+            73.234
+          ],
+          "median_fps": 73.234,
+          "slowdown": 1.1428161782778492
+        },
+        "hevc": {
+          "runs": [
+            120.293,
+            120.067,
+            121.041
+          ],
+          "median_fps": 120.293,
+          "slowdown": 1.5184923478506644
+        },
+        "mjpeg": {
+          "runs": [
+            298.654,
+            298.755,
+            297.742
+          ],
+          "median_fps": 298.654,
+          "slowdown": 1.1930260435152384
+        },
+        "mpeg2": {
+          "runs": [
+            704.861,
+            707.45,
+            705.66
+          ],
+          "median_fps": 705.66,
+          "slowdown": 1.2087152453022703
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1335.732,
+            1343.954,
+            1339.68
+          ],
+          "median_fps": 1339.68,
+          "slowdown": 1.1962670189896094
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1447.821,
+            1445.142,
+            1437.236
+          ],
+          "median_fps": 1445.142,
+          "slowdown": 1.2089967629478626
+        },
+        "mpeg4asp": {
+          "runs": [
+            503.099,
+            520.407,
+            519.028
+          ],
+          "median_fps": 519.028,
+          "slowdown": 1.1871286327519903
+        },
+        "msmpeg4": {
+          "runs": [
+            477.125,
+            479.397,
+            472.155
+          ],
+          "median_fps": 477.125,
+          "slowdown": 1.1904113177888394
+        },
+        "vp9": {
+          "runs": [
+            157.876,
+            158.546,
+            160.754
+          ],
+          "median_fps": 158.546,
+          "slowdown": 1.215054306005828
+        }
+      },
+      "geomean_slowdown": 1.2250570091982151
+    },
+    {
+      "runtime": "wasmer-llvm",
+      "label": "Wasmer (LLVM)",
+      "variant": "simd",
+      "compile_seconds": 5.0663335,
+      "clips": {
+        "h264": {
+          "runs": [
+            48.22,
+            47.915,
+            48.184
+          ],
+          "median_fps": 48.184,
+          "slowdown": 1.736945874149095
+        },
+        "hevc": {
+          "runs": [
+            74.862,
+            75.232,
+            75.708
+          ],
+          "median_fps": 75.232,
+          "slowdown": 2.428009357720119
+        },
+        "mjpeg": {
+          "runs": [
+            66.374,
+            65.996,
+            66.582
+          ],
+          "median_fps": 66.374,
+          "slowdown": 5.368095941181789
+        },
+        "mpeg2": {
+          "runs": [
+            374.452,
+            368.726,
+            373.262
+          ],
+          "median_fps": 373.262,
+          "slowdown": 2.2851026892638413
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            763.526,
+            765.173,
+            761.735
+          ],
+          "median_fps": 763.526,
+          "slowdown": 2.0989658505407807
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            856.746,
+            859.402,
+            862.446
+          ],
+          "median_fps": 859.402,
+          "slowdown": 2.033008999280895
+        },
+        "mpeg4asp": {
+          "runs": [
+            310.252,
+            309.741,
+            309.385
+          ],
+          "median_fps": 309.741,
+          "slowdown": 1.9892523108016054
+        },
+        "msmpeg4": {
+          "runs": [
+            252.758,
+            251.213,
+            251.911
+          ],
+          "median_fps": 251.911,
+          "slowdown": 2.2546653381551423
+        },
+        "vp9": {
+          "runs": [
+            117.763,
+            118.713,
+            120.297
+          ],
+          "median_fps": 118.713,
+          "slowdown": 1.6227540370473328
+        }
+      },
+      "geomean_slowdown": 2.270987075766424
+    },
+    {
+      "runtime": "wasmer",
+      "label": "Wasmer (Cranelift, default)",
+      "variant": "base",
+      "compile_seconds": 0.282102,
+      "clips": {
+        "h264": {
+          "runs": [
+            65.906,
+            65.9,
+            66.216
+          ],
+          "median_fps": 65.906,
+          "slowdown": 1.269884380784754
+        },
+        "hevc": {
+          "runs": [
+            108.012,
+            108.041,
+            108.75
+          ],
+          "median_fps": 108.041,
+          "slowdown": 1.6906914967466053
+        },
+        "mjpeg": {
+          "runs": [
+            270.734,
+            267.866,
+            270.579
+          ],
+          "median_fps": 270.579,
+          "slowdown": 1.3168132042767546
+        },
+        "mpeg2": {
+          "runs": [
+            638.793,
+            642.448,
+            636.256
+          ],
+          "median_fps": 638.793,
+          "slowdown": 1.3352400542898872
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1230.022,
+            1227.546,
+            1222.574
+          ],
+          "median_fps": 1227.546,
+          "slowdown": 1.3055437433709205
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1364.194,
+            1352.143,
+            1349.588
+          ],
+          "median_fps": 1352.143,
+          "slowdown": 1.2921503125039289
+        },
+        "mpeg4asp": {
+          "runs": [
+            439.095,
+            441.694,
+            435.218
+          ],
+          "median_fps": 439.095,
+          "slowdown": 1.403233924321616
+        },
+        "msmpeg4": {
+          "runs": [
+            411.931,
+            419.047,
+            422.088
+          ],
+          "median_fps": 419.047,
+          "slowdown": 1.3553968886544945
+        },
+        "vp9": {
+          "runs": [
+            143.423,
+            144.249,
+            145.738
+          ],
+          "median_fps": 144.249,
+          "slowdown": 1.3354823950252688
+        }
+      },
+      "geomean_slowdown": 1.3624381859589718
+    },
+    {
+      "runtime": "wasmer",
+      "label": "Wasmer (Cranelift, default)",
+      "variant": "simd",
+      "compile_seconds": 0.332360791,
+      "clips": {
+        "h264": {
+          "runs": [
+            69.037,
+            68.886,
+            69.175
+          ],
+          "median_fps": 69.037,
+          "slowdown": 1.2122919593840982
+        },
+        "hevc": {
+          "runs": [
+            143.803,
+            143.51,
+            144.382
+          ],
+          "median_fps": 143.803,
+          "slowdown": 1.2702377558187241
+        },
+        "mjpeg": {
+          "runs": [
+            279.701,
+            279.594,
+            280.228
+          ],
+          "median_fps": 279.701,
+          "slowdown": 1.2738674513140817
+        },
+        "mpeg2": {
+          "runs": [
+            680.392,
+            681.31,
+            681.843
+          ],
+          "median_fps": 681.31,
+          "slowdown": 1.2519146937517431
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1283.576,
+            1302.423,
+            1289.657
+          ],
+          "median_fps": 1289.657,
+          "slowdown": 1.242667624027164
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1412.749,
+            1425.07,
+            1438.173
+          ],
+          "median_fps": 1425.07,
+          "slowdown": 1.2260253882265433
+        },
+        "mpeg4asp": {
+          "runs": [
+            456.12,
+            454.722,
+            451.58
+          ],
+          "median_fps": 454.722,
+          "slowdown": 1.3550103139940448
+        },
+        "msmpeg4": {
+          "runs": [
+            442.556,
+            443.005,
+            438.58
+          ],
+          "median_fps": 442.556,
+          "slowdown": 1.2833969034427282
+        },
+        "vp9": {
+          "runs": [
+            160.687,
+            160.961,
+            162.26
+          ],
+          "median_fps": 160.961,
+          "slowdown": 1.1968240753971457
+        }
+      },
+      "geomean_slowdown": 1.2561519436066055
+    },
+    {
+      "runtime": "wasmtime",
+      "label": "Wasmtime (Cranelift)",
+      "variant": "base",
+      "compile_seconds": 0.267194833,
+      "clips": {
+        "h264": {
+          "runs": [
+            65.074,
+            64.86,
+            65.203
+          ],
+          "median_fps": 65.074,
+          "slowdown": 1.2861204167563083
+        },
+        "hevc": {
+          "runs": [
+            108.357,
+            107.353,
+            108.647
+          ],
+          "median_fps": 108.357,
+          "slowdown": 1.6857609568371217
+        },
+        "mjpeg": {
+          "runs": [
+            258.883,
+            260.457,
+            260.154
+          ],
+          "median_fps": 260.154,
+          "slowdown": 1.3695810942749296
+        },
+        "mpeg2": {
+          "runs": [
+            620.153,
+            622.166,
+            624.813
+          ],
+          "median_fps": 622.166,
+          "slowdown": 1.370923515589087
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1195.882,
+            1195.723,
+            1192.143
+          ],
+          "median_fps": 1195.723,
+          "slowdown": 1.340289515213808
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1293.563,
+            1306.043,
+            1297.122
+          ],
+          "median_fps": 1297.122,
+          "slowdown": 1.3469604246940534
+        },
+        "mpeg4asp": {
+          "runs": [
+            429.007,
+            425.068,
+            427.246
+          ],
+          "median_fps": 427.246,
+          "slowdown": 1.4421504238775789
+        },
+        "msmpeg4": {
+          "runs": [
+            409.464,
+            409.198,
+            409.386
+          ],
+          "median_fps": 409.386,
+          "slowdown": 1.3873825680409198
+        },
+        "vp9": {
+          "runs": [
+            142.565,
+            142.898,
+            144.173
+          ],
+          "median_fps": 142.898,
+          "slowdown": 1.3481084409858781
+        }
+      },
+      "geomean_slowdown": 1.3935716346480667
+    },
+    {
+      "runtime": "wasmtime",
+      "label": "Wasmtime (Cranelift)",
+      "variant": "simd",
+      "compile_seconds": 0.273734875,
+      "clips": {
+        "h264": {
+          "runs": [
+            68.466,
+            66.842,
+            68.45
+          ],
+          "median_fps": 68.45,
+          "slowdown": 1.2226880934989042
+        },
+        "hevc": {
+          "runs": [
+            142.65,
+            141.137,
+            142.408
+          ],
+          "median_fps": 142.408,
+          "slowdown": 1.282680748272569
+        },
+        "mjpeg": {
+          "runs": [
+            271.809,
+            270.899,
+            274.109
+          ],
+          "median_fps": 271.809,
+          "slowdown": 1.3108543131390056
+        },
+        "mpeg2": {
+          "runs": [
+            669.059,
+            666.817,
+            668.427
+          ],
+          "median_fps": 668.427,
+          "slowdown": 1.2760436068560965
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1257.275,
+            1265.679,
+            1266.319
+          ],
+          "median_fps": 1265.679,
+          "slowdown": 1.26620967875741
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1316.177,
+            1387.012,
+            1400.164
+          ],
+          "median_fps": 1387.012,
+          "slowdown": 1.2596661023841178
+        },
+        "mpeg4asp": {
+          "runs": [
+            444.956,
+            445.957,
+            445.361
+          ],
+          "median_fps": 445.361,
+          "slowdown": 1.383491145385429
+        },
+        "msmpeg4": {
+          "runs": [
+            417.355,
+            424.865,
+            423.218
+          ],
+          "median_fps": 423.218,
+          "slowdown": 1.3420388546800939
+        },
+        "vp9": {
+          "runs": [
+            158.687,
+            158.155,
+            160.145
+          ],
+          "median_fps": 158.687,
+          "slowdown": 1.2139746797154145
+        }
+      },
+      "geomean_slowdown": 1.2831728232410216
+    },
+    {
+      "runtime": "wazero",
+      "label": "Wazero (compiler)",
+      "variant": "base",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            46.41,
+            45.54,
+            46.506
+          ],
+          "median_fps": 46.41,
+          "slowdown": 1.8033397974574445
+        },
+        "hevc": {
+          "runs": [
+            50.129,
+            49.721,
+            50.298
+          ],
+          "median_fps": 50.129,
+          "slowdown": 3.6438787927147955
+        },
+        "mjpeg": {
+          "runs": [
+            152.875,
+            153.085,
+            153.261
+          ],
+          "median_fps": 153.085,
+          "slowdown": 2.327478198386517
+        },
+        "mpeg2": {
+          "runs": [
+            425.198,
+            425.853,
+            427.952
+          ],
+          "median_fps": 425.853,
+          "slowdown": 2.0029024099865445
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            821.629,
+            818.529,
+            817.377
+          ],
+          "median_fps": 818.529,
+          "slowdown": 1.957920855583614
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            938.519,
+            942.049,
+            946.207
+          ],
+          "median_fps": 942.049,
+          "slowdown": 1.8546508727253042
+        },
+        "mpeg4asp": {
+          "runs": [
+            290.31,
+            289.722,
+            291.859
+          ],
+          "median_fps": 290.31,
+          "slowdown": 2.1223967483035375
+        },
+        "msmpeg4": {
+          "runs": [
+            278.109,
+            278.417,
+            278.907
+          ],
+          "median_fps": 278.417,
+          "slowdown": 2.040015516293905
+        },
+        "vp9": {
+          "runs": [
+            94.631,
+            94.103,
+            96.472
+          ],
+          "median_fps": 94.631,
+          "slowdown": 2.0357176823662435
+        }
+      },
+      "geomean_slowdown": 2.1497115960102513
+    },
+    {
+      "runtime": "wazero",
+      "label": "Wazero (compiler)",
+      "variant": "simd",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            49.171,
+            49.196,
+            49.181
+          ],
+          "median_fps": 49.181,
+          "slowdown": 1.701734409629735
+        },
+        "hevc": {
+          "runs": [
+            90.427,
+            89.406,
+            90.606
+          ],
+          "median_fps": 90.427,
+          "slowdown": 2.020016145620224
+        },
+        "mjpeg": {
+          "runs": [
+            150.491,
+            150.89,
+            151.303
+          ],
+          "median_fps": 150.89,
+          "slowdown": 2.3613360726356953
+        },
+        "mpeg2": {
+          "runs": [
+            434.005,
+            433.538,
+            434.08
+          ],
+          "median_fps": 434.005,
+          "slowdown": 1.9652815059734334
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            830.919,
+            832.869,
+            815.086
+          ],
+          "median_fps": 830.919,
+          "slowdown": 1.928725904691071
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            938.109,
+            940.935,
+            937.302
+          ],
+          "median_fps": 938.109,
+          "slowdown": 1.8624402921195724
+        },
+        "mpeg4asp": {
+          "runs": [
+            291.562,
+            292.033,
+            289.992
+          ],
+          "median_fps": 291.562,
+          "slowdown": 2.113282938105789
+        },
+        "msmpeg4": {
+          "runs": [
+            277.309,
+            280.274,
+            284.167
+          ],
+          "median_fps": 280.274,
+          "slowdown": 2.0264990687684197
+        },
+        "vp9": {
+          "runs": [
+            120.574,
+            122.354,
+            124.539
+          ],
+          "median_fps": 122.354,
+          "slowdown": 1.5744642594439087
+        }
+      },
+      "geomean_slowdown": 1.938414041622884
+    },
+    {
+      "runtime": "node",
+      "label": "Node (default tiering)",
+      "variant": "base",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            66.023,
+            66.141,
+            66.066
+          ],
+          "median_fps": 66.066,
+          "slowdown": 1.2668089486271303
+        },
+        "hevc": {
+          "runs": [
+            107.496,
+            109.141,
+            109.346
+          ],
+          "median_fps": 109.141,
+          "slowdown": 1.6736515150126898
+        },
+        "mjpeg": {
+          "runs": [
+            285.401,
+            284.329,
+            285.874
+          ],
+          "median_fps": 285.401,
+          "slowdown": 1.2484258989982515
+        },
+        "mpeg2": {
+          "runs": [
+            643.655,
+            644.784,
+            644.766
+          ],
+          "median_fps": 644.766,
+          "slowdown": 1.3228706228306084
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1210.475,
+            1198.98,
+            1202.179
+          ],
+          "median_fps": 1202.179,
+          "slowdown": 1.3330918274233703
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1339.593,
+            1332.169,
+            1340.438
+          ],
+          "median_fps": 1339.593,
+          "slowdown": 1.3042558448722859
+        },
+        "mpeg4asp": {
+          "runs": [
+            456.374,
+            456.541,
+            456.699
+          ],
+          "median_fps": 456.541,
+          "slowdown": 1.349611535437124
+        },
+        "msmpeg4": {
+          "runs": [
+            432.368,
+            428.82,
+            437.013
+          ],
+          "median_fps": 432.368,
+          "slowdown": 1.313637919550013
+        },
+        "vp9": {
+          "runs": [
+            149.155,
+            149.001,
+            151.42
+          ],
+          "median_fps": 149.155,
+          "slowdown": 1.2915557641379771
+        }
+      },
+      "geomean_slowdown": 1.340114369851387
+    },
+    {
+      "runtime": "node",
+      "label": "Node (default tiering)",
+      "variant": "simd",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            68.736,
+            68.162,
+            68.711
+          ],
+          "median_fps": 68.711,
+          "slowdown": 1.2180436902388263
+        },
+        "hevc": {
+          "runs": [
+            141.259,
+            142.665,
+            142.829
+          ],
+          "median_fps": 142.665,
+          "slowdown": 1.2803700977815162
+        },
+        "mjpeg": {
+          "runs": [
+            264.191,
+            264.12,
+            264.829
+          ],
+          "median_fps": 264.191,
+          "slowdown": 1.3486530578255884
+        },
+        "mpeg2": {
+          "runs": [
+            626.51,
+            627.138,
+            629.528
+          ],
+          "median_fps": 627.138,
+          "slowdown": 1.3600547247974129
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1174.847,
+            1146.566,
+            1190.331
+          ],
+          "median_fps": 1174.847,
+          "slowdown": 1.3641052834964893
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1274.84,
+            1274.611,
+            1279.964
+          ],
+          "median_fps": 1274.84,
+          "slowdown": 1.3705029650779708
+        },
+        "mpeg4asp": {
+          "runs": [
+            446.059,
+            446.107,
+            444.848
+          ],
+          "median_fps": 446.059,
+          "slowdown": 1.3813262371121309
+        },
+        "msmpeg4": {
+          "runs": [
+            419.815,
+            422.497,
+            419.184
+          ],
+          "median_fps": 419.815,
+          "slowdown": 1.3529173564546288
+        },
+        "vp9": {
+          "runs": [
+            168.409,
+            167.332,
+            170.508
+          ],
+          "median_fps": 168.409,
+          "slowdown": 1.1438937348954035
+        }
+      },
+      "geomean_slowdown": 1.3109033619681807
+    },
+    {
+      "runtime": "node-noliftoff",
+      "label": "Node --no-liftoff",
+      "variant": "base",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            65.379,
+            64.986,
+            65.611
+          ],
+          "median_fps": 65.379,
+          "slowdown": 1.2801205279982868
+        },
+        "hevc": {
+          "runs": [
+            103.88,
+            103.971,
+            104.37
+          ],
+          "median_fps": 103.971,
+          "slowdown": 1.7568745130853793
+        },
+        "mjpeg": {
+          "runs": [
+            281.835,
+            281.779,
+            280.793
+          ],
+          "median_fps": 281.779,
+          "slowdown": 1.2644732219221448
+        },
+        "mpeg2": {
+          "runs": [
+            599.83,
+            541.367,
+            593.375
+          ],
+          "median_fps": 593.375,
+          "slowdown": 1.437441752685907
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1043.967,
+            1048.498,
+            1043.456
+          ],
+          "median_fps": 1043.967,
+          "slowdown": 1.5351203629999797
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1130.353,
+            1125.273,
+            1116.465
+          ],
+          "median_fps": 1125.273,
+          "slowdown": 1.5526649977383267
+        },
+        "mpeg4asp": {
+          "runs": [
+            422.723,
+            426.971,
+            430.562
+          ],
+          "median_fps": 426.971,
+          "slowdown": 1.4430792723627601
+        },
+        "msmpeg4": {
+          "runs": [
+            402.956,
+            405.432,
+            405.945
+          ],
+          "median_fps": 405.432,
+          "slowdown": 1.4009131001006334
+        },
+        "vp9": {
+          "runs": [
+            146.83,
+            146.722,
+            148.831
+          ],
+          "median_fps": 146.83,
+          "slowdown": 1.3120070830211807
+        }
+      },
+      "geomean_slowdown": 1.4352504614969122
+    },
+    {
+      "runtime": "node-noliftoff",
+      "label": "Node --no-liftoff",
+      "variant": "simd",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            68.284,
+            68.087,
+            68.069
+          ],
+          "median_fps": 68.087,
+          "slowdown": 1.2292067501872603
+        },
+        "hevc": {
+          "runs": [
+            132.341,
+            125.899,
+            132.929
+          ],
+          "median_fps": 132.341,
+          "slowdown": 1.3802525294504346
+        },
+        "mjpeg": {
+          "runs": [
+            260.572,
+            261.367,
+            261.495
+          ],
+          "median_fps": 261.367,
+          "slowdown": 1.3632248906709723
+        },
+        "mpeg2": {
+          "runs": [
+            577.193,
+            578.124,
+            567.954
+          ],
+          "median_fps": 577.193,
+          "slowdown": 1.477741414050413
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1016.768,
+            1007.464,
+            1006.879
+          ],
+          "median_fps": 1007.464,
+          "slowdown": 1.5907417039219267
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1084.996,
+            1085.4,
+            1082.946
+          ],
+          "median_fps": 1084.996,
+          "slowdown": 1.6103027107934038
+        },
+        "mpeg4asp": {
+          "runs": [
+            417.627,
+            416.867,
+            417.428
+          ],
+          "median_fps": 417.428,
+          "slowdown": 1.4760701246682064
+        },
+        "msmpeg4": {
+          "runs": [
+            389.076,
+            390.071,
+            396.104
+          ],
+          "median_fps": 390.071,
+          "slowdown": 1.4560810724201492
+        },
+        "vp9": {
+          "runs": [
+            164.844,
+            164.948,
+            166.815
+          ],
+          "median_fps": 164.948,
+          "slowdown": 1.1678953367121758
+        }
+      },
+      "geomean_slowdown": 1.4096324874027681
+    },
+    {
+      "runtime": "bun",
+      "label": "Bun",
+      "variant": "base",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            68.696,
+            68.128,
+            68.198
+          ],
+          "median_fps": 68.198,
+          "slowdown": 1.2272060764245287
+        },
+        "hevc": {
+          "runs": [
+            112.34,
+            111.326,
+            112.487
+          ],
+          "median_fps": 112.34,
+          "slowdown": 1.6259925226989496
+        },
+        "mjpeg": {
+          "runs": [
+            268.248,
+            268.933,
+            265.07
+          ],
+          "median_fps": 268.248,
+          "slowdown": 1.328255942262384
+        },
+        "mpeg2": {
+          "runs": [
+            659.681,
+            661.015,
+            659.299
+          ],
+          "median_fps": 659.681,
+          "slowdown": 1.2929612949289127
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1231.776,
+            1236.708,
+            1228.769
+          ],
+          "median_fps": 1231.776,
+          "slowdown": 1.3010604200763776
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1299.745,
+            1312.14,
+            1316.974
+          ],
+          "median_fps": 1312.14,
+          "slowdown": 1.3315438901336747
+        },
+        "mpeg4asp": {
+          "runs": [
+            473.397,
+            475.347,
+            474.377
+          ],
+          "median_fps": 474.377,
+          "slowdown": 1.298867778159565
+        },
+        "msmpeg4": {
+          "runs": [
+            441.912,
+            446.992,
+            449.844
+          ],
+          "median_fps": 446.992,
+          "slowdown": 1.2706603250170025
+        },
+        "vp9": {
+          "runs": [
+            149.895,
+            149.55,
+            152.216
+          ],
+          "median_fps": 149.895,
+          "slowdown": 1.2851796257380166
+        }
+      },
+      "geomean_slowdown": 1.3250581806567308
+    },
+    {
+      "runtime": "bun",
+      "label": "Bun",
+      "variant": "simd",
+      "compile_seconds": null,
+      "clips": {
+        "h264": {
+          "runs": [
+            71.928,
+            71.118,
+            71.746
+          ],
+          "median_fps": 71.746,
+          "slowdown": 1.1665179940345107
+        },
+        "hevc": {
+          "runs": [
+            147.821,
+            146.489,
+            149.16
+          ],
+          "median_fps": 147.821,
+          "slowdown": 1.2357107582819762
+        },
+        "mjpeg": {
+          "runs": [
+            280.684,
+            279.73,
+            281.365
+          ],
+          "median_fps": 280.684,
+          "slowdown": 1.2694061649399324
+        },
+        "mpeg2": {
+          "runs": [
+            683.297,
+            688.931,
+            686.587
+          ],
+          "median_fps": 686.587,
+          "slowdown": 1.2422926737616646
+        },
+        "mpeg2_1280x720.mpg": {
+          "runs": [
+            1278.596,
+            1278.694,
+            1272.628
+          ],
+          "median_fps": 1278.596,
+          "slowdown": 1.2534178114118923
+        },
+        "mpeg2_640x360.mpg": {
+          "runs": [
+            1379.819,
+            1369.557,
+            1369.312
+          ],
+          "median_fps": 1369.557,
+          "slowdown": 1.2757205432121481
+        },
+        "mpeg4asp": {
+          "runs": [
+            484.282,
+            486.116,
+            487.186
+          ],
+          "median_fps": 486.116,
+          "slowdown": 1.2675019954085034
+        },
+        "msmpeg4": {
+          "runs": [
+            458.831,
+            455.094,
+            460.646
+          ],
+          "median_fps": 458.831,
+          "slowdown": 1.2378740756400506
+        },
+        "vp9": {
+          "runs": [
+            170.363,
+            169.938,
+            171.651
+          ],
+          "median_fps": 170.363,
+          "slowdown": 1.1307737008622765
+        }
+      },
+      "geomean_slowdown": 1.2301066909580376
+    }
+  ]
+}

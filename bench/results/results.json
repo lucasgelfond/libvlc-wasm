@@ -1,0 +1,717 @@
+{
+ "showdown": {
+  "vlcFirstFrameMs": 21.469999969005585,
+  "ffmpegLoadMs": 204.67500001192093,
+  "ffmpegWasm_first10s_Ms": 666.7350000143051,
+  "ffmpegWasm_whole_Ms": 970.8100000023842
+ },
+ "date": "2026-09-27T05:27:26.542Z",
+ "machine": {
+  "cpu": "Apple M5",
+  "cores": 10,
+  "memGB": 16,
+  "os": "26.6.2",
+  "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+  "node": "v22.21.1"
+ },
+ "browser": "Chrome 153.0.8010.53",
+ "size": {
+  "libvlc-wasm (libvlc.wasm)": {
+   "raw": 25945912,
+   "gzip": 10331025,
+   "brotli": 7998760
+  },
+  "ffmpeg.wasm core-mt 0.12.10": {
+   "raw": 32718323,
+   "gzip": 10312618,
+   "brotli": 7301319
+  }
+ },
+ "startup": {
+  "cold": [
+   {
+    "readyMs": 531.8499999642372,
+    "wasmFetchMs": null,
+    "wasmTransferBytes": null
+   },
+   {
+    "readyMs": 108.33499997854233,
+    "wasmFetchMs": null,
+    "wasmTransferBytes": null
+   },
+   {
+    "readyMs": 103.19999998807907,
+    "wasmFetchMs": null,
+    "wasmTransferBytes": null
+   }
+  ],
+  "warm": [
+   {
+    "readyMs": 115.58000004291534,
+    "wasmFetchMs": null,
+    "wasmTransferBytes": null
+   },
+   {
+    "readyMs": 101.51999998092651,
+    "wasmFetchMs": null,
+    "wasmTransferBytes": null
+   },
+   {
+    "readyMs": 90.24000000953674,
+    "wasmFetchMs": null,
+    "wasmTransferBytes": null
+   }
+  ]
+ },
+ "memoryBytes": 48125744074,
+ "results": [
+  {
+   "clip": "av1_1080p.mkv",
+   "bytes": 3880548,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.549,
+      "fps": 273.22404371584696,
+      "cpuSeconds": 0.545
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 6.246572417000003,
+      "fps": 240.13169140851718,
+      "startupOverhead": 0.07038570800000161
+     },
+     "libvlcWasm": {
+      "frames": 156,
+      "fps": 89.35545889891264,
+      "seconds": 1.7346449999809266,
+      "firstFrameMs": 45.625
+     },
+     "libvlcWebCodecs": {
+      "frames": 160,
+      "fps": 482.11388397047745,
+      "seconds": 0.3235749999880791,
+      "firstFrameMs": 77.08999997377396
+     },
+     "ffmpegWasm": {
+      "frames": 0,
+      "seconds": 0.014345000028610229,
+      "fps": 0
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.235,
+      "fps": 638.2978723404256,
+      "cpuSeconds": 0.608
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.685816709000006,
+      "fps": 558.4893395642349,
+      "startupOverhead": 0.06928758299999754
+     },
+     "libvlcWasm": {
+      "frames": 154,
+      "fps": 248.61272473804726,
+      "seconds": 0.6154150000214577,
+      "firstFrameMs": 20.740000009536743
+     },
+     "libvlcWebCodecs": {
+      "frames": 160,
+      "fps": 495.2822795671715,
+      "seconds": 0.31900999999046326,
+      "firstFrameMs": 26.15499997138977
+     },
+     "ffmpegWasm": {
+      "frames": 0,
+      "seconds": 0.008924999952316284,
+      "fps": 0
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 5.430000007152557,
+    "thumbnailMs": 24.40499997138977
+   }
+  },
+  {
+   "clip": "h264_1080p.mkv",
+   "bytes": 14654843,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 1.196,
+      "fps": 125.4180602006689,
+      "cpuSeconds": 1.191
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 12.758286626,
+      "fps": 117.57064596300597,
+      "startupOverhead": 0.07723420799999439
+     },
+     "libvlcWasm": {
+      "frames": 156,
+      "fps": 74.55615040251222,
+      "seconds": 2.0789699999690057,
+      "firstFrameMs": 81.28500002622604
+     },
+     "libvlcWebCodecs": {
+      "frames": 170,
+      "fps": 509.9314493276797,
+      "seconds": 0.3274950000047684,
+      "firstFrameMs": 39.064999997615814
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 2.240939999997616,
+      "fps": 66.93619641764599
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.44,
+      "fps": 340.90909090909093,
+      "cpuSeconds": 1.234
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 4.8266027080000065,
+      "fps": 310.7775988095679,
+      "startupOverhead": 0.07459329200000502
+     },
+     "libvlcWasm": {
+      "frames": 165,
+      "fps": 214.11588528553816,
+      "seconds": 0.7612700000405311,
+      "firstFrameMs": 38.219999969005585
+     },
+     "libvlcWebCodecs": {
+      "frames": 169,
+      "fps": 614.0220303008064,
+      "seconds": 0.26872000002861024,
+      "firstFrameMs": 39.25999999046326
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.7498299999833107,
+      "fps": 200.04534361567104
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 7.485000014305115,
+    "thumbnailMs": 53.70999997854233
+   }
+  },
+  {
+   "clip": "hevc_1080p.mkv",
+   "bytes": 4304819,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.518,
+      "fps": 289.57528957528956,
+      "cpuSeconds": 0.513
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 6.00221716700001,
+      "fps": 249.90765216676098,
+      "startupOverhead": 0.07483154099999229
+     },
+     "libvlcWasm": {
+      "frames": 163,
+      "fps": 196.99162177494398,
+      "seconds": 0.8223700000047683,
+      "firstFrameMs": 47.35499995946884
+     },
+     "libvlcWebCodecs": {
+      "frames": 170,
+      "fps": 517.3099880658525,
+      "seconds": 0.32668999999761583,
+      "firstFrameMs": 43.01500004529953
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 1.1958449999690055,
+      "fps": 125.43431632350996
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.224,
+      "fps": 669.6428571428571,
+      "cpuSeconds": 0.523
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.6287022920000016,
+      "fps": 570.6237654088823,
+      "startupOverhead": 0.07281466699999874
+     },
+     "libvlcWasm": {
+      "frames": 170,
+      "fps": 423.3997244396709,
+      "seconds": 0.39914999997615813,
+      "firstFrameMs": 27.400000035762787
+     },
+     "libvlcWebCodecs": {
+      "frames": 168,
+      "fps": 510.961188400765,
+      "seconds": 0.3268349999785423,
+      "firstFrameMs": 32.90499997138977
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.5036949999928474,
+      "fps": 297.7992634473839
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 2.9200000166893005,
+    "thumbnailMs": 40.72499996423721
+   }
+  },
+  {
+   "clip": "mjpeg_1080p.avi",
+   "bytes": 15049146,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.213,
+      "fps": 704.2253521126761,
+      "cpuSeconds": 0.212
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.568842499999999,
+      "fps": 583.9205790156465,
+      "startupOverhead": 0.07334875000000465
+     },
+     "libvlcWasm": {
+      "frames": 156,
+      "fps": 198.8670990367555,
+      "seconds": 0.7794150000214577,
+      "firstFrameMs": 21.414999961853027
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.5282549999952316,
+      "fps": 283.9537723284285
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.21,
+      "fps": 714.2857142857143,
+      "cpuSeconds": 0.21
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.5950921249999954,
+      "fps": 578.0141620213204,
+      "startupOverhead": 0.07385054200000013
+     },
+     "libvlcWasm": {
+      "frames": 162,
+      "fps": 202.3350215585347,
+      "seconds": 0.7957099999785423,
+      "firstFrameMs": 13.240000009536743
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.5236949999928474,
+      "fps": 286.4262595633884
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 2.790000021457672,
+    "thumbnailMs": 14.310000002384186
+   }
+  },
+  {
+   "clip": "mpeg2_1080p.mpg",
+   "bytes": 9418752,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.12,
+      "fps": 1250,
+      "cpuSeconds": 0.123
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.6692632490000108,
+      "fps": 561.9528162169643,
+      "startupOverhead": 0.07128845900000305
+     },
+     "libvlcWasm": {
+      "frames": 154,
+      "fps": 469.35394815333285,
+      "seconds": 0.32597999995946886,
+      "firstFrameMs": 39.105000019073486
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.25299000000953675,
+      "fps": 592.9088106025755
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.049,
+      "fps": 3061.224489795918,
+      "cpuSeconds": 0.128
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.6250610419999867,
+      "fps": 571.4152836831471,
+      "startupOverhead": 0.07127129100001184
+     },
+     "libvlcWasm": {
+      "frames": 160,
+      "fps": 496.9526488698989,
+      "seconds": 0.31994999998807905,
+      "firstFrameMs": 28.339999973773956
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.11004000002145767,
+      "fps": 1363.1406758519645
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 1.9950000047683716,
+    "thumbnailMs": 42.735000014305115
+   }
+  },
+  {
+   "clip": "mpeg2_1280x720.mpg",
+   "bytes": 5081088,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.064,
+      "fps": 2343.75,
+      "cpuSeconds": 0.066
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.783301624999993,
+      "fps": 538.9282952759401,
+      "startupOverhead": 0.07139366699999664
+     },
+     "libvlcWasm": {
+      "frames": 155,
+      "fps": 508.1166688942857,
+      "seconds": 0.3030799999833107,
+      "firstFrameMs": 20.09500002861023
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.14294499999284743,
+      "fps": 1049.354646944668
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.027,
+      "fps": 5555.555555555556,
+      "cpuSeconds": 0.07
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.7943325000000185,
+      "fps": 536.8008281047406,
+      "startupOverhead": 0.07210262499999953
+     },
+     "libvlcWasm": {
+      "frames": 161,
+      "fps": 459.4334611195554,
+      "seconds": 0.34825499999523163,
+      "firstFrameMs": 18.649999976158142
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.06998500001430512,
+      "fps": 2143.316424510104
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 2.8299999833106995,
+    "thumbnailMs": 28.589999973773956
+   }
+  },
+  {
+   "clip": "mpeg2_640x360.mpg",
+   "bytes": 5064704,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.057,
+      "fps": 2631.578947368421,
+      "cpuSeconds": 0.06
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.7133401259999954,
+      "fps": 552.8241688635251,
+      "startupOverhead": 0.06925770799999009
+     },
+     "libvlcWasm": {
+      "frames": 154,
+      "fps": 584.0375949651041,
+      "seconds": 0.2585450000166893,
+      "firstFrameMs": 14.504999995231628
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.1360300000309944,
+      "fps": 1102.6979340279536
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.021,
+      "fps": 7142.857142857142,
+      "cpuSeconds": 0.063
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.691146833000006,
+      "fps": 557.3831875713176,
+      "startupOverhead": 0.07008391699998173
+     },
+     "libvlcWasm": {
+      "frames": 161,
+      "fps": 538.7114695125293,
+      "seconds": 0.2970049999952316,
+      "firstFrameMs": 14.115000009536743
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.06036000001430512,
+      "fps": 2485.089462631718
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 2.064999997615814,
+    "thumbnailMs": 16.00499999523163
+   }
+  },
+  {
+   "clip": "mpeg4asp_1080p.avi",
+   "bytes": 13066772,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.171,
+      "fps": 877.1929824561403,
+      "cpuSeconds": 0.17
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.6313276659999976,
+      "fps": 570.0544327420154,
+      "startupOverhead": 0.07260054200000013
+     },
+     "libvlcWasm": {
+      "frames": 154,
+      "fps": 340.9926675451046,
+      "seconds": 0.44868999999761583,
+      "firstFrameMs": 19.905000030994415
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.33313499999046325,
+      "fps": 450.26790941898656
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.061,
+      "fps": 2459.016393442623,
+      "cpuSeconds": 0.181
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.6217620000000172,
+      "fps": 572.1343127255602,
+      "startupOverhead": 0.07075920799997402
+     },
+     "libvlcWasm": {
+      "frames": 154,
+      "fps": 342.6459884847866,
+      "seconds": 0.44652499997615813,
+      "firstFrameMs": 20.564999997615814
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.12649500000476838,
+      "fps": 1185.817621205151
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 2.3700000047683716,
+    "thumbnailMs": 16.02999997138977
+   }
+  },
+  {
+   "clip": "msmpeg4_1080p.avi",
+   "bytes": 14340300,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.183,
+      "fps": 819.672131147541,
+      "cpuSeconds": 0.182
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.6063002489999927,
+      "fps": 575.5284720459712,
+      "startupOverhead": 0.07072366700001294
+     },
+     "libvlcWasm": {
+      "frames": 156,
+      "fps": 280.2183895650442,
+      "seconds": 0.5531399999856949,
+      "firstFrameMs": 23.230000019073486
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.36283499997854235,
+      "fps": 413.41105463604896
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.183,
+      "fps": 819.672131147541,
+      "cpuSeconds": 0.183
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 2.599688874999993,
+      "fps": 576.9921217976532,
+      "startupOverhead": 0.07519120800000383
+     },
+     "libvlcWasm": {
+      "frames": 161,
+      "fps": 342.9943405793558,
+      "seconds": 0.46648000001907347,
+      "firstFrameMs": 20.155000030994415
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.35850999999046324,
+      "fps": 418.3983710468053
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 2.6450000405311584,
+    "thumbnailMs": 15.254999995231628
+   }
+  },
+  {
+   "clip": "vp9_1080p.webm",
+   "bytes": 5679252,
+   "runs": {
+    "1": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.447,
+      "fps": 335.5704697986577,
+      "cpuSeconds": 0.443
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 5.07223775,
+      "fps": 295.72746269632177,
+      "startupOverhead": 0.07670062499999768
+     },
+     "libvlcWasm": {
+      "frames": 155,
+      "fps": 160.79268706586416,
+      "seconds": 0.9577549999952316,
+      "firstFrameMs": 50.814999997615814
+     },
+     "libvlcWebCodecs": {
+      "frames": 153,
+      "fps": 583.5044818411778,
+      "seconds": 0.2604950000047684,
+      "firstFrameMs": 65.39000004529953
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 1.0034300000071525,
+      "fps": 149.48725870158435
+     }
+    },
+    "4": {
+     "ffmpegNative": {
+      "frames": 150,
+      "seconds": 0.274,
+      "fps": 547.4452554744526,
+      "cpuSeconds": 0.457
+     },
+     "vlcNative": {
+      "frames": 1500,
+      "seconds": 4.050627416000003,
+      "fps": 370.31300239439224,
+      "startupOverhead": 0.0726026669999992
+     },
+     "libvlcWasm": {
+      "frames": 160,
+      "fps": 294.48493092813567,
+      "seconds": 0.5365300000309944,
+      "firstFrameMs": 41.67500001192093
+     },
+     "libvlcWebCodecs": {
+      "frames": 153,
+      "fps": 585.5715177414226,
+      "seconds": 0.256160000026226,
+      "firstFrameMs": 68.63499999046326
+     },
+     "ffmpegWasm": {
+      "frames": 150,
+      "seconds": 0.4660149999856949,
+      "fps": 321.87805114557364
+     }
+    }
+   },
+   "probe": {
+    "probeMs": 5.314999997615814,
+    "thumbnailMs": 45.464999973773956
+   }
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vlc-player element</title><link rel="stylesheet" href="style.css">
+<style>vlc-player { border-radius: 10px; max-width: 900px; --vlc-accent: #ff8800; }</style></head>
+<body>
+<h1>&lt;vlc-player&gt;</h1>
+<p class="lede">A drop-in for <code>&lt;video&gt;</code>: same attributes, methods and events, but it plays
+what VLC plays. The whole integration is the markup below plus one import.</p>
+
+<vlc-player id="p" controls></vlc-player>
+
+<div class="row">
+  <input type="file" id="file">
+  <button id="demo">Play a RealVideo sample</button>
+  <span id="status" class="muted"></span>
+</div>
+
+<pre><code>&lt;script type="module"&gt;import '@libvlc-wasm/core/element';&lt;/script&gt;
+&lt;vlc-player src="trailer.rm" controls autoplay&gt;&lt;/vlc-player&gt;
+
+player.addEventListener('timeupdate', () =&gt; console.log(player.currentTime));
+player.player.selectTrack(...)   // the full libvlc-wasm Player, when you need more</code></pre>
+
+<script type="module">
+  import '../../packages/core/src/element.js'; // or '@libvlc-wasm/core/element'
+
+  const el = document.getElementById('p');
+  const status = document.getElementById('status');
+  for (const e of ['play', 'playing', 'pause', 'ended', 'loadedmetadata', 'error'])
+    el.addEventListener(e, (ev) => { status.textContent = `${e}${ev.detail?.error ? `: ${ev.detail.error.message}` : ''}`; });
+  el.addEventListener('timeupdate', () => { status.textContent = `playing ${el.currentTime.toFixed(1)} / ${el.duration.toFixed(1)} s`; });
+
+  document.getElementById('file').onchange = (e) => { el.src = e.target.files[0]; el.play(); };
+  document.getElementById('demo').onclick = () => {
+    el.setAttribute('autoplay', '');
+    el.src = '../../corpus/media/realmedia/realvideo-4-cook-rmvb.rmvb';
+  };
+</script>
+</body></html>

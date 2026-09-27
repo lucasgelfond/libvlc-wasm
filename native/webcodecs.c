@@ -39,6 +39,7 @@ typedef struct
     unsigned width, height, planes;
     unsigned offset[4], stride[4];
     int64_t ts;
+    int colour; /* bit 0 known, bit 1 full range, bits 4-7 matrix (1 BT.601, 2 BT.709, 3 BT.2020) */
 } wc_frame_t;
 
 typedef struct
@@ -59,6 +60,7 @@ typedef struct
     char       *codec;
     vlc_fourcc_t out_chroma;
     unsigned    out_w, out_h;
+    int         out_colour;
 } decoder_sys_t;
 
 /* --- called from JS, on the runtime thread ------------------------------- */
@@ -75,7 +77,7 @@ EMSCRIPTEN_KEEPALIVE void wv_wc_opened(decoder_sys_t *sys, int ok)
 EMSCRIPTEN_KEEPALIVE void wv_wc_push(decoder_sys_t *sys, uint32_t gen, uint8_t *data,
                                      int format, unsigned w, unsigned h, double ts,
                                      unsigned o0, unsigned s0, unsigned o1, unsigned s1,
-                                     unsigned o2, unsigned s2)
+                                     unsigned o2, unsigned s2, int colour)
 {
     static const vlc_fourcc_t chroma[] = {
         VLC_CODEC_I420, VLC_CODEC_NV12, VLC_CODEC_I420_10L, VLC_CODEC_I422,
@@ -92,7 +94,7 @@ EMSCRIPTEN_KEEPALIVE void wv_wc_push(decoder_sys_t *sys, uint32_t gen, uint8_t *
     *f = (wc_frame_t) {
         .data = data, .chroma = chroma[format], .width = w, .height = h,
         .planes = planes[format], .offset = { o0, o1, o2 }, .stride = { s0, s1, s2 },
-        .ts = (int64_t)ts,
+        .ts = (int64_t)ts, .colour = colour,
     };
     if (sys->inflight > 0)
         sys->inflight--;
@@ -124,8 +126,22 @@ EMSCRIPTEN_KEEPALIVE void wv_wc_error(decoder_sys_t *sys)
 static void output_frame(decoder_t *dec, wc_frame_t *f)
 {
     decoder_sys_t *sys = dec->p_sys;
-    if (f->chroma != sys->out_chroma || f->width != sys->out_w || f->height != sys->out_h) {
+    if (f->chroma != sys->out_chroma || f->width != sys->out_w || f->height != sys->out_h ||
+        f->colour != sys->out_colour) {
         video_format_t *v = &dec->fmt_out.video;
+        /* The browser's decoder knows the frame's colour description (a
+         * hardware decoder may even hand back full range from a limited
+         * stream); trust it over the container's. */
+        if (f->colour & 1) {
+            v->color_range = (f->colour & 2) ? COLOR_RANGE_FULL : COLOR_RANGE_LIMITED;
+            switch ((f->colour >> 4) & 0xf) {
+            case 1: v->space = COLOR_SPACE_BT601; break;
+            case 2: v->space = COLOR_SPACE_BT709; break;
+            case 3: v->space = COLOR_SPACE_BT2020; break;
+            default: break;
+            }
+        }
+        sys->out_colour = f->colour;
         dec->fmt_out.i_codec = f->chroma;
         v->i_chroma = f->chroma;
         v->i_width = v->i_visible_width = f->width;

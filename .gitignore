@@ -14,3 +14,4 @@ bench/media/
 packages/core/wasm/
 examples/*/dist/
 bench/compare/*.png
+.svelte-kit/

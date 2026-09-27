@@ -49,12 +49,14 @@ typedef struct wv_video
     _Atomic uint32_t format_gen;  /*  3 bumped whenever buffers are (re)allocated */
     uint32_t width;               /*  4 */
     uint32_t height;              /*  5 */
-    uint32_t chroma;              /*  6 0 = I420 */
+    uint32_t chroma;              /*  6 layout | full range << 8 | matrix << 12 | transfer << 16 */
     uint32_t pitch[3];            /*  7..9 */
     uint32_t lines[3];            /* 10..12 */
     uint8_t *planes[WV_VIDEO_BUFFERS][3]; /* 13..21 */
     _Atomic uint32_t displayed;   /* 22 total frames handed to the page */
-    int32_t locked;               /* 23 buffer the vout is filling (vout thread only) */
+    int32_t locked;               /* 23 (unused since webframe.c; kept for the layout) */
+    uint32_t sar_num;             /* 24 sample aspect ratio of the picture */
+    uint32_t sar_den;             /* 25 */
 } wv_video_t;
 
 #endif

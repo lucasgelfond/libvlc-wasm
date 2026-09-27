@@ -453,7 +453,9 @@ export class Player extends Emitter {
     const { value } = await this._call('tracks', {}, 'json');
     this.tracks = value ?? [];
     const v = this.tracks.find((t) => t.type === 'video' && t.selected);
-    if (this.renderer) this.renderer.sar = v?.sarNum && v?.sarDen ? v.sarNum / v.sarDen : 1;
+    // The renderer takes the SAR from the video output; this only covers the
+    // moment before the first frame.
+    if (this.renderer && !this.renderer.width) this.renderer.sar = v?.sarNum && v?.sarDen ? v.sarNum / v.sarDen : 1;
     this.emit('tracks', this.tracks);
   }
 

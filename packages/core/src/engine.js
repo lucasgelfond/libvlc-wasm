@@ -128,6 +128,13 @@ function webCodecsHost(getModule) {
   const FORMATS = { I420: 0, NV12: 1, I420P10: 2, I422: 3, I444: 4, RGBX: 5, RGBA: 5, BGRX: 6, BGRA: 6, I420A: 0 };
   const decoders = new Map(); // sys pointer -> state
 
+  // VideoFrame.colorSpace -> the bit field wv_wc_push takes.
+  const MATRIX = { smpte170m: 1, bt470bg: 1, bt709: 2, 'bt2020-ncl': 3 };
+  function colour(cs) {
+    if (!cs || (cs.fullRange == null && !cs.matrix)) return 0;
+    return 1 | (cs.fullRange ? 2 : 0) | ((MATRIX[cs.matrix] ?? 0) << 4);
+  }
+
   function make(sys, st) {
     const M = getModule();
     return new VideoDecoder({
@@ -136,16 +143,33 @@ function webCodecsHost(getModule) {
         // copyTo is async; chain the copies so frames reach VLC in order.
         st.chain = st.chain.then(async () => {
           try {
+            const rect = frame.visibleRect;
+            if (frame.format === null) {
+              // A GPU-only frame (e.g. 10-bit hardware HEVC on macOS): copyTo
+              // refuses it, so read it back through a 2D canvas as RGBA.
+              const w = rect.width, h = rect.height;
+              st.readback ??= new OffscreenCanvas(w, h);
+              if (st.readback.width !== w || st.readback.height !== h) Object.assign(st.readback, { width: w, height: h });
+              const g = st.readback.getContext('2d', { willReadFrequently: true });
+              g.drawImage(frame, 0, 0, w, h);
+              const px = g.getImageData(0, 0, w, h).data;
+              const ptr = M._malloc(px.length);
+              M.HEAPU8.set(px, ptr);
+              M._wv_wc_push(sys, gen, ptr, FORMATS.RGBX, w, h, frame.timestamp, 0, w * 4, 0, 0, 0, 0, 0);
+              return;
+            }
             let format = frame.format;
             const opts = {};
-            if (!(format in FORMATS)) { opts.format = 'I420'; format = 'I420'; }
-            const rect = frame.visibleRect;
+            // A layout we cannot draw is converted by the browser; RGBX is the
+            // conversion every engine offers.
+            if (!(format in FORMATS)) { opts.format = 'RGBX'; format = 'RGBX'; }
             const size = frame.allocationSize(opts);
             const ptr = M._malloc(size);
             const layout = await frame.copyTo(new Uint8Array(M.HEAPU8.buffer, ptr, size), opts);
             const l = (k) => layout[k] ?? { offset: 0, stride: 0 };
             M._wv_wc_push(sys, gen, ptr, FORMATS[format], rect.width, rect.height, frame.timestamp,
-              l(0).offset, l(0).stride, l(1).offset, l(1).stride, l(2).offset, l(2).stride);
+              l(0).offset, l(0).stride, l(1).offset, l(1).stride, l(2).offset, l(2).stride,
+              opts.format ? 0 : colour(frame.colorSpace));
           } catch (e) {
             M.printErr?.(`webcodecs: copyTo(${frame.format}): ${e?.message ?? e}`);
             M._wv_wc_error(sys);
@@ -203,7 +227,17 @@ function webCodecsHost(getModule) {
       M._free(ptr);
       let got = false;
       try {
-        const probe = new VideoDecoder({ output: (f) => { got = true; f.close(); }, error: () => {} });
+        // A frame with no CPU-readable format (e.g. 10-bit hardware HEVC on
+        // macOS) can only be read back through a canvas, ~20x slower than
+        // decoding in software; decline it so VLC falls back.
+        const probe = new VideoDecoder({
+          output: (f) => {
+            if (f.format === null) M.printErr?.(`webcodecs: ${st.config.codec}: GPU-only frames, using software decoding`);
+            else got = true;
+            f.close();
+          },
+          error: () => {},
+        });
         probe.configure(st.config);
         probe.decode(new EncodedVideoChunk({ type: 'key', timestamp: ts, data }));
         await probe.flush();
