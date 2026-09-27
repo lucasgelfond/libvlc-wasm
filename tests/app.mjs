@@ -62,9 +62,12 @@ await test('sample menu: DVD opens on its menu, a click plays', async () => {
   await page.getByRole('button', { name: 'sample' }).click();
   await page.getByRole('menuitem', { name: /DVD/ }).click();
   await page.waitForFunction(() => window.session.inMenu && window.session.player.renderer.framesDrawn > 2, null, { timeout: 20000 });
+  // "Play" on the showcase disc's main menu: 84..340 x 292..334 of its 720x480
+  // picture, which is 4:3 and drawn centred inside the canvas.
   const box = await page.locator('canvas').boundingBox();
-  // "Play" on the showcase disc's main menu (720x480 picture)
-  await page.mouse.click(box.x + box.width * (150 / 720), box.y + box.height * (352 / 480));
+  const pw = Math.min(box.width, box.height * 4 / 3), ph = pw * 3 / 4;
+  const px = box.x + (box.width - pw) / 2, py = box.y + (box.height - ph) / 2;
+  await page.mouse.click(px + pw * (212 / 720), py + ph * (313 / 480));
   await page.waitForFunction(() => !window.session.inMenu && window.session.time > 0.5, null, { timeout: 15000 });
   // The feature's tracks are announced one by one as the title starts.
   await page.waitForFunction(() => window.session.audio.length === 2 && window.session.subtitles.length === 2, null, { timeout: 8000 })
@@ -74,7 +77,7 @@ await test('sample menu: DVD opens on its menu, a click plays', async () => {
   return `menu → feature, ${s.audio} audio and ${s.subs} subtitle tracks`;
 });
 
-for (const [id, kind] of [['bluray', 'video'], ['playstation', 'video'], ['c64', 'audio'], ['genesis', 'audio']]) {
+for (const [id, kind] of [['bluray', 'video'], ['playstation', 'video'], ['wmv', 'video'], ['c64', 'audio'], ['genesis', 'audio']]) {
   await test(`?sample=${id} plays its ${kind}`, async () => {
     await page.goto(`${url}/?sample=${id}`);
     await ready();

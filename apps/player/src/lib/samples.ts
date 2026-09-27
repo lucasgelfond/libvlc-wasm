@@ -1,6 +1,8 @@
 /**
  * One-click samples for the empty player: files no browser plays by itself,
- * shipped with the app in static/samples/ (see scripts/samples.mjs).
+ * shipped with the app in static/samples/. Each is made by a script in
+ * scripts/ from our own or freely licensed material; the sources and
+ * licences are listed in static/samples/CREDITS.md.
  */
 export type Sample = {
   /** For links: /?sample=<id>. */
@@ -26,11 +28,11 @@ export const SAMPLES: Sample[] = [
     label: "DVD disc image (.iso)",
     kind: "disc",
     files: ["showcase.iso"],
-    title: "A DVD, with its menus",
+    title: "Tomorrow Vision, a DVD with motion menus",
     plain:
-      "A disc image of a small DVD: a main menu, a chapter menu, a feature in three chapters with English and Spanish audio and subtitles, and an extra. Click the buttons, or use the arrow keys and Enter.",
+      "A small DVD we authored: a looping VHS-style main menu with chrome type, a scene-select menu, a 48-second feature in three chapters with two audio tracks (the films' own sound, or a synth score) and English and Spanish subtitles, and a credits title. Click the buttons, or use the arrow keys and Enter. Footage: Design for Dreaming (1956) and Living Stereo (1958), Prelinger Archives, public domain; menus and music generated for this disc (CC0).",
     format:
-      "DVD-Video ISO 9660 · MPEG-2 video + AC-3 audio (2 languages) · subpicture subtitles and menu buttons",
+      "DVD-Video ISO 9660 · MPEG-2 video + AC-3 audio (2 tracks) · subpicture subtitles (2) and menu buttons",
     hint: "Click a button on the menu",
   },
   {
@@ -40,173 +42,57 @@ export const SAMPLES: Sample[] = [
     files: ["bluray.iso"],
     title: "A Blu-ray",
     plain:
-      "A disc image of an unencrypted Blu-ray: a minute of Big Buck Bunny (Blender Foundation, CC BY 3.0) in three chapters, read by libbluray the way desktop VLC reads a disc.",
+      "A disc image of an unencrypted Blu-ray: a minute of Big Buck Bunny in three chapters, read by libbluray the way desktop VLC reads a disc. Footage: Big Buck Bunny, (c) 2008 Blender Foundation, www.bigbuckbunny.org (CC BY 3.0).",
     format: "BDMV UDF image · H.264 video + AC-3 audio · chapters",
-  },
-  {
-    id: "c64",
-    label: "Commodore 64 music (.sid)",
-    kind: "audio",
-    files: ["chiptune-tracker-midi/c64-sid-rob-hubbard-commando.sid"],
-    title: "Rob Hubbard, Commando (1985)",
-    plain:
-      "The C64's music was a program for its SID sound chip: this runs that program on an emulated 6510 CPU and SID.",
-    format: "PSID file · MOS 6581 SID emulation (libsidplay2)",
-  },
-  {
-    id: "genesis",
-    label: "Sega Genesis music (.vgz)",
-    kind: "audio",
-    files: ["chiptune-tracker-midi/sega-genesis-vgz-gzip-vgm.vgz"],
-    title: "Sega Genesis music",
-    plain:
-      "A log of every write to the Genesis's Yamaha FM chip, replayed through an emulation of it. Gzipped, as these files are passed around.",
-    format: "VGM, gzipped (.vgz) · YM2612 + SN76489 emulation (game-music-emu)",
-  },
-  {
-    id: "amiga",
-    label: "Amiga module (.mod)",
-    kind: "audio",
-    files: [
-      "chiptune-tracker-midi/axelf-mod-15-sample-soundtracker-no-m-k-.mod",
-    ],
-    title: "'Axel F' as an Amiga module",
-    plain:
-      "A song file from the original Amiga Soundtracker (1987): fifteen instrument samples and a score, mixed live.",
-    format: "15-sample Soundtracker module (.mod) · libmodplug",
-  },
-  {
-    id: "nes",
-    label: "NES music (.nsf)",
-    kind: "audio",
-    files: ["chiptune-tracker-midi/nes-nsf-tetris-gb-rip.nsf"],
-    title: "Tetris, on the NES sound chip",
-    plain:
-      "NES music as the game's own 6502 code, run against an emulated 2A03 sound chip.",
-    format: "NES Sound Format (.nsf) · 2A03 emulation (game-music-emu)",
-  },
-  {
-    id: "realmedia",
-    label: "RealMedia (.rm)",
-    kind: "video",
-    files: ["realmedia/realvideo-3-cook.rm"],
-    title: "A RealPlayer video",
-    plain:
-      "The streaming video format of the late-90s web: what you got from a news site in 2001, before Flash took over.",
-    format: "RealMedia (.rm) · RealVideo 3 + Cook audio",
-  },
-  {
-    id: "bink",
-    label: "Bink video (.bik)",
-    kind: "video",
-    files: ["game-and-oddball-video/bink-video.bik"],
-    title: "A video game cutscene",
-    plain:
-      "The format behind thousands of PC and console game cutscenes: Bink, from RAD Game Tools.",
-    format: "Bink (.bik) · Bink video",
-  },
-  {
-    id: "tracker",
-    label: "Scream Tracker module (.s3m)",
-    kind: "audio",
-    files: ["chiptune-tracker-midi/sandman-s3m.s3m"],
-    title: "A tracker module",
-    plain:
-      "Demoscene music from the 90s: the song file carries its own instrument samples and a score that VLC plays live.",
-    format: "Scream Tracker 3 module (.s3m)",
-  },
-  {
-    id: "snes",
-    label: "SNES music (.spc)",
-    kind: "audio",
-    files: ["chiptune-tracker-midi/snes-spc.spc"],
-    title: "Super Nintendo music",
-    plain:
-      "A snapshot of a SNES sound chip's memory: VLC emulates the chip to play the game's soundtrack.",
-    format: "SNES SPC700 dump (.spc), via game-music-emu",
-  },
-  {
-    id: "subtitles",
-    label: "Matroska with ASS subtitles (.mkv)",
-    kind: "video",
-    files: ["subtitles-and-captions/mpeg-4-asp-vorbis-16-ass-ssa-tracks.mkv"],
-    title: "Anime fansub, 16 subtitle tracks",
-    plain:
-      "A Matroska file with styled, positioned karaoke-style subtitles in sixteen languages. Pick one in the Tracks tab.",
-    format: "Matroska · MPEG-4 ASP + Vorbis · 16 ASS/SSA tracks (libass)",
-    hint: "Tracks → Subtitles",
-  },
-  {
-    id: "wmv",
-    label: "Windows Media (.wmv)",
-    kind: "video",
-    files: ["windows-media/wmv7.wmv"],
-    title: "An early-2000s Windows Media clip",
-    plain:
-      "What Windows Media Player made in 2000: a format browsers never adopted outside Internet Explorer plugins.",
-    format: "ASF (.wmv) · WMV7 + WMA",
-  },
-  {
-    id: "truehd",
-    label: "Dolby TrueHD (.thd)",
-    kind: "audio",
-    files: ["rare-and-surround-audio/dolby-truehd-atmos-8ch.thd"],
-    title: "Blu-ray surround audio",
-    plain:
-      "The lossless 8-channel soundtrack format of Blu-ray discs, mixed down to your speakers.",
-    format: "Dolby TrueHD with Atmos (.thd), 7.1",
-  },
-  {
-    id: "quake",
-    label: "id RoQ video (.roq)",
-    kind: "video",
-    files: ["game-and-oddball-video/id-roq-quake-3-logo.roq"],
-    title: "The Quake III intro",
-    plain:
-      "id Software's own video format, used for the logo and cutscenes of Quake III Arena (1999).",
-    format: "id RoQ (.roq) · RoQ video + RoQ DPCM audio",
   },
   {
     id: "playstation",
     label: "PlayStation STR (.str)",
     kind: "video",
-    files: ["game-and-oddball-video/lunar2.str"],
-    title: "Lunar 2: Eternal Blue, an anime cutscene",
+    files: ["sintel-psx.str"],
+    title: "A PlayStation cutscene",
     plain:
-      "A 41-second anime cutscene straight off the PlayStation disc of Lunar 2: Eternal Blue Complete (1999). Desktop VLC cannot play these.",
-    format: "PSX STR · MDEC video + XA ADPCM audio (via patches/0009)",
+      "28 seconds of film encoded the way PlayStation games stored their cutscenes: pictures for the console's MDEC decoder chip, interleaved with CD-XA audio in raw CD sectors. Browsers cannot play these, and neither can desktop VLC. Footage: the Sintel trailer, (c) Blender Foundation, durian.blender.org (CC BY 3.0).",
+    format: "PSX STR, 2352-byte sectors · MDEC (BS v2) 320x240 15 fps + XA ADPCM 37.8 kHz stereo",
   },
   {
-    id: "flash",
-    label: "Flash video (.flv)",
+    id: "wmv",
+    label: "Windows Media (.wmv)",
     kind: "video",
-    files: ["flash/vp6f-nellymoser.flv"],
-    title: "A Flash video",
+    files: ["elephants-dream.wmv"],
+    title: "An early-2000s Windows Media clip",
     plain:
-      "A 2000s web video recorded through a Flash webcam app, with the Nellymoser voice codec Flash used for microphones.",
-    format: "Flash Video (.flv) · On2 VP6 + Nellymoser",
+      "What Windows Media Player 7 and 8 made around 2001: a format browsers never played outside Internet Explorer plugins. Footage: Elephants Dream, (c) 2006 Blender Foundation / Netherlands Media Art Institute, www.elephantsdream.org (CC BY 2.5).",
+    format: "ASF (.wmv) · Windows Media Video 8 (WMV2) + Windows Media Audio 2 (WMA2)",
+  },
+  {
+    id: "c64",
+    label: "Commodore 64 music (.sid)",
+    kind: "audio",
+    files: ["wasm-64.sid"],
+    title: "Commodore 64 music",
+    plain:
+      "C64 music was a program for the machine's SID sound chip: this runs one on an emulated 6510 CPU and SID. A sawtooth bass with drums on the same voice, fast pulse-wave arpeggios through the chip's filter, and a lead with vibrato. Music and player: written for libvlc-wasm (CC0).",
+    format: "PSID file · 6502 player + MOS 6581 SID emulation (libsidplay2)",
+  },
+  {
+    id: "genesis",
+    label: "Sega Genesis music (.vgm)",
+    kind: "audio",
+    files: ["wasm-drive.vgm"],
+    title: "Sega Genesis music",
+    plain:
+      "A log of every write to the Genesis's two sound chips, replayed through emulations of them: FM slap bass, brass lead and pads on the Yamaha YM2612, square-wave arpeggios and noise drums on the SN76489. Music: written for libvlc-wasm (CC0).",
+    format: "VGM · YM2612 + SN76489 emulation (game-music-emu)",
   },
 ];
 
-/** What the sample menu offers, in order; the rest stay reachable as ?sample=<id>. */
-export const MENU = [
-  "dvd",
-  "bluray",
-  "playstation",
-  "wmv",
-  "snes",
-  "c64",
-  "genesis",
-  "amiga",
-  "nes",
-  "realmedia",
-  "quake",
-  "bink",
-];
+/** What the sample menu offers, in order. */
+export const MENU = ["dvd", "bluray", "playstation", "wmv", "c64", "genesis"];
 
 /** The gallery thumbnail, drawn by scripts/thumbs.mjs (none for audio, or where VLC's thumbnailer finds no frame). */
 export const thumbOf = (s: Sample) =>
-  s.kind === "audio" || s.id === "quake"
+  s.kind === "audio"
     ? null
     : `/samples/thumbs/${s.files[0].split("/").pop()}.jpg`;
 
