@@ -4,7 +4,7 @@
   "nativeVlc": "3.0.24",
   "ffmpeg": "ffmpeg version 9.0.2",
   "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
-  "libvlcWasm": "corpus/results/results.json (2026-09-27T06:37:31.283Z)",
+  "libvlcWasm": "corpus/results/results.json (2026-09-27T14:10:21.265Z)",
   "browsers": [
    "chromium",
    "webkit",
@@ -566,9 +566,9 @@
     "note": "20286 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "audio": false
+     "audio": true
     },
     "note": "this 0.2 s clip only leaves the decoder at end-of-stream drain, already late, so VLC's audio core drops it (native VLC's file output ignores timing)"
    },
@@ -606,11 +606,11 @@
     "note": "0 video frames; error: [mss2 @ 0xdef1e0] header error"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "video": false
+     "video": true
     },
-    "note": "known issue: frame decodes (RV24) but EOS stops playback before it is shown"
+    "note": null
    },
    "browsers": {
     "chromium": false,
@@ -1860,12 +1860,12 @@
     "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 warning/error lines logged"
    },
    "libvlcWasm": {
-    "passed": true,
+    "passed": false,
     "checks": {
-     "video": true,
-     "audio": true
+     "video": false,
+     "audio": false
     },
-    "note": null
+    "note": "timeout"
    },
    "browsers": {
     "chromium": false,
@@ -1904,9 +1904,9 @@
     "passed": false,
     "checks": {
      "video": false,
-     "audio": false
+     "audio": true
     },
-    "note": "expected failure: FFmpeg (and so VLC) cannot decode Vivo 2 video either"
+    "note": "expected failure: video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010)"
    },
    "browsers": {
     "chromium": false,
@@ -1942,12 +1942,12 @@
     "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "video": false,
-     "audio": false
+     "video": true,
+     "audio": true
     },
-    "note": "expected failure: native VLC 3.0.24 also shows no picture; VLC has no PSX STR demuxer"
+    "note": null
    },
    "browsers": {
     "chromium": false,
@@ -2103,9 +2103,9 @@
     "note": "40960 audio samples, peak -8 dB"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "audio": false
+     "audio": true
     },
     "note": "plays about half the time: its 0.1 s of audio only leaves the decoder at end-of-stream drain, right at the lateness limit of VLC's audio core (same as the WMA Lossless clip)"
    },
@@ -2263,9 +2263,9 @@
     "note": "27648 audio samples, peak 0 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "audio": false
+     "audio": true
     },
     "note": "truncated test file: native FFmpeg reports \"Error decoding frame\" too, and how much decodes varies from run to run"
    },
@@ -2423,11 +2423,11 @@
     "note": "1 video frames"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "video": false
+     "video": true
     },
-    "note": "known issue: the single 4K Main10 frame decodes but misses its display deadline"
+    "note": null
    },
    "browsers": {
     "chromium": false,
@@ -2468,7 +2468,7 @@
      "video": false,
      "audio": false
     },
-    "note": "expected failure: native VLC 3.0.24 also shows no picture for this 77 KB fragment"
+    "note": "expected failure: a subtitle-only fragment: its video and audio PIDs carry no packets, so there is no picture to show (FFmpeg's DVB-subtitle test fixture)"
    },
    "browsers": {
     "chromium": false,

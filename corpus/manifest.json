@@ -211,9 +211,7 @@
       "audio": null,
       "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
       "notes": null,
-      "test": {
-        "knownIssue": "known issue: frame decodes (RV24) but EOS stops playback before it is shown"
-      }
+      "test": {}
     },
     {
       "id": "ms-mpeg4-v1",
@@ -668,7 +666,7 @@
       "whyBrowserCant": "Vivo unsupported; note ffmpeg cannot decode this video layer either - good negative test",
       "notes": null,
       "test": {
-        "expectFail": "FFmpeg (and so VLC) cannot decode Vivo 2 video either"
+        "expectFail": "video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010)"
       }
     },
     {
@@ -683,9 +681,7 @@
       "audio": "ADPCM XA",
       "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
       "notes": null,
-      "test": {
-        "expectFail": "native VLC 3.0.24 also shows no picture; VLC has no PSX STR demuxer"
-      }
+      "test": {}
     },
     {
       "id": "ac-3-5-1-448k",
@@ -859,9 +855,7 @@
       "audio": null,
       "whyBrowserCant": "Chrome decodes HEVC only with platform HW support (Win/macOS/Android/ChromeOS, Chrome 107+), MKV via <video> is unofficial, and DV P7 dual-layer is unsupported everywhere",
       "notes": null,
-      "test": {
-        "knownIssue": "known issue: the single 4K Main10 frame decodes but misses its display deadline"
-      }
+      "test": {}
     },
     {
       "id": "dvb-subtitles-in-ts",
@@ -876,7 +870,7 @@
       "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4); DVB bitmap subtitles never rendered by browsers",
       "notes": null,
       "test": {
-        "expectFail": "native VLC 3.0.24 also shows no picture for this 77 KB fragment"
+        "expectFail": "a subtitle-only fragment: its video and audio PIDs carry no packets, so there is no picture to show (FFmpeg's DVB-subtitle test fixture)"
       }
     },
     {

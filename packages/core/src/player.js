@@ -550,7 +550,9 @@ export class Player extends Emitter {
         this._wakeLock(this.state === 'playing' && this.opts.keepAwake !== false);
         if (this.state === 'playing') this._timeAt = performance.now();
         if (this.state === 'paused') this._setTime(this.currentTimeAt(prev));
-        if (this.state === 'stopped') this.renderer?.clear();
+        // Like <video>, keep the last picture when the media ended by itself.
+        if (this.state === 'stopped' && !this._ended) this.renderer?.clear();
+        if (this.state === 'opening') this._ended = false;
         this.emit('statechange', this.state);
         this.emit(this.state);
         break;
@@ -577,7 +579,8 @@ export class Player extends Emitter {
         if (type === EVENT.CHAPTER) this.emit('chapterchange', { title: a, chapter: b, name: str });
         break;
       case EVENT.STOPPING:
-        if (STOP_REASON[a] === 'ended') this.emit('ended');
+        this._ended = STOP_REASON[a] === 'ended';
+        if (this._ended) this.emit('ended');
         if (STOP_REASON[a] === 'error') this.emit('error', new Error('VLC could not play this media (see the log)'));
         break;
       case EVENT.VOLUME: this._volume = a; this.emit('volumechange', { volume: a, muted: this._muted }); break;

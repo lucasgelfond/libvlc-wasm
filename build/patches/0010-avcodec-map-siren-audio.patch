@@ -1,0 +1,41 @@
+From: libvlc-wasm <noreply@libvlc-wasm>
+Subject: [PATCH] avcodec: map Siren audio (Vivo 2)
+
+FFmpeg decodes Siren, but VLC had no fourcc for it, so Vivo 2 audio tracks
+came out as 'undf' and played nothing.
+---
+--- a/include/vlc_fourcc.h
++++ b/include/vlc_fourcc.h
+@@ -584,6 +584,7 @@
+ #define VLC_CODEC_ADPCM_XA_EA                VLC_FOURCC('X','A','J', 0)
+ #define VLC_CODEC_G723_1                     VLC_FOURCC('g','7','2', 0x31)
+ #define VLC_CODEC_G729                       VLC_FOURCC('g','7','2','9')
++#define VLC_CODEC_SIREN                      VLC_FOURCC('s','i','r','n')
+ #define VLC_CODEC_VMDAUDIO                   VLC_FOURCC('v','m','d','a')
+ #define VLC_CODEC_AMR_NB                     VLC_FOURCC('s','a','m','r')
+ #define VLC_CODEC_AMR_WB                     VLC_FOURCC('s','a','w','b')
+--- a/src/misc/fourcc_list.h
++++ b/src/misc/fourcc_list.h
+@@ -1669,6 +1669,10 @@
+     /* G.723.1 */
+     B(VLC_CODEC_G723_1, "G.723.1 Audio"),
+         A("g72\x31"),
++
++    /* Siren 7 (G.722.1 precursor), Vivo 2 */
++    B(VLC_CODEC_SIREN, "Siren Audio"),
++        A("sirn"),
+ 
+     /* PCM */
+     B(VLC_CODEC_S8, "PCM S8"),
+--- a/modules/codec/avcodec/fourcc.c
++++ b/modules/codec/avcodec/fourcc.c
+@@ -490,6 +490,9 @@
+     /* AV_CODEC_ID_QDMC */
+     /* AV_CODEC_ID_CELT */
+     { VLC_CODEC_G723_1, AV_CODEC_ID_G723_1 },
++#if LIBAVCODEC_VERSION_CHECK(60, 3, 100) /* FFmpeg 6.0 has the Siren decoder */
++    { VLC_CODEC_SIREN, AV_CODEC_ID_SIREN },
++#endif
+     /* AV_CODEC_ID_G729 */
+     /* AV_CODEC_ID_8SVX_EXP */
+     /* AV_CODEC_ID_8SVX_FIB */

@@ -1,0 +1,84 @@
+From: libvlc-wasm <noreply@libvlc-wasm>
+Subject: [PATCH] vout: EOF waits for a picture taken from the fifo but not yet shown
+
+At end of file the input asks vout_IsEmpty(), which only looked at the
+decoder fifo. PreparePicture() pops a picture before RenderPicture() waits
+for its display time, so a clip whose last pictures are still waiting (a
+two-frame MS Screen 2 file, a lone still) was declared finished and stopped
+before they were ever shown. Track the popped-but-unrendered picture.
+---
+--- a/src/video_output/video_output.c
++++ b/src/video_output/video_output.c
+@@ -83,6 +83,9 @@
+     bool clock_nowait; /* protected by vlc_clock_Lock()/vlc_clock_Unlock() */
+     bool wait_interrupted;
+     bool first_picture;
++    /* A picture was taken from decoder_fifo and is not on screen yet. Set
++     * under the fifo lock so vout_IsEmpty() cannot miss it between the two. */
++    atomic_bool render_pending;
+ 
+     vlc_clock_t     *clock;
+     vlc_clock_listener_id *clock_listener_id;
+@@ -286,7 +289,8 @@
+     assert(sys->decoder_fifo);
+ 
+     picture_fifo_Lock(sys->decoder_fifo);
+-    bool empty = picture_fifo_IsEmpty(sys->decoder_fifo);
++    bool empty = picture_fifo_IsEmpty(sys->decoder_fifo)
++              && !atomic_load(&sys->render_pending);
+     picture_fifo_Unlock(sys->decoder_fifo);
+     return empty;
+ }
+@@ -1076,6 +1080,8 @@
+         } else {
+             picture_fifo_Lock(sys->decoder_fifo);
+             decoded = picture_fifo_Pop(sys->decoder_fifo);
++            if (decoded != NULL)
++                atomic_store(&sys->render_pending, true);
+             picture_fifo_Unlock(sys->decoder_fifo);
+             if (decoded == NULL)
+                 break;
+@@ -1582,11 +1588,10 @@
+             picture_Release(sys->displayed.current);
+         sys->displayed.current = next;
+     }
+-
+-    if (!next)
+-        return VLC_EGENERIC;
+ 
+-    return RenderPicture(sys, RENDER_PICTURE_NEXT);
++    int ret = next ? RenderPicture(sys, RENDER_PICTURE_NEXT) : VLC_EGENERIC;
++    atomic_store(&sys->render_pending, false);
++    return ret;
+ }
+ 
+ static bool UpdateCurrentPicture(vout_thread_sys_t *sys)
+@@ -1652,8 +1657,20 @@
+     return true;
+ }
+ 
++static vlc_tick_t DisplayPictureOnce(vout_thread_sys_t *vout);
++
++/* Whatever PreparePicture() took from the fifo has been rendered (or dropped)
++ * by the time DisplayPictureOnce() returns, so the input may now treat an
++ * empty fifo as "everything shown" and signal EOF. */
+ static vlc_tick_t DisplayPicture(vout_thread_sys_t *vout)
+ {
++    vlc_tick_t deadline = DisplayPictureOnce(vout);
++    atomic_store(&vout->render_pending, false);
++    return deadline;
++}
++
++static vlc_tick_t DisplayPictureOnce(vout_thread_sys_t *vout)
++{
+     vout_thread_sys_t *sys = vout;
+ 
+     assert(sys->clock);
+@@ -2258,6 +2275,7 @@
+ 
+     vout_control_Init(&sys->control);
+     atomic_init(&sys->control_is_terminated, false);
++    atomic_init(&sys->render_pending, false);
+ 
+     sys->title.show     = var_InheritBool(vout, "video-title-show");
+     sys->title.timeout  = var_InheritInteger(vout, "video-title-timeout");

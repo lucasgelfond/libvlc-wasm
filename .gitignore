@@ -12,6 +12,7 @@ bench/media/
 /tests/out
 # build output: produced by ./build.sh, published by CI
 packages/core/wasm/
+packages/sout/wasm/
 examples/*/dist/
 bench/compare/*.png
 .svelte-kit/

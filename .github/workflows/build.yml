@@ -63,13 +63,15 @@ jobs:
         run: |
           mkdir -p "$CACHE_DIR"
           ./build.sh all
-          sudo chown -R "$(id -u):$(id -g)" .vlc-cache packages/core/wasm
-          ls -la packages/core/wasm
+          out=packages/core/wasm; [ "$VARIANT" = sout ] && out=packages/sout/wasm
+          sudo chown -R "$(id -u):$(id -g)" .vlc-cache "$out"
+          ls -la "$out"
+          echo "WASM_OUT=$out" >> "$GITHUB_ENV"
 
       - uses: actions/upload-artifact@v4
         with:
           name: wasm-${{ matrix.variant }}
-          path: packages/core/wasm/
+          path: ${{ env.WASM_OUT }}/
           if-no-files-found: error
 
   test:
@@ -79,7 +81,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
-        with: { pattern: wasm-*, path: packages/core/wasm, merge-multiple: true }
+        with: { name: wasm-default, path: packages/core/wasm }
+      - uses: actions/download-artifact@v4
+        with: { name: wasm-sout, path: packages/sout/wasm }
       - uses: pnpm/action-setup@v4
         with: { version: 10 }
       - uses: actions/setup-node@v4
@@ -120,33 +124,39 @@ jobs:
   package:
     needs: [wasm, test]
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write   # the GitHub release
+      id-token: write   # npm provenance
     env:
       # Job level: a step's `if` cannot see that step's own env.
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
-        with: { pattern: wasm-*, path: packages/core/wasm, merge-multiple: true }
+        with: { name: wasm-default, path: packages/core/wasm }
+      - uses: actions/download-artifact@v4
+        with: { name: wasm-sout, path: packages/sout/wasm }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - name: Pack
         run: |
-          cd packages/core
-          echo "${{ needs.wasm.outputs.vlc_commit }}" > wasm/VLC_COMMIT
-          npm pack
+          for p in core sout; do
+            echo "${{ needs.wasm.outputs.vlc_commit }}" > packages/$p/wasm/VLC_COMMIT
+            (cd packages/$p && npm pack)
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: npm-package
-          path: packages/core/*.tgz
+          path: packages/*/*.tgz
       - name: GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: packages/core/*.tgz
+          files: packages/*/*.tgz
           body: Built from VLC ${{ needs.wasm.outputs.vlc_commit }}.
       - name: Publish to npm
         if: startsWith(github.ref, 'refs/tags/v') && env.NPM_TOKEN != ''
         run: |
-          cd packages/core
           npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
-          npm publish --access public
+          # core first: sout names it as a peer dependency.
+          for p in core sout; do (cd packages/$p && npm publish --access public --provenance); done

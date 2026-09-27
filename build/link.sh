@@ -12,7 +12,8 @@ C=$S/contrib/wasm32-unknown-emscripten
 N=/work/native
 OUT=/work/packages/core/wasm
 NAME=libvlc
-[ "${VARIANT:-default}" = sout ] && NAME=libvlc-sout
+# The stream-output engine ships as its own package (@libvlc-wasm/sout).
+if [ "${VARIANT:-default}" = sout ]; then NAME=libvlc-sout; OUT=/work/packages/sout/wasm; fi
 OBJ=/cache/link$SUFFIX
 PROFILE=${PROFILE:-release}
 STAGE="$OBJ/stage"

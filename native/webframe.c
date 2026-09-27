@@ -116,6 +116,12 @@ static void Close(vout_display_t *vd)
 {
     vout_display_sys_t *sys = vd->sys;
     wv_video_t *v = sys->v;
+    /* A clip that ends right after its last frame (a one-frame file, a still
+     * followed by EOF) closes the display before the page's next animation
+     * frame: give the page a moment to upload what it has not seen yet. */
+    for (int spin = 0; spin < 100 && atomic_load(&v->front) >= 0
+                       && atomic_load(&v->drawn) != atomic_load(&v->seq); spin++)
+        usleep(1000);
     atomic_store(&v->front, -1);
     atomic_fetch_add(&v->format_gen, 1);
     /* Let an upload in progress finish before the memory goes away. */

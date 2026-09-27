@@ -194,6 +194,7 @@ export class Renderer {
       Atomics.store(h, VIDEO.READING, -1);
     }
     this.lastSeq = seq;
+    Atomics.store(h, VIDEO.DRAWN, seq);
     this.draw();
     this.framesDrawn++;
     return 'drawn';

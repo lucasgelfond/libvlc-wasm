@@ -43,7 +43,15 @@
 
 	onMount(() => {
 		if (import.meta.env.DEV) (window as unknown as { session: Session }).session = session;
-		session.start(canvas);
+		session.start(canvas).then(() => {
+			// /?try=<corpus path>, from the formats page.
+			const path = new URLSearchParams(location.search).get('try');
+			if (!path || !session.ready) return;
+			history.replaceState(null, '', '/');
+			// VobSub is a pair of files drawn over a video.
+			const files = /\.idx$/i.test(path) ? ['gen/t_mpeg2_ac3.ts', path, path.replace(/\.idx$/i, '.sub')] : [path];
+			openSample({ files, title: path, plain: '', format: '' });
+		});
 		const onFs = () => (fullscreen = !!document.fullscreenElement);
 		document.addEventListener('fullscreenchange', onFs);
 		return () => document.removeEventListener('fullscreenchange', onFs);

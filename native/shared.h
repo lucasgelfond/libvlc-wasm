@@ -57,7 +57,7 @@ typedef struct wv_video
     uint32_t lines[3];            /* 10..12 */
     uint8_t *planes[WV_VIDEO_BUFFERS][3]; /* 13..21 */
     _Atomic uint32_t displayed;   /* 22 total frames handed to the page */
-    int32_t locked;               /* 23 (unused since webframe.c; kept for the layout) */
+    _Atomic uint32_t drawn;       /* 23 seq of the last frame the page uploaded */
     uint32_t sar_num;             /* 24 sample aspect ratio of the picture */
     uint32_t sar_den;             /* 25 */
 } wv_video_t;

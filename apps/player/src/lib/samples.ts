@@ -72,6 +72,12 @@ export const SAMPLES: Sample[] = [
 		format: 'id RoQ (.roq) · RoQ video + RoQ DPCM audio'
 	},
 	{
+		files: ['game-and-oddball-video/playstation-str-mdec-xa.str'],
+		title: 'A PlayStation 1 movie',
+		plain: 'A full-motion video straight off an original PlayStation game disc. Desktop VLC cannot play this one.',
+		format: 'PSX STR · MDEC video + XA ADPCM audio (via patches/0009)'
+	},
+	{
 		files: ['flash/vp6f-nellymoser.flv'],
 		title: 'A Flash video',
 		plain: 'A 2000s web video recorded through a Flash webcam app, with the Nellymoser voice codec Flash used for microphones.',

@@ -1,0 +1,40 @@
+From: libvlc-wasm <noreply@libvlc-wasm>
+Subject: [PATCH] avformat: probe again with 16 CD sectors when 2 KiB is not enough
+
+The avformat demuxer probed with 2261 bytes, less than one raw CD sector, so
+formats whose probe needs whole sectors (PlayStation STR) never matched even
+with --demux=avformat. Retry once with a larger window, accepting only a
+confident score so VLC's own demuxers keep their files.
+---
+--- a/modules/demux/avformat/demux.c
++++ b/modules/demux/avformat/demux.c
+@@ -313,6 +313,29 @@
+     if( *pp_fmt == NULL )
+         *pp_fmt = av_probe_input_format( &pd, 1 );
+ 
++    /* 2 KiB is less than one raw CD sector (2352 bytes), so formats whose
++     * probe needs whole sectors (psxstr) can never match. Retry once with a
++     * larger window, as avformat itself would, but only accept a confident
++     * answer so this does not steal files from lower-priority VLC demuxers. */
++    if( *pp_fmt == NULL )
++    {
++        const int i_retry = 16 * 2352 + 44; /* 16 sectors + RIFF/CDXA header */
++        ssize_t i_peek = vlc_stream_Peek( p_demux->s, &peek, i_retry );
++        if( i_peek > pd.buf_size )
++        {
++            uint8_t *p_buf = realloc( pd.buf, i_peek + AVPROBE_PADDING_SIZE );
++            if( p_buf != NULL )
++            {
++                int i_score = AVPROBE_SCORE_RETRY;
++                pd.buf = p_buf;
++                pd.buf_size = i_peek;
++                memcpy( pd.buf, peek, i_peek );
++                memset( pd.buf + i_peek, 0, AVPROBE_PADDING_SIZE );
++                *pp_fmt = av_probe_input_format2( &pd, 1, &i_score );
++            }
++        }
++    }
++
+     free( pd.buf );
+ 
+     if( *pp_fmt == NULL )
