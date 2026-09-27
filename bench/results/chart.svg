@@ -126,31 +126,31 @@
 <rect x="378" y="928" width="104.38425000607968" height="16" rx="2" fill="#93c5fd"/>
 <rect x="482.3842500060797" y="928" width="495.1131000012159" height="16" rx="2" fill="#2563eb"/>
 <text x="983.4973500072956" y="941" font-size="12" font-weight="600" fill="#171717" text-anchor="start">1175 ms</text>
-<text x="48" y="986" font-size="16" font-weight="600" fill="#171717" text-anchor="start">Formats played from a 75-file corpus of formats browsers can't play</text>
+<text x="48" y="986" font-size="16" font-weight="600" fill="#171717" text-anchor="start">Formats played from a 90-file corpus of formats browsers can't play</text>
 <text x="48" y="1019" font-size="13" font-weight="550" fill="#171717" text-anchor="start">libvlc-wasm</text>
 <rect x="228" y="1008" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1008" width="530.64" height="16" rx="2" fill="#f97316"/>
-<text x="830" y="1021" font-size="12" font-weight="600" fill="#171717" text-anchor="start">67 / 75</text>
+<rect x="228" y="1008" width="534.6" height="16" rx="2" fill="#f97316"/>
+<text x="830" y="1021" font-size="12" font-weight="600" fill="#171717" text-anchor="start">81 / 90</text>
 <text x="886" y="1021" font-size="11" font-weight="400" fill="#737373" text-anchor="start">plays in the page</text>
 <text x="48" y="1045" font-size="13" font-weight="550" fill="#171717" text-anchor="start">VLC desktop 3.0.24</text>
 <rect x="228" y="1034" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1034" width="514.8000000000001" height="16" rx="2" fill="#7c2d12"/>
-<text x="830" y="1047" font-size="12" font-weight="600" fill="#171717" text-anchor="start">65 / 75</text>
+<rect x="228" y="1034" width="528" height="16" rx="2" fill="#7c2d12"/>
+<text x="830" y="1047" font-size="12" font-weight="600" fill="#171717" text-anchor="start">80 / 90</text>
 <text x="886" y="1047" font-size="11" font-weight="400" fill="#737373" text-anchor="start">native app</text>
 <text x="48" y="1071" font-size="13" font-weight="550" fill="#171717" text-anchor="start">ffmpeg.wasm</text>
 <rect x="228" y="1060" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1060" width="475.20000000000005" height="16" rx="2" fill="#2563eb"/>
-<text x="830" y="1073" font-size="12" font-weight="600" fill="#171717" text-anchor="start">60 / 75</text>
+<rect x="228" y="1060" width="481.8" height="16" rx="2" fill="#2563eb"/>
+<text x="830" y="1073" font-size="12" font-weight="600" fill="#171717" text-anchor="start">73 / 90</text>
 <text x="886" y="1073" font-size="11" font-weight="400" fill="#737373" text-anchor="start">decodes; converts before showing</text>
 <text x="48" y="1097" font-size="13" font-weight="550" fill="#171717" text-anchor="start">vlc.js (addyosmani)</text>
 <rect x="228" y="1086" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1086" width="488.4" height="16" rx="2" fill="#a855f7"/>
-<text x="830" y="1099" font-size="12" font-weight="600" fill="#171717" text-anchor="start">37 / 45</text>
+<rect x="228" y="1086" width="506" height="16" rx="2" fill="#a855f7"/>
+<text x="830" y="1099" font-size="12" font-weight="600" fill="#171717" text-anchor="start">46 / 54</text>
 <text x="886" y="1099" font-size="11" font-weight="400" fill="#737373" text-anchor="start">video samples only</text>
 <text x="48" y="1123" font-size="13" font-weight="550" fill="#171717" text-anchor="start">The browser alone</text>
 <rect x="228" y="1112" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1112" width="126.72000000000001" height="16" rx="2" fill="#a3a3a3"/>
-<text x="830" y="1125" font-size="12" font-weight="600" fill="#171717" text-anchor="start">16 / 75</text>
+<rect x="228" y="1112" width="198" height="16" rx="2" fill="#a3a3a3"/>
+<text x="830" y="1125" font-size="12" font-weight="600" fill="#171717" text-anchor="start">30 / 90</text>
 <text x="886" y="1125" font-size="11" font-weight="400" fill="#737373" text-anchor="start">Chrome, Safari or Firefox</text>
 <text x="48" y="1166" font-size="11" font-weight="400" fill="#737373" text-anchor="start">VLC columns run the whole player (demux, decode, copy, WebGL upload) at 32x; FFmpeg columns decode only. Native VLC is forced to software decoding.</text>
 <text x="48" y="1182" font-size="11" font-weight="400" fill="#737373" text-anchor="start">Sources: bench/run.mjs, bench/results/RESULTS.md, corpus/compat/build.mjs, tests/verify-corpus.mjs.</text>

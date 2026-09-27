@@ -4,13 +4,13 @@
   "nativeVlc": "3.0.24",
   "ffmpeg": "ffmpeg version 9.0.2",
   "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
-  "libvlcWasm": "corpus/results/results.json (2026-09-27T15:28:06.307Z)",
+  "libvlcWasm": "corpus/results/results.json (2026-09-27T15:54:37.753Z)",
   "browsers": [
    "chromium",
    "webkit",
    "firefox"
   ],
-  "vlcjs": "addyosmani/vlc.js, bench/compare/vlcjs-results.json (2026-09-27T15:33:28.858Z)"
+  "vlcjs": "addyosmani/vlc.js, bench/compare/vlcjs-results.json (2026-09-27T16:01:04.766Z)"
  },
  "samples": [
   {
@@ -3039,6 +3039,615 @@
     "chromium": false,
     "webkit": false,
     "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "everyday-mp4-h264-aac",
+   "name": "MP4 (H.264)",
+   "category": "everyday",
+   "container": "MP4",
+   "video": "H.264",
+   "audio": "AAC",
+   "file": "everyday/mp4-h264-aac.mp4",
+   "url": null,
+   "bytes": 329595,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "84 pictures displayed; 2.987 s audio, peak -17.7 dB; decoders video:videotoolbox, audio:faad"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -16.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144384 audio samples, peak -16.1 dB; 3 warning/error lines logged"
+   },
+   "libvlcWasm": {
+    "passed": false,
+    "checks": {
+     "video": false,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-mp4-hevc-aac",
+   "name": "MP4 (HEVC)",
+   "category": "everyday",
+   "container": "MP4",
+   "video": "HEVC",
+   "audio": "AAC",
+   "file": "everyday/mp4-hevc-aac.mp4",
+   "url": null,
+   "bytes": 233252,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "84 pictures displayed; 2.987 s audio, peak -17.7 dB; decoders video:videotoolbox, audio:faad"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -16.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144384 audio samples, peak -16.1 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-mp4-av1-aac",
+   "name": "MP4 (AV1)",
+   "category": "everyday",
+   "container": "MP4",
+   "video": "AV1",
+   "audio": "AAC",
+   "file": "everyday/mp4-av1-aac.mp4",
+   "url": null,
+   "bytes": 308731,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "89 pictures displayed; 2.987 s audio, peak -17.7 dB; decoders video:dav1d, audio:faad"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -16.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": false,
+    "audio": true,
+    "note": "0 video frames; 144384 audio samples, peak -16.1 dB; error: [av1 @ 0xdeee50] Failed to get pixel format."
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-webm-vp9-opus",
+   "name": "WebM (VP9)",
+   "category": "everyday",
+   "container": "WebM",
+   "video": "VP9",
+   "audio": "Opus",
+   "file": "everyday/webm-vp9-opus.webm",
+   "url": null,
+   "bytes": 271834,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "90 pictures displayed; 3.02 s audio, peak -17.9 dB; decoders video:avcodec, audio:opus"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -17.9 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -17.9 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-webm-av1-opus",
+   "name": "WebM (AV1)",
+   "category": "everyday",
+   "container": "WebM",
+   "video": "AV1",
+   "audio": "Opus",
+   "file": "everyday/webm-av1-opus.webm",
+   "url": null,
+   "bytes": 309727,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "90 pictures displayed; 3.02 s audio, peak -17.9 dB; decoders video:dav1d, audio:opus"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -17.9 dB"
+   },
+   "ffmpegWasm": {
+    "video": false,
+    "audio": true,
+    "note": "0 video frames; 144000 audio samples, peak -17.9 dB; error: [av1 @ 0xdef140] Failed to get pixel format."
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-webm-vp8-vorbis",
+   "name": "WebM (VP8)",
+   "category": "everyday",
+   "container": "WebM",
+   "video": "VP8",
+   "audio": "Vorbis",
+   "file": "everyday/webm-vp8-vorbis.webm",
+   "url": null,
+   "bytes": 396010,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "90 pictures displayed; 3.008 s audio, peak -21 dB; decoders video:avcodec, audio:vorbis"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 288000 audio samples, peak -21 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 288000 audio samples, peak -21 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-mkv-h264-aac",
+   "name": "Matroska (H.264)",
+   "category": "everyday",
+   "container": "Matroska",
+   "video": "H.264",
+   "audio": "AAC",
+   "file": "everyday/mkv-h264-aac.mkv",
+   "url": null,
+   "bytes": 327405,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "83 pictures displayed; 3.008 s audio, peak -16.1 dB; decoders video:videotoolbox, audio:faad"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144384 audio samples, peak -16.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 145408 audio samples, peak -16.1 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": false,
+    "firefox": true
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-mov-prores-pcm",
+   "name": "QuickTime (ProRes)",
+   "category": "everyday",
+   "container": "QuickTime",
+   "video": "ProRes 422",
+   "audio": "PCM",
+   "file": "everyday/mov-prores-pcm.mov",
+   "url": null,
+   "bytes": 5819737,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "83 pictures displayed; 3 s audio, peak -18.1 dB; decoders video:videotoolbox, audio:araw"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -18.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 144000 audio samples, peak -18.1 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-avi-mpeg4-mp3",
+   "name": "AVI (MPEG-4)",
+   "category": "everyday",
+   "container": "AVI",
+   "video": "MPEG-4 Part 2",
+   "audio": "MP3",
+   "file": "everyday/avi-mpeg4-mp3.avi",
+   "url": null,
+   "bytes": 874628,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "90 pictures displayed; 3.024 s audio, peak -18.4 dB; decoders video:avcodec, audio:mpg123"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 145152 audio samples, peak -18.4 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "90 video frames; 145152 audio samples, peak -18.4 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": true
+  },
+  {
+   "id": "everyday-audio-mp3",
+   "name": "MP3",
+   "category": "everyday",
+   "container": "MP3",
+   "video": null,
+   "audio": "MP3",
+   "file": "everyday/audio.mp3",
+   "url": null,
+   "bytes": 73196,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "3 s audio, peak -18.3 dB; decoders audio:mpg123"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -18.3 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -18.3 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "everyday-audio-m4a",
+   "name": "AAC (.m4a)",
+   "category": "everyday",
+   "container": "MP4",
+   "video": null,
+   "audio": "AAC",
+   "file": "everyday/audio.m4a",
+   "url": null,
+   "bytes": 58384,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "2.987 s audio, peak -17.9 dB; decoders audio:faad"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -17.9 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": true,
+    "note": "144384 audio samples, peak -17.9 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "everyday-audio-flac",
+   "name": "FLAC",
+   "category": "everyday",
+   "container": "FLAC",
+   "video": null,
+   "audio": "FLAC",
+   "file": "everyday/audio.flac",
+   "url": null,
+   "bytes": 59168,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "3 s audio, peak -18.1 dB; decoders audio:flac"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -18.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -18.1 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "everyday-audio-wav",
+   "name": "WAV",
+   "category": "everyday",
+   "container": "WAV",
+   "video": null,
+   "audio": "PCM",
+   "file": "everyday/audio.wav",
+   "url": null,
+   "bytes": 288078,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "3 s audio, peak -18.1 dB; decoders audio:araw"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -18.1 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -18.1 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "everyday-audio-ogg",
+   "name": "Ogg Vorbis",
+   "category": "everyday",
+   "container": "Ogg",
+   "video": null,
+   "audio": "Vorbis",
+   "file": "everyday/audio.ogg",
+   "url": null,
+   "bytes": 15384,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "2.965 s audio, peak -21 dB; decoders audio:vorbis"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "288000 audio samples, peak -21 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": true,
+    "note": "288000 audio samples, peak -21 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "everyday-audio-opus",
+   "name": "Opus",
+   "category": "everyday",
+   "container": "Ogg",
+   "video": null,
+   "audio": "Opus",
+   "file": "everyday/audio.opus",
+   "url": null,
+   "bytes": 29408,
+   "whyBrowserCant": null,
+   "nativeVlc": {
+    "video": null,
+    "audio": true,
+    "note": "2.926 s audio, peak -18 dB; decoders audio:opus"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -17.9 dB"
+   },
+   "ffmpegWasm": {
+    "video": null,
+    "audio": true,
+    "note": "144000 audio samples, peak -17.9 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": true,
+    "webkit": true,
+    "firefox": true
    },
    "vlcjs": null
   }

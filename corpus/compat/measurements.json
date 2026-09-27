@@ -1102,6 +1102,225 @@
    "noDecoder": [],
    "late": 0,
    "timedOut": false
+  },
+  "everyday-mp4-h264-aac": {
+   "frames": 84,
+   "audioSeconds": 2.987,
+   "peakDb": -17.7,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:faad"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-mp4-hevc-aac": {
+   "frames": 84,
+   "audioSeconds": 2.987,
+   "peakDb": -17.7,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:faad"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-mp4-av1-aac": {
+   "frames": 89,
+   "audioSeconds": 2.987,
+   "peakDb": -17.7,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:dav1d",
+    "audio:faad"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-webm-vp9-opus": {
+   "frames": 90,
+   "audioSeconds": 3.02,
+   "peakDb": -17.9,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:opus"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-mkv-h264-aac": {
+   "frames": 83,
+   "audioSeconds": 3.008,
+   "peakDb": -16.1,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:faad"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-mov-prores-pcm": {
+   "frames": 83,
+   "audioSeconds": 3,
+   "peakDb": -18.1,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-webm-av1-opus": {
+   "frames": 90,
+   "audioSeconds": 3.02,
+   "peakDb": -17.9,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:dav1d",
+    "audio:opus"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-webm-vp8-vorbis": {
+   "frames": 90,
+   "audioSeconds": 3.008,
+   "peakDb": -21,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:vorbis"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-audio-mp3": {
+   "frames": 0,
+   "audioSeconds": 3,
+   "peakDb": -18.3,
+   "demux": [
+    "es"
+   ],
+   "decoders": [
+    "audio:mpg123"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-audio-m4a": {
+   "frames": 0,
+   "audioSeconds": 2.987,
+   "peakDb": -17.9,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "audio:faad"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-audio-flac": {
+   "frames": 0,
+   "audioSeconds": 3,
+   "peakDb": -18.1,
+   "demux": [
+    "flacsys"
+   ],
+   "decoders": [
+    "audio:flac"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-avi-mpeg4-mp3": {
+   "frames": 90,
+   "audioSeconds": 3.024,
+   "peakDb": -18.4,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:mpg123"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-audio-opus": {
+   "frames": 0,
+   "audioSeconds": 2.926,
+   "peakDb": -18,
+   "demux": [
+    "ogg"
+   ],
+   "decoders": [
+    "audio:opus"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-audio-ogg": {
+   "frames": 0,
+   "audioSeconds": 2.965,
+   "peakDb": -21,
+   "demux": [
+    "ogg"
+   ],
+   "decoders": [
+    "audio:vorbis"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "everyday-audio-wav": {
+   "frames": 0,
+   "audioSeconds": 3,
+   "peakDb": -18.1,
+   "demux": [
+    "wav"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
   }
  },
  "ffmpeg": {
@@ -2539,6 +2758,309 @@
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
+   }
+  },
+  "everyday-mp4-h264-aac": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -16.1
+   }
+  },
+  "everyday-mp4-hevc-aac": {
+   "video": {
+    "streams": [
+     "video:hevc",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:hevc",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -16.1
+   }
+  },
+  "everyday-mp4-av1-aac": {
+   "video": {
+    "streams": [
+     "video:av1",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:av1",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -16.1
+   }
+  },
+  "everyday-webm-vp9-opus": {
+   "video": {
+    "streams": [
+     "video:vp9",
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:vp9",
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -17.9
+   }
+  },
+  "everyday-webm-av1-opus": {
+   "video": {
+    "streams": [
+     "video:av1",
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:av1",
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -17.9
+   }
+  },
+  "everyday-webm-vp8-vorbis": {
+   "video": {
+    "streams": [
+     "video:vp8",
+     "audio:vorbis"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:vp8",
+     "audio:vorbis"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 288000,
+    "peakDb": -21
+   }
+  },
+  "everyday-mkv-h264-aac": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144384,
+    "peakDb": -16.1
+   }
+  },
+  "everyday-mov-prores-pcm": {
+   "video": {
+    "streams": [
+     "video:prores",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:prores",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.1
+   }
+  },
+  "everyday-avi-mpeg4-mp3": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 145152,
+    "peakDb": -18.4
+   }
+  },
+  "everyday-audio-mp3": {
+   "video": {
+    "streams": [
+     "audio:mp3"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:mp3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.3
+   }
+  },
+  "everyday-audio-m4a": {
+   "video": {
+    "streams": [
+     "audio:aac"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -17.9
+   }
+  },
+  "everyday-audio-flac": {
+   "video": {
+    "streams": [
+     "audio:flac"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:flac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.1
+   }
+  },
+  "everyday-audio-wav": {
+   "video": {
+    "streams": [
+     "audio:pcm_s16le"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.1
+   }
+  },
+  "everyday-audio-ogg": {
+   "video": {
+    "streams": [
+     "audio:vorbis"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:vorbis"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 288000,
+    "peakDb": -21
+   }
+  },
+  "everyday-audio-opus": {
+   "video": {
+    "streams": [
+     "audio:opus"
+    ],
+    "firstError": "Error opening output file -.",
+    "errorLines": 2,
+    "frames": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -17.9
    }
   }
  },
@@ -4125,6 +4647,339 @@
     "samples": 0,
     "peakDb": null,
     "code": 1
+   }
+  },
+  "everyday-mp4-h264-aac": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": "Unknown dref type 0x206c7275 size 12",
+    "errorLines": 3,
+    "frames": 90,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144384,
+    "peakDb": -16.1,
+    "code": 0
+   }
+  },
+  "everyday-mp4-hevc-aac": {
+   "video": {
+    "streams": [
+     "video:hevc",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:hevc",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144384,
+    "peakDb": -16.1,
+    "code": 0
+   }
+  },
+  "everyday-mp4-av1-aac": {
+   "video": {
+    "streams": [
+     "video:av1",
+     "audio:aac"
+    ],
+    "firstError": "[av1 @ 0xdeee50] Failed to get pixel format.",
+    "errorLines": 13,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "video:av1",
+     "audio:aac"
+    ],
+    "firstError": "[av1 @ 0xdeeea0] Failed to get pixel format.",
+    "errorLines": 2,
+    "samples": 144384,
+    "peakDb": -16.1,
+    "code": 0
+   }
+  },
+  "everyday-webm-vp9-opus": {
+   "video": {
+    "streams": [
+     "video:vp9",
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:vp9",
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -17.9,
+    "code": 0
+   }
+  },
+  "everyday-webm-av1-opus": {
+   "video": {
+    "streams": [
+     "video:av1",
+     "audio:opus"
+    ],
+    "firstError": "[av1 @ 0xdef140] Failed to get pixel format.",
+    "errorLines": 13,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "video:av1",
+     "audio:opus"
+    ],
+    "firstError": "[av1 @ 0xdef180] Failed to get pixel format.",
+    "errorLines": 2,
+    "samples": 144000,
+    "peakDb": -17.9,
+    "code": 0
+   }
+  },
+  "everyday-webm-vp8-vorbis": {
+   "video": {
+    "streams": [
+     "video:vp8",
+     "audio:vorbis"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:vp8",
+     "audio:vorbis"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 288000,
+    "peakDb": -21,
+    "code": 0
+   }
+  },
+  "everyday-mkv-h264-aac": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 145408,
+    "peakDb": -16.1,
+    "code": 0
+   }
+  },
+  "everyday-mov-prores-pcm": {
+   "video": {
+    "streams": [
+     "video:prores",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:prores",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.1,
+    "code": 0
+   }
+  },
+  "everyday-avi-mpeg4-mp3": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 90,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 145152,
+    "peakDb": -18.4,
+    "code": 0
+   }
+  },
+  "everyday-audio-mp3": {
+   "video": {
+    "streams": [
+     "audio:mp3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:mp3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.3,
+    "code": 0
+   }
+  },
+  "everyday-audio-m4a": {
+   "video": {
+    "streams": [
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144384,
+    "peakDb": -17.9,
+    "code": 0
+   }
+  },
+  "everyday-audio-flac": {
+   "video": {
+    "streams": [
+     "audio:flac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:flac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.1,
+    "code": 0
+   }
+  },
+  "everyday-audio-wav": {
+   "video": {
+    "streams": [
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -18.1,
+    "code": 0
+   }
+  },
+  "everyday-audio-ogg": {
+   "video": {
+    "streams": [
+     "audio:vorbis"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:vorbis"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 288000,
+    "peakDb": -21,
+    "code": 0
+   }
+  },
+  "everyday-audio-opus": {
+   "video": {
+    "streams": [
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:opus"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 144000,
+    "peakDb": -17.9,
+    "code": 0
    }
   }
  }
