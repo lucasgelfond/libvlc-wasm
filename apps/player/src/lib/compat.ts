@@ -68,9 +68,10 @@ type Sample = (typeof compat.samples)[number];
 function row(s: Sample): Row {
 	const wantVideo = !!s.video && s.video !== 'none';
 	const wantAudio = !!s.audio && s.audio !== 'none';
-	const lv = s.libvlcWasm as unknown as { passed: boolean; checks?: Record<string, boolean | undefined>; note?: string | null };
-	const checks = Object.values(lv.checks ?? {});
-	const lvVerdict: Verdict = lv.passed ? 'yes' : checks.some(Boolean) ? 'partial' : 'no';
+	// A sample added to the manifest has no libvlc-wasm result until the corpus is re-verified.
+	const lv = s.libvlcWasm as unknown as { passed: boolean; checks?: Record<string, boolean | undefined>; note?: string | null } | null;
+	const checks = Object.values(lv?.checks ?? {});
+	const lvVerdict: Verdict = !lv ? 'untested' : lv.passed ? 'yes' : checks.some(Boolean) ? 'partial' : 'no';
 	return {
 		id: s.id,
 		name: s.name,
@@ -85,7 +86,7 @@ function row(s: Sample): Row {
 		bytes: s.bytes,
 		hasVideo: wantVideo,
 		whyBrowserCant: s.whyBrowserCant ?? '',
-		libvlcWasm: { verdict: lvVerdict, note: lv.note ?? (lv.passed ? 'picture and sound verified' : '') },
+		libvlcWasm: { verdict: lvVerdict, note: !lv ? 'not measured yet' : (lv.note ?? (lv.passed ? 'picture and sound verified' : '')) },
 		nativeVlc: decodeCell(s.nativeVlc as Decode, wantVideo, wantAudio),
 		nativeVlc4: decodeCell((s as { nativeVlc4?: Decode }).nativeVlc4, wantVideo, wantAudio),
 		ffmpegWasm: decodeCell(s.ffmpegWasm as Decode, wantVideo, wantAudio),
