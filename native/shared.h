@@ -60,6 +60,9 @@ typedef struct wv_video
     _Atomic uint32_t drawn;       /* 23 seq of the last frame the page uploaded */
     uint32_t sar_num;             /* 24 sample aspect ratio of the picture */
     uint32_t sar_den;             /* 25 */
+    /* 26..29: the part of the buffered picture to show, in pixels (0,0,0,0 =
+     * all of it): VLC's crop, applied by the page's shader. */
+    uint32_t crop_x, crop_y, crop_w, crop_h;
 } wv_video_t;
 
 /* Pointer input for the picture: webwindow.c is the vout's window, and the

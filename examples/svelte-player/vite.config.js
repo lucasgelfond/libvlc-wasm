@@ -25,6 +25,6 @@ export default defineConfig({
   preview: { headers: isolation },
   // Keep Vite's dependency optimiser away from the Emscripten output: it has
   // to stay next to libvlc.wasm and spawn itself as pthread workers.
-  optimizeDeps: { exclude: ['@libvlc-wasm/core'] },
+  optimizeDeps: { exclude: ['libvlc-wasm'] },
   worker: { format: 'es' },
 });

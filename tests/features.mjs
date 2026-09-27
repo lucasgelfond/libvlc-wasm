@@ -257,6 +257,34 @@ const results = await page.evaluate(async () => {
     return `${p.renderer.framesDrawn - before} new frames, ${p.tracks.map((t) => t.codec.trim()).join('+')}`;
   });
 
+  await test('aspect ratio, crop and picture adjustments change the picture', async () => {
+    await p.open(await file('t_mpeg2_ac3.ts'));
+    await waitFor(() => p.renderer.framesDrawn > 2, 5000, 'frames');
+    const a0 = p.renderer.aspect;
+    await p.setAspectRatio('4:3');
+    await waitFor(() => Math.abs(p.renderer.aspect - 4 / 3) < 0.01, 3000, `4:3 (aspect ${p.renderer.aspect.toFixed(3)})`);
+    await p.setAspectRatio(null);
+    await waitFor(() => Math.abs(p.renderer.aspect - a0) < 0.01, 3000, 'aspect back');
+    await p.setCrop({ ratio: '1:1' });
+    await waitFor(() => Math.abs(p.renderer.aspect - 1) < 0.01, 3000, `1:1 crop (aspect ${p.renderer.aspect.toFixed(3)})`);
+    await p.setCrop(null);
+    await waitFor(() => Math.abs(p.renderer.aspect - a0) < 0.01, 3000, 'crop back');
+    // Each setAdjust() describes the whole picture: brightness must not
+    // linger into the next call.
+    const mean = () => { p.renderer.draw(); const c = new OffscreenCanvas(64, 36); c.getContext('2d').drawImage(canvas, 0, 0, 64, 36);
+      const d = c.getContext('2d').getImageData(0, 0, 64, 36).data; let s = 0; for (let i = 0; i < d.length; i += 4) s += d[i] + d[i + 1] + d[i + 2]; return s / (d.length / 4) / 3; };
+    await p.pause(); await sleep(200);
+    const base = mean();
+    await p.setAdjust({ brightness: 1.8 }); await p.nextFrame(); await sleep(400);
+    const bright = mean();
+    await p.setAdjust({ saturation: 0 }); await p.nextFrame(); await sleep(400);
+    const grey = mean();
+    await p.setAdjust(null); await p.play();
+    assert(bright > base + 30, `brightness: ${base.toFixed(0)} -> ${bright.toFixed(0)}`);
+    assert(Math.abs(grey - base) < 25, `brightness lingered: ${base.toFixed(0)} -> ${grey.toFixed(0)}`);
+    return `aspect ${a0.toFixed(2)} -> 4:3 -> back; crop 1:1; mean luma ${base.toFixed(0)}, bright ${bright.toFixed(0)}, greyscale ${grey.toFixed(0)}`;
+  });
+
   await test('DVD image: menu by mouse and keys, titles, chapters (dvdnav)', async () => {
     await p.open(await file('t_dvd.iso'));
     await waitFor(() => p.renderer.framesDrawn > 2 && p.inMenu, 8000, 'the disc menu');

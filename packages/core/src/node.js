@@ -1,7 +1,7 @@
 // Headless use under Node: probe files and grab thumbnails with VLC's
 // demuxers and decoders, no browser. Playback needs a page (canvas, Web Audio).
 //
-//   import { createVLC } from '@libvlc-wasm/core/node';
+//   import { createVLC } from 'libvlc-wasm/node';
 //   const vlc = await createVLC();
 //   console.log(await vlc.probe('movie.rm'));
 //   await writeFile('thumb.jpg', (await vlc.thumbnail('movie.rm', { time: 10 })).jpeg);

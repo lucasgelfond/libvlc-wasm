@@ -1,6 +1,6 @@
 // <vlc-player>: a drop-in for <video> that plays what <video> can't.
 //
-//   <script type="module">import '@libvlc-wasm/core/element';</script>
+//   <script type="module">import 'libvlc-wasm/element';</script>
 //   <vlc-player src="movie.rm" controls autoplay></vlc-player>
 //
 // It mirrors the HTMLMediaElement surface people already know (src, play(),

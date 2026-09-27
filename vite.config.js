@@ -57,6 +57,6 @@ function isolateEverything() {
 export default defineConfig({
   plugins: [isolateEverything(), rawMedia('/corpus/media'), rawMedia('/bench/media')],
   server: { port: 5199, headers: ISOLATION, fs: { allow: ['.'] } },
-  optimizeDeps: { exclude: ['@libvlc-wasm/core', '@ffmpeg/ffmpeg', '@ffmpeg/util'] },
+  optimizeDeps: { exclude: ['libvlc-wasm', '@ffmpeg/ffmpeg', '@ffmpeg/util'] },
   worker: { format: 'es' },
 });

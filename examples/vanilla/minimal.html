@@ -9,7 +9,7 @@
 <canvas class="video" id="screen"></canvas>
 <div class="row"><button id="toggle">Play / pause</button><span id="time" class="muted"></span></div>
 <script type="module">
-  import { createVLC } from '../../packages/core/src/index.js'; // or '@libvlc-wasm/core'
+  import { createVLC } from '../../packages/core/src/index.js'; // or 'libvlc-wasm'
 
   const vlc = await createVLC();
   const player = await vlc.createPlayer({ canvas: document.getElementById('screen') });

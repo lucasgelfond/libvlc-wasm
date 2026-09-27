@@ -14,8 +14,9 @@ in vec2 pos;
 out vec2 uv;
 uniform vec2 scale;
 uniform vec2 crop;
+uniform vec2 off;
 void main() {
-  uv = vec2((pos.x + 1.0) * 0.5, (1.0 - pos.y) * 0.5) * crop;
+  uv = vec2((pos.x + 1.0) * 0.5, (1.0 - pos.y) * 0.5) * crop + off;
   gl_Position = vec4(pos * scale, 0.0, 1.0);
 }`;
 
@@ -100,6 +101,7 @@ export class Renderer {
     this.u = {
       scale: gl.getUniformLocation(this.program, 'scale'),
       crop: gl.getUniformLocation(this.program, 'crop'),
+      off: gl.getUniformLocation(this.program, 'off'),
       mode: gl.getUniformLocation(this.program, 'mode'),
       range: gl.getUniformLocation(this.program, 'range'),
       k: gl.getUniformLocation(this.program, 'k'),
@@ -180,9 +182,16 @@ export class Renderer {
           gl.texImage2D(gl.TEXTURE_2D, 0, gl[internal], p.texW, p.rows, 0, gl[fmt], gl.UNSIGNED_BYTE, null);
           this.scratch[k] = new Uint8Array(p.pitch * p.rows);
         });
-        // Textures are pitch wide; sample only the visible part. Every plane
-        // has the same visible/pitch ratio by construction.
-        gl.uniform2f(this.u.crop, (width * L.bpp) / planes[0].pitch, 1);
+        // Textures are pitch wide; sample only the visible part, and of that
+        // only VLC's crop, if any. Every plane has the same visible/pitch
+        // ratio by construction, so one set of coordinates fits them all.
+        let cx = h[VIDEO.CROP_X], cy = h[VIDEO.CROP_Y], cw = h[VIDEO.CROP_W], ch = h[VIDEO.CROP_H];
+        if (!cw || !ch) { cx = 0; cy = 0; cw = width; ch = height; }
+        this.cropW = cw;
+        this.cropH = ch;
+        const unit = L.bpp / planes[0].pitch;
+        gl.uniform2f(this.u.crop, cw * unit, ch / height);
+        gl.uniform2f(this.u.off, cx * unit, cy / height);
       }
       planes.forEach((p, k) => {
         const dst = this.scratch[k];
@@ -213,7 +222,7 @@ export class Renderer {
     gl.clearColor(...this.background, 1);
     gl.clear(gl.COLOR_BUFFER_BIT);
     if (!this.width) return;
-    const src = (this.width * this.sar) / this.height;
+    const src = this.aspect;
     const dst = c.width / c.height;
     let sx = 1, sy = 1;
     if (this.fit !== 'fill') {
@@ -222,6 +231,12 @@ export class Renderer {
     }
     gl.uniform2f(this.u.scale, sx, sy);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  /** Display aspect ratio of what is drawn: the (cropped) picture with its pixel shape. */
+  get aspect() {
+    const w = this.cropW || this.width, h = this.cropH || this.height;
+    return w && h ? (w * this.sar) / h : 16 / 9;
   }
 
   /** Drops the picture (on stop) so a stale frame is not left on screen. */

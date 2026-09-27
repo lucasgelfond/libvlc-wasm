@@ -136,13 +136,15 @@ jobs:
         with: { name: wasm-default, path: packages/core/wasm }
       - uses: actions/download-artifact@v4
         with: { name: wasm-sout, path: packages/sout/wasm }
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - name: Pack
         run: |
           for p in core sout; do
             echo "${{ needs.wasm.outputs.vlc_commit }}" > packages/$p/wasm/VLC_COMMIT
-            (cd packages/$p && npm pack)
+            (cd packages/$p && pnpm pack)
           done
       - uses: actions/upload-artifact@v4
         with:
@@ -159,4 +161,5 @@ jobs:
         run: |
           npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
           # core first: sout names it as a peer dependency.
-          for p in core sout; do (cd packages/$p && npm publish --access public --provenance); done
+          # pnpm rewrites the workspace: specifier sout's package.json uses.
+          for p in core sout; do (cd packages/$p && pnpm publish --access public --provenance --no-git-checks); done

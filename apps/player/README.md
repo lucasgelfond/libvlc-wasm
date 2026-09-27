@@ -1,6 +1,6 @@
 # Player
 
-A minimal VLC-in-the-browser player built on `@libvlc-wasm/core`, SvelteKit and
+A minimal VLC-in-the-browser player built on `libvlc-wasm`, SvelteKit and
 shadcn-svelte: drop a file and it plays, with speed, subtitles (tracks, external
 files, delay), audio track, equalizer, aspect ratio and deinterlacing in one
 settings menu, plus volume, seeking, snapshots, fullscreen and keyboard shortcuts.

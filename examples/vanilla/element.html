@@ -16,14 +16,14 @@ what VLC plays. The whole integration is the markup below plus one import.</p>
   <span id="status" class="muted"></span>
 </div>
 
-<pre><code>&lt;script type="module"&gt;import '@libvlc-wasm/core/element';&lt;/script&gt;
+<pre><code>&lt;script type="module"&gt;import 'libvlc-wasm/element';&lt;/script&gt;
 &lt;vlc-player src="trailer.rm" controls autoplay&gt;&lt;/vlc-player&gt;
 
 player.addEventListener('timeupdate', () =&gt; console.log(player.currentTime));
 player.player.selectTrack(...)   // the full libvlc-wasm Player, when you need more</code></pre>
 
 <script type="module">
-  import '../../packages/core/src/element.js'; // or '@libvlc-wasm/core/element'
+  import '../../packages/core/src/element.js'; // or 'libvlc-wasm/element'
 
   const el = document.getElementById('p');
   const status = document.getElementById('status');

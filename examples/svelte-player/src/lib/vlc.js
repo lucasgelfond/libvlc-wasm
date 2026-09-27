@@ -1,4 +1,4 @@
-import { createVLC } from '@libvlc-wasm/core';
+import { createVLC } from 'libvlc-wasm';
 
 let shared = null;
 

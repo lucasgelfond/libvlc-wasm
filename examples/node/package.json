@@ -2,5 +2,5 @@
   "name": "node-example",
   "private": true,
   "type": "module",
-  "dependencies": { "@libvlc-wasm/core": "workspace:*" }
+  "dependencies": { "libvlc-wasm": "workspace:*" }
 }

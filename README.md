@@ -8,12 +8,12 @@ subtitle renderer and filters, and hands H.264/HEVC/VP9/AV1 to the browser's har
 through WebCodecs when it can.
 
 ```html
-<script type="module">import '@libvlc-wasm/core/element';</script>
+<script type="module">import 'libvlc-wasm/element';</script>
 <vlc-player src="old-trailer.rm" controls autoplay></vlc-player>
 ```
 
 ```js
-import { createVLC } from '@libvlc-wasm/core';
+import { createVLC } from 'libvlc-wasm';
 
 const vlc = await createVLC();
 const player = await vlc.createPlayer({ canvas });
@@ -59,7 +59,7 @@ a level meter, MIDI via FluidSynth with a SoundFont you supply.
 **Subtitles**: libass (ASS/SSA with styling), SRT/VTT/SUB/USF/TTML, VobSub, DVB, CEA-608,
 external files, delay and scale.
 **Without playing**: `probe()` (container, tracks, codecs, metadata) and `thumbnail()` (JPEG).
-**Converting** (the `@libvlc-wasm/sout` package, `createVLC({ engine: sout })`, a 33 MB wasm instead of 26: 9.7 MB brotli instead of 7.9): `transcode()` to
+**Converting** (the `libvlc-wasm-sout` package, `createVLC({ engine: sout })`, a 33 MB wasm instead of 26: 9.7 MB brotli instead of 7.9): `transcode()` to
 WebM/MP4/Ogg/TS/WAV/MP3, lossless `remux`, and `startRecording()` while playing. A 22 s
 RealVideo 4 file becomes a WebM every browser plays in ~6 s.
 **Inputs**: `File`/`Blob` (read on demand — never copied), bytes, http(s) URLs (range requests),

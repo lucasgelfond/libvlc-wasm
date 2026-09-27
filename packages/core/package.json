@@ -1,5 +1,5 @@
 {
-  "name": "@libvlc-wasm/core",
+  "name": "libvlc-wasm",
   "version": "0.1.0",
   "description": "VLC's playback engine (libvlc 4) compiled to WebAssembly: plays the formats browsers can't.",
   "type": "module",
@@ -27,8 +27,6 @@
     "src",
     "wasm/libvlc.js",
     "wasm/libvlc.wasm",
-    "wasm/libvlc-sout.js",
-    "wasm/libvlc-sout.wasm",
     "wasm/VLC_COMMIT",
     "fonts",
     "README.md"
@@ -49,5 +47,14 @@
   ],
   "engines": {
     "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasgelfond/libvlc-wasm.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/lucasgelfond/libvlc-wasm#readme",
+  "bugs": {
+    "url": "https://github.com/lucasgelfond/libvlc-wasm/issues"
   }
 }

@@ -14,7 +14,7 @@
 	"devDependencies": {
 		"@fontsource-variable/roboto": "^5.3.0",
 		"@internationalized/date": "^3.12.4",
-		"@libvlc-wasm/core": "workspace:*",
+		"libvlc-wasm": "workspace:*",
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.63.0",

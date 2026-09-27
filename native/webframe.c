@@ -38,6 +38,7 @@ typedef struct
     wv_video_t *v;
     uint8_t *mem;
     int idx;       /* buffer filled by prepare(), published by display() */
+    unsigned x0, y0, w0, h0; /* the source region the buffers hold */
 } vout_display_sys_t;
 
 /* Layout codes shared with renderer.js (low byte of wv_video_t.chroma). */
@@ -132,10 +133,42 @@ static void Close(vout_display_t *vd)
     free(sys);
 }
 
+/* A forced aspect ratio ("16:9", ...) arrives as a new sample aspect ratio. */
+static int SetSourceAspect(vout_display_t *vd, const video_format_t *fmt)
+{
+    wv_video_t *v = ((vout_display_sys_t *)vd->sys)->v;
+    v->sar_num = fmt->i_sar_num ? fmt->i_sar_num : 1;
+    v->sar_den = fmt->i_sar_den ? fmt->i_sar_den : 1;
+    atomic_fetch_add(&v->format_gen, 1);
+    return VLC_SUCCESS;
+}
+
+/* A crop arrives as a new visible region of the source; the buffers keep the
+ * whole picture and the page's shader samples just that part. */
+static int SetSourceCrop(vout_display_t *vd, const video_format_t *fmt)
+{
+    vout_display_sys_t *sys = vd->sys;
+    wv_video_t *v = sys->v;
+    unsigned x = fmt->i_x_offset > sys->x0 ? fmt->i_x_offset - sys->x0 : 0;
+    unsigned y = fmt->i_y_offset > sys->y0 ? fmt->i_y_offset - sys->y0 : 0;
+    unsigned w = fmt->i_visible_width, h = fmt->i_visible_height;
+    if (x >= sys->w0 || y >= sys->h0 || w == 0 || h == 0) {
+        x = y = w = h = 0; /* nothing sensible: show everything */
+    } else {
+        if (x + w > sys->w0) w = sys->w0 - x;
+        if (y + h > sys->h0) h = sys->h0 - y;
+    }
+    v->crop_x = x; v->crop_y = y; v->crop_w = w; v->crop_h = h;
+    atomic_fetch_add(&v->format_gen, 1);
+    return VLC_SUCCESS;
+}
+
 static const struct vlc_display_operations ops = {
     .close = Close,
     .prepare = Prepare,
     .display = Display,
+    .set_source_aspect = SetSourceAspect,
+    .set_source_crop = SetSourceCrop,
 };
 
 static int Open(vout_display_t *vd, video_format_t *fmtp, vlc_video_context *context)
@@ -190,6 +223,11 @@ static int Open(vout_display_t *vd, video_format_t *fmtp, vlc_video_context *con
     }
     sys->v = v;
     sys->mem = mem;
+    sys->x0 = vd->source->i_x_offset;
+    sys->y0 = vd->source->i_y_offset;
+    sys->w0 = w;
+    sys->h0 = h;
+    v->crop_x = v->crop_y = v->crop_w = v->crop_h = 0;
 
     v->width = w;
     v->height = h;

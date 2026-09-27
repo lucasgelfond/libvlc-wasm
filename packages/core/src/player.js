@@ -143,7 +143,7 @@ export class Player extends Emitter {
     const r = this.renderer;
     if (!r?.width || !this.canvas) return null;
     const box = this.canvas.getBoundingClientRect();
-    const src = (r.width * r.sar) / r.height, dst = box.width / box.height;
+    const src = r.aspect, dst = box.width / box.height;
     let w = box.width, h = box.height;
     if (r.fit === 'contain') { if (src > dst) h = w / src; else w = h * src; }
     else if (r.fit === 'cover') { if (src > dst) w = h * src; else h = w / src; }
@@ -337,14 +337,17 @@ export class Player extends Emitter {
   }
 
   /**
-   * Picture adjustments, VLC's "adjust" filter. Pass `null` to turn it off.
+   * Picture adjustments, VLC's "adjust" filter. Values not given go back to
+   * neutral (brightness/contrast/saturation/gamma 1, hue 0), so each call
+   * describes the whole picture; `null` turns the filter off.
    * @param {{ brightness?: number, contrast?: number, saturation?: number, hue?: number, gamma?: number } | null} values
    */
   async setAdjust(values) {
     if (!values) return this._call('set_adjust', { i: [0, 0, 0] });
-    await this._call('set_adjust', { i: [0, 0, 1] });
-    for (const [k, v] of Object.entries(values))
+    const all = { brightness: 1, contrast: 1, saturation: 1, hue: 0, gamma: 1, ...values };
+    for (const [k, v] of Object.entries(all))
       if (ADJUST[k]) await this._call('set_adjust', { i: [0, ADJUST[k]], d: [v] });
+    await this._call('set_adjust', { i: [0, 0, 1] });
   }
 
   /**
@@ -438,12 +441,14 @@ export class Player extends Emitter {
   setSubtitleScale(scale) { return this._call('set_spu_scale', { d: [scale] }); }
 
   /**
-   * Crops the picture: `{ ratio: [16, 9] }`, `{ window: [x, y, w, h] }`,
+   * Crops the picture: `{ ratio: '16:9' }` (or `[16, 9]`), `{ window: [x, y, w, h] }`,
    * `{ border: [left, right, top, bottom] }`, or `null` for none.
    */
   setCrop(c) {
     if (!c) return this._call('set_crop', { i: [0, 0] });
-    if (c.ratio) return this._call('set_crop', { i: [0, 1, ...c.ratio] });
+    // A ratio may be given as '16:9' (like setAspectRatio) or [16, 9].
+    const ratio = typeof c.ratio === 'string' ? c.ratio.split(/[:/]/).map(Number) : c.ratio;
+    if (ratio) return this._call('set_crop', { i: [0, 1, ...ratio] });
     if (c.window) return this._call('set_crop', { i: [0, 2, ...c.window] });
     if (c.border) return this._call('set_crop', { i: [0, 3, ...c.border] });
     throw new TypeError('setCrop expects { ratio }, { window } or { border }');
@@ -455,7 +460,7 @@ export class Player extends Emitter {
    */
   startRecording() {
     if (!this.vlc.features?.sout) {
-      return Promise.reject(new Error('recording needs the stream-output engine: createVLC({ engine: sout }) with @libvlc-wasm/sout'));
+      return Promise.reject(new Error('recording needs the stream-output engine: createVLC({ engine: sout }) with libvlc-wasm-sout'));
     }
     this._recording = new Promise((resolve) => { this._recordingDone = resolve; });
     return this._call('record', { i: [0, 1], s: ['/recordings'] });

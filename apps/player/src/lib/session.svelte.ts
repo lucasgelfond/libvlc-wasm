@@ -1,4 +1,4 @@
-import { createVLC, type Player, type Track, type VLC } from '@libvlc-wasm/core';
+import { createVLC, type Player, type Track, type VLC } from 'libvlc-wasm';
 
 const SUBTITLE = /\.(srt|ass|ssa|vtt|sub|idx|smi|sami|usf|ttml|dfxp|mpl|jss|rt|pjs|psb|scc|stl)$/i;
 export const isSubtitle = (f: File) => SUBTITLE.test(f.name);

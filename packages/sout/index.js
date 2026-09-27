@@ -1,6 +1,6 @@
 // The stream-output build of libvlc-wasm, for createVLC({ engine }):
-//   import { createVLC } from '@libvlc-wasm/core';
-//   import sout from '@libvlc-wasm/sout';
+//   import { createVLC } from 'libvlc-wasm';
+//   import sout from 'libvlc-wasm-sout';
 //   const vlc = await createVLC({ engine: sout });
 //   const webm = await vlc.transcode(file, { to: 'webm' });
 // Both URLs are written as `new URL(..., import.meta.url)` so bundlers (Vite,

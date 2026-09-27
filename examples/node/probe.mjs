@@ -4,7 +4,7 @@
 //   node examples/node/probe.mjs file [file...] [--thumbs=out-dir]
 import { writeFile, mkdir } from 'node:fs/promises';
 import { basename, join } from 'node:path';
-import { createVLC } from '@libvlc-wasm/core/node';
+import { createVLC } from 'libvlc-wasm/node';
 
 const args = process.argv.slice(2);
 const thumbs = args.find((a) => a.startsWith('--thumbs='))?.split('=')[1];

@@ -1,4 +1,4 @@
-# @libvlc-wasm/core
+# libvlc-wasm
 
 VLC 4's playback engine (libvlc) compiled to WebAssembly. It plays the formats browsers
 can't — RealMedia, WMV/WMA, DivX/Xvid AVIs, DVD VOBs, MPEG-TS with AC-3/DTS, FLV,
@@ -7,7 +7,7 @@ tracker modules, chiptunes, MIDI, MKV with ASS subtitles — through VLC's own d
 clock, audio pipeline and subtitle renderer, drawing to a `<canvas>`.
 
 ```js
-import { createVLC } from '@libvlc-wasm/core';
+import { createVLC } from 'libvlc-wasm';
 
 const vlc = await createVLC();
 const player = await vlc.createPlayer({ canvas: document.querySelector('canvas') });
@@ -101,10 +101,10 @@ phosphor, ivtc…), `setAdjust({ brightness, contrast, saturation, hue, gamma })
 ### Converting (the `sout` build)
 
 VLC's stream output — transcoding, remuxing, recording — makes the wasm 33 MB instead of 26
-(9.7 MB brotli instead of 7.9), so it is a separate package, `@libvlc-wasm/sout`, loaded instead of the default engine. `vlc.features.sout` says which you have.
+(9.7 MB brotli instead of 7.9), so it is a separate package, `libvlc-wasm-sout`, loaded instead of the default engine. `vlc.features.sout` says which you have.
 
 ```js
-import sout from '@libvlc-wasm/sout';   // npm i @libvlc-wasm/sout
+import sout from 'libvlc-wasm-sout';   // npm i libvlc-wasm-sout
 const vlc = await createVLC({ engine: sout });
 const webm = await vlc.transcode(file, { to: 'webm', width: 640, onProgress: (p) => bar.value = p });
 const mp4 = await vlc.transcode(mkv, { to: 'mp4', remux: true });   // no re-encoding

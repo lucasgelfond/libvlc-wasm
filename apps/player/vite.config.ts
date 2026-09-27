@@ -51,7 +51,7 @@ export default defineConfig({
 	],
 	// The Emscripten output has to stay next to libvlc.wasm and spawn itself
 	// as pthread workers: keep the dependency optimiser away from it.
-	optimizeDeps: { exclude: ['@libvlc-wasm/core'] },
+	optimizeDeps: { exclude: ['libvlc-wasm'] },
 	// In this monorepo the SDK is a workspace package outside the app's root.
 	server: { fs: { allow: ['../..'] } },
 	worker: { format: 'es' }

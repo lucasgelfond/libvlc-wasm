@@ -14,12 +14,12 @@ the servers used below set it for you.
 | [`vanilla/url.html`](vanilla/url.html) | playing an http(s) URL through range requests | same |
 | [`svelte-player/`](svelte-player/) | a reusable Svelte `<VlcPlayer>` component and a playlist app with every option | `pnpm --filter svelte-player dev` |
 | [`../apps/player/`](../apps/player/) | a polished minimal player on SvelteKit + shadcn-svelte | `pnpm --filter player dev` |
-| [`node/probe.mjs`](node/probe.mjs) | headless probing and thumbnails under Node (`@libvlc-wasm/core/node`) | `node examples/node/probe.mjs file.rm --thumbs=out` |
+| [`node/probe.mjs`](node/probe.mjs) | headless probing and thumbnails under Node (`libvlc-wasm/node`) | `node examples/node/probe.mjs file.rm --thumbs=out` |
 
 Frameworks: `<vlc-player>` is a standard custom element, so it works as-is in React
 (`<vlc-player src={url} controls />`), Vue, Solid or Angular; for full control use the
 `Player` API the way `svelte-player/src/lib/VlcPlayer.svelte` does.
 
 Hosting where you cannot set headers (GitHub Pages): load
-`@libvlc-wasm/core/coi-serviceworker.js` first in `<head>`; it adds the isolation headers
+`libvlc-wasm/coi-serviceworker.js` first in `<head>`; it adds the isolation headers
 from a service worker (one reload on the first visit).

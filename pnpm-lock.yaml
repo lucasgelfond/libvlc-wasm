@@ -35,9 +35,6 @@ importers:
       '@internationalized/date':
         specifier: ^3.12.4
         version: 3.12.4
-      '@libvlc-wasm/core':
-        specifier: workspace:*
-        version: link:../../packages/core
       '@sveltejs/adapter-auto':
         specifier: ^7.0.1
         version: 7.0.1(@sveltejs/kit@2.70.3(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.1)(vite@8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)))(svelte@5.57.1)(typescript@6.0.3)(vite@8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)))
@@ -62,6 +59,9 @@ importers:
       cn:
         specifier: ^0.4.0
         version: 0.4.0
+      libvlc-wasm:
+        specifier: workspace:*
+        version: link:../../packages/core
       mode-watcher:
         specifier: ^1.1.0
         version: 1.1.0(svelte@5.57.1)
@@ -98,13 +98,13 @@ importers:
 
   examples/node:
     dependencies:
-      '@libvlc-wasm/core':
+      libvlc-wasm:
         specifier: workspace:*
         version: link:../../packages/core
 
   examples/svelte-player:
     dependencies:
-      '@libvlc-wasm/core':
+      libvlc-wasm:
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -119,6 +119,12 @@ importers:
         version: 7.3.6(@types/node@26.6.3)(jiti@2.7.0)(lightningcss@1.33.0)
 
   packages/core: {}
+
+  packages/sout:
+    devDependencies:
+      libvlc-wasm:
+        specifier: workspace:*
+        version: link:../core
 
 packages:
 

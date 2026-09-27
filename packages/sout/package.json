@@ -1,19 +1,49 @@
 {
-  "name": "@libvlc-wasm/sout",
+  "name": "libvlc-wasm-sout",
   "version": "0.1.0",
-  "description": "The stream-output engine for @libvlc-wasm/core: transcode, remux and record. A larger wasm, installed only when you need it.",
+  "description": "The stream-output engine for libvlc-wasm: transcode, remux and record. A larger wasm, installed only when you need it.",
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {
-    ".": { "types": "./index.d.ts", "default": "./index.js" },
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
     "./wasm/libvlc-sout.js": "./wasm/libvlc-sout.js",
     "./wasm/libvlc-sout.wasm": "./wasm/libvlc-sout.wasm",
     "./package.json": "./package.json"
   },
-  "files": ["index.js", "index.d.ts", "wasm/libvlc-sout.js", "wasm/libvlc-sout.wasm", "wasm/VLC_COMMIT", "README.md"],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "wasm/libvlc-sout.js",
+    "wasm/libvlc-sout.wasm",
+    "wasm/VLC_COMMIT",
+    "README.md"
+  ],
   "sideEffects": false,
-  "peerDependencies": { "@libvlc-wasm/core": "0.1.x" },
+  "peerDependencies": {
+    "libvlc-wasm": "0.1.x"
+  },
   "license": "GPL-2.0-or-later",
-  "keywords": ["vlc", "libvlc", "wasm", "transcode", "remux"]
+  "keywords": [
+    "vlc",
+    "libvlc",
+    "wasm",
+    "transcode",
+    "remux"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasgelfond/libvlc-wasm.git",
+    "directory": "packages/sout"
+  },
+  "homepage": "https://github.com/lucasgelfond/libvlc-wasm#readme",
+  "bugs": {
+    "url": "https://github.com/lucasgelfond/libvlc-wasm/issues"
+  },
+  "devDependencies": {
+    "libvlc-wasm": "workspace:*"
+  }
 }

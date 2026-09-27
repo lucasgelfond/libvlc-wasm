@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@libvlc-wasm/core": "workspace:*"
+    "libvlc-wasm": "workspace:*"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.1.0",

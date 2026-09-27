@@ -8,7 +8,8 @@ export const RING = Object.freeze({
 
 export const VIDEO = Object.freeze({
   SEQ: 0, FRONT: 1, READING: 2, FORMAT_GEN: 3, WIDTH: 4, HEIGHT: 5, CHROMA: 6,
-  PITCH: 7, LINES: 10, PLANES: 13, DISPLAYED: 22, DRAWN: 23, SAR_NUM: 24, SAR_DEN: 25, SIZE: 26,
+  PITCH: 7, LINES: 10, PLANES: 13, DISPLAYED: 22, DRAWN: 23, SAR_NUM: 24, SAR_DEN: 25,
+  CROP_X: 26, CROP_Y: 27, CROP_W: 28, CROP_H: 29, SIZE: 30,
 });
 
 export const VIDEO_BUFFERS = 3;

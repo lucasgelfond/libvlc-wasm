@@ -1,4 +1,4 @@
-// Type declarations for @libvlc-wasm/core.
+// Type declarations for libvlc-wasm.
 
 export type Source = File | Blob | ArrayBuffer | ArrayBufferView | string | URL;
 /** Files that refer to each other by name (e.g. `.idx` + `.sub`) are mounted together; the first is opened. */
@@ -18,7 +18,7 @@ export interface VLCOptions {
   workerUrl?: string | URL;
   /** Font files for subtitles; the first is the default face. `false` = none. Default: bundled Noto Sans. */
   fonts?: (string | URL)[] | false;
-  /** Another build of VLC to run: `import sout from '@libvlc-wasm/sout'` for transcode/remux/record. */
+  /** Another build of VLC to run: `import sout from 'libvlc-wasm-sout'` for transcode/remux/record. */
   engine?: Engine;
   /** Load the engine from this libvlc*.js URL instead (self-hosting). */
   moduleUrl?: string | URL;
@@ -200,7 +200,7 @@ export declare class Player extends Emitter<PlayerEvents> {
   setLogo(l: { image: Blob | File | string; x?: number; y?: number; opacity?: number; position?: number } | null): Promise<unknown>;
   setStereoMode(mode: 'stereo' | 'reverse' | 'left' | 'right' | 'dolby' | 'mono'): Promise<unknown>;
   setSubtitleScale(scale: number): Promise<unknown>;
-  setCrop(c: { ratio: [number, number] } | { window: [number, number, number, number] } |
+  setCrop(c: { ratio: [number, number] | string } | { window: [number, number, number, number] } |
     { border: [number, number, number, number] } | null): Promise<unknown>;
   /** Needs a build with sout (`vlc.features.sout`). */
   startRecording(): Promise<void>;
@@ -240,7 +240,7 @@ export declare class VLC extends Emitter<VLCEvents> {
   }): Promise<{ blob: Blob; width: number; height: number }>;
   equalizerPresets(): Promise<{ presets: string[]; bands: number[] }>;
   /**
-   * Converts media with VLC's stream output (needs `createVLC({ engine: sout })` from @libvlc-wasm/sout).
+   * Converts media with VLC's stream output (needs `createVLC({ engine: sout })` from libvlc-wasm-sout).
    * Defaults: webm/mkv VP8 + Opus, mp4 MPEG-4 Part 2 + AAC, ogg Opus,
    * ts MPEG-2 + MP2, wav PCM. WebM is the one every browser plays back.
    */
@@ -269,7 +269,7 @@ export declare class VLC extends Emitter<VLCEvents> {
   destroy(): Promise<void>;
 }
 
-/** A build of VLC for createVLC({ engine }), e.g. the default export of @libvlc-wasm/sout. */
+/** A build of VLC for createVLC({ engine }), e.g. the default export of libvlc-wasm-sout. */
 export interface Engine {
   name?: string;
   /** The Emscripten loader (libvlc*.js). */

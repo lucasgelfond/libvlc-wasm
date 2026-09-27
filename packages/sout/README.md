@@ -1,12 +1,12 @@
-# @libvlc-wasm/sout
+# libvlc-wasm-sout
 
-The stream-output build of [`@libvlc-wasm/core`](../core): VLC's transcoder, muxers and
+The stream-output build of [`libvlc-wasm`](../core): VLC's transcoder, muxers and
 recording, in a separate 33 MB wasm (9.7 MB brotli) so apps that only play media never
 download it.
 
 ```js
-import { createVLC } from '@libvlc-wasm/core';
-import sout from '@libvlc-wasm/sout';
+import { createVLC } from 'libvlc-wasm';
+import sout from 'libvlc-wasm-sout';
 
 const vlc = await createVLC({ engine: sout });
 const webm = await vlc.transcode(file, { to: 'webm' });   // VP8 + Opus
