@@ -56,6 +56,7 @@ typedef struct
     bool        need_key;
     bool        verified;  /* the browser has decoded a first frame */
     uint8_t    *xps;       /* Annex B parameter sets for key frames (H.264/HEVC) */
+    unsigned    nal_length; /* NAL length-prefix size (avcC/hvcC), 0 for Annex B */
     size_t      xps_size;
     char       *codec;
     vlc_fourcc_t out_chroma;
@@ -211,6 +212,49 @@ static uint8_t *packet_copy(decoder_t *dec, const block_t *block, bool key, size
     return buf;
 }
 
+/* Whether an H.264/HEVC access unit starts a coded video sequence. Blocks
+ * from demuxers that hand over whole samples (MP4) skip the packetizer and
+ * carry no BLOCK_FLAG_TYPE_I, so read the NAL unit types instead. */
+static bool IsRandomAccess(const decoder_sys_t *sys, vlc_fourcc_t codec,
+                           const uint8_t *p, size_t size)
+{
+    const size_t len = sys->nal_length;
+    size_t i = 0;
+    while (i < size) {
+        size_t nal_size;
+        if (len) {
+            if (size - i < len)
+                break;
+            nal_size = 0;
+            for (size_t k = 0; k < len; k++)
+                nal_size = (nal_size << 8) | p[i + k];
+            i += len;
+            if (nal_size == 0 || nal_size > size - i)
+                break;
+        } else {
+            /* Annex B: skip to the byte after the next start code. */
+            while (i + 3 <= size && !(p[i] == 0 && p[i + 1] == 0 && p[i + 2] == 1))
+                i++;
+            if (i + 3 > size)
+                break;
+            i += 3;
+            nal_size = 1;
+        }
+        if (i >= size)
+            break;
+        if (codec == VLC_CODEC_H264) {
+            if ((p[i] & 0x1f) == 5) /* IDR slice */
+                return true;
+        } else {
+            unsigned type = (p[i] >> 1) & 0x3f;
+            if (type >= 16 && type <= 21) /* BLA, IDR, CRA */
+                return true;
+        }
+        i += nal_size;
+    }
+    return false;
+}
+
 static int Decode(decoder_t *dec, block_t *block)
 {
     decoder_sys_t *sys = dec->p_sys;
@@ -243,12 +287,14 @@ static int Decode(decoder_t *dec, block_t *block)
         block_Release(block);
         return VLCDEC_SUCCESS;
     }
+    const vlc_fourcc_t fourcc = dec->fmt_in->i_codec;
     bool key = (block->i_flags & BLOCK_FLAG_TYPE_I) != 0;
+    if (!key && (fourcc == VLC_CODEC_H264 || fourcc == VLC_CODEC_HEVC))
+        key = IsRandomAccess(sys, fourcc, block->p_buffer, block->i_buffer);
     /* A VideoDecoder rejects anything but a key frame after configure/reset.
      * Packetizers do not flag key frames for every codec; after the first
      * packet we stop insisting and let the decoder judge. */
-    if (sys->need_key && !key && dec->fmt_in->i_codec != VLC_CODEC_VP9 &&
-        dec->fmt_in->i_codec != VLC_CODEC_AV1) {
+    if (sys->need_key && !key && fourcc != VLC_CODEC_VP9 && fourcc != VLC_CODEC_AV1) {
         block_Release(block);
         return VLCDEC_SUCCESS;
     }
@@ -398,6 +444,12 @@ static int Open(vlc_object_t *obj)
         if (e[0] == 1) {
             description = e;
             description_size = in->i_extra;
+            if (in->i_codec == VLC_CODEC_H264)
+                sys->nal_length = (e[4] & 3) + 1;
+            else if (in->i_extra > 21)
+                sys->nal_length = (e[21] & 3) + 1;
+            else
+                sys->nal_length = 4;
         } else if (e[0] == 0 && e[1] == 0 && (e[2] == 1 || (e[2] == 0 && e[3] == 1))) {
             sys->xps = malloc(in->i_extra);
             if (sys->xps) { memcpy(sys->xps, e, in->i_extra); sys->xps_size = in->i_extra; }

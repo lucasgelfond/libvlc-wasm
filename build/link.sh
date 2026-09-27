@@ -12,7 +12,7 @@ C=$S/contrib/wasm32-unknown-emscripten
 N=/work/native
 OUT=/work/packages/core/wasm
 NAME=libvlc
-# The stream-output engine ships as its own package (@libvlc-wasm/sout).
+# The stream-output engine ships as its own package (libvlc-wasm-sout).
 if [ "${VARIANT:-default}" = sout ]; then NAME=libvlc-sout; OUT=/work/packages/sout/wasm; fi
 OBJ=/cache/link$SUFFIX
 PROFILE=${PROFILE:-release}
@@ -113,4 +113,6 @@ wasm-opt "$STAGE/$NAME.wasm" -g --translate-to-exnref \
 mv "$STAGE/$NAME.wasm" "$OUT/$NAME.wasm"
 mv "$STAGE/$NAME.js" "$OUT/$NAME.js"
 cp "$OBJ/vlc-modules.c" "$OUT/$NAME.modules.c"
+# The source this binary was built from; the GPL makes shipping it a duty.
+git -C "$S" rev-parse HEAD > "$OUT/VLC_COMMIT"
 ls -la "$OUT"
