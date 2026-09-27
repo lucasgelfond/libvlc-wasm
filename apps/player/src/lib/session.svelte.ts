@@ -13,7 +13,6 @@ export type Item = {
 	subtitles: File[];
 	disc: boolean;
 	info: MediaInfo | { error: string } | null;
-	thumb: string | null;
 };
 
 export type Adjust = { brightness: number; contrast: number; saturation: number; hue: number; gamma: number };
@@ -62,6 +61,8 @@ export class Session {
 	subtitleDelay = $state(0);
 	audioDelay = $state(0);
 	stats = $state<Record<string, number> | null>(null);
+	/** How far VLC has read into the file, 0..1, for the seek bar; null when that means nothing (discs, URLs). */
+	loaded = $state<number | null>(null);
 
 	#raf = 0;
 	#destroyed = false;
@@ -117,6 +118,9 @@ export class Session {
 				this.time = p.currentTime;
 			};
 			tick();
+			// The demuxer's read position runs ahead of playback (VLC reads ahead
+			// to buffer): the second, lighter playhead on the seek bar.
+			this.#loadedTimer = setInterval(() => this.#refreshLoaded(), 500);
 			this.ready = true;
 		} catch (e) {
 			if (!this.#destroyed) this.error = (e as Error).message;
@@ -135,7 +139,7 @@ export class Session {
 		const isDisc = files.some((f) => /^video_ts\.ifo$/i.test(f.name));
 		if (isDisc) {
 			const folder = files[0].webkitRelativePath?.split('/')[0] || 'DVD';
-			items.push({ name: folder, files: files.filter((f) => DISC.test(f.name)), subtitles: [], disc: true, info: null, thumb: null });
+			items.push({ name: folder, files: files.filter((f) => DISC.test(f.name)), subtitles: [], disc: true, info: null });
 		}
 		const rest = isDisc ? files.filter((f) => !DISC.test(f.name)) : files;
 		const subs = rest.filter(isSubtitle);
@@ -143,7 +147,7 @@ export class Session {
 		const stem = (n: string) => n.replace(/\.[^.]+$/, '').toLowerCase();
 		for (const f of [...media].sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))) {
 			const own = subs.filter((s) => stem(s.name).startsWith(stem(f.name)));
-			items.push({ name: f.name, files: [f], subtitles: own.length ? own : media.length === 1 ? subs : [], disc: false, info: null, thumb: null });
+			items.push({ name: f.name, files: [f], subtitles: own.length ? own : media.length === 1 ? subs : [], disc: false, info: null });
 		}
 		if (!items.length) return this.addSubtitles(subs);
 		const start = this.playlist.length;
@@ -158,7 +162,7 @@ export class Session {
 		if (u.protocol !== 'http:' && u.protocol !== 'https:') throw new Error('only http(s) URLs can be opened');
 		let name = u.pathname.split('/').pop() || url;
 		try { name = decodeURIComponent(name); } catch { /* keep it escaped */ }
-		this.playlist = [...this.playlist, { name, files: [], url, subtitles: [], disc: false, info: null, thumb: null }];
+		this.playlist = [...this.playlist, { name, files: [], url, subtitles: [], disc: false, info: null }];
 		await this.play(this.playlist.length - 1);
 	}
 
@@ -183,7 +187,6 @@ export class Session {
 
 	/** Back to the start: an empty playlist and nothing playing. */
 	async reset() {
-		for (const it of this.playlist) if (it.thumb) URL.revokeObjectURL(it.thumb);
 		this.playlist = [];
 		this.current = -1;
 		this.ended = false;
@@ -197,7 +200,6 @@ export class Session {
 
 	remove(i: number) {
 		const it = this.playlist[i];
-		if (it?.thumb) URL.revokeObjectURL(it.thumb);
 		this.playlist = this.playlist.filter((_, k) => k !== i);
 		if (i < this.current) this.current--;
 		else if (i === this.current) {
@@ -206,28 +208,19 @@ export class Session {
 		}
 	}
 
-	/** Container, codecs and a thumbnail for the playlist card. */
+	/** Container and codecs, for the Info tab. */
 	async #describe(i: number) {
 		const vlc = this.vlc;
 		const it = this.playlist[i];
 		if (!vlc || !it || it.disc || it.url) return;
 		let info: Item['info'];
-		let thumb: string | null = null;
 		try {
 			info = await vlc.probe(it.files[0]);
 		} catch (e) {
 			info = { error: (e as Error).message };
 		}
-		if (info && 'tracks' in info && info.tracks.some((t) => t.type === 'video')) {
-			try {
-				thumb = URL.createObjectURL((await vlc.thumbnail(it.files[0], { position: 0.2, width: 320 })).blob);
-			} catch {
-				/* no frame to show; the card keeps its placeholder */
-			}
-		}
 		const k = this.playlist.indexOf(it);
-		if (k >= 0) this.playlist[k] = { ...it, info, thumb };
-		else if (thumb) URL.revokeObjectURL(thumb); // removed while it was being described
+		if (k >= 0) this.playlist[k] = { ...it, info };
 	}
 
 	/** Browsers start audio only after a click or key; any one will do. */
@@ -269,6 +262,19 @@ export class Session {
 	async resetAdjust() { this.adjust = { ...NEUTRAL }; await this.applyAdjust(); }
 	async setSubtitleDelay(s: number) { this.subtitleDelay = s; await this.player?.setSubtitleDelay(s); }
 	async setAudioDelay(s: number) { this.audioDelay = s; await this.player?.setAudioDelay(s); }
+	#loadedTimer: ReturnType<typeof setInterval> | undefined;
+	async #refreshLoaded() {
+		const it = this.item;
+		// A disc is read out of order (menus, titles), and a URL's size is unknown here.
+		const size = it && !it.disc && !it.url && !/\.iso$/i.test(it.name) ? it.files.reduce((n, f) => n + f.size, 0) : 0;
+		if (!this.player || !size || this.state === 'idle' || this.state === 'stopped') {
+			this.loaded = null;
+			return;
+		}
+		const s = await this.player.stats().catch(() => null);
+		if (s?.demuxReadBytes != null) this.loaded = Math.min(1, s.demuxReadBytes / size);
+	}
+
 	async refreshStats() {
 		if (this.player && this.current >= 0) this.stats = (await this.player.stats()) as unknown as Record<string, number>;
 	}
@@ -289,7 +295,7 @@ export class Session {
 	destroy() {
 		this.#destroyed = true;
 		cancelAnimationFrame(this.#raf);
-		for (const it of this.playlist) if (it.thumb) URL.revokeObjectURL(it.thumb);
+		clearInterval(this.#loadedTimer);
 		this.vlc?.destroy();
 	}
 }

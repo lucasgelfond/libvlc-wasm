@@ -8,8 +8,12 @@
 		orientation = "horizontal",
 		class: className,
 		"aria-label": ariaLabel,
+		loaded = null,
 		...restProps
-	}: WithoutChildrenOrChild<SliderPrimitive.RootProps> = $props();
+	}: WithoutChildrenOrChild<SliderPrimitive.RootProps> & {
+		/** 0..1: a second, lighter bar under the range (how much is loaded). */
+		loaded?: number | null;
+	} = $props();
 </script>
 
 <!--
@@ -35,6 +39,13 @@ get along, so we shut typescript up by casting `value` to `never`.
 				"bg-muted rounded-full data-horizontal:h-1 data-horizontal:w-full data-vertical:h-full data-vertical:w-1 relative grow overflow-hidden data-horizontal:w-full data-vertical:h-full"
 			)}
 		>
+			{#if loaded != null}
+				<span
+					data-slot="slider-loaded"
+					class="bg-foreground/20 absolute inset-y-0 left-0 transition-[width] duration-500"
+					style="width: {Math.max(0, Math.min(1, loaded)) * 100}%"
+				></span>
+			{/if}
 			<SliderPrimitive.Range
 				data-slot="slider-range"
 				class={cn(

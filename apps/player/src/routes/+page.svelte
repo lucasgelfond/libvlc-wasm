@@ -320,7 +320,8 @@
 									scrub = null;
 								}}
 								disabled={!session.duration}
-								class="py-2 **:data-[slot=slider-track]:bg-white/25"
+								loaded={session.loaded}
+								class="py-2 **:data-[slot=slider-loaded]:bg-white/30 **:data-[slot=slider-track]:bg-white/15"
 								aria-label="Seek"
 							/>
 						</div>
@@ -404,11 +405,8 @@
 					</div>
 				{/if}
 
-				{#if session.playlist.length}
-					<section class="flex flex-col gap-2">
-						<h2 class="text-muted-foreground font-mono text-[11px] tracking-widest uppercase">Playlist · {session.playlist.length}</h2>
-						<Playlist {session} />
-					</section>
+				{#if session.playlist.length > 1}
+					<Playlist {session} />
 				{/if}
 
 			</div>
