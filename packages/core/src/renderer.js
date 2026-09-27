@@ -28,14 +28,18 @@ uniform sampler2D y, u, v;
 uniform int mode;          // 0: 8-bit planar, 1: NV12 (u holds interleaved UV), 2: 10-bit planar (RG8 = little-endian 16-bit), 3: RGBX, 4: BGRX
 uniform vec4 range;        // y offset, y scale, c offset, c scale
 uniform vec2 k;            // Kr, Kb of the colour matrix
-float s16(sampler2D t) { vec2 p = texture(t, uv).rg; return (p.r + p.g * 256.0) * 255.0 / 1023.0; }
+uniform vec4 yBox, cBox;   // where each plane may be sampled: half a texel inside the visible area
+float s16(sampler2D t, vec2 at) { vec2 p = texture(t, at).rg; return (p.r + p.g * 256.0) * 255.0 / 1023.0; }
 void main() {
-  if (mode == 3) { color = vec4(texture(y, uv).rgb, 1.0); return; }
-  if (mode == 4) { color = vec4(texture(y, uv).bgr, 1.0); return; }
+  // Textures are pitch wide: bilinear filtering at the visible edge would blend
+  // in the padding past it (zero chroma draws a green line), so clamp.
+  vec2 ay = clamp(uv, yBox.xy, yBox.zw), ac = clamp(uv, cBox.xy, cBox.zw);
+  if (mode == 3) { color = vec4(texture(y, ay).rgb, 1.0); return; }
+  if (mode == 4) { color = vec4(texture(y, ay).bgr, 1.0); return; }
   vec3 c;
-  if (mode == 1) c = vec3(texture(y, uv).r, texture(u, uv).rg);
-  else if (mode == 2) c = vec3(s16(y), s16(u), s16(v));
-  else c = vec3(texture(y, uv).r, texture(u, uv).r, texture(v, uv).r);
+  if (mode == 1) c = vec3(texture(y, ay).r, texture(u, ac).rg);
+  else if (mode == 2) c = vec3(s16(y, ay), s16(u, ac), s16(v, ac));
+  else c = vec3(texture(y, ay).r, texture(u, ac).r, texture(v, ac).r);
   float Y = (c.x - range.x) * range.y;
   float Cb = (c.y - range.z) * range.w, Cr = (c.z - range.z) * range.w;
   float r = Y + 2.0 * (1.0 - k.x) * Cr;
@@ -105,6 +109,8 @@ export class Renderer {
       mode: gl.getUniformLocation(this.program, 'mode'),
       range: gl.getUniformLocation(this.program, 'range'),
       k: gl.getUniformLocation(this.program, 'k'),
+      yBox: gl.getUniformLocation(this.program, 'yBox'),
+      cBox: gl.getUniformLocation(this.program, 'cBox'),
     };
   }
 
@@ -195,6 +201,10 @@ export class Renderer {
         const unit = L.bpp / planes[0].pitch;
         gl.uniform2f(this.u.crop, cw * unit, ch / height);
         gl.uniform2f(this.u.off, cx * unit, cy / height);
+        const x0 = cx * unit, x1 = (cx + cw) * unit, y0 = cy / height, y1 = (cy + ch) / height;
+        const box = (p) => [x0 + 0.5 / p.texW, y0 + 0.5 / p.rows, x1 - 0.5 / p.texW, y1 - 0.5 / p.rows];
+        gl.uniform4fv(this.u.yBox, box(planes[0]));
+        gl.uniform4fv(this.u.cBox, box(planes[1] ?? planes[0]));
       }
       planes.forEach((p, k) => {
         const dst = this.scratch[k];
