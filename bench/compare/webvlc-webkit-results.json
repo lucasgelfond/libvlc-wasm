@@ -1,16 +1,19 @@
 {
- "date": "2026-09-27T22:39:04.148Z",
+ "date": "2026-09-27T22:37:08.716Z",
  "port": "addyosmani/webvlc",
  "relaunches": 0,
- "engine": "chromium",
+ "engine": "webkit",
  "summary": {
   "videoShown": "10/59",
   "videoShownExclEveryday": "3/50",
-  "audible": "17/74",
-  "medianFirstFrameMs": 540,
+  "audible": "15/74",
+  "medianFirstFrameMs": 729,
   "crashed": 0,
   "rejectedByUi": 54,
   "failedButBrowserPlays": [
+   "mpeg-1-system-stream",
+   "mpeg-2-es-with-eia-608-closed-captions",
+   "amr-nb-12-2k",
    "everyday-audio-opus"
   ]
  },
@@ -41,7 +44,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13994
+   "wallMs": 13993
   },
   {
    "id": "realvideo-g2-svt",
@@ -69,7 +72,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13879
+   "wallMs": 13877
   },
   {
    "id": "realvideo-4-cook-rmvb",
@@ -97,7 +100,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13903
+   "wallMs": 13853
   },
   {
    "id": "realaudio-sipr-8-5k",
@@ -125,7 +128,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13837
+   "wallMs": 13825
   },
   {
    "id": "realvideo-2-in-matroska",
@@ -150,10 +153,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -163,7 +166,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14250
+   "wallMs": 14801
   },
   {
    "id": "realvideo-2-sipr-a-v-sync-bug",
@@ -191,7 +194,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13822
+   "wallMs": 13884
   },
   {
    "id": "wmv8-x8-intra",
@@ -219,7 +222,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14112
+   "wallMs": 14189
   },
   {
    "id": "wmv7",
@@ -247,7 +250,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14382
+   "wallMs": 14575
   },
   {
    "id": "wmv9-vc-1-simple-main-raw-rcv",
@@ -275,7 +278,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13840
+   "wallMs": 13890
   },
   {
    "id": "ms-mpeg4-v3-divx-in-asf",
@@ -303,7 +306,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13814
+   "wallMs": 13832
   },
   {
    "id": "ms-screen-codec-2-wmv9-screen",
@@ -331,7 +334,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13952
+   "wallMs": 13920
   },
   {
    "id": "ms-mpeg4-v1",
@@ -356,10 +359,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -369,7 +372,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14008
+   "wallMs": 13987
   },
   {
    "id": "xvid-mp3",
@@ -394,10 +397,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -407,7 +410,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14034
+   "wallMs": 13988
   },
   {
    "id": "divx-5-mp3",
@@ -432,10 +435,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -445,7 +448,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14833
+   "wallMs": 14132
   },
   {
    "id": "cinepak",
@@ -470,10 +473,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -483,7 +486,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14815
+   "wallMs": 14235
   },
   {
    "id": "indeo-3",
@@ -508,10 +511,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -521,7 +524,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14695
+   "wallMs": 14343
   },
   {
    "id": "indeo-4-partial",
@@ -546,10 +549,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -559,7 +562,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14381
+   "wallMs": 14184
   },
   {
    "id": "indeo-5",
@@ -584,10 +587,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -597,7 +600,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14196
+   "wallMs": 14114
   },
   {
    "id": "motion-jpeg-mu-law-10-mb",
@@ -622,10 +625,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -635,7 +638,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14400
+   "wallMs": 14086
   },
   {
    "id": "dvcpro-hd-720p50",
@@ -660,10 +663,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -673,7 +676,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14244
+   "wallMs": 14082
   },
   {
    "id": "on2-vp5-speex",
@@ -698,10 +701,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -711,7 +714,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14362
+   "wallMs": 14187
   },
   {
    "id": "dvd-vob-single-frame-dvd-subs",
@@ -739,7 +742,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14795
+   "wallMs": 14117
   },
   {
    "id": "mpeg-1-system-stream",
@@ -760,14 +763,14 @@
    "uiError": null,
    "media": null,
    "browserAlone": {
-    "video": false,
-    "firstFrameMs": null,
+    "video": true,
+    "firstFrameMs": 690,
     "audible": null,
-    "mediaError": 4
+    "mediaError": null
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14107
+   "wallMs": 14080
   },
   {
    "id": "dvd-vob-mpeg-2-ac-3-5-mb",
@@ -795,7 +798,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14175
+   "wallMs": 14001
   },
   {
    "id": "mpeg-2-field-encoded-ts",
@@ -823,7 +826,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14113
+   "wallMs": 13962
   },
   {
    "id": "flash-vp6-sorenson-on2",
@@ -851,7 +854,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13926
+   "wallMs": 13939
   },
   {
    "id": "flv-with-h-264-aac",
@@ -879,7 +882,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13880
+   "wallMs": 13850
   },
   {
    "id": "vp6f-nellymoser",
@@ -907,11 +910,75 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 13920
+   "wallMs": 13929
   },
   {
    "id": "3gpp-h-263-amr-nb",
    "name": "3GPP H.263 + AMR-NB",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": true,
+   "rejectedByUi": false,
+   "firstOpenLoaded": false,
+   "video": true,
+   "firstFrameMs": 333,
+   "loadedMs": 259,
+   "maxVariance": 4805,
+   "audible": true,
+   "audioPeakRms": 0,
+   "mediaError": null,
+   "uiError": null,
+   "media": {
+    "tag": "video",
+    "readyState": 4,
+    "videoWidth": 176,
+    "currentTime": 5.9506613339766945,
+    "error": null,
+    "audioBytes": null,
+    "videoFrames": null,
+    "mozHasAudio": null,
+    "audioTracks": 1
+   },
+   "crashed": false,
+   "errors": [],
+   "wallMs": 7852
+  },
+  {
+   "id": "3gp-h-263-phone-clip",
+   "name": "3GP H.263 phone clip",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": true,
+   "rejectedByUi": false,
+   "firstOpenLoaded": false,
+   "video": true,
+   "firstFrameMs": 344,
+   "loadedMs": 266,
+   "maxVariance": 4847,
+   "audible": null,
+   "audioPeakRms": 0,
+   "mediaError": null,
+   "uiError": null,
+   "media": {
+    "tag": "video",
+    "readyState": 4,
+    "videoWidth": 128,
+    "currentTime": 2.9,
+    "error": null,
+    "audioBytes": null,
+    "videoFrames": null,
+    "mozHasAudio": null,
+    "audioTracks": 0
+   },
+   "crashed": false,
+   "errors": [],
+   "wallMs": 7843
+  },
+  {
+   "id": "sorenson-video-1",
+   "name": "Sorenson Video 1",
    "category": "quicktime-and-3gp",
    "hasVideo": true,
    "hasAudio": true,
@@ -932,10 +999,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -945,83 +1012,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14166
-  },
-  {
-   "id": "3gp-h-263-phone-clip",
-   "name": "3GP H.263 phone clip",
-   "category": "quicktime-and-3gp",
-   "hasVideo": true,
-   "hasAudio": false,
-   "ready": true,
-   "rejectedByUi": false,
-   "firstOpenLoaded": false,
-   "video": false,
-   "firstFrameMs": null,
-   "loadedMs": null,
-   "maxVariance": 0,
-   "audible": null,
-   "audioPeakRms": 0,
-   "mediaError": null,
-   "uiError": "The media format or codec is not supported by this browser.",
-   "media": {
-    "tag": "video",
-    "readyState": 0,
-    "videoWidth": 0,
-    "currentTime": 0,
-    "error": null,
-    "audioBytes": 0,
-    "videoFrames": null,
-    "mozHasAudio": null,
-    "audioTracks": null
-   },
-   "browserAlone": {
-    "video": false,
-    "firstFrameMs": null,
-    "audible": null,
-    "mediaError": 4
-   },
-   "crashed": false,
-   "errors": [],
-   "wallMs": 14546
-  },
-  {
-   "id": "sorenson-video-1",
-   "name": "Sorenson Video 1",
-   "category": "quicktime-and-3gp",
-   "hasVideo": true,
-   "hasAudio": true,
-   "ready": true,
-   "rejectedByUi": false,
-   "firstOpenLoaded": false,
-   "video": false,
-   "firstFrameMs": null,
-   "loadedMs": 270,
-   "maxVariance": 0,
-   "audible": true,
-   "audioPeakRms": 0.4566,
-   "mediaError": null,
-   "uiError": null,
-   "media": {
-    "tag": "video",
-    "readyState": 4,
-    "videoWidth": 0,
-    "currentTime": 5.950661,
-    "error": null,
-    "audioBytes": 142540,
-    "videoFrames": null,
-    "mozHasAudio": null,
-    "audioTracks": null
-   },
-   "browserAlone": {
-    "video": false,
-    "firstFrameMs": null,
-    "audible": true,
-    "mediaError": null
-   },
-   "crashed": false,
-   "errors": [],
-   "wallMs": 14567
+   "wallMs": 14230
   },
   {
    "id": "sorenson-video-3",
@@ -1046,10 +1037,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -1059,7 +1050,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15256
+   "wallMs": 14319
   },
   {
    "id": "smacker",
@@ -1087,7 +1078,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14757
+   "wallMs": 14365
   },
   {
    "id": "bink-video",
@@ -1115,7 +1106,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15801
+   "wallMs": 14274
   },
   {
    "id": "id-roq-quake-3-logo",
@@ -1143,7 +1134,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15340
+   "wallMs": 14529
   },
   {
    "id": "autodesk-flic-640x480",
@@ -1171,7 +1162,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 18613
+   "wallMs": 14896
   },
   {
    "id": "autodesk-flc-320x200",
@@ -1199,7 +1190,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 21581
+   "wallMs": 14974
   },
   {
    "id": "nuppelvideo-mythtv",
@@ -1227,7 +1218,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15870
+   "wallMs": 15185
   },
   {
    "id": "vivo-2-vivoactive",
@@ -1255,7 +1246,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14324
+   "wallMs": 16739
   },
   {
    "id": "playstation-str-mdec-xa",
@@ -1283,7 +1274,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14117
+   "wallMs": 16442
   },
   {
    "id": "psx-str-lunar2",
@@ -1311,7 +1302,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14052
+   "wallMs": 14201
   },
   {
    "id": "hevc-main10-dolby-vision-p7-in-mkv",
@@ -1322,28 +1313,34 @@
    "ready": true,
    "rejectedByUi": false,
    "firstOpenLoaded": false,
-   "video": true,
-   "firstFrameMs": 559,
-   "loadedMs": 297,
-   "maxVariance": 3388,
+   "video": false,
+   "firstFrameMs": null,
+   "loadedMs": null,
+   "maxVariance": 0,
    "audible": null,
    "audioPeakRms": 0,
    "mediaError": null,
-   "uiError": null,
+   "uiError": "The media format or codec is not supported by this browser.",
    "media": {
     "tag": "video",
-    "readyState": 4,
-    "videoWidth": 3840,
-    "currentTime": 0.042,
+    "readyState": 0,
+    "videoWidth": 0,
+    "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
+   },
+   "browserAlone": {
+    "video": false,
+    "firstFrameMs": null,
+    "audible": null,
+    "mediaError": 4
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8590
+   "wallMs": 14343
   },
   {
    "id": "dvb-subtitles-in-ts",
@@ -1371,7 +1368,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15845
+   "wallMs": 14323
   },
   {
    "id": "mpeg-2-es-with-eia-608-closed-captions",
@@ -1392,14 +1389,14 @@
    "uiError": null,
    "media": null,
    "browserAlone": {
-    "video": false,
-    "firstFrameMs": null,
+    "video": true,
+    "firstFrameMs": 731,
     "audible": null,
-    "mediaError": 4
+    "mediaError": null
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14836
+   "wallMs": 14258
   },
   {
    "id": "mpeg-4-asp-vorbis-16-ass-ssa-tracks",
@@ -1412,32 +1409,32 @@
    "firstOpenLoaded": false,
    "video": false,
    "firstFrameMs": null,
-   "loadedMs": 262,
+   "loadedMs": null,
    "maxVariance": 0,
-   "audible": true,
-   "audioPeakRms": 0.1835,
+   "audible": false,
+   "audioPeakRms": 0,
    "mediaError": null,
-   "uiError": null,
+   "uiError": "The media format or codec is not supported by this browser.",
    "media": {
     "tag": "video",
-    "readyState": 4,
+    "readyState": 0,
     "videoWidth": 0,
-    "currentTime": 5.845773,
+    "currentTime": 0,
     "error": null,
-    "audioBytes": 79522,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
     "firstFrameMs": null,
-    "audible": true,
-    "mediaError": null
+    "audible": false,
+    "mediaError": 4
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 16126
+   "wallMs": 14839
   },
   {
    "id": "h-264-2x-mp3-vobsub-in-mkv",
@@ -1448,28 +1445,34 @@
    "ready": true,
    "rejectedByUi": false,
    "firstOpenLoaded": false,
-   "video": true,
-   "firstFrameMs": 540,
-   "loadedMs": 272,
-   "maxVariance": 1814,
-   "audible": true,
-   "audioPeakRms": 0.0766,
+   "video": false,
+   "firstFrameMs": null,
+   "loadedMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
    "mediaError": null,
-   "uiError": null,
+   "uiError": "The media format or codec is not supported by this browser.",
    "media": {
     "tag": "video",
-    "readyState": 4,
-    "videoWidth": 640,
-    "currentTime": 6.988702,
+    "readyState": 0,
+    "videoWidth": 0,
+    "currentTime": 0,
     "error": null,
-    "audioBytes": 89280,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
+   },
+   "browserAlone": {
+    "video": false,
+    "firstFrameMs": null,
+    "audible": false,
+    "mediaError": 4
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 9165
+   "wallMs": 14722
   },
   {
    "id": "everyday-mp4-h264-aac",
@@ -1481,11 +1484,11 @@
    "rejectedByUi": false,
    "firstOpenLoaded": false,
    "video": true,
-   "firstFrameMs": 1342,
-   "loadedMs": 461,
-   "maxVariance": 6803,
+   "firstFrameMs": 1045,
+   "loadedMs": 922,
+   "maxVariance": 7051,
    "audible": true,
-   "audioPeakRms": 0.0897,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
@@ -1494,14 +1497,14 @@
     "videoWidth": 640,
     "currentTime": 3,
     "error": null,
-    "audioBytes": 26328,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8508
+   "wallMs": 8385
   },
   {
    "id": "everyday-mp4-hevc-aac",
@@ -1513,11 +1516,11 @@
    "rejectedByUi": false,
    "firstOpenLoaded": false,
    "video": true,
-   "firstFrameMs": 485,
-   "loadedMs": 274,
-   "maxVariance": 6808,
+   "firstFrameMs": 408,
+   "loadedMs": 290,
+   "maxVariance": 7048,
    "audible": true,
-   "audioPeakRms": 0.0896,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
@@ -1526,14 +1529,14 @@
     "videoWidth": 640,
     "currentTime": 3,
     "error": null,
-    "audioBytes": 26328,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8016
+   "wallMs": 8388
   },
   {
    "id": "everyday-mp4-av1-aac",
@@ -1545,11 +1548,11 @@
    "rejectedByUi": false,
    "firstOpenLoaded": false,
    "video": true,
-   "firstFrameMs": 365,
-   "loadedMs": 274,
-   "maxVariance": 5756,
+   "firstFrameMs": 1141,
+   "loadedMs": 882,
+   "maxVariance": 7059,
    "audible": true,
-   "audioPeakRms": 0.0904,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
@@ -1558,14 +1561,14 @@
     "videoWidth": 640,
     "currentTime": 3,
     "error": null,
-    "audioBytes": 26328,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8065
+   "wallMs": 8438
   },
   {
    "id": "everyday-webm-vp9-opus",
@@ -1577,27 +1580,27 @@
    "rejectedByUi": false,
    "firstOpenLoaded": false,
    "video": true,
-   "firstFrameMs": 355,
-   "loadedMs": 259,
-   "maxVariance": 5757,
+   "firstFrameMs": 427,
+   "loadedMs": 292,
+   "maxVariance": 7048,
    "audible": true,
-   "audioPeakRms": 0.0886,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "video",
     "readyState": 4,
     "videoWidth": 640,
-    "currentTime": 3.008,
+    "currentTime": 3.0135,
     "error": null,
-    "audioBytes": 29012,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8063
+   "wallMs": 8182
   },
   {
    "id": "everyday-webm-av1-opus",
@@ -1609,27 +1612,27 @@
    "rejectedByUi": false,
    "firstOpenLoaded": false,
    "video": true,
-   "firstFrameMs": 887,
-   "loadedMs": 355,
-   "maxVariance": 5759,
+   "firstFrameMs": 837,
+   "loadedMs": 288,
+   "maxVariance": 7052,
    "audible": true,
-   "audioPeakRms": 0.0886,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "video",
     "readyState": 4,
     "videoWidth": 640,
-    "currentTime": 3.008,
+    "currentTime": 3.0135,
     "error": null,
-    "audioBytes": 29012,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8236
+   "wallMs": 8273
   },
   {
    "id": "everyday-webm-vp8-vorbis",
@@ -1641,27 +1644,27 @@
    "rejectedByUi": false,
    "firstOpenLoaded": false,
    "video": true,
-   "firstFrameMs": 1130,
-   "loadedMs": 588,
-   "maxVariance": 6782,
+   "firstFrameMs": 396,
+   "loadedMs": 283,
+   "maxVariance": 7058,
    "audible": true,
-   "audioPeakRms": 0.0626,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "video",
     "readyState": 4,
     "videoWidth": 640,
-    "currentTime": 3.021,
+    "currentTime": 3,
     "error": null,
-    "audioBytes": 11729,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 9013
+   "wallMs": 8056
   },
   {
    "id": "everyday-mkv-h264-aac",
@@ -1672,28 +1675,34 @@
    "ready": true,
    "rejectedByUi": false,
    "firstOpenLoaded": false,
-   "video": true,
-   "firstFrameMs": 384,
-   "loadedMs": 259,
-   "maxVariance": 6803,
-   "audible": true,
-   "audioPeakRms": 0.0898,
+   "video": false,
+   "firstFrameMs": null,
+   "loadedMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
    "mediaError": null,
-   "uiError": null,
+   "uiError": "The media format or codec is not supported by this browser.",
    "media": {
     "tag": "video",
-    "readyState": 4,
-    "videoWidth": 640,
-    "currentTime": 3.021,
+    "readyState": 0,
+    "videoWidth": 0,
+    "currentTime": 0,
     "error": null,
-    "audioBytes": 26328,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
+   },
+   "browserAlone": {
+    "video": false,
+    "firstFrameMs": null,
+    "audible": false,
+    "mediaError": 4
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8145
+   "wallMs": 14382
   },
   {
    "id": "everyday-mov-prores-pcm",
@@ -1704,34 +1713,28 @@
    "ready": true,
    "rejectedByUi": false,
    "firstOpenLoaded": false,
-   "video": false,
-   "firstFrameMs": null,
-   "loadedMs": 258,
-   "maxVariance": 0,
+   "video": true,
+   "firstFrameMs": 729,
+   "loadedMs": 531,
+   "maxVariance": 7095,
    "audible": true,
-   "audioPeakRms": 0.0885,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "video",
     "readyState": 4,
-    "videoWidth": 0,
+    "videoWidth": 640,
     "currentTime": 3,
     "error": null,
-    "audioBytes": 288000,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
-   },
-   "browserAlone": {
-    "video": false,
-    "firstFrameMs": null,
-    "audible": true,
-    "mediaError": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14353
+   "wallMs": 8829
   },
   {
    "id": "everyday-avi-mpeg4-mp3",
@@ -1756,10 +1759,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": false,
@@ -1769,7 +1772,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 17613
+   "wallMs": 15916
   },
   {
    "id": "dvd-video-iso",
@@ -1797,7 +1800,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 18739
+   "wallMs": 15670
   },
   {
    "id": "bluray-bdmv-iso",
@@ -1825,7 +1828,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14357
+   "wallMs": 14033
   },
   {
    "id": "cenc-clearkey-mp4",
@@ -1836,34 +1839,28 @@
    "ready": true,
    "rejectedByUi": false,
    "firstOpenLoaded": false,
-   "video": false,
-   "firstFrameMs": 462,
-   "loadedMs": null,
-   "maxVariance": 0,
-   "audible": false,
+   "video": true,
+   "firstFrameMs": 2026,
+   "loadedMs": 755,
+   "maxVariance": 441,
+   "audible": true,
    "audioPeakRms": 0,
    "mediaError": 3,
    "uiError": "The media file could not be decoded. The codec may not be supported by this browser.",
    "media": {
     "tag": "video",
-    "readyState": 1,
+    "readyState": 4,
     "videoWidth": 640,
-    "currentTime": 0,
+    "currentTime": 3,
     "error": 3,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
-   },
-   "browserAlone": {
-    "video": false,
-    "firstFrameMs": null,
-    "audible": false,
-    "mediaError": 3
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15250
+   "wallMs": 8215
   },
   {
    "id": "gen-h264-opus-ass",
@@ -1874,28 +1871,34 @@
    "ready": true,
    "rejectedByUi": false,
    "firstOpenLoaded": false,
-   "video": true,
-   "firstFrameMs": 860,
-   "loadedMs": 572,
-   "maxVariance": 6797,
-   "audible": true,
-   "audioPeakRms": 0.0889,
+   "video": false,
+   "firstFrameMs": null,
+   "loadedMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
    "mediaError": null,
-   "uiError": null,
+   "uiError": "The media format or codec is not supported by this browser.",
    "media": {
     "tag": "video",
-    "readyState": 4,
-    "videoWidth": 640,
-    "currentTime": 5.008,
+    "readyState": 0,
+    "videoWidth": 0,
+    "currentTime": 0,
     "error": null,
-    "audioBytes": 44068,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
+   },
+   "browserAlone": {
+    "video": false,
+    "firstFrameMs": null,
+    "audible": false,
+    "mediaError": 4
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8492
+   "wallMs": 16688
   },
   {
    "id": "realaudio-cook",
@@ -1923,7 +1926,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14598
+   "wallMs": 15079
   },
   {
    "id": "realaudio-28-8",
@@ -1951,7 +1954,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14988
+   "wallMs": 14458
   },
   {
    "id": "wma-voice-11k",
@@ -1976,10 +1979,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": null,
@@ -1989,7 +1992,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14797
+   "wallMs": 14661
   },
   {
    "id": "wma-lossless-24-bit",
@@ -2014,10 +2017,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": null,
@@ -2027,7 +2030,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14750
+   "wallMs": 15322
   },
   {
    "id": "dts-in-mpeg-ts",
@@ -2055,7 +2058,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15087
+   "wallMs": 14468
   },
   {
    "id": "qdesign-music-2",
@@ -2080,10 +2083,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": null,
@@ -2093,7 +2096,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15656
+   "wallMs": 14709
   },
   {
    "id": "ima4-adpcm",
@@ -2106,32 +2109,26 @@
    "firstOpenLoaded": false,
    "video": null,
    "firstFrameMs": null,
-   "loadedMs": null,
+   "loadedMs": 268,
    "maxVariance": 0,
-   "audible": false,
+   "audible": true,
    "audioPeakRms": 0,
    "mediaError": null,
-   "uiError": "The media format or codec is not supported by this browser.",
+   "uiError": null,
    "media": {
     "tag": "video",
-    "readyState": 0,
+    "readyState": 4,
     "videoWidth": 0,
-    "currentTime": 0,
+    "currentTime": 5.9904158743030935,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
-   },
-   "browserAlone": {
-    "video": null,
-    "firstFrameMs": null,
-    "audible": false,
-    "mediaError": 4
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15347
+   "wallMs": 8001
   },
   {
    "id": "mace-3-1",
@@ -2156,10 +2153,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": null,
@@ -2169,7 +2166,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14409
+   "wallMs": 14495
   },
   {
    "id": "ac-3-5-1-448k",
@@ -2197,7 +2194,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14370
+   "wallMs": 14541
   },
   {
    "id": "e-ac-3-5-1-with-spx",
@@ -2225,7 +2222,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14876
+   "wallMs": 14361
   },
   {
    "id": "dts-es",
@@ -2253,7 +2250,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 16463
+   "wallMs": 14511
   },
   {
    "id": "dolby-truehd-atmos-8ch",
@@ -2281,7 +2278,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14730
+   "wallMs": 14200
   },
   {
    "id": "mlp-440-hz",
@@ -2309,7 +2306,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 16160
+   "wallMs": 14124
   },
   {
    "id": "musepack-sv8",
@@ -2337,7 +2334,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 17287
+   "wallMs": 14551
   },
   {
    "id": "musepack-sv7",
@@ -2365,7 +2362,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15208
+   "wallMs": 14826
   },
   {
    "id": "monkey-s-audio",
@@ -2393,7 +2390,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14799
+   "wallMs": 14610
   },
   {
    "id": "true-audio-6-6-mb",
@@ -2421,7 +2418,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14659
+   "wallMs": 14175
   },
   {
    "id": "amr-nb-12-2k",
@@ -2444,12 +2441,12 @@
    "browserAlone": {
     "video": null,
     "firstFrameMs": null,
-    "audible": false,
-    "mediaError": 4
+    "audible": true,
+    "mediaError": null
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15231
+   "wallMs": 14640
   },
   {
    "id": "shorten",
@@ -2477,7 +2474,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14639
+   "wallMs": 15334
   },
   {
    "id": "snes-spc",
@@ -2505,7 +2502,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14229
+   "wallMs": 15012
   },
   {
    "id": "nes-nsf-tetris-gb-rip",
@@ -2533,7 +2530,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 14554
+   "wallMs": 14527
   },
   {
    "id": "sega-genesis-vgz-gzip-vgm",
@@ -2561,7 +2558,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 16395
+   "wallMs": 14486
   },
   {
    "id": "c64-sid-rob-hubbard-commando",
@@ -2589,7 +2586,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15101
+   "wallMs": 14193
   },
   {
    "id": "standard-midi-file",
@@ -2617,7 +2614,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 16825
+   "wallMs": 14144
   },
   {
    "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
@@ -2645,7 +2642,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15237
+   "wallMs": 14100
   },
   {
    "id": "external-xm",
@@ -2673,7 +2670,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 16015
+   "wallMs": 14001
   },
   {
    "id": "sandman-s3m",
@@ -2701,7 +2698,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 16540
+   "wallMs": 16682
   },
   {
    "id": "for-a-change-it",
@@ -2729,7 +2726,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 17043
+   "wallMs": 15390
   },
   {
    "id": "openmpt-test-xm",
@@ -2757,7 +2754,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 17158
+   "wallMs": 14702
   },
   {
    "id": "everyday-audio-mp3",
@@ -2770,26 +2767,26 @@
    "firstOpenLoaded": true,
    "video": null,
    "firstFrameMs": null,
-   "loadedMs": 521,
+   "loadedMs": 394,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0858,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "audio",
     "readyState": 4,
     "videoWidth": 0,
-    "currentTime": 3,
+    "currentTime": 3.024,
     "error": null,
-    "audioBytes": 72576,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 9002
+   "wallMs": 8441
   },
   {
    "id": "everyday-audio-m4a",
@@ -2802,26 +2799,26 @@
    "firstOpenLoaded": true,
    "video": null,
    "firstFrameMs": null,
-   "loadedMs": 405,
+   "loadedMs": 706,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0885,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "audio",
     "readyState": 4,
     "videoWidth": 0,
-    "currentTime": 3,
+    "currentTime": 2.977333333333333,
     "error": null,
-    "audioBytes": 57010,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8396
+   "wallMs": 8090
   },
   {
    "id": "everyday-audio-flac",
@@ -2834,26 +2831,26 @@
    "firstOpenLoaded": true,
    "video": null,
    "firstFrameMs": null,
-   "loadedMs": 1239,
+   "loadedMs": 432,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0885,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "audio",
     "readyState": 4,
     "videoWidth": 0,
-    "currentTime": 3,
+    "currentTime": 3.008,
     "error": null,
-    "audioBytes": 50882,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8369
+   "wallMs": 8191
   },
   {
    "id": "everyday-audio-wav",
@@ -2866,10 +2863,10 @@
    "firstOpenLoaded": true,
    "video": null,
    "firstFrameMs": null,
-   "loadedMs": 387,
+   "loadedMs": 408,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0885,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
@@ -2878,14 +2875,14 @@
     "videoWidth": 0,
     "currentTime": 3,
     "error": null,
-    "audioBytes": 288000,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8640
+   "wallMs": 8277
   },
   {
    "id": "everyday-audio-ogg",
@@ -2898,26 +2895,26 @@
    "firstOpenLoaded": true,
    "video": null,
    "firstFrameMs": null,
-   "loadedMs": 401,
+   "loadedMs": 432,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0626,
+   "audioPeakRms": 0,
    "mediaError": null,
    "uiError": null,
    "media": {
     "tag": "audio",
     "readyState": 4,
     "videoWidth": 0,
-    "currentTime": 3.021333,
+    "currentTime": 3.0061666666666667,
     "error": null,
-    "audioBytes": 11729,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 1
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 8550
+   "wallMs": 8252
   },
   {
    "id": "everyday-audio-opus",
@@ -2942,10 +2939,10 @@
     "videoWidth": 0,
     "currentTime": 0,
     "error": null,
-    "audioBytes": 0,
+    "audioBytes": null,
     "videoFrames": null,
     "mozHasAudio": null,
-    "audioTracks": null
+    "audioTracks": 0
    },
    "browserAlone": {
     "video": null,
@@ -2955,7 +2952,7 @@
    },
    "crashed": false,
    "errors": [],
-   "wallMs": 15052
+   "wallMs": 15777
   }
  ]
 }

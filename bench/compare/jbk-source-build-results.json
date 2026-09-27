@@ -1,13 +1,15 @@
 {
- "date": "2026-09-27T17:35:12.279Z",
+ "date": "2026-09-27T21:20:02.508Z",
  "port": "jbk/vlc.js",
  "build": "source-build",
  "dir": "/Users/lucasgelfond/Projects/libvlc-wasm/.research/vlcjs-jbk-build/",
+ "relaunches": 0,
+ "engine": "chromium",
  "summary": {
-  "videoShown": "48/55",
-  "videoShownExclEveryday": "39/46",
-  "audible": "57/71",
-  "medianFirstFrameMs": 447,
+  "videoShown": "49/59",
+  "videoShownExclEveryday": "40/50",
+  "audible": "57/74",
+  "medianFirstFrameMs": 491,
   "crashed": 0
  },
  "results": [
@@ -19,8 +21,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 1467,
-   "maxVariance": 5881,
+   "firstFrameMs": 1327,
+   "maxVariance": 5867,
    "audible": true,
    "audioPeakRms": 0.1641,
    "audioGraphs": 1,
@@ -32,7 +34,7 @@
     "[rm @ 0x12e9c80] Before avformat_find_stream_info() pos: 1163 bytes read:32768 seeks:0 nb_streams:2",
     "[cook @ 0x236c280] codecdata_length=8"
    ],
-   "wallMs": 6303
+   "wallMs": 6741
   },
   {
    "id": "realvideo-g2-svt",
@@ -42,8 +44,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 398,
-   "maxVariance": 10322,
+   "firstFrameMs": 578,
+   "maxVariance": 10280,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -55,7 +57,7 @@
     "[rm @ 0x12e9c80] Invalid stream index 1 for index at pos 726206",
     "[rm @ 0x12e9c80] Before avformat_find_stream_info() pos: 666 bytes read:33280 seeks:2 nb_streams:1"
    ],
-   "wallMs": 6527
+   "wallMs": 6792
   },
   {
    "id": "realvideo-4-cook-rmvb",
@@ -65,10 +67,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 2695,
-   "maxVariance": 6416,
+   "firstFrameMs": 2686,
+   "maxVariance": 6428,
    "audible": true,
-   "audioPeakRms": 0.0293,
+   "audioPeakRms": 0.0286,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -78,7 +80,7 @@
     "[rm @ 0x12e9c80] Before avformat_find_stream_info() pos: 872 bytes read:32768 seeks:0 nb_streams:2",
     "[cook @ 0x236c280] codecdata_length=16"
    ],
-   "wallMs": 6455
+   "wallMs": 6867
   },
   {
    "id": "realaudio-sipr-8-5k",
@@ -88,7 +90,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 1100,
+   "firstFrameMs": 1091,
    "maxVariance": 5799,
    "audible": true,
    "audioPeakRms": 0.1113,
@@ -101,7 +103,7 @@
     "[rm @ 0x12e9c80] Before avformat_find_stream_info() pos: 371 bytes read:32768 seeks:0 nb_streams:2",
     "[sipr @ 0x236c280] Mode: 8k5"
    ],
-   "wallMs": 6517
+   "wallMs": 6679
   },
   {
    "id": "realvideo-2-in-matroska",
@@ -121,10 +123,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[swscaler @ 0x242b020] Forcing full internal H chroma due to input having non subsampled chroma",
+    "[swscaler @ 0x24289f0] Forcing full internal H chroma due to input having non subsampled chroma",
     "worker.js received unknown command undefined"
    ],
-   "wallMs": 6274
+   "wallMs": 6584
   },
   {
    "id": "realvideo-2-sipr-a-v-sync-bug",
@@ -134,10 +136,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 1115,
-   "maxVariance": 3461,
+   "firstFrameMs": 1105,
+   "maxVariance": 4278,
    "audible": true,
-   "audioPeakRms": 0.1628,
+   "audioPeakRms": 0.1596,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -147,7 +149,7 @@
     "[rm @ 0x12e9c80] Before avformat_find_stream_info() pos: 967 bytes read:32768 seeks:0 nb_streams:2",
     "[sipr @ 0x236c280] Mode: 8k5"
    ],
-   "wallMs": 6531
+   "wallMs": 6400
   },
   {
    "id": "wmv8-x8-intra",
@@ -157,8 +159,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 354,
-   "maxVariance": 2476,
+   "firstFrameMs": 353,
+   "maxVariance": 2506,
    "audible": true,
    "audioPeakRms": 0.0497,
    "audioGraphs": 1,
@@ -170,7 +172,7 @@
     "[wmv2 @ 0x23aa310] Format yuv420p chosen by get_format().",
     "[wmv2 @ 0x23aa310] I7:0/"
    ],
-   "wallMs": 6545
+   "wallMs": 6690
   },
   {
    "id": "wmv7",
@@ -180,8 +182,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 703,
-   "maxVariance": 6963,
+   "firstFrameMs": 733,
+   "maxVariance": 6968,
    "audible": true,
    "audioPeakRms": 0.1383,
    "audioGraphs": 1,
@@ -191,9 +193,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[wmv1 @ 0x242a0a0] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x2516640] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x2515290] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6251
+   "wallMs": 6680
   },
   {
    "id": "wmv9-vc-1-simple-main-raw-rcv",
@@ -203,8 +205,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 445,
-   "maxVariance": 1236,
+   "firstFrameMs": 619,
+   "maxVariance": 1263,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -216,7 +218,7 @@
     "[vc1test @ 0x12e9c80] Before avformat_find_stream_info() pos: 36 bytes read:32768 seeks:0 nb_streams:1",
     "[wmv3 @ 0x236c280] Header: 41F38001"
    ],
-   "wallMs": 6243
+   "wallMs": 6671
   },
   {
    "id": "ms-mpeg4-v3-divx-in-asf",
@@ -226,7 +228,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 415,
+   "firstFrameMs": 473,
    "maxVariance": 7255,
    "audible": null,
    "audioPeakRms": 0,
@@ -239,7 +241,7 @@
     "[msmpeg4 @ 0x236e240] Format yuv420p chosen by get_format().",
     "[swscaler @ 0x2468f00] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6459
+   "wallMs": 6480
   },
   {
    "id": "ms-screen-codec-2-wmv9-screen",
@@ -262,7 +264,7 @@
     "[mss2 @ 0x2372600] Encoder version 2.1",
     "[mss2 @ 0x2372600] 9 free colour(s)"
    ],
-   "wallMs": 6216
+   "wallMs": 6388
   },
   {
    "id": "ms-mpeg4-v1",
@@ -272,8 +274,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 482,
-   "maxVariance": 3284,
+   "firstFrameMs": 476,
+   "maxVariance": 2692,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -283,9 +285,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[msmpeg4v1 @ 0x23ec710] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x24ad970] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x24ad940] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6222
+   "wallMs": 6632
   },
   {
    "id": "xvid-mp3",
@@ -295,10 +297,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 452,
-   "maxVariance": 4233,
+   "firstFrameMs": 991,
+   "maxVariance": 4160,
    "audible": true,
-   "audioPeakRms": 0.0817,
+   "audioPeakRms": 0.071,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -308,7 +310,7 @@
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6617
+   "wallMs": 7039
   },
   {
    "id": "divx-5-mp3",
@@ -318,7 +320,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 2387,
+   "firstFrameMs": 2557,
    "maxVariance": 2370,
    "audible": false,
    "audioPeakRms": 0,
@@ -331,7 +333,7 @@
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6468
+   "wallMs": 6629
   },
   {
    "id": "cinepak",
@@ -341,7 +343,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 356,
+   "firstFrameMs": 373,
    "maxVariance": 4341,
    "audible": true,
    "audioPeakRms": 0.4636,
@@ -352,9 +354,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 1",
-    "[swscaler @ 0x25aff30] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x25aebf0] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6389
+   "wallMs": 6696
   },
   {
    "id": "indeo-3",
@@ -364,8 +366,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 367,
-   "maxVariance": 937,
+   "firstFrameMs": 530,
+   "maxVariance": 912,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -374,10 +376,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[swscaler @ 0x2407d50] Forcing full internal H chroma due to input having non subsampled chroma",
+    "[swscaler @ 0x24018f0] Forcing full internal H chroma due to input having non subsampled chroma",
     "worker.js received unknown command undefined"
    ],
-   "wallMs": 6408
+   "wallMs": 6770
   },
   {
    "id": "indeo-4-partial",
@@ -387,7 +389,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 736,
+   "firstFrameMs": 490,
    "maxVariance": 11454,
    "audible": true,
    "audioPeakRms": 0.2592,
@@ -400,7 +402,7 @@
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6203
+   "wallMs": 6910
   },
   {
    "id": "indeo-5",
@@ -410,10 +412,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 745,
+   "firstFrameMs": 738,
    "maxVariance": 3402,
    "audible": true,
-   "audioPeakRms": 0.6706,
+   "audioPeakRms": 0.6824,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -421,9 +423,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 1",
-    "[swscaler @ 0x25ad810] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x25ad780] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6447
+   "wallMs": 6310
   },
   {
    "id": "motion-jpeg-mu-law-10-mb",
@@ -433,8 +435,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 466,
-   "maxVariance": 5589,
+   "firstFrameMs": 598,
+   "maxVariance": 5426,
    "audible": true,
    "audioPeakRms": 0.4003,
    "audioGraphs": 1,
@@ -446,7 +448,7 @@
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6253
+   "wallMs": 6871
   },
   {
    "id": "dvcpro-hd-720p50",
@@ -456,7 +458,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 444,
+   "firstFrameMs": 436,
    "maxVariance": 1893,
    "audible": null,
    "audioPeakRms": 0,
@@ -469,7 +471,7 @@
     "[swscaler @ 0x3092700] Forcing full internal H chroma due to input having non subsampled chroma",
     "worker.js received unknown command undefined"
    ],
-   "wallMs": 6413
+   "wallMs": 6402
   },
   {
    "id": "on2-vp5-speex",
@@ -479,7 +481,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 374,
+   "firstFrameMs": 377,
    "maxVariance": 2354,
    "audible": false,
    "audioPeakRms": 0,
@@ -492,7 +494,7 @@
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6595
+   "wallMs": 6681
   },
   {
    "id": "dvd-vob-single-frame-dvd-subs",
@@ -502,7 +504,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 386,
+   "firstFrameMs": 396,
    "maxVariance": 1557,
    "audible": null,
    "audioPeakRms": 0,
@@ -512,10 +514,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[mpeg2video @ 0x12e9ce0] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x24624b0] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[mpeg2video @ 0x12e9c80] Format yuv420p chosen by get_format().",
+    "[swscaler @ 0x24615d0] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6534
+   "wallMs": 6374
   },
   {
    "id": "mpeg-1-system-stream",
@@ -525,8 +527,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 448,
-   "maxVariance": 1021,
+   "firstFrameMs": 490,
+   "maxVariance": 1032,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -536,9 +538,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[mpeg2video @ 0x12e9c80] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x24626f0] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x2462710] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6498
+   "wallMs": 6274
   },
   {
    "id": "dvd-vob-mpeg-2-ac-3-5-mb",
@@ -548,8 +550,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 2392,
-   "maxVariance": 4450,
+   "firstFrameMs": 2448,
+   "maxVariance": 4456,
    "audible": true,
    "audioPeakRms": 0.064,
    "audioGraphs": 1,
@@ -559,9 +561,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x12e48e0/0x16ebdc8] libvlc audio output: too low audio sample frequency (0)",
-    "[mpeg2video @ 0x2415e10] Format yuv420p chosen by get_format()."
+    "[mpeg2video @ 0x2415e80] Format yuv420p chosen by get_format()."
    ],
-   "wallMs": 6216
+   "wallMs": 6369
   },
   {
    "id": "mpeg-2-field-encoded-ts",
@@ -571,7 +573,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 467,
+   "firstFrameMs": 475,
    "maxVariance": 1943,
    "audible": null,
    "audioPeakRms": 0,
@@ -581,10 +583,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[mpeg2video @ 0x2407690] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x2449fb0] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[mpeg2video @ 0x23f45f0] Format yuv420p chosen by get_format().",
+    "[swscaler @ 0x2430660] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6222
+   "wallMs": 6656
   },
   {
    "id": "flash-vp6-sorenson-on2",
@@ -594,8 +596,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 452,
-   "maxVariance": 3150,
+   "firstFrameMs": 459,
+   "maxVariance": 2991,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -607,7 +609,7 @@
     "[flv @ 0x12e9c80] Before avformat_find_stream_info() pos: 13 bytes read:32768 seeks:0 nb_streams:0",
     "[flv @ 0x12e9c80] max_analyze_duration 5000000 reached at 5000000 microseconds st:0"
    ],
-   "wallMs": 6422
+   "wallMs": 6375
   },
   {
    "id": "flv-with-h-264-aac",
@@ -617,10 +619,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 3110,
-   "maxVariance": 1759,
+   "firstFrameMs": 3171,
+   "maxVariance": 1771,
    "audible": true,
-   "audioPeakRms": 0.0314,
+   "audioPeakRms": 0.0319,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -630,7 +632,7 @@
     "[flv @ 0x12e9c80] Before avformat_find_stream_info() pos: 13 bytes read:32768 seeks:0 nb_streams:0",
     "[flv @ 0x12e9c80] keyframe stream hasn't been created"
    ],
-   "wallMs": 6452
+   "wallMs": 6391
   },
   {
    "id": "vp6f-nellymoser",
@@ -640,7 +642,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 466,
+   "firstFrameMs": 503,
    "maxVariance": 6469,
    "audible": true,
    "audioPeakRms": 0.3849,
@@ -653,7 +655,7 @@
     "[flv @ 0x12e9c80] Before avformat_find_stream_info() pos: 13 bytes read:32768 seeks:0 nb_streams:0",
     "[flv @ 0x12e9c80] All info found"
    ],
-   "wallMs": 6503
+   "wallMs": 6865
   },
   {
    "id": "3gpp-h-263-amr-nb",
@@ -663,8 +665,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 406,
-   "maxVariance": 3708,
+   "firstFrameMs": 687,
+   "maxVariance": 3652,
    "audible": true,
    "audioPeakRms": 0.2127,
    "audioGraphs": 1,
@@ -674,9 +676,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[h263 @ 0x2371030] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x24a1ee0] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x249cc30] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6205
+   "wallMs": 6751
   },
   {
    "id": "3gp-h-263-phone-clip",
@@ -686,8 +688,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 447,
-   "maxVariance": 5031,
+   "firstFrameMs": 559,
+   "maxVariance": 4732,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -697,9 +699,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[h263 @ 0x236d6b0] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x2403ce0] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x2401c20] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6646
+   "wallMs": 7033
   },
   {
    "id": "sorenson-video-1",
@@ -709,20 +711,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 426,
-   "maxVariance": 12339,
+   "firstFrameMs": 444,
+   "maxVariance": 12014,
    "audible": true,
-   "audioPeakRms": 0.4133,
+   "audioPeakRms": 0.4329,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[swscaler @ 0x2491630] Forcing full internal H chroma due to input having non subsampled chroma",
+    "[swscaler @ 0x248e5f0] Forcing full internal H chroma due to input having non subsampled chroma",
     "worker.js received unknown command undefined"
    ],
-   "wallMs": 6486
+   "wallMs": 6466
   },
   {
    "id": "sorenson-video-3",
@@ -732,8 +734,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 365,
-   "maxVariance": 574,
+   "firstFrameMs": 373,
+   "maxVariance": 587,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -745,7 +747,7 @@
     "[svq3 @ 0x23c4d20] Unknown fields 0 0 1 1 0",
     "[svq3 @ 0x23c4d20] watermark size: 500x499"
    ],
-   "wallMs": 6234
+   "wallMs": 6352
   },
   {
    "id": "smacker",
@@ -768,7 +770,7 @@
     "[smk @ 0x12e9c80] Before avformat_find_stream_info() pos: 31232 bytes read:32768 seeks:0 nb_streams:2",
     "[smk @ 0x12e9c80] All info found"
    ],
-   "wallMs": 6490
+   "wallMs": 6519
   },
   {
    "id": "bink-video",
@@ -778,7 +780,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 397,
+   "firstFrameMs": 383,
    "maxVariance": 277,
    "audible": null,
    "audioPeakRms": 0,
@@ -791,7 +793,7 @@
     "[bink @ 0x12e9c80] Before avformat_find_stream_info() pos: 128 bytes read:32768 seeks:0 nb_streams:1",
     "[bink @ 0x12e9c80] All info found"
    ],
-   "wallMs": 6263
+   "wallMs": 6472
   },
   {
    "id": "id-roq-quake-3-logo",
@@ -801,8 +803,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 507,
-   "maxVariance": 5280,
+   "firstFrameMs": 545,
+   "maxVariance": 5279,
    "audible": true,
    "audioPeakRms": 0.369,
    "audioGraphs": 1,
@@ -814,7 +816,7 @@
     "[roq @ 0x12e9c80] Before avformat_find_stream_info() pos: 8 bytes read:32768 seeks:0 nb_streams:0",
     "[roq @ 0x12e9c80] max_analyze_duration 5000000 reached at 5006803 microseconds st:0"
    ],
-   "wallMs": 6260
+   "wallMs": 6764
   },
   {
    "id": "autodesk-flic-640x480",
@@ -837,7 +839,7 @@
     "st:0 removing common factor 8 from timebase",
     "[flic @ 0x12e9c80] Before avformat_find_stream_info() pos: 128 bytes read:32768 seeks:0 nb_streams:1"
    ],
-   "wallMs": 6485
+   "wallMs": 6288
   },
   {
    "id": "autodesk-flc-320x200",
@@ -860,7 +862,7 @@
     "[flic @ 0x12e9c80] Before avformat_find_stream_info() pos: 128 bytes read:22528 seeks:0 nb_streams:1",
     "[flic @ 0x12e9c80] All info found"
    ],
-   "wallMs": 6323
+   "wallMs": 6409
   },
   {
    "id": "nuppelvideo-mythtv",
@@ -870,10 +872,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 558,
+   "firstFrameMs": 491,
    "maxVariance": 2333,
    "audible": true,
-   "audioPeakRms": 0.4191,
+   "audioPeakRms": 0.4087,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -883,7 +885,7 @@
     "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: VLC doesn't support NUV without extended chunks (please upload samples)",
     "[nuv @ 0x12e97a0] Before avformat_find_stream_info() pos: 596 bytes read:32768 seeks:0 nb_streams:2"
    ],
-   "wallMs": 6565
+   "wallMs": 6359
   },
   {
    "id": "vivo-2-vivoactive",
@@ -906,7 +908,7 @@
     "[vivo @ 0x12e9c80] header: 'Version' = 'Vivo/2.00'",
     "[vivo @ 0x12e9c80] header: 'FPS' = '15.68'"
    ],
-   "wallMs": 6378
+   "wallMs": 6510
   },
   {
    "id": "playstation-str-mdec-xa",
@@ -927,7 +929,29 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6384
+   "wallMs": 6387
+  },
+  {
+   "id": "psx-str-lunar2",
+   "name": "PlayStation STR (Lunar 2 cutscene)",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": true,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0x24203a0/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration"
+   ],
+   "wallMs": 6493
   },
   {
    "id": "hevc-main10-dolby-vision-p7-in-mkv",
@@ -937,7 +961,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 507,
+   "firstFrameMs": 500,
    "maxVariance": 3248,
    "audible": null,
    "audioPeakRms": 0,
@@ -950,7 +974,7 @@
     "[hevc @ 0x2372f00] nal_unit_type: 32(VPS), nuh_layer_id: 0, temporal_id: 0",
     "[hevc @ 0x2372f00] Decoding VPS"
    ],
-   "wallMs": 6388
+   "wallMs": 6976
   },
   {
    "id": "dvb-subtitles-in-ts",
@@ -973,7 +997,7 @@
     "[vlc.js: 0x2370a48/0x16ebdc8] libvlc decoder: buffer deadlock prevented",
     "[vlc.js: 0x23f6f58/0x16ebdc8] libvlc decoder: buffer deadlock prevented"
    ],
-   "wallMs": 6539
+   "wallMs": 6824
   },
   {
    "id": "mpeg-2-es-with-eia-608-closed-captions",
@@ -983,8 +1007,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 472,
-   "maxVariance": 6415,
+   "firstFrameMs": 566,
+   "maxVariance": 6335,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -993,8 +1017,8 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[mpeg2video @ 0x23fc830] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x243a8a0] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[mpeg2video @ 0x23fb420] Format yuv420p chosen by get_format().",
+    "[swscaler @ 0x241e0c0] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
    "wallMs": 6653
   },
@@ -1006,7 +1030,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 466,
+   "firstFrameMs": 621,
    "maxVariance": 5803,
    "audible": true,
    "audioPeakRms": 0.1868,
@@ -1019,7 +1043,7 @@
     "[vlc.js: 0x24ad7c0/0x16ebdc8] libvlc decoder: Codec `ssa ' (SubStation Alpha subtitles) is not supported.",
     "[vlc.js: 0x24ad7c0/0x16ebdc8] libvlc decoder: Codec not supported"
    ],
-   "wallMs": 6251
+   "wallMs": 7971
   },
   {
    "id": "h-264-2x-mp3-vobsub-in-mkv",
@@ -1029,10 +1053,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 455,
-   "maxVariance": 1827,
+   "firstFrameMs": 725,
+   "maxVariance": 1851,
    "audible": true,
-   "audioPeakRms": 0.0802,
+   "audioPeakRms": 0.0809,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1042,7 +1066,7 @@
     "[vlc.js: 0x236f7b0/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[h264 @ 0x237e000] nal_unit_type: 7(SPS), nal_ref_idc: 3"
    ],
-   "wallMs": 6363
+   "wallMs": 7282
   },
   {
    "id": "everyday-mp4-h264-aac",
@@ -1052,10 +1076,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 366,
-   "maxVariance": 4630,
+   "firstFrameMs": 424,
+   "maxVariance": 4631,
    "audible": true,
-   "audioPeakRms": 0.0902,
+   "audioPeakRms": 0.09,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1065,7 +1089,7 @@
     "worker.js received unknown command undefined",
     "[object Object]"
    ],
-   "wallMs": 6292
+   "wallMs": 6433
   },
   {
    "id": "everyday-mp4-hevc-aac",
@@ -1075,10 +1099,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 371,
+   "firstFrameMs": 461,
    "maxVariance": 4637,
    "audible": true,
-   "audioPeakRms": 0.09,
+   "audioPeakRms": 0.0902,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1088,7 +1112,7 @@
     "[hevc @ 0x237e3f0] nal_unit_type: 32(VPS), nuh_layer_id: 0, temporal_id: 0",
     "[hevc @ 0x237e3f0] Decoding VPS"
    ],
-   "wallMs": 6328
+   "wallMs": 7366
   },
   {
    "id": "everyday-mp4-av1-aac",
@@ -1111,7 +1135,7 @@
     "[vlc.js: 0x2373628/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration",
     "worker.js received unknown command undefined"
    ],
-   "wallMs": 6342
+   "wallMs": 6501
   },
   {
    "id": "everyday-webm-vp9-opus",
@@ -1121,8 +1145,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 384,
-   "maxVariance": 4638,
+   "firstFrameMs": 381,
+   "maxVariance": 4640,
    "audible": true,
    "audioPeakRms": 0.0888,
    "audioGraphs": 1,
@@ -1134,7 +1158,7 @@
     "[vlc.js: 0x236e128/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[vp9 @ 0x2379db0] Format yuv420p chosen by get_format()."
    ],
-   "wallMs": 6335
+   "wallMs": 6327
   },
   {
    "id": "everyday-webm-av1-opus",
@@ -1144,10 +1168,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 379,
+   "firstFrameMs": 390,
    "maxVariance": 4639,
    "audible": true,
-   "audioPeakRms": 0.0888,
+   "audioPeakRms": 0.0887,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1157,7 +1181,7 @@
     "[vlc.js: 0x236e198/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration",
     "worker.js received unknown command undefined"
    ],
-   "wallMs": 6501
+   "wallMs": 6585
   },
   {
    "id": "everyday-webm-vp8-vorbis",
@@ -1167,8 +1191,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 364,
-   "maxVariance": 3231,
+   "firstFrameMs": 599,
+   "maxVariance": 3232,
    "audible": true,
    "audioPeakRms": 0.0628,
    "audioGraphs": 1,
@@ -1178,9 +1202,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "worker.js received unknown command undefined",
-    "[object Object]"
+    "worker.js received unknown command undefined"
    ],
-   "wallMs": 6263
+   "wallMs": 6763
   },
   {
    "id": "everyday-mkv-h264-aac",
@@ -1190,7 +1214,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 384,
+   "firstFrameMs": 390,
    "maxVariance": 4637,
    "audible": true,
    "audioPeakRms": 0.09,
@@ -1203,7 +1227,7 @@
     "[vlc.js: 0x236e230/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[h264 @ 0x237c970] nal_unit_type: 7(SPS), nal_ref_idc: 3"
    ],
-   "wallMs": 6527
+   "wallMs": 6583
   },
   {
    "id": "everyday-mov-prores-pcm",
@@ -1213,8 +1237,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 370,
-   "maxVariance": 4641,
+   "firstFrameMs": 366,
+   "maxVariance": 4640,
    "audible": true,
    "audioPeakRms": 0.0887,
    "audioGraphs": 1,
@@ -1226,7 +1250,7 @@
     "[prores @ 0x2375a80] Auto bitdepth precision. Use 10b decoding based on codec tag.",
     "[prores @ 0x25765b0] Auto bitdepth precision. Use 10b decoding based on codec tag."
    ],
-   "wallMs": 6337
+   "wallMs": 6540
   },
   {
    "id": "everyday-avi-mpeg4-mp3",
@@ -1236,8 +1260,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 383,
-   "maxVariance": 4631,
+   "firstFrameMs": 372,
+   "maxVariance": 4635,
    "audible": true,
    "audioPeakRms": 0.0843,
    "audioGraphs": 1,
@@ -1247,9 +1271,78 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[mpeg4 @ 0x246e0a0] Format yuv420p chosen by get_format().",
-    "[swscaler @ 0x2606490] Forcing full internal H chroma due to input having non subsampled chroma"
+    "[swscaler @ 0x2606650] Forcing full internal H chroma due to input having non subsampled chroma"
    ],
-   "wallMs": 6415
+   "wallMs": 6743
+  },
+  {
+   "id": "dvd-video-iso",
+   "name": "DVD-Video disc image",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": true,
+   "video": true,
+   "firstFrameMs": 358,
+   "maxVariance": 5274,
+   "audible": null,
+   "audioPeakRms": 0.0884,
+   "audioGraphs": 1,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0x12e48e0/0x16ebdc8] libvlc audio output: too low audio sample frequency (0)",
+    "[mpeg2video @ 0x236d0f0] Format yuv420p chosen by get_format()."
+   ],
+   "wallMs": 6609
+  },
+  {
+   "id": "bluray-bdmv-iso",
+   "name": "Blu-ray disc image",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": true,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0x12e9c80/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration",
+    "[swscaler @ 0x23991a0] Forcing full internal H chroma due to input having non subsampled chroma"
+   ],
+   "wallMs": 6366
+  },
+  {
+   "id": "cenc-clearkey-mp4",
+   "name": "MP4 with Common Encryption (ClearKey)",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": true,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0x12e96d8/0x16ebdc8] libvlc demux: missing avcC",
+    "[vlc.js: 0x2372d08/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration"
+   ],
+   "wallMs": 7203
   },
   {
    "id": "gen-h264-opus-ass",
@@ -1259,8 +1352,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 436,
-   "maxVariance": 4637,
+   "firstFrameMs": 556,
+   "maxVariance": 4638,
    "audible": true,
    "audioPeakRms": 0.0887,
    "audioGraphs": 1,
@@ -1269,10 +1362,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x236f678/0x16ebdc8] libvlc decoder: VideoDecoder doesn't support this configuration",
-    "[h264 @ 0x237ddb0] nal_unit_type: 7(SPS), nal_ref_idc: 3"
+    "[h264 @ 0x237ddb0] nal_unit_type: 7(SPS), nal_ref_idc: 3",
+    "[h264 @ 0x237ddb0] nal_unit_type: 8(PPS), nal_ref_idc: 3"
    ],
-   "wallMs": 6303
+   "wallMs": 6952
   },
   {
    "id": "realaudio-cook",
@@ -1285,7 +1378,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.2201,
+   "audioPeakRms": 0.2084,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1295,7 +1388,7 @@
     "[rm @ 0x12e9c80] Before avformat_find_stream_info() pos: 911 bytes read:32768 seeks:0 nb_streams:1",
     "[cook @ 0x236c280] codecdata_length=16"
    ],
-   "wallMs": 6458
+   "wallMs": 7525
   },
   {
    "id": "realaudio-28-8",
@@ -1318,7 +1411,7 @@
     "[rm @ 0x12e9c80] Before avformat_find_stream_info() pos: 73 bytes read:2809 seeks:0 nb_streams:1",
     "[rm @ 0x12e9c80] All info found"
    ],
-   "wallMs": 6546
+   "wallMs": 6664
   },
   {
    "id": "wma-voice-11k",
@@ -1339,7 +1432,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6400
+   "wallMs": 6501
   },
   {
    "id": "wma-lossless-24-bit",
@@ -1360,7 +1453,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6426
+   "wallMs": 6400
   },
   {
    "id": "dts-in-mpeg-ts",
@@ -1381,7 +1474,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6437
+   "wallMs": 6555
   },
   {
    "id": "qdesign-music-2",
@@ -1404,7 +1497,7 @@
     "[qdm2 @ 0x236e410] size: 36",
     "Superblock follows"
    ],
-   "wallMs": 6383
+   "wallMs": 6461
   },
   {
    "id": "ima4-adpcm",
@@ -1426,7 +1519,7 @@
     "[object Object]",
     "[adpcm_ima_qt @ 0x236e0b0] Multiple frames in a packet."
    ],
-   "wallMs": 6539
+   "wallMs": 6578
   },
   {
    "id": "mace-3-1",
@@ -1447,7 +1540,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6347
+   "wallMs": 6463
   },
   {
    "id": "ac-3-5-1-448k",
@@ -1469,7 +1562,7 @@
     "[object Object]",
     "Max number of channels of the browser is  2"
    ],
-   "wallMs": 6442
+   "wallMs": 6546
   },
   {
    "id": "e-ac-3-5-1-with-spx",
@@ -1482,7 +1575,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0695,
+   "audioPeakRms": 0.0754,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1491,7 +1584,7 @@
     "[object Object]",
     "Max number of channels of the browser is  2"
    ],
-   "wallMs": 6457
+   "wallMs": 6525
   },
   {
    "id": "dts-es",
@@ -1504,7 +1597,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3227,
+   "audioPeakRms": 0.3389,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1513,7 +1606,7 @@
     "[object Object]",
     "Max number of channels of the browser is  2"
    ],
-   "wallMs": 6529
+   "wallMs": 6302
   },
   {
    "id": "dolby-truehd-atmos-8ch",
@@ -1526,7 +1619,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.1335,
+   "audioPeakRms": 0.1345,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1535,7 +1628,7 @@
     "[object Object]",
     "Max number of channels of the browser is  2"
    ],
-   "wallMs": 6461
+   "wallMs": 6691
   },
   {
    "id": "mlp-440-hz",
@@ -1557,7 +1650,7 @@
     "[object Object]",
     "Blocking on the main thread is very dangerous, see https://emscripten.org/docs/porting/pthreads.html#blocking-on-the-main-browser-thread"
    ],
-   "wallMs": 6505
+   "wallMs": 6293
   },
   {
    "id": "musepack-sv8",
@@ -1570,7 +1663,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3087,
+   "audioPeakRms": 0.3137,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1580,7 +1673,7 @@
     "st:0 removing common factor 36 from timebase",
     "[mpc8 @ 0x12e9c80] Before avformat_find_stream_info() pos: 18 bytes read:33280 seeks:2 nb_streams:1"
    ],
-   "wallMs": 6500
+   "wallMs": 6593
   },
   {
    "id": "musepack-sv7",
@@ -1593,7 +1686,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.2919,
+   "audioPeakRms": 0.3052,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1603,7 +1696,7 @@
     "st:0 removing common factor 36 from timebase",
     "[mpc @ 0x12e9c80] Before avformat_find_stream_info() pos: 24 bytes read:43520 seeks:2 nb_streams:1"
    ],
-   "wallMs": 6454
+   "wallMs": 6377
   },
   {
    "id": "monkey-s-audio",
@@ -1616,7 +1709,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3769,
+   "audioPeakRms": 0.3669,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1626,7 +1719,7 @@
     "[ape @ 0x12e9c80] Decoding file - v3.99, compression level 3000",
     "[ape @ 0x12e9c80] Before avformat_find_stream_info() pos: 0 bytes read:33280 seeks:2 nb_streams:1"
    ],
-   "wallMs": 6405
+   "wallMs": 6760
   },
   {
    "id": "true-audio-6-6-mb",
@@ -1639,7 +1732,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.2834,
+   "audioPeakRms": 0.2729,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1649,7 +1742,7 @@
     "[tta @ 0x12e9bf0] format: 1 chans: 2 bps: 16 rate: 44100 block: 0",
     "[tta @ 0x12e9bf0] data_length: 2667168 frame_length: 46080 last: 40608 total: 58"
    ],
-   "wallMs": 6370
+   "wallMs": 7075
   },
   {
    "id": "amr-nb-12-2k",
@@ -1672,7 +1765,7 @@
     "[amr @ 0x12e9c80] Before avformat_find_stream_info() pos: 6 bytes read:12288 seeks:0 nb_streams:1",
     "[amr @ 0x12e9c80] All info found"
    ],
-   "wallMs": 6298
+   "wallMs": 6464
   },
   {
    "id": "shorten",
@@ -1695,7 +1788,7 @@
     "[shn @ 0x12e9c80] Before avformat_find_stream_info() pos: 0 bytes read:32768 seeks:0 nb_streams:1",
     "[shn @ 0x12e9c80] parser not found for codec shorten, packets or times may be invalid."
    ],
-   "wallMs": 6353
+   "wallMs": 6489
   },
   {
    "id": "snes-spc",
@@ -1716,7 +1809,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6399
+   "wallMs": 6544
   },
   {
    "id": "nes-nsf-tetris-gb-rip",
@@ -1738,7 +1831,7 @@
     "[object Object]",
     "Blocking on the main thread is very dangerous, see https://emscripten.org/docs/porting/pthreads.html#blocking-on-the-main-browser-thread"
    ],
-   "wallMs": 6435
+   "wallMs": 6304
   },
   {
    "id": "sega-genesis-vgz-gzip-vgm",
@@ -1759,7 +1852,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6397
+   "wallMs": 6495
   },
   {
    "id": "c64-sid-rob-hubbard-commando",
@@ -1780,7 +1873,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6363
+   "wallMs": 6370
   },
   {
    "id": "standard-midi-file",
@@ -1803,7 +1896,7 @@
     "[vlc.js: 0x236c090/0x16ebdc8] libvlc decoder: Codec `MIDI' (MIDI Audio) is not supported.",
     "[vlc.js: 0x236c090/0x16ebdc8] libvlc decoder: Codec not supported"
    ],
-   "wallMs": 6389
+   "wallMs": 6427
   },
   {
    "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
@@ -1824,7 +1917,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6424
+   "wallMs": 6465
   },
   {
    "id": "external-xm",
@@ -1837,15 +1930,16 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0628,
+   "audioPeakRms": 0.0618,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
-    "[object Object]"
+    "[object Object]",
+    "Blocking on the main thread is very dangerous, see https://emscripten.org/docs/porting/pthreads.html#blocking-on-the-main-browser-thread"
    ],
-   "wallMs": 6372
+   "wallMs": 6483
   },
   {
    "id": "sandman-s3m",
@@ -1866,7 +1960,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6355
+   "wallMs": 6388
   },
   {
    "id": "for-a-change-it",
@@ -1879,7 +1973,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.1134,
+   "audioPeakRms": 0.1224,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1887,7 +1981,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6435
+   "wallMs": 6345
   },
   {
    "id": "openmpt-test-xm",
@@ -1908,7 +2002,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6367
+   "wallMs": 6335
   },
   {
    "id": "everyday-audio-mp3",
@@ -1929,7 +2023,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6536
+   "wallMs": 6499
   },
   {
    "id": "everyday-audio-m4a",
@@ -1950,7 +2044,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6416
+   "wallMs": 6536
   },
   {
    "id": "everyday-audio-flac",
@@ -1971,7 +2065,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6386
+   "wallMs": 6941
   },
   {
    "id": "everyday-audio-wav",
@@ -1992,7 +2086,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6472
+   "wallMs": 6745
   },
   {
    "id": "everyday-audio-ogg",
@@ -2013,7 +2107,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6407
+   "wallMs": 6286
   },
   {
    "id": "everyday-audio-opus",
@@ -2034,7 +2128,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6407
+   "wallMs": 6286
   }
  ]
 }

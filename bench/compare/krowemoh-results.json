@@ -1,11 +1,12 @@
 {
- "date": "2026-09-27T16:53:36.628Z",
+ "date": "2026-09-27T20:40:49.370Z",
  "port": "Krowemoh/vlc.js",
+ "engine": "chromium",
  "summary": {
-  "videoShown": "48/55",
-  "videoShownExclEveryday": "39/46",
-  "audible": "57/71",
-  "medianFirstFrameMs": 455,
+  "videoShown": "49/59",
+  "videoShownExclEveryday": "40/50",
+  "audible": "57/74",
+  "medianFirstFrameMs": 802,
   "crashed": 0
  },
  "results": [
@@ -17,10 +18,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 1267,
+   "firstFrameMs": 2513,
    "maxVariance": 2202,
    "audible": true,
-   "audioPeakRms": 0.1641,
+   "audioPeakRms": 0.161,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -28,9 +29,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x1ed82a0/0x121fc48] libvlc decoder: buffer deadlock prevented",
-    "[vlc.js: 0x24491f0/0x23c8098] libvlc generic: program: "
+    "[vlc.js: 0x244a810/0x23c80d8] libvlc generic: program: "
    ],
-   "wallMs": 6413
+   "wallMs": 7517
   },
   {
    "id": "realvideo-g2-svt",
@@ -40,8 +41,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 478,
-   "maxVariance": 6905,
+   "firstFrameMs": 1230,
+   "maxVariance": 6920,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -53,7 +54,7 @@
     "[rm @ 0x1ea19b0] Invalid stream index 1 for index at pos 726206",
     "[rm @ 0x1ea19b0] parser not found for codec rv20, packets or times may be invalid."
    ],
-   "wallMs": 6368
+   "wallMs": 8399
   },
   {
    "id": "realvideo-4-cook-rmvb",
@@ -63,8 +64,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 441,
-   "maxVariance": 6280,
+   "firstFrameMs": 2709,
+   "maxVariance": 836,
    "audible": true,
    "audioPeakRms": 0.0286,
    "audioGraphs": 1,
@@ -76,7 +77,7 @@
     "[vlc.js: 0x1ea4b80/0x121fc48] libvlc decoder: buffer deadlock prevented",
     "[vlc.js: 0x26bac28/0x2639198] libvlc generic: program: "
    ],
-   "wallMs": 6665
+   "wallMs": 8859
   },
   {
    "id": "realaudio-sipr-8-5k",
@@ -86,8 +87,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 827,
-   "maxVariance": 2990,
+   "firstFrameMs": 3627,
+   "maxVariance": 2877,
    "audible": true,
    "audioPeakRms": 0.1113,
    "audioGraphs": 1,
@@ -99,7 +100,7 @@
     "[rm @ 0x1ea19b0] parser not found for codec rv20, packets or times may be invalid.",
     "[rm @ 0x1ea19b0] parser not found for codec rv20, packets or times may be invalid."
    ],
-   "wallMs": 6639
+   "wallMs": 8245
   },
   {
    "id": "realvideo-2-in-matroska",
@@ -109,20 +110,20 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 462,
+   "firstFrameMs": 882,
    "maxVariance": 6611,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x2246e30/0x21c52d8] libvlc generic: program: ",
-    "[vlc.js: 0x2246180/0x21c52d8] libvlc gl: program: "
+    "[vlc.js: 0x1f58ef8/0x21c5698] libvlc generic: program: ",
+    "[vlc.js: 0x20984f8/0x21c5698] libvlc gl: program: "
    ],
-   "wallMs": 6245
+   "wallMs": 7755
   },
   {
    "id": "realvideo-2-sipr-a-v-sync-bug",
@@ -132,10 +133,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 1173,
-   "maxVariance": 3046,
+   "firstFrameMs": 1652,
+   "maxVariance": 2284,
    "audible": true,
-   "audioPeakRms": 0.1628,
+   "audioPeakRms": 0.1942,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -145,7 +146,7 @@
     "[rm @ 0x1ea19b0] parser not found for codec rv20, packets or times may be invalid.",
     "[rm @ 0x1ea19b0] parser not found for codec rv20, packets or times may be invalid."
    ],
-   "wallMs": 6276
+   "wallMs": 8901
   },
   {
    "id": "wmv8-x8-intra",
@@ -155,20 +156,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 448,
-   "maxVariance": 2799,
+   "firstFrameMs": 1075,
+   "maxVariance": 2665,
    "audible": true,
-   "audioPeakRms": 0.038,
+   "audioPeakRms": 0.0383,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x231efe8/0x229d498] libvlc generic: program: ",
-    "[vlc.js: 0x231e320/0x229d498] libvlc gl: program: "
+    "[vlc.js: 0x231f030/0x22987c0] libvlc generic: program: ",
+    "[vlc.js: 0x2014a40/0x22987c0] libvlc gl: program: "
    ],
-   "wallMs": 6271
+   "wallMs": 9068
   },
   {
    "id": "wmv7",
@@ -178,8 +179,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 428,
-   "maxVariance": 6345,
+   "firstFrameMs": 918,
+   "maxVariance": 6330,
    "audible": true,
    "audioPeakRms": 0.1383,
    "audioGraphs": 1,
@@ -188,10 +189,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x2355620/0x22d3d30] libvlc generic: program: ",
-    "[vlc.js: 0x2166ff8/0x22d3d30] libvlc gl: program: "
+    "[vlc.js: 0x2355618/0x22d3ea8] libvlc generic: program: ",
+    "[vlc.js: 0x21df978/0x22d3ea8] libvlc gl: program: "
    ],
-   "wallMs": 6670
+   "wallMs": 8468
   },
   {
    "id": "wmv9-vc-1-simple-main-raw-rcv",
@@ -201,8 +202,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 438,
-   "maxVariance": 2647,
+   "firstFrameMs": 908,
+   "maxVariance": 2677,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -211,10 +212,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x2a7d7b0/0x29fbcd8] libvlc generic: program: ",
-    "[vlc.js: 0x2a7cb60/0x29fbcd8] libvlc gl: program: "
+    "[vlc.js: 0x2a7d790/0x29fbc58] libvlc generic: program: ",
+    "[vlc.js: 0x2a7cae0/0x29fbc58] libvlc gl: program: "
    ],
-   "wallMs": 6584
+   "wallMs": 7498
   },
   {
    "id": "ms-mpeg4-v3-divx-in-asf",
@@ -224,8 +225,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 424,
-   "maxVariance": 3837,
+   "firstFrameMs": 768,
+   "maxVariance": 3836,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -237,7 +238,7 @@
     "[vlc.js: 0x275d640/0x26dbe58] libvlc generic: program: ",
     "[vlc.js: 0x2519738/0x26dbe58] libvlc gl: program: "
    ],
-   "wallMs": 6492
+   "wallMs": 11680
   },
   {
    "id": "ms-screen-codec-2-wmv9-screen",
@@ -257,10 +258,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x21b5880/0x2134098] libvlc generic: program: ",
-    "[vlc.js: 0x20f7978/0x2134098] libvlc gl: program: "
+    "[mss2 @ 0x1ea9660] header error",
+    "[mss2 @ 0x1ea9660] header error"
    ],
-   "wallMs": 23280
+   "wallMs": 235279
   },
   {
    "id": "ms-mpeg4-v1",
@@ -270,8 +271,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 512,
-   "maxVariance": 1867,
+   "firstFrameMs": 1816,
+   "maxVariance": 1880,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -280,10 +281,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x2317ef8/0x228c558] libvlc generic: program: ",
-    "[vlc.js: 0x1ea2a90/0x228c558] libvlc gl: program: "
+    "[vlc.js: 0x2305680/0x2282178] libvlc generic: program: ",
+    "[msmpeg4v1 @ 0x1f230d0] ext header missing, 0 left"
    ],
-   "wallMs": 7101
+   "wallMs": 8459
   },
   {
    "id": "xvid-mp3",
@@ -293,8 +294,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 457,
-   "maxVariance": 3469,
+   "firstFrameMs": 1138,
+   "maxVariance": 3183,
    "audible": true,
    "audioPeakRms": 0.071,
    "audioGraphs": 1,
@@ -306,7 +307,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6391
+   "wallMs": 7671
   },
   {
    "id": "divx-5-mp3",
@@ -316,8 +317,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 535,
-   "maxVariance": 1740,
+   "firstFrameMs": 580,
+   "maxVariance": 1595,
    "audible": false,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -329,7 +330,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6719
+   "wallMs": 7020
   },
   {
    "id": "cinepak",
@@ -339,7 +340,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 455,
+   "firstFrameMs": 670,
    "maxVariance": 3494,
    "audible": true,
    "audioPeakRms": 0.4636,
@@ -350,9 +351,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 1",
-    "[vlc.js: 0x22945b8/0x2212b18] libvlc generic: program: "
+    "[vlc.js: 0x2294508/0x2205b80] libvlc generic: program: "
    ],
-   "wallMs": 6488
+   "wallMs": 7474
   },
   {
    "id": "indeo-3",
@@ -362,8 +363,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 422,
-   "maxVariance": 3359,
+   "firstFrameMs": 678,
+   "maxVariance": 3348,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -372,10 +373,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x20cdc70/0x204c198] libvlc generic: program: ",
-    "[vlc.js: 0x20cd020/0x204c198] libvlc gl: program: "
+    "[vlc.js: 0x20cdd10/0x2046998] libvlc generic: program: ",
+    "[vlc.js: 0x20c84b8/0x2046998] libvlc gl: program: "
    ],
-   "wallMs": 6457
+   "wallMs": 7273
   },
   {
    "id": "indeo-4-partial",
@@ -385,8 +386,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 430,
-   "maxVariance": 5342,
+   "firstFrameMs": 669,
+   "maxVariance": 5345,
    "audible": true,
    "audioPeakRms": 0.2613,
    "audioGraphs": 1,
@@ -398,7 +399,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6563
+   "wallMs": 7449
   },
   {
    "id": "indeo-5",
@@ -408,10 +409,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 439,
-   "maxVariance": 3121,
+   "firstFrameMs": 645,
+   "maxVariance": 3117,
    "audible": true,
-   "audioPeakRms": 0.678,
+   "audioPeakRms": 0.6824,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -419,9 +420,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 1",
-    "[vlc.js: 0x2302f08/0x226d580] libvlc generic: program: "
+    "[vlc.js: 0x2302fc0/0x2267a28] libvlc generic: program: "
    ],
-   "wallMs": 6290
+   "wallMs": 6888
   },
   {
    "id": "motion-jpeg-mu-law-10-mb",
@@ -431,8 +432,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 481,
-   "maxVariance": 2406,
+   "firstFrameMs": 558,
+   "maxVariance": 2412,
    "audible": true,
    "audioPeakRms": 0.4003,
    "audioGraphs": 1,
@@ -444,7 +445,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6365
+   "wallMs": 6988
   },
   {
    "id": "dvcpro-hd-720p50",
@@ -454,7 +455,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 474,
+   "firstFrameMs": 610,
    "maxVariance": 1890,
    "audible": null,
    "audioPeakRms": 0,
@@ -467,7 +468,7 @@
     "[vlc.js: 0x200c9f0/0x356c3d8] libvlc generic: program: ",
     "[vlc.js: 0x200b178/0x356c3d8] libvlc gl: program: "
    ],
-   "wallMs": 6265
+   "wallMs": 7156
   },
   {
    "id": "on2-vp5-speex",
@@ -477,8 +478,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 451,
-   "maxVariance": 2534,
+   "firstFrameMs": 453,
+   "maxVariance": 2442,
    "audible": false,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -490,7 +491,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 0",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: no key frame set for track 1"
    ],
-   "wallMs": 6548
+   "wallMs": 7282
   },
   {
    "id": "dvd-vob-single-frame-dvd-subs",
@@ -500,7 +501,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 457,
+   "firstFrameMs": 1171,
    "maxVariance": 1497,
    "audible": null,
    "audioPeakRms": 0,
@@ -510,10 +511,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x29d8890/0x2956d58] libvlc generic: program: ",
-    "[vlc.js: 0x29d7be0/0x2956d58] libvlc gl: program: "
+    "[vlc.js: 0x29d8900/0x2957118] libvlc generic: program: ",
+    "[vlc.js: 0x26e99f8/0x2957118] libvlc gl: program: "
    ],
-   "wallMs": 6585
+   "wallMs": 7061
   },
   {
    "id": "mpeg-1-system-stream",
@@ -523,8 +524,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 451,
-   "maxVariance": 1282,
+   "firstFrameMs": 768,
+   "maxVariance": 1258,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -536,7 +537,7 @@
     "[vlc.js: 0x24cbd10/0x244a218] libvlc generic: program: ",
     "[vlc.js: 0x24cb0c0/0x244a218] libvlc gl: program: "
    ],
-   "wallMs": 6613
+   "wallMs": 6986
   },
   {
    "id": "dvd-vob-mpeg-2-ac-3-5-mb",
@@ -546,10 +547,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 2734,
-   "maxVariance": 4448,
+   "firstFrameMs": 2801,
+   "maxVariance": 4465,
    "audible": true,
-   "audioPeakRms": 0.064,
+   "audioPeakRms": 0.0606,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -557,9 +558,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0xe1a198/0x121fc48] libvlc audio output: too low audio sample frequency (0)",
-    "[vlc.js: 0x2911f30/0x2890498] libvlc generic: program: "
+    "[vlc.js: 0x2911ed8/0x2874af0] libvlc generic: program: "
    ],
-   "wallMs": 6298
+   "wallMs": 7633
   },
   {
    "id": "mpeg-2-field-encoded-ts",
@@ -569,8 +570,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 469,
-   "maxVariance": 1993,
+   "firstFrameMs": 681,
+   "maxVariance": 1985,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -579,10 +580,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x29df500/0x2926298] libvlc generic: program: ",
-    "[vlc.js: 0x23afeb8/0x2926298] libvlc gl: program: "
+    "[vlc.js: 0x29b15e8/0x2925f58] libvlc generic: program: ",
+    "[vlc.js: 0x29a6de0/0x2925f58] libvlc gl: program: "
    ],
-   "wallMs": 6391
+   "wallMs": 7335
   },
   {
    "id": "flash-vp6-sorenson-on2",
@@ -592,7 +593,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 436,
+   "firstFrameMs": 597,
    "maxVariance": 1711,
    "audible": null,
    "audioPeakRms": 0,
@@ -603,9 +604,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[flv @ 0x1ea19b0] max_analyze_duration 5000000 reached at 5000000 microseconds st:0",
-    "[vlc.js: 0x22c7b08/0x2246058] libvlc generic: program: "
+    "[vlc.js: 0x22c7b28/0x2246098] libvlc generic: program: "
    ],
-   "wallMs": 6218
+   "wallMs": 7644
   },
   {
    "id": "flv-with-h-264-aac",
@@ -615,8 +616,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 3080,
-   "maxVariance": 1798,
+   "firstFrameMs": 4066,
+   "maxVariance": 1772,
    "audible": true,
    "audioPeakRms": 0.0319,
    "audioGraphs": 1,
@@ -628,7 +629,7 @@
     "[flv @ 0x1ea19b0] Found invalid index entries, clearing the index.",
     "[h264 @ 0x1ea36d0] Reinit context to 432x240, pix_fmt: yuv420p"
    ],
-   "wallMs": 6297
+   "wallMs": 7967
   },
   {
    "id": "vp6f-nellymoser",
@@ -638,20 +639,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 480,
-   "maxVariance": 3253,
+   "firstFrameMs": 959,
+   "maxVariance": 3223,
    "audible": true,
-   "audioPeakRms": 0.4106,
+   "audioPeakRms": 0.3849,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x256ca40/0x24eb198] libvlc generic: program: ",
-    "[vlc.js: 0x20d1818/0x24eb198] libvlc gl: program: "
+    "[vlc.js: 0x256ca78/0x24dcb58] libvlc generic: program: ",
+    "[vlc.js: 0x256be70/0x24dcb58] libvlc gl: program: "
    ],
-   "wallMs": 6363
+   "wallMs": 8065
   },
   {
    "id": "3gpp-h-263-amr-nb",
@@ -661,20 +662,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 465,
-   "maxVariance": 4400,
+   "firstFrameMs": 942,
+   "maxVariance": 4372,
    "audible": true,
-   "audioPeakRms": 0.2127,
+   "audioPeakRms": 0.2092,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x2121520/0x209fa18] libvlc generic: program: ",
-    "[vlc.js: 0x2120840/0x209fa18] libvlc gl: program: "
+    "[vlc.js: 0x2121708/0x2093008] libvlc generic: program: ",
+    "[vlc.js: 0x2120a20/0x2093008] libvlc gl: program: "
    ],
-   "wallMs": 6310
+   "wallMs": 7867
   },
   {
    "id": "3gp-h-263-phone-clip",
@@ -684,20 +685,20 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 431,
-   "maxVariance": 3371,
+   "firstFrameMs": 842,
+   "maxVariance": 3269,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x206e8b0/0x1fecd18] libvlc generic: program: ",
-    "[vlc.js: 0x206dbc0/0x1fecd18] libvlc gl: program: "
+    "worker sent an unknown command customCmd",
+    "[vlc.js: 0x206eaf8/0x1fecfd8] libvlc generic: program: ",
+    "[vlc.js: 0x206de60/0x1fecfd8] libvlc gl: program: "
    ],
-   "wallMs": 6331
+   "wallMs": 7491
   },
   {
    "id": "sorenson-video-1",
@@ -707,20 +708,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 474,
-   "maxVariance": 6381,
+   "firstFrameMs": 1475,
+   "maxVariance": 6185,
    "audible": true,
-   "audioPeakRms": 0.4329,
+   "audioPeakRms": 0.4105,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x215b2c8/0x20d9758] libvlc generic: program: ",
-    "[vlc.js: 0x215a600/0x20d9758] libvlc gl: program: "
+    "[vlc.js: 0x215b248/0x20cce40] libvlc generic: program: ",
+    "[vlc.js: 0x2095e38/0x20cce40] libvlc gl: program: "
    ],
-   "wallMs": 6410
+   "wallMs": 9009
   },
   {
    "id": "sorenson-video-3",
@@ -730,7 +731,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 436,
+   "firstFrameMs": 858,
    "maxVariance": 3702,
    "audible": null,
    "audioPeakRms": 0,
@@ -741,9 +742,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "Invalid UTF-8 leading byte 0x00000092 encountered when deserializing a UTF-8 string in wasm memory to a JS string!",
-    "[vlc.js: 0x227d7b0/0x21fbcd8] libvlc generic: program: "
+    "[vlc.js: 0x1ee03c0/0x21f98d8] libvlc generic: program: "
    ],
-   "wallMs": 6488
+   "wallMs": 7537
   },
   {
    "id": "smacker",
@@ -763,10 +764,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x258ba78/0x250a318] libvlc generic: program: ",
-    "[vlc.js: 0x2437db8/0x250a318] libvlc gl: program: "
+    "[vlc.js: 0x258b910/0x24fb688] libvlc generic: program: ",
+    "[vlc.js: 0x258acd0/0x24fb688] libvlc gl: program: "
    ],
-   "wallMs": 6425
+   "wallMs": 8312
   },
   {
    "id": "bink-video",
@@ -776,8 +777,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 461,
-   "maxVariance": 2735,
+   "firstFrameMs": 592,
+   "maxVariance": 2733,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -786,10 +787,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x1f63ec8/0x2a4f018] libvlc generic: program: ",
-    "[vlc.js: 0x21556e8/0x2a4f018] libvlc gl: program: "
+    "[vlc.js: 0x214a198/0x29de7d8] libvlc generic: program: ",
+    "[vlc.js: 0x1f71338/0x29de7d8] libvlc gl: program: "
    ],
-   "wallMs": 6531
+   "wallMs": 7274
   },
   {
    "id": "id-roq-quake-3-logo",
@@ -799,20 +800,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 473,
-   "maxVariance": 4306,
+   "firstFrameMs": 828,
+   "maxVariance": 4305,
    "audible": true,
    "audioPeakRms": 0.3751,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]",
     "[roq @ 0x1ea19b0] max_analyze_duration 5000000 reached at 5006803 microseconds st:0",
-    "[vlc.js: 0x28cb590/0x2849b20] libvlc generic: program: "
+    "[roqvideo @ 0x1ebbc70] Chunk is too short"
    ],
-   "wallMs": 6554
+   "wallMs": 7067
   },
   {
    "id": "autodesk-flic-640x480",
@@ -829,13 +830,13 @@
    "audioGraphs": 0,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x1f58978/0x31fa0d8] libvlc generic: program: ",
-    "[vlc.js: 0x1eb1118/0x31fa0d8] libvlc gl: program: "
+    "[vlc.js: 0x201d560/0x31b27d8] libvlc generic: program: ",
+    "[vlc.js: 0x1f6dde8/0x31b27d8] libvlc gl: program: "
    ],
-   "wallMs": 6317
+   "wallMs": 7081
   },
   {
    "id": "autodesk-flc-320x200",
@@ -858,7 +859,7 @@
     "[vlc.js: 0x2477710/0x23f5bd8] libvlc generic: program: ",
     "[vlc.js: 0x2476a60/0x23f5bd8] libvlc gl: program: "
    ],
-   "wallMs": 6375
+   "wallMs": 7987
   },
   {
    "id": "nuppelvideo-mythtv",
@@ -868,7 +869,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 439,
+   "firstFrameMs": 1081,
    "maxVariance": 3021,
    "audible": true,
    "audioPeakRms": 0.4218,
@@ -881,7 +882,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: VLC doesn't support NUV without extended chunks (please upload samples)",
     "[nuv @ 0x1ea1820] Estimating duration from bitrate, this may be inaccurate"
    ],
-   "wallMs": 6329
+   "wallMs": 9135
   },
   {
    "id": "vivo-2-vivoactive",
@@ -904,7 +905,7 @@
     "[vivo @ 0x1ea19b0] max_analyze_duration 5000000 reached at 5000000 microseconds st:1",
     "[vivo @ 0x1ea19b0] Could not find codec parameters for stream 0 (Video: none, 1 reference frame, none, 320x240 (0x0)): unknown codec"
    ],
-   "wallMs": 6494
+   "wallMs": 8241
   },
   {
    "id": "playstation-str-mdec-xa",
@@ -925,7 +926,29 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6215
+   "wallMs": 8786
+  },
+  {
+   "id": "psx-str-lunar2",
+   "name": "PlayStation STR (Lunar 2 cutscene)",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": true,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0x1f58128/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration"
+   ],
+   "wallMs": 7270
   },
   {
    "id": "hevc-main10-dolby-vision-p7-in-mkv",
@@ -935,7 +958,7 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 477,
+   "firstFrameMs": 2153,
    "maxVariance": 3160,
    "audible": null,
    "audioPeakRms": 0,
@@ -948,7 +971,7 @@
     "[vlc.js: 0x1ea4470/0x121fc48] libvlc decoder: buffer deadlock prevented",
     "[vlc.js: 0x20d57a8/0x2054478] libvlc generic: program: "
    ],
-   "wallMs": 6297
+   "wallMs": 7965
   },
   {
    "id": "dvb-subtitles-in-ts",
@@ -971,7 +994,7 @@
     "[vlc.js: 0x1ea7380/0x121fc48] libvlc decoder: buffer deadlock prevented",
     "[vlc.js: 0x1f2def0/0x121fc48] libvlc decoder: buffer deadlock prevented"
    ],
-   "wallMs": 6330
+   "wallMs": 6922
   },
   {
    "id": "mpeg-2-es-with-eia-608-closed-captions",
@@ -981,8 +1004,8 @@
    "hasAudio": false,
    "ready": true,
    "video": true,
-   "firstFrameMs": 465,
-   "maxVariance": 4433,
+   "firstFrameMs": 699,
+   "maxVariance": 4484,
    "audible": null,
    "audioPeakRms": 0,
    "audioGraphs": 0,
@@ -991,10 +1014,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x1fbaef0/0x278fa70] libvlc generic: program: ",
-    "[vlc.js: 0x1f35538/0x278fa70] libvlc gl: program: "
+    "[vlc.js: 0x1ea56d8/0x2746880] libvlc generic: program: ",
+    "[vlc.js: 0x1f39670/0x2746880] libvlc gl: program: "
    ],
-   "wallMs": 6554
+   "wallMs": 7811
   },
   {
    "id": "mpeg-4-asp-vorbis-16-ass-ssa-tracks",
@@ -1004,8 +1027,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 463,
-   "maxVariance": 2654,
+   "firstFrameMs": 802,
+   "maxVariance": 2653,
    "audible": true,
    "audioPeakRms": 0.1613,
    "audioGraphs": 1,
@@ -1017,7 +1040,7 @@
     "[vlc.js: 0x1fe7528/0x121fc48] libvlc decoder: Codec `ssa ' (SubStation Alpha subtitles) is not supported.",
     "[vlc.js: 0x1fe7528/0x121fc48] libvlc decoder: Codec not supported"
    ],
-   "wallMs": 6393
+   "wallMs": 7192
   },
   {
    "id": "h-264-2x-mp3-vobsub-in-mkv",
@@ -1027,8 +1050,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 473,
-   "maxVariance": 1971,
+   "firstFrameMs": 594,
+   "maxVariance": 1944,
    "audible": true,
    "audioPeakRms": 0.0742,
    "audioGraphs": 1,
@@ -1040,7 +1063,7 @@
     "[vlc.js: 0x1ea67a0/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[h264 @ 0x1eb4930] Reinit context to 640x480, pix_fmt: yuv420p"
    ],
-   "wallMs": 6248
+   "wallMs": 7404
   },
   {
    "id": "everyday-mp4-h264-aac",
@@ -1050,20 +1073,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 448,
-   "maxVariance": 4587,
+   "firstFrameMs": 536,
+   "maxVariance": 4583,
    "audible": true,
    "audioPeakRms": 0.0902,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x1eaa0a8/0x121fc48] libvlc decoder: buffer deadlock prevented",
-    "[vlc.js: 0x217bf60/0x2192990] libvlc generic: program: "
+    "[vlc.js: 0x217bbc0/0x2193b70] libvlc generic: program: "
    ],
-   "wallMs": 6463
+   "wallMs": 7098
   },
   {
    "id": "everyday-mp4-hevc-aac",
@@ -1073,10 +1096,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 451,
-   "maxVariance": 4585,
+   "firstFrameMs": 607,
+   "maxVariance": 4586,
    "audible": true,
-   "audioPeakRms": 0.0901,
+   "audioPeakRms": 0.09,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1084,9 +1107,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x1ead9f8/0x121fc48] libvlc decoder: buffer deadlock prevented",
-    "[vlc.js: 0x221b3c8/0x218b5d0] libvlc generic: program: "
+    "[vlc.js: 0x221b4a8/0x21979e8] libvlc generic: program: "
    ],
-   "wallMs": 6413
+   "wallMs": 7106
   },
   {
    "id": "everyday-mp4-av1-aac",
@@ -1096,8 +1119,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 448,
-   "maxVariance": 4589,
+   "firstFrameMs": 686,
+   "maxVariance": 4590,
    "audible": true,
    "audioPeakRms": 0.0902,
    "audioGraphs": 1,
@@ -1109,7 +1132,7 @@
     "[vlc.js: 0x1ea9f88/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[vlc.js: 0x30ff908/0x307e098] libvlc generic: program: "
    ],
-   "wallMs": 6360
+   "wallMs": 7541
   },
   {
    "id": "everyday-webm-vp9-opus",
@@ -1119,10 +1142,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 440,
-   "maxVariance": 4595,
+   "firstFrameMs": 648,
+   "maxVariance": 4596,
    "audible": true,
-   "audioPeakRms": 0.1006,
+   "audioPeakRms": 0.1278,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1130,9 +1153,9 @@
     "worker.js received unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x1ea24c0/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration",
-    "[vlc.js: 0x26f53c8/0x2673918] libvlc generic: program: "
+    "[vlc.js: 0x26f53b0/0x2673a58] libvlc generic: program: "
    ],
-   "wallMs": 6900
+   "wallMs": 7214
   },
   {
    "id": "everyday-webm-av1-opus",
@@ -1142,8 +1165,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 417,
-   "maxVariance": 4593,
+   "firstFrameMs": 538,
+   "maxVariance": 4596,
    "audible": true,
    "audioPeakRms": 0.108,
    "audioGraphs": 1,
@@ -1155,7 +1178,7 @@
     "[vlc.js: 0x1ea24c0/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[vlc.js: 0x30fa490/0x3078998] libvlc generic: program: "
    ],
-   "wallMs": 6219
+   "wallMs": 7769
   },
   {
    "id": "everyday-webm-vp8-vorbis",
@@ -1165,20 +1188,20 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 440,
-   "maxVariance": 3191,
+   "firstFrameMs": 574,
+   "maxVariance": 3190,
    "audible": true,
    "audioPeakRms": 0.0628,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]",
     "[vlc.js: 0x1ea97a8/0x121fc48] libvlc decoder: buffer deadlock prevented",
-    "[vlc.js: 0x2069be0/0x21688d0] libvlc generic: program: "
+    "[vlc.js: 0x2093550/0x21688d0] libvlc generic: program: "
    ],
-   "wallMs": 6218
+   "wallMs": 7209
   },
   {
    "id": "everyday-mkv-h264-aac",
@@ -1188,10 +1211,10 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 413,
-   "maxVariance": 4595,
+   "firstFrameMs": 748,
+   "maxVariance": 4594,
    "audible": true,
-   "audioPeakRms": 0.0897,
+   "audioPeakRms": 0.0902,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1201,7 +1224,7 @@
     "[vlc.js: 0x1ea2fa0/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[h264 @ 0x1eb32a0] Reinit context to 640x368, pix_fmt: yuv420p"
    ],
-   "wallMs": 6564
+   "wallMs": 7403
   },
   {
    "id": "everyday-mov-prores-pcm",
@@ -1211,8 +1234,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 441,
-   "maxVariance": 4596,
+   "firstFrameMs": 696,
+   "maxVariance": 4597,
    "audible": true,
    "audioPeakRms": 0.0887,
    "audioGraphs": 1,
@@ -1221,10 +1244,10 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x203dc78/0x2f10518] libvlc generic: program: ",
-    "[vlc.js: 0x2036e38/0x2f10518] libvlc gl: program: "
+    "[vlc.js: 0x2034110/0x2eff3c0] libvlc generic: program: ",
+    "[vlc.js: 0x202ae80/0x2eff3c0] libvlc gl: program: "
    ],
-   "wallMs": 6265
+   "wallMs": 7556
   },
   {
    "id": "everyday-avi-mpeg4-mp3",
@@ -1234,8 +1257,8 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 446,
-   "maxVariance": 4584,
+   "firstFrameMs": 839,
+   "maxVariance": 4585,
    "audible": true,
    "audioPeakRms": 0.0843,
    "audioGraphs": 1,
@@ -1244,10 +1267,79 @@
     "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
     "[object Object]",
-    "[vlc.js: 0x23fca08/0x2362418] libvlc generic: program: ",
-    "[vlc.js: 0x23e9dc8/0x2362418] libvlc gl: program: "
+    "[vlc.js: 0x23fc7b8/0x2335b88] libvlc generic: program: ",
+    "[vlc.js: 0x1ea4190/0x2335b88] libvlc gl: program: "
    ],
-   "wallMs": 6258
+   "wallMs": 7774
+  },
+  {
+   "id": "dvd-video-iso",
+   "name": "DVD-Video disc image",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": true,
+   "video": true,
+   "firstFrameMs": 629,
+   "maxVariance": 4600,
+   "audible": null,
+   "audioPeakRms": 0.0884,
+   "audioGraphs": 1,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0xe1a198/0x121fc48] libvlc audio output: too low audio sample frequency (0)",
+    "[vlc.js: 0x1f62c98/0x28796d8] libvlc generic: program: "
+   ],
+   "wallMs": 7244
+  },
+  {
+   "id": "bluray-bdmv-iso",
+   "name": "Blu-ray disc image",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": true,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0x1ea1a00/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration",
+    "[vlc.js: 0x1ea1a00/0x121fc48] libvlc decoder: buffer deadlock prevented"
+   ],
+   "wallMs": 7563
+  },
+  {
+   "id": "cenc-clearkey-mp4",
+   "name": "MP4 with Common Encryption (ClearKey)",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": true,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "errors": [
+    "worker sent an unknown command customCmd",
+    "worker.js received unknown command customCmd",
+    "[object Object]",
+    "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: missing avcC",
+    "[vlc.js: 0x1ea9648/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration"
+   ],
+   "wallMs": 7193
   },
   {
    "id": "gen-h264-opus-ass",
@@ -1257,7 +1349,7 @@
    "hasAudio": true,
    "ready": true,
    "video": true,
-   "firstFrameMs": 415,
+   "firstFrameMs": 822,
    "maxVariance": 4598,
    "audible": true,
    "audioPeakRms": 0.0887,
@@ -1270,7 +1362,7 @@
     "[vlc.js: 0x1ea6470/0x121fc48] libvlc decoder: VideoDecoder doesn't support this configuration",
     "[h264 @ 0x1eb48f0] Reinit context to 640x368, pix_fmt: yuv420p"
    ],
-   "wallMs": 6510
+   "wallMs": 6981
   },
   {
    "id": "realaudio-cook",
@@ -1283,7 +1375,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.2156,
+   "audioPeakRms": 0.2095,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1291,7 +1383,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6447
+   "wallMs": 6829
   },
   {
    "id": "realaudio-28-8",
@@ -1314,7 +1406,7 @@
     "[rm @ 0x1ea19b0] Estimating duration from bitrate, this may be inaccurate",
     "[rm @ 0x1ea19b0] Failed to fully read block"
    ],
-   "wallMs": 6482
+   "wallMs": 7226
   },
   {
    "id": "wma-voice-11k",
@@ -1335,7 +1427,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6566
+   "wallMs": 6887
   },
   {
    "id": "wma-lossless-24-bit",
@@ -1348,7 +1440,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.8751,
+   "audioPeakRms": 0.8789,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1356,7 +1448,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6223
+   "wallMs": 7368
   },
   {
    "id": "dts-in-mpeg-ts",
@@ -1379,7 +1471,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: libdvbpsi error (PSI decoder): TS discontinuity (received 0, expected 8) for PID 17",
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: libdvbpsi error (PSI decoder): TS discontinuity (received 0, expected 6) for PID 0"
    ],
-   "wallMs": 41647
+   "wallMs": 187901
   },
   {
    "id": "qdesign-music-2",
@@ -1392,15 +1484,16 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3767,
+   "audioPeakRms": 0.3953,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
-    "[object Object]"
+    "worker sent an unknown command customCmd",
+    "[object Object]",
+    "Blocking on the main thread is very dangerous, see https://emscripten.org/docs/porting/pthreads.html#blocking-on-the-main-browser-thread"
    ],
-   "wallMs": 6653
+   "wallMs": 7568
   },
   {
    "id": "ima4-adpcm",
@@ -1422,7 +1515,7 @@
     "[object Object]",
     "[adpcm_ima_qt @ 0x1ea49d0] Multiple frames in a packet."
    ],
-   "wallMs": 6599
+   "wallMs": 6714
   },
   {
    "id": "mace-3-1",
@@ -1435,7 +1528,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3699,
+   "audioPeakRms": 0.3883,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1443,7 +1536,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 7392
+   "wallMs": 6783
   },
   {
    "id": "ac-3-5-1-448k",
@@ -1465,7 +1558,7 @@
     "[object Object]",
     "Max number of channels of the browser is  2"
    ],
-   "wallMs": 6911
+   "wallMs": 6683
   },
   {
    "id": "e-ac-3-5-1-with-spx",
@@ -1487,7 +1580,7 @@
     "[object Object]",
     "Max number of channels of the browser is  2"
    ],
-   "wallMs": 6864
+   "wallMs": 6814
   },
   {
    "id": "dts-es",
@@ -1509,7 +1602,7 @@
     "[object Object]",
     "Max number of channels of the browser is  2"
    ],
-   "wallMs": 7292
+   "wallMs": 6912
   },
   {
    "id": "dolby-truehd-atmos-8ch",
@@ -1522,7 +1615,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.1348,
+   "audioPeakRms": 0.1343,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1532,7 +1625,7 @@
     "Max number of channels of the browser is  2",
     "[truehd @ 0x1ea8b50] Lossless check failed - expected ff, calculated 78."
    ],
-   "wallMs": 6466
+   "wallMs": 6753
   },
   {
    "id": "mlp-440-hz",
@@ -1554,7 +1647,7 @@
     "[object Object]",
     "Blocking on the main thread is very dangerous, see https://emscripten.org/docs/porting/pthreads.html#blocking-on-the-main-browser-thread"
    ],
-   "wallMs": 6345
+   "wallMs": 7619
   },
   {
    "id": "musepack-sv8",
@@ -1567,7 +1660,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3073,
+   "audioPeakRms": 0.3087,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1577,7 +1670,7 @@
     "[mpc8 @ 0x1ea2980] Multiple frames in a packet.",
     "[mpc8 @ 0x1ea19b0] max_analyze_duration 5000000 reached at 5015510 microseconds st:0"
    ],
-   "wallMs": 6398
+   "wallMs": 7465
   },
   {
    "id": "musepack-sv7",
@@ -1590,15 +1683,15 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3052,
+   "audioPeakRms": 0.3094,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6402
+   "wallMs": 7535
   },
   {
    "id": "monkey-s-audio",
@@ -1611,7 +1704,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.3769,
+   "audioPeakRms": 0.3677,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1621,7 +1714,7 @@
     "[ape @ 0x1ea19b0] Decoding file - v3.99, compression level 3000",
     "[ape @ 0x1ea33a0] Compression Level: 3000 - Flags: 0"
    ],
-   "wallMs": 6255
+   "wallMs": 6689
   },
   {
    "id": "true-audio-6-6-mb",
@@ -1634,7 +1727,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.2834,
+   "audioPeakRms": 0.2727,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1642,7 +1735,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6540
+   "wallMs": 6555
   },
   {
    "id": "amr-nb-12-2k",
@@ -1655,7 +1748,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.1848,
+   "audioPeakRms": 0.1849,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1664,7 +1757,7 @@
     "[object Object]",
     "[amr @ 0x1ea19b0] Estimating duration from bitrate, this may be inaccurate"
    ],
-   "wallMs": 6525
+   "wallMs": 6971
   },
   {
    "id": "shorten",
@@ -1687,7 +1780,7 @@
     "[shn @ 0x1ea19b0] parser not found for codec shorten, packets or times may be invalid.",
     "[shn @ 0x1ea19b0] parser not found for codec shorten, packets or times may be invalid."
    ],
-   "wallMs": 6454
+   "wallMs": 8912
   },
   {
    "id": "snes-spc",
@@ -1700,7 +1793,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.1408,
+   "audioPeakRms": 0.1123,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1708,7 +1801,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6534
+   "wallMs": 6923
   },
   {
    "id": "nes-nsf-tetris-gb-rip",
@@ -1721,7 +1814,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.1912,
+   "audioPeakRms": 0.198,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1729,7 +1822,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6637
+   "wallMs": 7690
   },
   {
    "id": "sega-genesis-vgz-gzip-vgm",
@@ -1752,7 +1845,7 @@
     "[vlc.js: 0xe1b968/0x121fc48] libvlc input: INPUT_CONTROL_SET_POSITION @0.0% failed",
     "[vlc.js: 0xe1b968/0x121fc48] libvlc input: INPUT_CONTROL_SET_POSITION @0.0% failed"
    ],
-   "wallMs": 6463
+   "wallMs": 9479
   },
   {
    "id": "c64-sid-rob-hubbard-commando",
@@ -1769,11 +1862,11 @@
    "audioGraphs": 0,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6643
+   "wallMs": 9983
   },
   {
    "id": "standard-midi-file",
@@ -1796,7 +1889,7 @@
     "[vlc.js: 0x1ea1d90/0x121fc48] libvlc decoder: Codec `MIDI' (MIDI Audio) is not supported.",
     "[vlc.js: 0x1ea1d90/0x121fc48] libvlc decoder: Codec not supported"
    ],
-   "wallMs": 6372
+   "wallMs": 7461
   },
   {
    "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
@@ -1817,7 +1910,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 12029
+   "wallMs": 29718
   },
   {
    "id": "external-xm",
@@ -1838,7 +1931,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6302
+   "wallMs": 7148
   },
   {
    "id": "sandman-s3m",
@@ -1851,7 +1944,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.0882,
+   "audioPeakRms": 0.0851,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1859,7 +1952,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6347
+   "wallMs": 6825
   },
   {
    "id": "for-a-change-it",
@@ -1872,7 +1965,7 @@
    "firstFrameMs": null,
    "maxVariance": 0,
    "audible": true,
-   "audioPeakRms": 0.1187,
+   "audioPeakRms": 0.1224,
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
@@ -1880,7 +1973,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6300
+   "wallMs": 6387
   },
   {
    "id": "openmpt-test-xm",
@@ -1901,7 +1994,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6269
+   "wallMs": 6777
   },
   {
    "id": "everyday-audio-mp3",
@@ -1918,11 +2011,11 @@
    "audioGraphs": 1,
    "crashed": false,
    "errors": [
-    "worker sent an unknown command customCmd",
     "worker.js received unknown command customCmd",
+    "worker sent an unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6326
+   "wallMs": 6969
   },
   {
    "id": "everyday-audio-m4a",
@@ -1943,7 +2036,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6266
+   "wallMs": 7143
   },
   {
    "id": "everyday-audio-flac",
@@ -1964,7 +2057,7 @@
     "worker.js received unknown command customCmd",
     "[object Object]"
    ],
-   "wallMs": 6320
+   "wallMs": 6738
   },
   {
    "id": "everyday-audio-wav",
@@ -1987,7 +2080,7 @@
     "[vlc.js: 0xe1b968/0x121fc48] libvlc input: Invalid PCR value in ES_OUT_SET_(GROUP_)PCR !",
     "[vlc.js: 0xe1b968/0x121fc48] libvlc input: Invalid PCR value in ES_OUT_SET_(GROUP_)PCR !"
    ],
-   "wallMs": 78211
+   "wallMs": 92418
   },
   {
    "id": "everyday-audio-ogg",
@@ -2010,7 +2103,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: No selected seekable stream found",
     "[vlc.js: 0xe1b968/0x121fc48] libvlc input: INPUT_CONTROL_SET_POSITION @0.0% failed"
    ],
-   "wallMs": 6524
+   "wallMs": 6505
   },
   {
    "id": "everyday-audio-opus",
@@ -2033,7 +2126,7 @@
     "[vlc.js: 0x1ea12e0/0x121fc48] libvlc demux: No selected seekable stream found",
     "[vlc.js: 0xe1b968/0x121fc48] libvlc input: INPUT_CONTROL_SET_POSITION @0.0% failed"
    ],
-   "wallMs": 6188
+   "wallMs": 6301
   }
  ]
 }

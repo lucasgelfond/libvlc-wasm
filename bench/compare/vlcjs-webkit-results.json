@@ -1,0 +1,1895 @@
+{
+ "date": "2026-09-27T23:16:18.113Z",
+ "port": "addyosmani/vlc.js",
+ "relaunches": 0,
+ "engine": "webkit",
+ "summary": {
+  "videoShown": "0/59",
+  "videoShownExclEveryday": "0/50",
+  "audible": "0/74",
+  "medianFirstFrameMs": null,
+  "crashed": 0
+ },
+ "results": [
+  {
+   "id": "realvideo-3-cook",
+   "name": "RealVideo 3 + Cook",
+   "category": "realmedia",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37053
+  },
+  {
+   "id": "realvideo-g2-svt",
+   "name": "RealVideo G2 (SVT)",
+   "category": "realmedia",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37037
+  },
+  {
+   "id": "realvideo-4-cook-rmvb",
+   "name": "RealVideo 4 + Cook (rmvb)",
+   "category": "realmedia",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37062
+  },
+  {
+   "id": "realaudio-sipr-8-5k",
+   "name": "RealAudio SIPR 8.5k",
+   "category": "realmedia",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37583
+  },
+  {
+   "id": "realvideo-2-in-matroska",
+   "name": "RealVideo 2 in Matroska",
+   "category": "realmedia",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37328
+  },
+  {
+   "id": "realvideo-2-sipr-a-v-sync-bug",
+   "name": "RealVideo 2 + SIPR (A/V sync bug)",
+   "category": "realmedia",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37230
+  },
+  {
+   "id": "wmv8-x8-intra",
+   "name": "WMV8 X8 intra",
+   "category": "windows-media",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37230
+  },
+  {
+   "id": "wmv7",
+   "name": "WMV7",
+   "category": "windows-media",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37068
+  },
+  {
+   "id": "wmv9-vc-1-simple-main-raw-rcv",
+   "name": "WMV9 / VC-1 simple/main raw (.rcv)",
+   "category": "windows-media",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37055
+  },
+  {
+   "id": "ms-mpeg4-v3-divx-in-asf",
+   "name": "MS-MPEG4 v3 (DivX ;-) ) in ASF",
+   "category": "windows-media",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37158
+  },
+  {
+   "id": "ms-screen-codec-2-wmv9-screen",
+   "name": "MS Screen Codec 2 (WMV9 Screen)",
+   "category": "windows-media",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37425
+  },
+  {
+   "id": "ms-mpeg4-v1",
+   "name": "MS-MPEG4 v1",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37860
+  },
+  {
+   "id": "xvid-mp3",
+   "name": "XviD + MP3",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 39044
+  },
+  {
+   "id": "divx-5-mp3",
+   "name": "DivX 5 + MP3",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37226
+  },
+  {
+   "id": "cinepak",
+   "name": "Cinepak",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37780
+  },
+  {
+   "id": "indeo-3",
+   "name": "Indeo 3",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37658
+  },
+  {
+   "id": "indeo-4-partial",
+   "name": "Indeo 4 (partial)",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37410
+  },
+  {
+   "id": "indeo-5",
+   "name": "Indeo 5",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37768
+  },
+  {
+   "id": "motion-jpeg-mu-law-10-mb",
+   "name": "Motion-JPEG + mu-law (10 MB)",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38086
+  },
+  {
+   "id": "dvcpro-hd-720p50",
+   "name": "DVCPRO HD 720p50",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38437
+  },
+  {
+   "id": "on2-vp5-speex",
+   "name": "On2 VP5 + Speex",
+   "category": "avi-era-codecs",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37596
+  },
+  {
+   "id": "dvd-vob-single-frame-dvd-subs",
+   "name": "DVD VOB single frame + DVD subs",
+   "category": "subtitles-and-captions",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37608
+  },
+  {
+   "id": "mpeg-1-system-stream",
+   "name": "MPEG-1 system stream",
+   "category": "mpeg-ps-ts",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37808
+  },
+  {
+   "id": "dvd-vob-mpeg-2-ac-3-5-mb",
+   "name": "DVD VOB MPEG-2 + AC-3 (5 MB)",
+   "category": "mpeg-ps-ts",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37539
+  },
+  {
+   "id": "mpeg-2-field-encoded-ts",
+   "name": "MPEG-2 field-encoded TS",
+   "category": "mpeg-ps-ts",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37937
+  },
+  {
+   "id": "flash-vp6-sorenson-on2",
+   "name": "Flash VP6 (Sorenson/On2)",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37680
+  },
+  {
+   "id": "flv-with-h-264-aac",
+   "name": "FLV with H.264/AAC",
+   "category": "flash",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37575
+  },
+  {
+   "id": "vp6f-nellymoser",
+   "name": "VP6F + Nellymoser",
+   "category": "flash",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37453
+  },
+  {
+   "id": "3gpp-h-263-amr-nb",
+   "name": "3GPP H.263 + AMR-NB",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37385
+  },
+  {
+   "id": "3gp-h-263-phone-clip",
+   "name": "3GP H.263 phone clip",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37679
+  },
+  {
+   "id": "sorenson-video-1",
+   "name": "Sorenson Video 1",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37796
+  },
+  {
+   "id": "sorenson-video-3",
+   "name": "Sorenson Video 3",
+   "category": "quicktime-and-3gp",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38022
+  },
+  {
+   "id": "smacker",
+   "name": "Smacker",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 39121
+  },
+  {
+   "id": "bink-video",
+   "name": "Bink video",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 39427
+  },
+  {
+   "id": "id-roq-quake-3-logo",
+   "name": "id RoQ (Quake 3 logo)",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38634
+  },
+  {
+   "id": "autodesk-flic-640x480",
+   "name": "Autodesk FLIC 640x480",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38251
+  },
+  {
+   "id": "autodesk-flc-320x200",
+   "name": "Autodesk FLC 320x200",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37704
+  },
+  {
+   "id": "nuppelvideo-mythtv",
+   "name": "NuppelVideo (MythTV)",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38312
+  },
+  {
+   "id": "vivo-2-vivoactive",
+   "name": "Vivo 2 (VivoActive)",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38371
+  },
+  {
+   "id": "playstation-str-mdec-xa",
+   "name": "PlayStation STR (MDEC + XA)",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38039
+  },
+  {
+   "id": "psx-str-lunar2",
+   "name": "PlayStation STR (Lunar 2 cutscene)",
+   "category": "game-and-oddball-video",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38253
+  },
+  {
+   "id": "hevc-main10-dolby-vision-p7-in-mkv",
+   "name": "HEVC Main10 Dolby Vision P7 in MKV",
+   "category": "modern-codecs",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37548
+  },
+  {
+   "id": "dvb-subtitles-in-ts",
+   "name": "DVB subtitles in TS",
+   "category": "subtitles-and-captions",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37143
+  },
+  {
+   "id": "mpeg-2-es-with-eia-608-closed-captions",
+   "name": "MPEG-2 ES with EIA-608 closed captions",
+   "category": "subtitles-and-captions",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36977
+  },
+  {
+   "id": "mpeg-4-asp-vorbis-16-ass-ssa-tracks",
+   "name": "MPEG-4 ASP + Vorbis + 16 ASS/SSA tracks",
+   "category": "subtitles-and-captions",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36926
+  },
+  {
+   "id": "h-264-2x-mp3-vobsub-in-mkv",
+   "name": "H.264 + 2x MP3 + VobSub in MKV",
+   "category": "subtitles-and-captions",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36936
+  },
+  {
+   "id": "everyday-mp4-h264-aac",
+   "name": "MP4 (H.264)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36959
+  },
+  {
+   "id": "everyday-mp4-hevc-aac",
+   "name": "MP4 (HEVC)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36955
+  },
+  {
+   "id": "everyday-mp4-av1-aac",
+   "name": "MP4 (AV1)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36964
+  },
+  {
+   "id": "everyday-webm-vp9-opus",
+   "name": "WebM (VP9)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36937
+  },
+  {
+   "id": "everyday-webm-av1-opus",
+   "name": "WebM (AV1)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36944
+  },
+  {
+   "id": "everyday-webm-vp8-vorbis",
+   "name": "WebM (VP8)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36947
+  },
+  {
+   "id": "everyday-mkv-h264-aac",
+   "name": "Matroska (H.264)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36939
+  },
+  {
+   "id": "everyday-mov-prores-pcm",
+   "name": "QuickTime (ProRes)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36955
+  },
+  {
+   "id": "everyday-avi-mpeg4-mp3",
+   "name": "AVI (MPEG-4)",
+   "category": "everyday",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36951
+  },
+  {
+   "id": "dvd-video-iso",
+   "name": "DVD-Video disc image",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": false,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": null,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37063
+  },
+  {
+   "id": "bluray-bdmv-iso",
+   "name": "Blu-ray disc image",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37845
+  },
+  {
+   "id": "cenc-clearkey-mp4",
+   "name": "MP4 with Common Encryption (ClearKey)",
+   "category": "discs-and-drm",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38697
+  },
+  {
+   "id": "gen-h264-opus-ass",
+   "name": "H.264 + Opus + ASS in MKV (generated)",
+   "category": "control",
+   "hasVideo": true,
+   "hasAudio": true,
+   "ready": false,
+   "video": false,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38481
+  },
+  {
+   "id": "realaudio-cook",
+   "name": "RealAudio Cook",
+   "category": "realmedia",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37672
+  },
+  {
+   "id": "realaudio-28-8",
+   "name": "RealAudio 28.8",
+   "category": "realmedia",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38339
+  },
+  {
+   "id": "wma-voice-11k",
+   "name": "WMA Voice 11k",
+   "category": "windows-media",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37348
+  },
+  {
+   "id": "wma-lossless-24-bit",
+   "name": "WMA Lossless 24-bit",
+   "category": "windows-media",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37320
+  },
+  {
+   "id": "dts-in-mpeg-ts",
+   "name": "DTS in MPEG-TS",
+   "category": "mpeg-ps-ts",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37522
+  },
+  {
+   "id": "qdesign-music-2",
+   "name": "QDesign Music 2",
+   "category": "quicktime-and-3gp",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37406
+  },
+  {
+   "id": "ima4-adpcm",
+   "name": "IMA4 ADPCM",
+   "category": "quicktime-and-3gp",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37376
+  },
+  {
+   "id": "mace-3-1",
+   "name": "MACE 3:1",
+   "category": "quicktime-and-3gp",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37231
+  },
+  {
+   "id": "ac-3-5-1-448k",
+   "name": "AC-3 5.1 448k",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37194
+  },
+  {
+   "id": "e-ac-3-5-1-with-spx",
+   "name": "E-AC-3 5.1 with SPX",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37429
+  },
+  {
+   "id": "dts-es",
+   "name": "DTS-ES",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37474
+  },
+  {
+   "id": "dolby-truehd-atmos-8ch",
+   "name": "Dolby TrueHD Atmos (8ch)",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37200
+  },
+  {
+   "id": "mlp-440-hz",
+   "name": "MLP 440 Hz",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37137
+  },
+  {
+   "id": "musepack-sv8",
+   "name": "Musepack SV8",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37603
+  },
+  {
+   "id": "musepack-sv7",
+   "name": "Musepack SV7",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 38197
+  },
+  {
+   "id": "monkey-s-audio",
+   "name": "Monkey's Audio",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37572
+  },
+  {
+   "id": "true-audio-6-6-mb",
+   "name": "True Audio (6.6 MB)",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37516
+  },
+  {
+   "id": "amr-nb-12-2k",
+   "name": "AMR-NB 12.2k",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37666
+  },
+  {
+   "id": "shorten",
+   "name": "Shorten",
+   "category": "rare-and-surround-audio",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37508
+  },
+  {
+   "id": "snes-spc",
+   "name": "SNES SPC",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37134
+  },
+  {
+   "id": "nes-nsf-tetris-gb-rip",
+   "name": "NES NSF (Tetris GB rip)",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37130
+  },
+  {
+   "id": "sega-genesis-vgz-gzip-vgm",
+   "name": "Sega Genesis VGZ (gzip VGM)",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37395
+  },
+  {
+   "id": "c64-sid-rob-hubbard-commando",
+   "name": "C64 SID (Rob Hubbard - Commando)",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 36987
+  },
+  {
+   "id": "standard-midi-file",
+   "name": "Standard MIDI file",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37000
+  },
+  {
+   "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
+   "name": "AXELF.MOD (15-sample Soundtracker, no M.K. tag)",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37074
+  },
+  {
+   "id": "external-xm",
+   "name": "external.xm",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37111
+  },
+  {
+   "id": "sandman-s3m",
+   "name": "Sandman.s3m",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37028
+  },
+  {
+   "id": "for-a-change-it",
+   "name": "For A Change.it",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37298
+  },
+  {
+   "id": "openmpt-test-xm",
+   "name": "OpenMPT test.xm",
+   "category": "chiptune-tracker-midi",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37057
+  },
+  {
+   "id": "everyday-audio-mp3",
+   "name": "MP3",
+   "category": "everyday",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37160
+  },
+  {
+   "id": "everyday-audio-m4a",
+   "name": "AAC (.m4a)",
+   "category": "everyday",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37174
+  },
+  {
+   "id": "everyday-audio-flac",
+   "name": "FLAC",
+   "category": "everyday",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37059
+  },
+  {
+   "id": "everyday-audio-wav",
+   "name": "WAV",
+   "category": "everyday",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37317
+  },
+  {
+   "id": "everyday-audio-ogg",
+   "name": "Ogg Vorbis",
+   "category": "everyday",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37315
+  },
+  {
+   "id": "everyday-audio-opus",
+   "name": "Opus",
+   "category": "everyday",
+   "hasVideo": false,
+   "hasAudio": true,
+   "ready": false,
+   "video": null,
+   "firstFrameMs": null,
+   "maxVariance": 0,
+   "audible": false,
+   "audioPeakRms": 0,
+   "audioGraphs": 0,
+   "crashed": false,
+   "status": "Error loading VLC.js",
+   "errors": [
+    "ReferenceError: Can't find variable: SharedArrayBuffer"
+   ],
+   "wallMs": 37559
+  }
+ ]
+}

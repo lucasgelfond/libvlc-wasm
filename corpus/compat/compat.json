@@ -5,13 +5,13 @@
   "nativeVlc4": "4.0.0-dev (4.0.0-dev-39188-gb11917943e)",
   "ffmpeg": "ffmpeg version 9.0.2",
   "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
-  "libvlcWasm": "corpus/results/results.json (2026-09-27T18:42:11.412Z)",
+  "libvlcWasm": "corpus/results/results.json (2026-09-27T20:09:33.210Z)",
   "browsers": [
    "chromium",
    "webkit",
    "firefox"
   ],
-  "vlcjs": "addyosmani/vlc.js, bench/compare/vlcjs-results.json (2026-09-27T16:01:04.766Z)"
+  "vlcjs": "addyosmani/vlc.js, bench/compare/vlcjs-results.json (2026-09-27T21:31:14.806Z)"
  },
  "samples": [
   {
@@ -44,6 +44,18 @@
     "video": true,
     "audio": true,
     "note": "109 video frames; 161792 audio samples, peak -6 dB; 1 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "109 video frames; 161792 audio samples, peak -6 dB; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "109 video frames; 161792 audio samples, peak -6 dB; 1 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -91,6 +103,18 @@
     "audio": null,
     "note": "144 video frames; 71 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "144 video frames; 71 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "144 video frames; 71 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -135,6 +159,18 @@
     "video": true,
     "audio": true,
     "note": "240 video frames; 880640 audio samples, peak -24.5 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "240 video frames; 880640 audio samples, peak -24.5 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "240 video frames; 880640 audio samples, peak -24.5 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -182,6 +218,18 @@
     "audio": true,
     "note": "487424 audio samples, peak -2.5 dB; 1 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "487424 audio samples, peak -2.5 dB; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "487424 audio samples, peak -2.5 dB; 1 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -194,7 +242,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "realaudio-sipr-8-5k",
@@ -226,6 +274,18 @@
     "video": true,
     "audio": true,
     "note": "88 video frames; 80352 audio samples, peak -4.2 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "88 video frames; 80352 audio samples, peak -4.2 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "88 video frames; 80352 audio samples, peak -4.2 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -273,6 +333,18 @@
     "audio": true,
     "note": "11520 audio samples, peak -1.3 dB; 1 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "11520 audio samples, peak -1.3 dB; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "11520 audio samples, peak -1.3 dB; 1 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -285,7 +357,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "realvideo-2-in-matroska",
@@ -317,6 +389,18 @@
     "video": true,
     "audio": null,
     "note": "196 video frames; 7 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "196 video frames; 7 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "196 video frames; 7 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -362,6 +446,18 @@
     "video": true,
     "audio": true,
     "note": "124 video frames; 80352 audio samples, peak 0 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "124 video frames; 80352 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "124 video frames; 80352 audio samples, peak 0 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -409,6 +505,18 @@
     "audio": true,
     "note": "124 video frames; 167936 audio samples, peak -14.9 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "124 video frames; 167936 audio samples, peak -14.9 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "124 video frames; 167936 audio samples, peak -14.9 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -454,6 +562,18 @@
     "video": true,
     "audio": true,
     "note": "149 video frames; 335872 audio samples, peak -5.1 dB; 2 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "149 video frames; 335872 audio samples, peak -5.1 dB; 2 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "149 video frames; 335872 audio samples, peak -5.1 dB; 2 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -501,6 +621,18 @@
     "audio": null,
     "note": "25 video frames; 1 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "25 video frames; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "25 video frames; 1 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -545,6 +677,18 @@
     "video": true,
     "audio": null,
     "note": "14 video frames"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "14 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "14 video frames"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -591,6 +735,18 @@
     "audio": true,
     "note": "81600 audio samples, peak 0 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "81600 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "81600 audio samples, peak 0 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -603,7 +759,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "wma-lossless-24-bit",
@@ -636,6 +792,18 @@
     "audio": true,
     "note": "20286 audio samples, peak 0 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "20286 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "20286 audio samples, peak 0 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -648,7 +816,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "ms-screen-codec-2-wmv9-screen",
@@ -680,6 +848,18 @@
     "video": false,
     "audio": null,
     "note": "0 video frames; error: [mss2 @ 0xdef1e0] header error"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": false,
+     "audio": null,
+     "note": "0 video frames; error: [mss2 @ 0xdef1e0] header error"
+    },
+    "firefox": {
+     "video": false,
+     "audio": null,
+     "note": "0 video frames; error: [mss2 @ 0xdef1e0] header error"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -726,6 +906,18 @@
     "audio": null,
     "note": "50 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "50 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "50 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -770,6 +962,18 @@
     "video": true,
     "audio": true,
     "note": "234 video frames; 940032 audio samples, peak -15.4 dB; 425 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "234 video frames; 940032 audio samples, peak -15.4 dB; 425 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "234 video frames; 940032 audio samples, peak -15.4 dB; 425 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": false,
@@ -817,6 +1021,18 @@
     "audio": true,
     "note": "248 video frames; 4608 audio samples, peak -59.4 dB; 2 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "248 video frames; 4608 audio samples, peak -59.4 dB; 2 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "248 video frames; 4608 audio samples, peak -59.4 dB; 2 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": false,
     "checks": {
@@ -862,6 +1078,18 @@
     "video": true,
     "audio": true,
     "note": "50 video frames; 115763 audio samples, peak 0 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "50 video frames; 115763 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "50 video frames; 115763 audio samples, peak 0 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -909,6 +1137,18 @@
     "audio": null,
     "note": "40 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "40 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "40 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -953,6 +1193,18 @@
     "video": true,
     "audio": true,
     "note": "100 video frames; 163170 audio samples, peak -1 dB; 2 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "100 video frames; 163170 audio samples, peak -1 dB; 2 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "100 video frames; 163170 audio samples, peak -1 dB; 2 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1000,6 +1252,18 @@
     "audio": true,
     "note": "133 video frames; 196972 audio samples, peak 0 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "133 video frames; 196972 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "133 video frames; 196972 audio samples, peak 0 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1045,6 +1309,18 @@
     "video": true,
     "audio": true,
     "note": "257 video frames; 192828 audio samples, peak -0.2 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "257 video frames; 192828 audio samples, peak -0.2 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "257 video frames; 192828 audio samples, peak -0.2 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1092,6 +1368,18 @@
     "audio": null,
     "note": "1 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "1 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "1 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1136,6 +1424,18 @@
     "video": true,
     "audio": false,
     "note": "240 video frames; no audio decoded; error: [avi @ 0xdeea50] Failed to open codec in avformat_find_stream_info"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": false,
+     "note": "240 video frames; no audio decoded; error: [avi @ 0xdeea50] Failed to open codec in avformat_find_stream_info"
+    },
+    "firefox": {
+     "video": true,
+     "audio": false,
+     "note": "240 video frames; no audio decoded; error: [avi @ 0xdeea50] Failed to open codec in avformat_find_stream_info"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1183,6 +1483,18 @@
     "audio": null,
     "note": "1 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "1 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "1 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1228,6 +1540,18 @@
     "audio": null,
     "note": "25 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "25 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "25 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1272,6 +1596,18 @@
     "video": true,
     "audio": true,
     "note": "181 video frames; 728064 audio samples, peak -14.2 dB; 1 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "181 video frames; 728064 audio samples, peak -14.2 dB; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "181 video frames; 728064 audio samples, peak -14.2 dB; 1 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1319,6 +1655,18 @@
     "audio": null,
     "note": "31 video frames; 1 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "31 video frames; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "31 video frames; 1 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1364,6 +1712,18 @@
     "audio": true,
     "note": "777216 audio samples, peak -10.4 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "777216 audio samples, peak -10.4 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "777216 audio samples, peak -10.4 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1376,7 +1736,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "flash-vp6-sorenson-on2",
@@ -1408,6 +1768,18 @@
     "video": true,
     "audio": null,
     "note": "100 video frames"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "100 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "100 video frames"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1453,6 +1825,18 @@
     "video": true,
     "audio": true,
     "note": "299 video frames; 444416 audio samples, peak -14.1 dB; 2 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "299 video frames; 444416 audio samples, peak -14.1 dB; 2 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "299 video frames; 444416 audio samples, peak -14.1 dB; 2 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1500,6 +1884,18 @@
     "audio": true,
     "note": "63 video frames; 280320 audio samples, peak 0 dB; 46 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "63 video frames; 280320 audio samples, peak 0 dB; 46 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "63 video frames; 280320 audio samples, peak 0 dB; 46 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1545,6 +1941,18 @@
     "video": true,
     "audio": true,
     "note": "101 video frames; 80160 audio samples, peak -0.4 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "101 video frames; 80160 audio samples, peak -0.4 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "101 video frames; 80160 audio samples, peak -0.4 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1592,6 +2000,18 @@
     "audio": null,
     "note": "29 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "29 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "29 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1636,6 +2056,18 @@
     "video": true,
     "audio": true,
     "note": "150 video frames; 221524 audio samples, peak -0.1 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "150 video frames; 221524 audio samples, peak -0.1 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "150 video frames; 221524 audio samples, peak -0.1 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1683,6 +2115,18 @@
     "audio": null,
     "note": "10 video frames; 1 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "10 video frames; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "10 video frames; 1 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1728,6 +2172,18 @@
     "audio": true,
     "note": "892928 audio samples, peak 0 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "892928 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "892928 audio samples, peak 0 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1740,7 +2196,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "ima4-adpcm",
@@ -1773,6 +2229,18 @@
     "audio": true,
     "note": "883968 audio samples, peak 0 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "883968 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "883968 audio samples, peak 0 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1785,7 +2253,7 @@
     "webkit": true,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "mace-3-1",
@@ -1818,6 +2286,18 @@
     "audio": true,
     "note": "442020 audio samples, peak 0 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "442020 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "442020 audio samples, peak 0 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1830,7 +2310,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "smacker",
@@ -1862,6 +2342,18 @@
     "video": true,
     "audio": true,
     "note": "100 video frames; 156552 audio samples, peak 0 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "100 video frames; 156552 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "100 video frames; 156552 audio samples, peak 0 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -1909,6 +2401,18 @@
     "audio": null,
     "note": "20 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "20 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "20 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -1953,6 +2457,18 @@
     "video": true,
     "audio": true,
     "note": "210 video frames; 258300 audio samples, peak -0.1 dB; 2 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "210 video frames; 258300 audio samples, peak -0.1 dB; 2 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "210 video frames; 258300 audio samples, peak -0.1 dB; 2 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -2000,6 +2516,18 @@
     "audio": null,
     "note": "27 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "27 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "27 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2045,6 +2573,18 @@
     "audio": null,
     "note": "28 video frames"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "28 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "28 video frames"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2089,6 +2629,18 @@
     "video": true,
     "audio": true,
     "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -2136,6 +2688,18 @@
     "audio": true,
     "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [vivo @ 0xdeea40] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": false,
+     "audio": true,
+     "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [vivo @ 0xdeea40] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
+    },
+    "firefox": {
+     "video": false,
+     "audio": true,
+     "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [vivo @ 0xdeea40] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
+    }
+   },
    "libvlcWasm": {
     "passed": false,
     "checks": {
@@ -2182,6 +2746,18 @@
     "audio": true,
     "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2195,6 +2771,53 @@
     "webkit": false,
     "firefox": false
    },
+   "vlcjs": false
+  },
+  {
+   "id": "psx-str-lunar2",
+   "name": "PlayStation STR (Lunar 2 cutscene)",
+   "category": "game-and-oddball-video",
+   "container": "PSX STR (CD-XA)",
+   "video": "MDEC",
+   "audio": "XA ADPCM",
+   "file": "game-and-oddball-video/lunar2.str",
+   "url": "https://samples.ffmpeg.org/game-formats/psx-str/lunar2.str",
+   "bytes": 10920380,
+   "whyBrowserCant": "no browser reads raw PlayStation CD sectors or MDEC video",
+   "nativeVlc": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "nativeVlc4": {
+    "video": false,
+    "audio": false,
+    "note": "0 pictures displayed; no audio decoded; decoders audio:mpg123, video:avcodec, video:videotoolbox; with software decoding forced (--codec=avcodec,none): 0 pictures"
+   },
+   "ffmpeg": {
+    "video": null,
+    "audio": null,
+    "note": "not measured"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "150 video frames; 383040 audio samples, peak 0 dB; 1 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "150 video frames; 383040 audio samples, peak 0 dB; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "150 video frames; 383040 audio samples, peak 0 dB; 1 warning/error lines logged"
+    }
+   },
+   "libvlcWasm": null,
+   "browsers": null,
    "vlcjs": false
   },
   {
@@ -2228,6 +2851,18 @@
     "audio": true,
     "note": "516096 audio samples, peak -74.7 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "516096 audio samples, peak -74.7 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "516096 audio samples, peak -74.7 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2240,7 +2875,7 @@
     "webkit": true,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "e-ac-3-5-1-with-spx",
@@ -2273,6 +2908,18 @@
     "audio": true,
     "note": "433152 audio samples, peak -10.3 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "433152 audio samples, peak -10.3 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "433152 audio samples, peak -10.3 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2285,7 +2932,7 @@
     "webkit": true,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "dts-es",
@@ -2318,6 +2965,18 @@
     "audio": true,
     "note": "896000 audio samples, peak 0 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "896000 audio samples, peak 0 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "896000 audio samples, peak 0 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2330,7 +2989,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "dolby-truehd-atmos-8ch",
@@ -2363,6 +3022,18 @@
     "audio": true,
     "note": "40960 audio samples, peak -8 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "40960 audio samples, peak -8 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "40960 audio samples, peak -8 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2375,7 +3046,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "mlp-440-hz",
@@ -2408,6 +3079,18 @@
     "audio": true,
     "note": "882000 audio samples, peak -12 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "882000 audio samples, peak -12 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "882000 audio samples, peak -12 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2420,7 +3103,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "musepack-sv8",
@@ -2453,6 +3136,18 @@
     "audio": true,
     "note": "884736 audio samples, peak -1.5 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "884736 audio samples, peak -1.5 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "884736 audio samples, peak -1.5 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2465,7 +3160,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "musepack-sv7",
@@ -2498,6 +3193,18 @@
     "audio": true,
     "note": "884736 audio samples, peak -1.5 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "884736 audio samples, peak -1.5 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2510,7 +3217,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "monkey-s-audio",
@@ -2543,10 +3250,22 @@
     "audio": true,
     "note": "27648 audio samples, peak 0 dB; 2 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "27648 audio samples, peak 0 dB; 2 warning/error lines logged"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "27648 audio samples, peak 0 dB; 2 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
-    "passed": true,
+    "passed": false,
     "checks": {
-     "audio": true
+     "audio": false
     },
     "note": "truncated test file: native FFmpeg reports \"Error decoding frame\" too, and how much decodes varies from run to run"
    },
@@ -2555,7 +3274,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "true-audio-6-6-mb",
@@ -2588,6 +3307,18 @@
     "audio": true,
     "note": "1013760 audio samples, peak -0.2 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "1013760 audio samples, peak -0.2 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "1013760 audio samples, peak -0.2 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2600,7 +3331,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "amr-nb-12-2k",
@@ -2633,6 +3364,18 @@
     "audio": true,
     "note": "45440 audio samples, peak -2.9 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "45440 audio samples, peak -2.9 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "45440 audio samples, peak -2.9 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -2645,7 +3388,7 @@
     "webkit": true,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "shorten",
@@ -2678,6 +3421,18 @@
     "audio": true,
     "note": "883200 audio samples, peak -2.7 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "883200 audio samples, peak -2.7 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "883200 audio samples, peak -2.7 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": false,
     "checks": {
@@ -2690,7 +3445,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "hevc-main10-dolby-vision-p7-in-mkv",
@@ -2722,6 +3477,18 @@
     "video": true,
     "audio": null,
     "note": "1 video frames"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "1 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "1 video frames"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -2767,6 +3534,18 @@
     "video": false,
     "audio": false,
     "note": "0 video frames; no audio decoded; error: [mpegts @ 0xdeea40] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": false,
+     "audio": false,
+     "note": "0 video frames; no audio decoded; error: [mpegts @ 0xdeea40] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
+    },
+    "firefox": {
+     "video": false,
+     "audio": false,
+     "note": "0 video frames; no audio decoded; error: [mpegts @ 0xdeea40] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
+    }
    },
    "libvlcWasm": {
     "passed": false,
@@ -2818,10 +3597,24 @@
     "subtitles": true,
     "note": "73 KiB of subpictures decoded"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": null,
+     "subtitles": true,
+     "note": "73 KiB of subpictures decoded"
+    },
+    "firefox": {
+     "video": null,
+     "audio": null,
+     "subtitles": true,
+     "note": "73 KiB of subpictures decoded"
+    }
+   },
    "libvlcWasm": {
-    "passed": true,
+    "passed": false,
     "checks": {
-     "subtitle track": true
+     "subtitle track": false
     },
     "note": null
    },
@@ -2862,6 +3655,18 @@
     "video": true,
     "audio": null,
     "note": "135 video frames"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "135 video frames"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "135 video frames"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -2907,6 +3712,18 @@
     "video": true,
     "audio": true,
     "note": "240 video frames; 961664 audio samples, peak 0 dB; 46 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "240 video frames; 961664 audio samples, peak 0 dB; 46 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "240 video frames; 961664 audio samples, peak 0 dB; 46 warning/error lines logged"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -2954,6 +3771,18 @@
     "audio": true,
     "note": "250 video frames; 963072 audio samples, peak -11.5 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "250 video frames; 963072 audio samples, peak -11.5 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "250 video frames; 963072 audio samples, peak -11.5 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3000,6 +3829,18 @@
     "audio": false,
     "note": "no audio decoded; error: snes-spc.spc: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: snes-spc.spc: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: snes-spc.spc: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3012,7 +3853,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "nes-nsf-tetris-gb-rip",
@@ -3045,6 +3886,18 @@
     "audio": false,
     "note": "no audio decoded; error: nes-nsf-tetris-gb-rip.nsf: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: nes-nsf-tetris-gb-rip.nsf: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: nes-nsf-tetris-gb-rip.nsf: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3057,7 +3910,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "sega-genesis-vgz-gzip-vgm",
@@ -3090,6 +3943,18 @@
     "audio": false,
     "note": "no audio decoded; error: sega-genesis-vgz-gzip-vgm.vgz: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: sega-genesis-vgz-gzip-vgm.vgz: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: sega-genesis-vgz-gzip-vgm.vgz: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3102,7 +3967,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "c64-sid-rob-hubbard-commando",
@@ -3135,6 +4000,18 @@
     "audio": false,
     "note": "no audio decoded; error: c64-sid-rob-hubbard-commando.sid: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: c64-sid-rob-hubbard-commando.sid: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: c64-sid-rob-hubbard-commando.sid: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3147,7 +4024,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "standard-midi-file",
@@ -3180,6 +4057,18 @@
     "audio": false,
     "note": "no audio decoded; error: standard-midi-file.mid: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: standard-midi-file.mid: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: standard-midi-file.mid: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3192,7 +4081,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
@@ -3225,6 +4114,18 @@
     "audio": false,
     "note": "no audio decoded; error: axelf-mod-15-sample-soundtracker-no-m-k-.mod: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: axelf-mod-15-sample-soundtracker-no-m-k-.mod: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: axelf-mod-15-sample-soundtracker-no-m-k-.mod: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3237,7 +4138,7 @@
     "webkit": true,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "external-xm",
@@ -3270,6 +4171,18 @@
     "audio": false,
     "note": "no audio decoded; error: external-xm.xm: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: external-xm.xm: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: external-xm.xm: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3282,7 +4195,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "sandman-s3m",
@@ -3315,6 +4228,18 @@
     "audio": false,
     "note": "no audio decoded; error: sandman-s3m.s3m: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: sandman-s3m.s3m: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: sandman-s3m.s3m: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3327,7 +4252,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "for-a-change-it",
@@ -3360,6 +4285,18 @@
     "audio": false,
     "note": "no audio decoded; error: for-a-change-it.it: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: for-a-change-it.it: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: for-a-change-it.it: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3372,7 +4309,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "openmpt-test-xm",
@@ -3405,6 +4342,18 @@
     "audio": false,
     "note": "no audio decoded; error: openmpt-test-xm.xm: Invalid data found when processing input"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: openmpt-test-xm.xm: Invalid data found when processing input"
+    },
+    "firefox": {
+     "video": null,
+     "audio": false,
+     "note": "no audio decoded; error: openmpt-test-xm.xm: Invalid data found when processing input"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3417,7 +4366,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "everyday-mp4-h264-aac",
@@ -3449,6 +4398,18 @@
     "video": true,
     "audio": true,
     "note": "90 video frames; 144384 audio samples, peak -16.1 dB; 3 warning/error lines logged"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144384 audio samples, peak -16.1 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144384 audio samples, peak -16.1 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -3496,6 +4457,18 @@
     "audio": true,
     "note": "90 video frames; 144384 audio samples, peak -16.1 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144384 audio samples, peak -16.1 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144384 audio samples, peak -16.1 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3541,6 +4514,18 @@
     "video": false,
     "audio": true,
     "note": "0 video frames; 144384 audio samples, peak -16.1 dB; error: [av1 @ 0xdeee50] Failed to get pixel format."
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": false,
+     "audio": true,
+     "note": "0 video frames; 144384 audio samples, peak -16.1 dB; error: [av1 @ 0xdeee50] Failed to get pixel format."
+    },
+    "firefox": {
+     "video": false,
+     "audio": true,
+     "note": "0 video frames; 144384 audio samples, peak -16.1 dB; error: [av1 @ 0xdeee50] Failed to get pixel format."
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -3588,6 +4573,18 @@
     "audio": true,
     "note": "90 video frames; 144000 audio samples, peak -17.9 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144000 audio samples, peak -17.9 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144000 audio samples, peak -17.9 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3633,6 +4630,18 @@
     "video": false,
     "audio": true,
     "note": "0 video frames; 144000 audio samples, peak -17.9 dB; error: [av1 @ 0xdef140] Failed to get pixel format."
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": false,
+     "audio": true,
+     "note": "0 video frames; 144000 audio samples, peak -17.9 dB; error: [av1 @ 0xdef140] Failed to get pixel format."
+    },
+    "firefox": {
+     "video": false,
+     "audio": true,
+     "note": "0 video frames; 144000 audio samples, peak -17.9 dB; error: [av1 @ 0xdef140] Failed to get pixel format."
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -3680,6 +4689,18 @@
     "audio": true,
     "note": "90 video frames; 288000 audio samples, peak -21 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 288000 audio samples, peak -21 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 288000 audio samples, peak -21 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3725,6 +4746,18 @@
     "video": true,
     "audio": true,
     "note": "90 video frames; 145408 audio samples, peak -16.1 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 145408 audio samples, peak -16.1 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 145408 audio samples, peak -16.1 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -3772,6 +4805,18 @@
     "audio": true,
     "note": "90 video frames; 144000 audio samples, peak -18.1 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144000 audio samples, peak -18.1 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 144000 audio samples, peak -18.1 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3817,6 +4862,18 @@
     "video": true,
     "audio": true,
     "note": "90 video frames; 145152 audio samples, peak -18.4 dB"
+   },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 145152 audio samples, peak -18.4 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "90 video frames; 145152 audio samples, peak -18.4 dB"
+    }
    },
    "libvlcWasm": {
     "passed": true,
@@ -3864,6 +4921,18 @@
     "audio": true,
     "note": "144000 audio samples, peak -18.3 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -18.3 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -18.3 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3876,7 +4945,7 @@
     "webkit": true,
     "firefox": true
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "everyday-audio-m4a",
@@ -3909,6 +4978,18 @@
     "audio": true,
     "note": "144384 audio samples, peak -17.9 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "144384 audio samples, peak -17.9 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "144384 audio samples, peak -17.9 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3921,7 +5002,7 @@
     "webkit": true,
     "firefox": true
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "everyday-audio-flac",
@@ -3954,6 +5035,18 @@
     "audio": true,
     "note": "144000 audio samples, peak -18.1 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -18.1 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -18.1 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -3966,7 +5059,7 @@
     "webkit": true,
     "firefox": true
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "everyday-audio-wav",
@@ -3999,6 +5092,18 @@
     "audio": true,
     "note": "144000 audio samples, peak -18.1 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -18.1 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -18.1 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -4011,7 +5116,7 @@
     "webkit": true,
     "firefox": true
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "everyday-audio-ogg",
@@ -4044,6 +5149,18 @@
     "audio": true,
     "note": "288000 audio samples, peak -21 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "288000 audio samples, peak -21 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "288000 audio samples, peak -21 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -4056,7 +5173,7 @@
     "webkit": true,
     "firefox": true
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "everyday-audio-opus",
@@ -4089,6 +5206,18 @@
     "audio": true,
     "note": "144000 audio samples, peak -17.9 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -17.9 dB"
+    },
+    "firefox": {
+     "video": null,
+     "audio": true,
+     "note": "144000 audio samples, peak -17.9 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -4101,7 +5230,7 @@
     "webkit": true,
     "firefox": true
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "dvd-video-iso",
@@ -4134,6 +5263,18 @@
     "audio": null,
     "note": "300 video frames; 2 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": null,
+     "note": "300 video frames; 1 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": null,
+     "note": "300 video frames; 1 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -4146,7 +5287,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": true
   },
   {
    "id": "bluray-bdmv-iso",
@@ -4179,6 +5320,18 @@
     "audio": true,
     "note": "216 video frames; 866304 audio samples, peak 0 dB; 598 warning/error lines logged"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "216 video frames; 866304 audio samples, peak 0 dB; 598 warning/error lines logged"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "216 video frames; 866304 audio samples, peak 0 dB; 598 warning/error lines logged"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -4192,7 +5345,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   },
   {
    "id": "cenc-clearkey-mp4",
@@ -4225,6 +5378,18 @@
     "audio": true,
     "note": "75 video frames; 133120 audio samples, peak -17.7 dB"
    },
+   "ffmpegWasmByEngine": {
+    "webkit": {
+     "video": true,
+     "audio": true,
+     "note": "75 video frames; 133120 audio samples, peak -17.7 dB"
+    },
+    "firefox": {
+     "video": true,
+     "audio": true,
+     "note": "75 video frames; 133120 audio samples, peak -17.7 dB"
+    }
+   },
    "libvlcWasm": {
     "passed": true,
     "checks": {
@@ -4238,7 +5403,7 @@
     "webkit": false,
     "firefox": false
    },
-   "vlcjs": null
+   "vlcjs": false
   }
  ]
 }

@@ -1,13 +1,25 @@
 // Shared by the port harnesses in bench/compare (krowemoh.mjs, webvlc.mjs, jbk.mjs).
 // Same sample selection, picture test and timing as vlcjs.mjs, plus a silent audio probe.
-import { readFileSync, existsSync, statSync, createReadStream } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, statSync, createReadStream, mkdirSync, rmSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize } from 'node:path';
-import { chromium } from 'playwright';
-import { root } from '../../tests/lib/browser.mjs';
+import { root, launchMuted } from '../../tests/lib/browser.mjs';
 
 export { root };
-export const args = Object.fromEntries(process.argv.slice(2).map((a) => a.replace(/^--/, '').split('=')));
+export const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, ...v] = a.replace(/^--/, '').split('='); return [k, v.length ? v.join('=') : true]; }));
+
+/** --engine=chromium|webkit|firefox (default chromium, which is installed Chrome as before). */
+export const engine = args.engine ?? 'chromium';
+if (!['chromium', 'webkit', 'firefox'].includes(engine)) throw new Error(`unknown --engine=${engine}`);
+
+/**
+ * The harness's port, offset per engine so the three engines can run at once. --port-base moves
+ * the base (two runs of one script, e.g. jbk.mjs on two builds); --port sets it outright.
+ */
+export const portFor = (base) => +(args.port ?? +(args['port-base'] ?? base) + { chromium: 0, webkit: 10, firefox: 20 }[engine]);
+
+/** bench/compare/<base>-results.json for Chromium (unchanged), <base>-<engine>-results.json otherwise. */
+export const resultsFile = (base) => `${root}/bench/compare/${base}${engine === 'chromium' ? '' : `-${engine}`}-results.json`;
 
 /**
  * vlcjs.mjs's video set (every video sample without a special test mode, plus the generated
@@ -19,6 +31,7 @@ export function loadSamples() {
   let samples = manifest.samples.filter((s) => s.video && keep(s));
   samples.push({ id: 'gen-h264-opus-ass', name: 'H.264 + Opus + ASS in MKV (generated)', category: 'control', file: 'gen/t_h264_opus_ass.mkv', video: 'H.264', audio: 'Opus' });
   if (!args['video-only']) samples.push(...manifest.samples.filter((s) => !s.video && s.audio && keep(s)));
+  if (args.ids) { const ids = new Set(args.ids.split(',')); samples = samples.filter((s) => ids.has(s.id)); }
   if (args.limit) samples = samples.slice(0, +args.limit);
   return samples;
 }
@@ -48,9 +61,12 @@ export async function serve(port, mounts, pages = {}, { isolate = true } = {}) {
   return server;
 }
 
-/** Headless Chrome, always muted. */
+/**
+ * The --engine browser, always muted (tests/lib/browser.mjs launchMuted). Chromium is installed
+ * Chrome, as the Chromium-only runs always were; WebKit and Firefox are Playwright's builds.
+ */
 export async function launch() {
-  return chromium.launch({ channel: 'chrome', args: ['--mute-audio', '--autoplay-policy=no-user-gesture-required'] });
+  return launchMuted(engine, engine === 'chromium' ? { channel: 'chrome' } : {});
 }
 
 /** Luma variance of a PNG screenshot, decoded in a scratch page (identical to vlcjs.mjs). */
@@ -128,3 +144,75 @@ export function summarize(label, results) {
   console.log(`\n${label}: video ${s.videoShown} (${s.videoShownExclEveryday} excl. everyday), audible ${s.audible}, median first frame ${s.medianFirstFrameMs} ms, crashes ${s.crashed}`);
   return s;
 }
+
+/**
+ * Writes resultsFile(base). With --ids (a re-run of some samples, e.g. retrying ones that failed
+ * while the machine was busy) the new rows replace the old ones in the existing file, which keeps
+ * its order, and the summary is recomputed over the merged rows; `rerun` lists what was redone.
+ */
+export function saveResults(base, label, meta, results, extend = () => {}) {
+  const file = resultsFile(base);
+  let rows = results, rerun;
+  if (args.ids && existsSync(file)) {
+    const prev = JSON.parse(readFileSync(file, 'utf8'));
+    const fresh = new Map(results.map((r) => [r.id, r]));
+    rows = prev.results.map((r) => fresh.get(r.id) ?? r);
+    for (const r of results) if (!prev.results.some((x) => x.id === r.id)) rows.push(r);
+    rerun = [...new Set([...(prev.rerun ?? []), ...results.map((r) => r.id)])];
+    meta = { ...meta, date: prev.date, rerunDate: new Date().toISOString() };
+  }
+  const summary = summarize(label, rows);
+  extend(summary, rows);
+  clearCheckpoint(base);
+  writeFileSync(file, JSON.stringify({ date: new Date().toISOString(), ...meta, engine, summary, ...(rerun ? { rerun } : {}), results: rows }, null, 1));
+  return summary;
+}
+
+/**
+ * A launch() browser that comes back if it goes away (a crashed engine, or a browser process
+ * killed from outside mid-run): page() relaunches when the old one is gone. `scratch` is the
+ * page variance() decodes screenshots in. `relaunches` is recorded in the results file.
+ */
+/** `promise`, or `fallback` after `ms`: a page whose main thread is stuck never answers evaluate() or close(). */
+export const timed = (promise, ms, fallback = null) => Promise.race([Promise.resolve(promise).catch(() => fallback), new Promise((r) => setTimeout(() => r(fallback), ms))]);
+
+export async function session() {
+  let browser = await launch();
+  let scratch = await browser.newPage();
+  const s = {
+    relaunches: 0,
+    get scratch() { return scratch; },
+    async page(opts) {
+      if (browser.isConnected()) {
+        const page = await timed(browser.newPage(opts), 30000);
+        if (page) return page;
+      }
+      await timed(browser.close(), 10000);
+      s.relaunches++;
+      console.warn(`[${engine}] browser went away; relaunching`);
+      browser = await launch();
+      scratch = await browser.newPage();
+      return browser.newPage(opts);
+    },
+    close: () => timed(browser.close(), 10000),
+  };
+  return s;
+}
+
+/**
+ * Rows are checkpointed after every sample to .scratch/compare/<base>[-<engine>].partial.json;
+ * --resume picks up from there, so a run killed halfway need not start over.
+ */
+const partialFile = (base) => `${root}/.scratch/compare/${base}${engine === 'chromium' ? '' : `-${engine}`}.partial.json`;
+export function resumeRows(base) {
+  const f = partialFile(base);
+  if (!args.resume || !existsSync(f)) return [];
+  const rows = JSON.parse(readFileSync(f, 'utf8'));
+  console.log(`resuming ${base} (${engine}) after ${rows.length} samples`);
+  return rows;
+}
+export function checkpoint(base, rows) {
+  mkdirSync(`${root}/.scratch/compare`, { recursive: true });
+  writeFileSync(partialFile(base), JSON.stringify(rows));
+}
+export const clearCheckpoint = (base) => rmSync(partialFile(base), { force: true });

@@ -25,26 +25,27 @@
 //   sed -i 's/GLSLANG_BRANCH := master/GLSLANG_BRANCH := main/' vlc/contrib/src/glslang/rules.mak
 //   bash compile.sh   # then copy out the files listed in .gitlab-ci.yml's artifacts
 // bench/compare/jbk-source-build-results.json is that build (.research/vlcjs-jbk-build).
-//   node bench/compare/jbk.mjs [--dir=...] [--label=...] [--only=category] [--limit=N] [--video-only] [--shots]
-// Writes bench/compare/jbk-results.json (or jbk-<label>-results.json). Silent: Chrome runs muted.
+//   node bench/compare/jbk.mjs [--engine=chromium|webkit|firefox] [--dir=...] [--label=...] [--only=category] [--limit=N] [--video-only] [--shots]
+// Writes bench/compare/jbk-results.json (or jbk-<label>-results.json; -<engine> is added before
+// -results off Chromium). Silent: every engine runs muted.
 import { writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { root, args, loadSamples, serve, launch, variance, AUDIO_PROBE, logRow, summarize } from './_common.mjs';
+import { root, args, engine, portFor, loadSamples, serve, variance, AUDIO_PROBE, logRow, saveResults, session, timed, resumeRows, checkpoint } from './_common.mjs';
 
 const dir = resolve(root, args.dir ?? '.research/vlcjs-jbk-demo') + '/';
 if (!existsSync(`${dir}vlc.html`) || !existsSync(`${dir}experimental.wasm`)) throw new Error(`${dir} has no vlc.html + experimental.wasm; see the header of this file`);
 const label = args.label ?? 'published-demo';
 const out = args.label ? `jbk-${args.label}` : 'jbk';
-const PORT = 5495;
+const PORT = portFor(5495);
 const samples = loadSamples();
 
 const server = await serve(PORT, { '/': dir });
-const browser = await launch();
-const scratch = await browser.newPage();
+const sess = await session();
 
-const results = [];
+const results = resumeRows(out);
 for (const s of samples) {
-  const p = await browser.newPage({ viewport: { width: 1024, height: 700 } });
+  if (results.some((r) => r.id === s.id)) continue;
+  const p = await sess.page({ viewport: { width: 1024, height: 700 } });
   await p.addInitScript(AUDIO_PROBE);
   const errors = [];
   p.on('pageerror', (e) => errors.push(e.message));
@@ -65,12 +66,12 @@ for (const s of samples) {
       await p.waitForTimeout(250);
       const shot = await p.locator('#canvas').screenshot({ timeout: 2000 }).catch(() => null);
       if (!shot) continue;
-      const v = await variance(scratch, shot);
+      const v = await variance(sess.scratch, shot);
       maxVar = Math.max(maxVar, v);
       if (v > 20 && firstFrameMs == null) firstFrameMs = Date.now() - tOpen;
       if (v >= maxVar && args.shots) writeFileSync(`${root}/bench/compare/${out}-${s.id}.png`, shot);
     }
-    audio = await p.evaluate(() => window.__audioPeak?.()).catch(() => null);
+    audio = await timed(p.evaluate(() => window.__audioPeak?.()), 5000);
   } catch (e) {
     errors.push(String(e.message ?? e));
   }
@@ -81,10 +82,10 @@ for (const s of samples) {
     crashed, errors: errors.slice(0, 5), wallMs: Date.now() - t0,
   };
   results.push(row);
+  checkpoint(out, results);
   logRow(row);
-  await p.close().catch(() => {});
+  await timed(p.close(), 10000);
 }
-await browser.close();
+await sess.close();
 server.close();
-const summary = summarize(`jbk/vlc.js (${label})`, results);
-writeFileSync(`${root}/bench/compare/${out}-results.json`, JSON.stringify({ date: new Date().toISOString(), port: 'jbk/vlc.js', build: label, dir, summary, results }, null, 1));
+saveResults(out, `jbk/vlc.js (${label}, ${engine})`, { port: 'jbk/vlc.js', build: label, dir, relaunches: sess.relaunches }, results);

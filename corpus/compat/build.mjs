@@ -7,6 +7,9 @@
 //   node corpus/compat/build.mjs --measure=vlc      re-measure one tool (vlc,vlc4,ffmpeg,wasm; comma list)
 //   node corpus/compat/build.mjs --measure=none     only re-merge measurements.json + inputs
 //   node corpus/compat/build.mjs --ids=a,b          limit measuring to these sample ids
+//   node corpus/compat/build.mjs --measure=wasm --wasm-engines=chromium,webkit,firefox
+//                                                   ffmpeg.wasm in each engine (default chromium);
+//                                                   Chromium stays in `wasm`, others go to wasmByEngine
 //
 // Raw per-tool measurements are kept in measurements.json so a merge never
 // needs to re-run the tools. Nothing here plays sound: VLC renders audio to a
@@ -32,6 +35,7 @@ const SECONDS = 10; // every tool decodes at most the first 10 s
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const measure = new Set(String(args.measure ?? 'vlc,vlc4,ffmpeg,wasm').split(',').filter((x) => x && x !== 'none'));
 const onlyIds = args.ids ? new Set(String(args.ids).split(',')) : null;
+const wasmEngines = String(args['wasm-engines'] ?? 'chromium').split(',');
 
 const manifest = JSON.parse(readFileSync(`${root}/corpus/manifest.json`, 'utf8'));
 const measPath = `${here}/measurements.json`;
@@ -213,15 +217,16 @@ if (measure.has('vlc4') && existsSync(VLC4)) {
 } else if (measure.has('vlc4')) console.log(`vlc4: ${VLC4} not found, skipped`);
 
 // ---------------------------------------------------------------------------
-// ffmpeg.wasm 0.12 (single-threaded core, UMD build through blob URLs) in
-// Chromium, on the repo's cross-origin isolated Vite server.
-if (measure.has('wasm')) {
+// ffmpeg.wasm 0.12 (single-threaded core, UMD build through blob URLs) in each
+// --wasm-engines browser (muted, via openHarness), on the repo's cross-origin isolated Vite server.
+if (measure.has('wasm')) for (const engine of wasmEngines) {
+  const into = engine === 'chromium' ? meas.wasm : ((meas.wasmByEngine ??= {})[engine] ??= {});
   const { startServer, openHarness } = await import('../../tests/lib/browser.mjs');
   const { server, url } = await startServer();
   let h;
   const open = async () => {
     if (h) await h.browser.close().catch(() => {});
-    h = await openHarness(url, 'chromium'); // headless, --mute-audio
+    h = await openHarness(url, engine); // headless and silenced (tests/lib/browser.mjs)
     await h.page.evaluate(async () => {
       const load = (src) => new Promise((ok, no) => document.head.append(Object.assign(document.createElement('script'), { src, onload: ok, onerror: no })));
       if (!window.FFmpegWASM) await load('/node_modules/@ffmpeg/ffmpeg/dist/umd/ffmpeg.js');
@@ -246,7 +251,17 @@ if (measure.has('wasm')) {
       await window.compatLoad();
     });
   };
-  await open();
+  try {
+    await open();
+  } catch (e) {
+    // Record an engine that cannot load ffmpeg.wasm at all, per sample, rather than dropping it.
+    console.log(`wasm[${engine}] did not load: ${e.message}`);
+    for (const s of todo) into[s.id] = { loadError: String(e.message).slice(0, 300) };
+    saveMeas();
+    await h?.browser.close().catch(() => {});
+    await server.close();
+    continue;
+  }
   const version = await h.page.evaluate(() => window.compatExec(['-version']));
   meas.tools.ffmpegWasm = `@ffmpeg/core 0.12.10 (${/ffmpeg version (\S+)/.exec(version.log)?.[1] ?? 'unknown'})`;
   for (const s of todo) {
@@ -279,8 +294,8 @@ if (measure.has('wasm')) {
       const a = await exec('audio'); r.audio = { ...parseFfmpeg(a.log, 'audio'), code: a.code };
     }
     void names;
-    meas.wasm[s.id] = r;
-    console.log(`wasm    ${s.id.padEnd(44)} v=${r.video?.frames ?? '-'} a=${r.audio?.samples ?? '-'} s=${r.subs?.subtitleKiB ?? '-'}`);
+    into[s.id] = r;
+    console.log(`wasm[${engine}] ${s.id.padEnd(44)} v=${r.video?.frames ?? '-'} a=${r.audio?.samples ?? '-'} s=${r.subs?.subtitleKiB ?? '-'}`);
   }
   saveMeas();
   await h.browser.close();
@@ -297,6 +312,7 @@ const res = byId(results.results), vj = byId(vlcjs.results);
 const db = (x) => (x == null ? 'silent (-inf dB)' : `peak ${x} dB`);
 function ffVerdict(m, j) {
   if (!m) return { video: null, audio: null, note: 'not measured' };
+  if (m.loadError) return { video: j.hasVideo ? false : null, audio: j.hasAudio ? false : null, note: `ffmpeg.wasm did not load: ${m.loadError}` };
   if (j.subs) {
     const ok = m.subs.subtitleKiB > 0;
     return { video: null, audio: null, subtitles: ok, note: ok ? `${m.subs.subtitleKiB} KiB of subpictures decoded` : `no subtitles decoded${m.subs.firstError ? `: ${m.subs.firstError}` : ''}` };
@@ -356,6 +372,7 @@ const samples = manifest.samples.map((s) => {
     nativeVlc4: vlcVerdict(meas.vlc4[s.id], j, s),
     ffmpeg: ffVerdict(meas.ffmpeg[s.id], j),
     ffmpegWasm: ffVerdict(meas.wasm[s.id], j),
+    ...(meas.wasmByEngine ? { ffmpegWasmByEngine: Object.fromEntries(Object.entries(meas.wasmByEngine).map(([e, m]) => [e, ffVerdict(m[s.id], j)])) } : {}),
     libvlcWasm: lv ? {
       passed: lv.passed, checks: lv.checks ?? null,
       note: lv.knownIssue ?? (lv.expectedFailure ? `expected failure: ${lv.expectedFailure}` : null) ?? lv.error ?? null,
