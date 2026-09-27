@@ -2,7 +2,7 @@
 # Links VLC's static archives, our webaudio module and the bridge into
 # libvlc.js + libvlc.wasm. Runs inside the build container (./build.sh link).
 set -eu
-SUFFIX=; [ "${VARIANT:-default}" = sout ] && SUFFIX=-sout
+SUFFIX=; [ "${VARIANT:-default}" != default ] && SUFFIX=-$VARIANT
 
 . /opt/emsdk/emsdk_env.sh >/dev/null 2>&1
 
@@ -14,6 +14,8 @@ OUT=/work/packages/core/wasm
 NAME=libvlc
 # The stream-output engine ships as its own package (libvlc-wasm-sout).
 if [ "${VARIANT:-default}" = sout ]; then NAME=libvlc-sout; OUT=/work/packages/sout/wasm; fi
+# Built for its owner's use only, never packaged (see build.sh).
+if [ "${VARIANT:-default}" = dvdcss ]; then NAME=libvlc-dvdcss; OUT=/work/build/engines/dvdcss; fi
 # OUT_DIR links somewhere else (a size study, say) without touching the packages.
 OUT=${OUT_DIR:-$OUT}
 OBJ=/cache/link$SUFFIX

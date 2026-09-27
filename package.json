@@ -13,7 +13,8 @@
     "corpus": "node corpus/fetch.mjs",
     "verify": "node tests/verify-corpus.mjs",
     "bench": "node bench/run.mjs",
-    "fate": "node corpus/compat/fate.mjs"
+    "fate": "node corpus/compat/fate.mjs",
+    "build:dvdcss": "WITH_DVDCSS=1 ./build.sh"
   },
   "devDependencies": {
     "@ffmpeg/core": "0.12.10",

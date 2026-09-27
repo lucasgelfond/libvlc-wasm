@@ -75,6 +75,19 @@ lossless fallback to software when it can't.
 disc's own navigation commands. No libdvdcss, so CSS-encrypted discs do not play; unencrypted
 ones and decrypted images do.
 
+**CSS-encrypted DVDs**: libvlc-wasm does not distribute libdvdcss, the way Debian, Ubuntu
+and Fedora leave it out of their archives but let users install it themselves. Build your
+own engine with it:
+
+```sh
+WITH_DVDCSS=1 ./build.sh     # fetches libdvdcss from VideoLAN and compiles it on your machine
+```
+
+It lands in `build/engines/dvdcss/` (ignored by git, never packaged or published). Serve the
+two files yourself and load them with
+`createVLC({ engine: { moduleUrl: '/libvlc-dvdcss.js', wasmUrl: '/libvlc-dvdcss.wasm' } })`.
+Whether you may use it depends on where you live.
+
 **Blu-ray**: unencrypted BDMV images through libbluray — playlists and chapters (tested),
 and HDMV (IG) menus, which libbluray renders but no test covers yet: no open-source tool
 authors them. No BD-J (Java) menus and no AACS/BD+, so commercial discs do not play.

@@ -19,3 +19,9 @@ bench/compare/*.png
 /corpus/results/partial-*.json
 .scratch/
 corpus/fate/
+# public test suites: definitions (corpus/suites/*.json) are committed, the downloads are not
+/corpus/suites/*/
+/corpus/suites/.*/
+
+# Engines built for local use only (WITH_DVDCSS=1): never committed or published.
+build/engines/

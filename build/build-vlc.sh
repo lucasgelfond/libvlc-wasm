@@ -6,7 +6,7 @@
 # VLC builds touch tens of thousands of files and a macOS bind mount makes that
 # several times slower. Only the finished archives are copied to /work/.cache/vlc-out.
 set -eu
-SUFFIX=; [ "${VARIANT:-default}" = sout ] && SUFFIX=-sout
+SUFFIX=; [ "${VARIANT:-default}" != default ] && SUFFIX=-$VARIANT
 
 VLC_REPO=${VLC_REPO:-https://code.videolan.org/videolan/vlc.git}
 VLC_COMMIT=${VLC_COMMIT:?}
@@ -72,8 +72,13 @@ sed -i 's|    emconfigure "$VLC_SRCPATH"/configure|    CFLAGS="$VLC_CFLAGS" CXXF
 sed -i 's/--disable-goom \\/--disable-goom --disable-soxr \\/' "$UP"
 # Discs: DVD images and VIDEO_TS folders (dvdnav, with menus) and Blu-ray
 # (libbluray, HDMV menus; no BD-J, which needs Java). No libdvdcss or libaacs:
-# unencrypted discs play, encrypted ones do not (patches/0005).
-sed -i 's/--disable-disc /--disable-dvdcss /' "$UP"
+# unencrypted discs play, encrypted ones do not (patches/0005) -- except in the
+# dvdcss variant, which you build yourself and which is never distributed.
+if [ "${VARIANT:-default}" = dvdcss ]; then
+  sed -i 's/--disable-disc //' "$UP"
+else
+  sed -i 's/--disable-disc /--disable-dvdcss /' "$UP"
+fi
 # C64 SID music (libsidplay2, GPL).
 sed -i 's/ --disable-sidplay2//' "$UP"
 if [ "${VARIANT:-default}" = sout ]; then

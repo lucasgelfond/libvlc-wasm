@@ -16,12 +16,19 @@ IMAGE=libvlc-wasm-build:latest
 # CACHE_DIR at a host directory it can save between runs.
 # VARIANT=sout builds a second binary with VLC's stream output (transcoding,
 # remuxing, recording) and FFmpeg's encoders/muxers, in its own build tree.
+#
+# WITH_DVDCSS=1 builds an engine that decrypts CSS-protected DVDs with
+# libdvdcss, for your own use: it goes to build/engines/dvdcss/ (ignored by
+# git) and is never part of the npm packages or the site -- libvlc-wasm does
+# not distribute libdvdcss. Load it with
+#   createVLC({ engine: { moduleUrl: '/libvlc-dvdcss.js', wasmUrl: '/libvlc-dvdcss.wasm' } })
+[ "${WITH_DVDCSS:-0}" = 1 ] && VARIANT=dvdcss
 VARIANT=${VARIANT:-default}
-if [ "$VARIANT" = sout ]; then
-  CACHE=${CACHE_DIR:-libvlc-wasm-cache-sout}
-else
-  CACHE=${CACHE_DIR:-libvlc-wasm-cache}
-fi
+case "$VARIANT" in
+  default) CACHE=${CACHE_DIR:-libvlc-wasm-cache} ;;
+  sout|dvdcss) CACHE=${CACHE_DIR:-libvlc-wasm-cache-$VARIANT} ;;
+  *) echo "VARIANT must be default, sout or dvdcss" >&2; exit 2 ;;
+esac
 
 run() {
   docker run --rm -i \
