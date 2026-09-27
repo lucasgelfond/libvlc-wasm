@@ -1,4 +1,18 @@
 {
+ "suite": "fate",
+ "title": "FFmpeg's FATE",
+ "source": "https://fate-suite.ffmpeg.org/",
+ "subset": "the whole FATE sample suite (rsync of fate-suite.ffmpeg.org) plus the curated corpus (corpus/manifest.json)",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays; fate/ = FFmpeg FATE suite, media/ = curated corpus",
  "tools": {
@@ -16,22 +30,22 @@
   ]
  },
  "overall": {
-  "files": 2629,
-  "media": 2219,
-  "union": 2183,
-  "unplayable": 45,
-  "ffmpeg": 2172,
-  "ffmpegMeasured": 2183,
-  "vlc": 1535,
-  "vlcMeasured": 2183,
-  "wasm": 2041,
-  "wasmMeasured": 2183,
+  "files": 2633,
+  "media": 2223,
+  "union": 2186,
+  "unplayable": 46,
+  "ffmpeg": 2175,
+  "ffmpegMeasured": 2186,
+  "vlc": 1536,
+  "vlcMeasured": 2186,
+  "wasm": 2044,
+  "wasmMeasured": 2186,
   "chromium": 518,
-  "chromiumMeasured": 2183,
+  "chromiumMeasured": 2186,
   "webkit": 546,
-  "webkitMeasured": 2183,
+  "webkitMeasured": 2186,
   "firefox": 422,
-  "firefoxMeasured": 2183
+  "firefoxMeasured": 2186
  },
  "folders": {
   "012v": {
@@ -5597,22 +5611,40 @@
    "firefoxMeasured": 2
   },
   "curated/game-and-oddball-video": {
-   "files": 8,
-   "media": 8,
-   "union": 7,
+   "files": 9,
+   "media": 9,
+   "union": 8,
    "unplayable": 1,
-   "ffmpeg": 7,
-   "ffmpegMeasured": 7,
+   "ffmpeg": 8,
+   "ffmpegMeasured": 8,
    "vlc": 6,
-   "vlcMeasured": 7,
-   "wasm": 7,
-   "wasmMeasured": 7,
+   "vlcMeasured": 8,
+   "wasm": 8,
+   "wasmMeasured": 8,
    "chromium": 0,
-   "chromiumMeasured": 7,
+   "chromiumMeasured": 8,
    "webkit": 0,
-   "webkitMeasured": 7,
+   "webkitMeasured": 8,
    "firefox": 0,
-   "firefoxMeasured": 7
+   "firefoxMeasured": 8
+  },
+  "curated/gen": {
+   "files": 3,
+   "media": 3,
+   "union": 2,
+   "unplayable": 1,
+   "ffmpeg": 2,
+   "ffmpegMeasured": 2,
+   "vlc": 1,
+   "vlcMeasured": 2,
+   "wasm": 2,
+   "wasmMeasured": 2,
+   "chromium": 0,
+   "chromiumMeasured": 2,
+   "webkit": 0,
+   "webkitMeasured": 2,
+   "firefox": 0,
+   "firefoxMeasured": 2
   },
   "curated/modern-codecs": {
    "files": 1,
@@ -8513,6 +8545,7 @@
   "fate/svq3/svq3_decoding_regression.mov",
   "fate/vvc/vvc-16bit-mc.vvc",
   "media/game-and-oddball-video/vivo-2-vivoactive.viv",
+  "media/gen/t_cenc.mp4",
   "media/subtitles-and-captions/dvb-subtitles-in-ts.ts"
  ]
 }

@@ -1,7 +1,22 @@
 {
  "suite": "dav1d",
  "title": "dav1d test data (AV1)",
+ "description": "The AV1 bitstreams dav1d decodes in its test suite (8/10/12-bit: conformance data, features, film grain, quantizer and size sweeps, resize, S-frames, SVC, issue repros), with the MD5 of the decoded output from meson.build where given.",
  "source": "https://code.videolan.org/videolan/dav1d-test-data/-/tree/61afa1ceb6029be1a8ea3f6b9c9a9672700f13bb",
+ "homepage": "https://code.videolan.org/videolan/dav1d-test-data",
+ "license": "BSD-2-Clause (dav1d test data; some streams from the AOM test vectors)",
+ "fetched": "GitLab archive tarballs of 8-bit/, 10-bit/, 12-bit/, multi-bit/ from master (then 61afa1ceb6029be1a8ea3f6b9c9a9672700f13bb), extracted into corpus/suites/dav1d/.",
+ "subset": "everything except oss-fuzz/ (sanitizer crash repros, not playable media) and the argon/ entries (pointers into the separately licensed Argon suite).",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
  "tools": {

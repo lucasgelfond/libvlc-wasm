@@ -1,7 +1,22 @@
 {
  "suite": "flac-test-files",
  "title": "IETF CELLAR FLAC decoder test files",
+ "description": "The FLAC conformance files of the IETF CELLAR working group: subset/ (streamable-subset files every decoder must play), uncommon/ (legal but unusual: odd sample rates, bit depths, block sizes, channel counts), faulty/ (invalid; a decoder should reject or recover).",
  "source": "https://github.com/ietf-wg-cellar/flac-test-files/tree/aa7b0c6cf32994c106ae517a08134c28a96ff5b2",
+ "homepage": "https://github.com/ietf-wg-cellar/flac-test-files",
+ "license": "CC0 / public domain (see LICENSE.txt in the repo)",
+ "fetched": "GitHub tree listing at aa7b0c6cf32994c106ae517a08134c28a96ff5b2; raw.githubusercontent.com per file.",
+ "subset": "all of them (about 310 MB).",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
  "tools": {

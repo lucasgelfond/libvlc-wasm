@@ -1,7 +1,22 @@
 {
  "suite": "chromium",
  "title": "Chromium media test data (media/test/data)",
+ "description": "The files Chromium's media pipeline unit and browser tests decode: containers, codecs, raw elementary streams (h264/hevc/vvc/av1/ivf), odd sample rates, encrypted and broken files. Grouped by extension or subfolder.",
  "source": "https://github.com/chromium/chromium/tree/9ac9e1044de400849af3353f9a9c87a8df8df455/media/test/data",
+ "homepage": "https://source.chromium.org/chromium/chromium/src/+/main:media/test/data/",
+ "license": "BSD-3-Clause (Chromium); clips under their own free licences (see media/test/data/README.md)",
+ "fetched": "GitHub tree listing of media/test/data (the chromium/chromium mirror) at 9ac9e1044de400849af3353f9a9c87a8df8df455; raw.githubusercontent.com per file.",
+ "subset": "every audio/video file (images, YUV/raw frame dumps, JSON/HTML and manifests left out).",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
  "tools": {

@@ -1,7 +1,22 @@
 {
  "suite": "libvpx",
  "title": "libvpx VP8/VP9 decoder test vectors",
+ "description": "The VP8 and VP9 conformance/decode test vectors libvpx runs in test/test_vectors.cc (vp80 = VP8; vp90 = VP9 profile 0; vp91/92/93 = profiles 1-3: 4:4:4, 10/12-bit). Each ships a .md5 with the MD5 of every decoded frame.",
  "source": "https://storage.googleapis.com/downloads.webmproject.org/test_data/libvpx/",
+ "homepage": "https://chromium.googlesource.com/webm/libvpx/+/refs/heads/main/test/test_vectors.cc",
+ "license": "BSD-3-Clause (WebM project test data)",
+ "fetched": "names from libvpx test/test_vectors.cc (main), sizes from the GCS bucket listing; every file downloaded from the bucket.",
+ "subset": "all of them (small: about 30 MB).",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
  "tools": {

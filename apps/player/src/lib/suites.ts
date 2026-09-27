@@ -7,7 +7,32 @@
 import type { Suite, Counts } from "$lib/components/SuiteView.svelte";
 import fate from "../../../../corpus/compat/fate-summary.json";
 
-type Summary = { overall: Counts; folders: Record<string, Counts> };
+type Failure = {
+  path: string;
+  video: string | null;
+  audio: string | null;
+  ffmpeg: boolean;
+  vlc: boolean;
+  wasmAvformat: boolean | null;
+  cause: string;
+  wasmError: string;
+};
+type Summary = {
+  overall: Counts;
+  folders: Record<string, Counts>;
+  description?: string;
+  subset?: string;
+  license?: string | null;
+  actionable?: Failure[];
+  unplayableByAll?: string[];
+};
+/** What the tab shows beyond the counts: failures by cause, how the suite was sampled. */
+const details = (s: Summary) => ({
+  subset: s.subset,
+  license: s.license ?? undefined,
+  failures: s.actionable ?? [],
+  unplayable: s.unplayableByAll?.length ?? 0,
+});
 type Definition = {
   name?: string;
   title?: string;
@@ -41,6 +66,7 @@ export const SUITES: Suite[] = [
     source: "https://fate-suite.ffmpeg.org/",
     overall: (fate as unknown as Summary).overall,
     folders: (fate as unknown as Summary).folders,
+    ...details(fate as unknown as Summary),
     files: async () =>
       (await import("../../../../corpus/compat/fate-matrix.json"))
         .default as never,
@@ -63,6 +89,7 @@ export const SUITES: Suite[] = [
         source: def.homepage ?? def.source,
         overall: s.overall,
         folders: s.folders,
+        ...details(s),
         files: async () => ((await matrix?.()) ?? []) as never,
       };
     })

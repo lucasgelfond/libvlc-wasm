@@ -1,7 +1,22 @@
 {
  "suite": "wpt",
  "title": "Web Platform Tests media files",
+ "description": "The media files the web-platform-tests suites for <video>/<audio> (media/), Media Source Extensions (media-source/) and WebCodecs (webcodecs/) use. Small clips browsers are expected to play.",
  "source": "https://github.com/web-platform-tests/wpt/tree/f085a1efc1f58fbe263d384b1e335d656fe58e66",
+ "homepage": "https://github.com/web-platform-tests/wpt/tree/master/media",
+ "license": "BSD-3-Clause (web-platform-tests); media under their own free licences",
+ "fetched": "GitHub tree listing of media/, media-source/, webcodecs/ at f085a1efc1f58fbe263d384b1e335d656fe58e66; raw.githubusercontent.com per file.",
+ "subset": "every audio/video file in those three folders (images, captions and manifests left out).",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
  "tools": {

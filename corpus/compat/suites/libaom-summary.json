@@ -1,7 +1,22 @@
 {
  "suite": "libaom",
  "title": "libaom AV1 decoder test vectors",
+ "description": "The AV1 decode test vectors libaom runs (av1-1-b8-* 8-bit and av1-1-b10-* 10-bit: sizes, quantizers, intra-only, film grain, SVC, annexb/section5 OBU streams), each with a .md5 of the decoded output.",
  "source": "https://storage.googleapis.com/aom-test-data/",
+ "homepage": "https://aomedia.googlesource.com/aom/+/refs/heads/main/test/test_vectors.cc",
+ "license": "BSD-2-Clause + AOM patent license (AOMedia test data)",
+ "fetched": "the aom-test-data GCS bucket listing, filtered to av1-1-b8-*/av1-1-b10-* bitstreams and their .md5.",
+ "subset": "all AV1 decode vectors (about 7 MB); skipped: raw YUV/Y4M encoder inputs (~3.8 GB), fuzzer seed corpora and the invalid-* crash repros. The Argon conformance suite (AOM CWG) is not included: it is ~10 GB of streams behind a separate licence.",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
  "tools": {

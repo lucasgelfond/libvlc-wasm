@@ -1,7 +1,12 @@
 {
  "suite": "h264-conformance",
  "title": "H.264/AVC conformance bitstreams (JVT)",
+ "description": "The ITU-T H.264.1 / JVT conformance bitstreams (baseline, main, extended, high profiles; CAVLC/CABAC, interlaced, MBAFF/PAFF, FMO/ASO, multi-slice), as FFmpeg's FATE suite carries them: raw Annex B elementary streams.",
  "source": "https://fate-suite.ffmpeg.org/h264-conformance/",
+ "homepage": "https://www.itu.int/wftp3/av-arch/jvt-site/draft_conformance/",
+ "license": "ITU-T conformance material, redistributed in FATE for testing",
+ "fetched": "nothing: the files are FATE's h264-conformance/ folder, already measured by corpus/compat/fate.mjs.",
+ "subset": "FATE folders h264-conformance, from the FATE measurements (nothing re-measured)",
  "derivedFrom": "fate",
  "folders": {
   "h264-conformance": {
@@ -22,6 +27,16 @@
    "firefox": 0,
    "firefoxMeasured": 192
   }
+ },
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
  },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",

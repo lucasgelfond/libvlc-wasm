@@ -6,7 +6,7 @@
 //
 //   node corpus/compat/suite.mjs --suite=libvpx     inventory + every tool + summary
 //   node corpus/compat/suite.mjs --suite=fate       the FFmpeg FATE suite + curated corpus (= fate.mjs)
-//   node corpus/compat/suite.mjs --index            only rewrite SUITES.md from the summaries on disk
+//   node corpus/compat/suite.mjs --index            only rewrite suites/index.json from the summaries on disk
 //   --tool=ffmpeg       one tool (inventory,ffmpeg,vlc,wasm,native,summary; comma list)
 //   --only=h264         limit measuring to one folder (comma list)
 //   --resume            skip files that already have a result for that tool
@@ -22,7 +22,7 @@
 // A definition with "derivedFrom": "fate" and "folders": [...] measures nothing:
 // it re-summarises those FATE folders from the FATE caches.
 //
-// FATE keeps its historical file names (corpus/compat/fate-*.json, FATE.md). Every
+// FATE keeps its historical file names (corpus/compat/fate-*.json). Every
 // other suite caches per file, keyed by path relative to corpus/ ("suites/<name>/..."),
 // in corpus/compat/suites/:
 //   <name>-inventory.json   ffprobe: container, streams, duration (non-media files recorded as such)
@@ -31,11 +31,11 @@
 //   <name>-wasm.json        libvlc-wasm in Chromium through tests/browser/harness.js
 //   <name>-native.json      browser-native <video>/<audio> (harness nativeCheck) per engine
 // and the summary step writes <name>-matrix.json (one row per union file),
-// <name>-summary.json and <name>.md from them, then corpus/compat/SUITES.md over
+// <name>-summary.json from them, then corpus/compat/suites/index.json over
 // every suite.
 //
 // "Plays" means, for every tool: the file has video and a video frame came out,
-// or it has audio and audio came out (see criteria() below and FATE.md).
+// or it has audio and audio came out (see criteria() below and METHOD).
 //
 // Nothing here makes a sound: FFmpeg decodes to the null muxer, VLC renders audio
 // to a WAV file (afile) that is deleted afterwards, and the browsers are launched
@@ -44,6 +44,18 @@ import { readFileSync, writeFileSync, existsSync, statSync, mkdirSync, rmSync, r
 import { spawn } from 'node:child_process';
 import { dirname, resolve, extname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+/** How every column is measured, stored with each summary (and in suites/index.json). */
+const METHOD = {
+  media: 'ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)',
+  plays: 'the file has video and a picture came out, or it has audio and sound came out',
+  ffmpeg: 'ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0',
+  vlc: 'VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing',
+  wasm: 'tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted',
+  browsers: "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  denominator: 'N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted',
+  caveats: 'many suite files are deliberately broken, truncated, single-frame or headerless; "plays" means something came out, not a bit-exact decode',
+};
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
@@ -556,7 +568,7 @@ function status(rel, tool, m) {
 // or native VLC 3 plays (FATE plus the curated corpus): a file neither native
 // tool can play says nothing about libvlc-wasm, so it is listed as
 // "unplayable by all" and not counted. Writes <suite>-matrix.json (one row per
-// union file, for the site), <suite>-summary.json and FATE.md / suites/<suite>.md.
+// union file, for the site) and <suite>-summary.json.
 if (tools.has('summary')) {
   load.cacheFfmpeg = null;
   const ff = load('ffmpeg'), vl = load('vlc'), wa = load('wasm'), na = load('native');
@@ -625,7 +637,15 @@ if (tools.has('summary')) {
       : r.wasmAvformat ? 'demuxer choice: plays with :demux=avformat' : r.wasmCause,
   }));
   const summary = {
-    ...(isFate ? {} : { suite: SUITE, title: def.title, source: def.source ?? def.homepage, ...(derived ? { derivedFrom: derived, folders: def.folders } : {}) }),
+    ...(isFate
+      ? { suite: 'fate', title: "FFmpeg's FATE", source: 'https://fate-suite.ffmpeg.org/', subset: 'the whole FATE sample suite (rsync of fate-suite.ffmpeg.org) plus the curated corpus (corpus/manifest.json)' }
+      : {
+        suite: SUITE, title: def.title, description: def.description, source: def.source ?? def.homepage, homepage: def.homepage,
+        license: def.license ?? null, fetched: def.fetched ?? null,
+        subset: derived ? `FATE folders ${def.folders.join(', ')}, from the FATE measurements (nothing re-measured)` : def.subset,
+        ...(derived ? { derivedFrom: derived, folders: def.folders } : {}),
+      }),
+    method: METHOD,
     date: new Date().toISOString().slice(0, 10),
     denominator: isFate ? 'media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays; fate/ = FFmpeg FATE suite, media/ = curated corpus'
       : 'media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays',
@@ -642,7 +662,7 @@ if (tools.has('summary')) {
     unplayableByAll: unplayable,
   };
   writeFileSync(outPath('summary'), `${JSON.stringify(summary, null, 1)}\n`);
-  writeFileSync(isFate ? `${here}/FATE.md` : `${outDir}/${SUITE}.md`, markdown(summary));
+  writeIndex();
   writeIndex();
   const o = overall;
   console.log(`${SUITE}: union ${o.union} (of ${o.media} media files): ffmpeg ${o.ffmpeg}, vlc ${o.vlc}, wasm ${o.wasm}/${o.wasmMeasured}, chromium ${o.chromium}, webkit ${o.webkit}, firefox ${o.firefox}; actionable ${act.length}; unplayable by all ${unplayable.length}`);
@@ -679,110 +699,33 @@ function classify(rel, w) {
   return 'other / no clue in the log';
 }
 
-function markdown(s) {
-  const pct = (n, d) => (d ? `${n} (${Math.round((100 * n) / d)}%)` : '—');
-  const L = [];
-  const o = s.overall;
-  if (isFate) {
-    L.push('# FFmpeg FATE suite + curated corpus: compatibility matrix', '');
-    L.push(`Generated ${s.date} by \`node corpus/compat/fate.mjs\` (\`pnpm fate\`). Raw per-file results are in`,
-      '`fate-inventory.json`, `fate-ffmpeg.json`, `fate-vlc.json`, `fate-wasm.json` and `fate-native.json` (keyed by path under',
-      '`corpus/`); `fate-matrix.json`, `fate-summary.json` and this page are regenerated from them with `--tool=summary`.', '');
-  } else {
-    L.push(`# ${def.title}: compatibility matrix`, '');
-    L.push(def.description, '');
-    L.push(`- Source: ${def.source ?? def.homepage}${def.homepage && def.source !== def.homepage ? ` (about: ${def.homepage})` : ''}`);
-    if (def.license) L.push(`- Licence: ${def.license}`);
-    if (derived) L.push(`- Derived from the FATE measurements (\`fate-*.json\`), folders ${def.folders.map((f) => `\`${f}\``).join(', ')}: nothing is re-measured.`);
-    else L.push(`- Fetched: ${def.fetched}`, `- Subset: ${def.subset}`);
-    L.push('', `Generated ${s.date} by \`node corpus/compat/suite.mjs --suite=${SUITE}\`. Definition: \`corpus/suites/${SUITE}.json\`.`,
-      ...(derived ? ['Rows and counts come from the FATE caches.'] : [`Raw per-file results are in \`suites/${SUITE}-{inventory,ffmpeg,vlc,wasm,native}.json\` (keyed by path under \`corpus/\`);`,
-        `\`${SUITE}-matrix.json\`, \`${SUITE}-summary.json\` and this page are regenerated from them with \`--tool=summary\`.`]), '');
-  }
-  L.push('## Headline', '');
-  L.push(`**N = ${o.union}**: the files that native FFmpeg **or** native VLC 3 plays, out of ${o.media} media files (${o.files} files`,
-    `in all; ${o.unplayable} media files play in neither and are listed at the end, not counted). ${s.unionNotRecognisedByFfprobe} union files`,
-    'are ones ffprobe does not recognise but VLC plays: every probed file is tried by every tool, whatever ffprobe says.', '');
-  L.push('| tool | plays | of N |', '|---|--:|--:|');
-  const names = { ffmpeg: `FFmpeg (${s.tools.ffmpeg})`, vlc: s.tools.vlc ?? 'VLC 3', wasm: 'libvlc-wasm (Chromium)', chromium: 'Chromium native', webkit: 'WebKit native', firefox: 'Firefox native' };
-  for (const c of ['wasm', 'ffmpeg', 'vlc', 'chromium', 'webkit', 'firefox']) L.push(`| ${names[c]} | ${o[`${c}Measured`] ? pct(o[c], o.union) : '—'} | ${o.union} |`);
-  const fixed = s.actionable.filter((a) => a.wasmAvformat).length;
-  const esFixed = s.actionable.filter((a) => a.wasmEsDemux?.plays).length;
-  L.push('', `${s.actionable.length} union files fail in libvlc-wasm; ${fixed} of them play when retried with \`${ALT_OPTION}\`,`,
-    `and ${esFixed} raw elementary streams play when their ES demuxer is named (\`:demux=h264\`, \`:demux=hevc\`, ...).`, '');
-  L.push('## How each column is measured', '');
-  L.push('A file is **media** when `ffprobe` finds a video or audio stream (checksums, reference text and headerless raw dumps',
-    'are not). A tool **plays** a file when it has video and a picture came out, or it has audio and sound came out:', '');
-  L.push('- **FFmpeg**: `ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -`; frames > 0 or samples > 0.');
-  L.push('- **VLC 3** (VLC.app): headless, `--vout=stats --aout=afile` (to a WAV file), `--run-time=4`; a picture reached the vout ("VOUT got") or audio was written. Retried with `--codec=avcodec,none` when a video file shows nothing.');
-  L.push(`- **libvlc-wasm** (${s.tools.wasm}): \`window.harness.playCase\` in muted headless Chromium; video = a frame drawn with content (variance > 2 or > 1 distinct frame), audio = audible output (peak > 0.003, or any output when FFmpeg found the start near-silent). Same criteria as \`tests/verify-corpus.mjs\`. Each failure is retried once with \`${ALT_OPTION}\`, and a raw elementary stream also with its ES demuxer (\`:demux=h264\`, \`hevc\`, \`vc1\`, \`m4v\`, \`es\`); those results are reported, not counted.`);
-  L.push('- **chromium / webkit / firefox**: the harness `nativeCheck`: `<video>`/`<audio>` reaches `loadeddata` within 4 s (muted).', '');
-  L.push(isFate || derived ? 'Caveats: FATE is a decoder conformance suite, not a playback corpus. Many files are deliberately broken, truncated,'
-    : 'Caveats: many suite files are deliberately broken, truncated,',
-    'single-frame or headerless bitstreams, and a still image counts as media. "Plays" is only "something came out", not a bit-exact decode.',
-    'Native VLC 3 is run on the file as given, so it shares libvlc-wasm\'s blind spot for raw `.264`/`.bit`/`.jsv` streams',
-    '(it falls back to the MPEG-PS demuxer), and it cannot decode most still-image formats FFmpeg can.', '');
-  const cols = ['ffmpeg', 'vlc', 'wasm', 'chromium', 'webkit', 'firefox'];
-  const head = '| folder | N | ffmpeg | VLC 3 | libvlc-wasm | chromium | webkit | firefox | unplayable |';
-  const sep = '|---|--:|--:|--:|--:|--:|--:|--:|--:|';
-  const row = (name, t) => `| ${name} | ${t.union} | ${cols.map((c) => (t[`${c}Measured`] ? pct(t[c], t.union) : '—')).join(' | ')} | ${t.unplayable} |`;
-  const gap = Object.entries(s.folders).map(([k, t]) => [k, Math.max(t.ffmpeg, t.vlc) - t.wasm, t]).filter(([, g]) => g > 0).sort((a, b) => b[1] - a[1]);
-  L.push('## Where libvlc-wasm trails native', '', '| folder | N | best of FFmpeg/VLC | libvlc-wasm | gap |', '|---|--:|--:|--:|--:|');
-  for (const [k, g, t] of gap.slice(0, 40)) L.push(`| ${k} | ${t.union} | ${Math.max(t.ffmpeg, t.vlc)} | ${t.wasm} | ${g} |`);
-  L.push('', '## Per folder', '', head, sep, row('**all**', o));
-  for (const [k, t] of Object.entries(s.folders).sort()) if (t.media) L.push(row(k, t));
-  L.push('');
-  L.push(`## Actionable: libvlc-wasm fails where FFmpeg or VLC plays (${s.actionable.length})`, '');
-  L.push(`Grouped by probable cause: first whether naming the ES demuxer or \`${ALT_OPTION}\` fixes it, else a heuristic over the libvlc-wasm logs of both attempts (\`classify()\` in suite.mjs).`, '');
-  const esc = (x) => String(x ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
-  for (const [c, list] of Object.entries(groupBy(s.actionable, (a) => a.cause)).sort((a, b) => b[1].length - a[1].length)) {
-    L.push(`### ${c} (${list.length})`, '', '| file | container | video | audio | FFmpeg | VLC | avformat retry | ES demux retry | libvlc-wasm log |', '|---|---|---|---|---|---|---|---|---|');
-    for (const a of list) L.push(`| ${esc(a.path)} | ${esc(a.container)} | ${esc(a.video)} | ${esc(a.audio)} | ${a.ffmpeg ? 'yes' : 'no'} | ${a.vlc ? 'yes' : 'no'} | ${a.wasmAvformat == null ? '—' : a.wasmAvformat ? 'plays' : 'no'} | ${a.wasmEsDemux ? `${a.wasmEsDemux.plays ? 'plays' : 'no'} (\`${a.wasmEsDemux.option}\`)` : '—'} | ${esc(a.wasmError)} |`);
-    L.push('');
-  }
-  L.push(`## Unplayable by all (${s.unplayableByAll.length}, not counted)`, '', 'Media files neither native FFmpeg nor native VLC 3 plays.', '');
-  for (const [k, list] of Object.entries(groupBy(s.unplayableByAll, folderOf)).sort()) L.push(`- **${k}** (${list.length}): ${list.map((x) => `\`${x.split('/').slice(x.startsWith('media/') ? 1 : 2).join('/')}\``).join(', ')}`);
-  return `${L.join('\n')}\n`;
-}
 
 // ---------------------------------------------------------------------------
-// SUITES.md: one table over every suite that has a summary on disk.
+// suites/index.json: every suite, with its totals, for the site and for people.
+
 function writeIndex() {
   const compat = dirname(fileURLToPath(import.meta.url));
   const defsDir = resolve(compat, '../suites');
-  const rows = [];
   const read = (p) => { try { return JSON.parse(readFileSync(p, 'utf8')); } catch { return null; } };
+  const entry = (name, title, s, extra = {}) => ({
+    name, title, source: s?.source ?? extra.source ?? null, subset: s?.subset ?? extra.subset ?? null,
+    overall: s?.overall ?? null,
+    wasmFails: s?.actionable?.length ?? null,
+    fixedByAvformat: s?.actionable?.filter((a) => a.wasmAvformat).length ?? null,
+    topCauses: s ? Object.entries(s.actionableByCause).slice(0, 5) : [],
+    ...extra,
+  });
+  const suites = [];
   const fs = read(`${compat}/fate-summary.json`);
-  if (fs) rows.push({ name: 'fate', title: 'FFmpeg FATE suite + curated corpus', page: 'FATE.md', listed: fs.overall.files, s: fs, subset: 'the whole FATE sample suite (rsync of fate-suite.ffmpeg.org) plus corpus/manifest.json', source: 'https://fate-suite.ffmpeg.org/' });
-  const defs = readdirSync(defsDir).filter((f) => f.endsWith('.json')).sort();
-  for (const f of defs) {
+  if (fs) suites.push(entry('fate', "FFmpeg's FATE", fs, { summary: 'fate-summary.json', matrix: 'fate-matrix.json' }));
+  for (const f of readdirSync(defsDir).filter((x) => x.endsWith('.json')).sort()) {
     const d = read(`${defsDir}/${f}`);
+    if (!d?.name) continue;
     const s = read(`${compat}/suites/${d.name}-summary.json`);
-    rows.push({ name: d.name, title: d.title, page: `suites/${d.name}.md`, listed: d.derivedFrom ? s?.overall.files : d.files.filter((x) => !x.reference).length, s, subset: d.derivedFrom ? `FATE folders ${d.folders.join(', ')} (from the FATE measurements)` : d.subset, source: d.source ?? d.homepage, bytes: d.bytes, derived: d.derivedFrom });
+    suites.push(entry(d.name, d.title, s, {
+      source: d.source ?? d.homepage, subset: d.subset, bytes: d.bytes ?? null, derived: d.derivedFrom ?? null,
+      summary: `suites/${d.name}-summary.json`, matrix: `suites/${d.name}-matrix.json`, measured: !!s,
+    }));
   }
-  const pct = (n, d) => (d ? `${n} (${Math.round((100 * n) / d)}%)` : '—');
-  const L = ['# Public test suites: compatibility summary', ''];
-  L.push('Every suite below is measured the same way as the FFmpeg FATE matrix (see [FATE.md](FATE.md) for the criteria):',
-    'native FFmpeg, native VLC 3, libvlc-wasm in Chromium, and the browsers\' own `<video>`/`<audio>`. **N** is the union of',
-    'media files native FFmpeg or native VLC 3 plays; every percentage is of N. A suite is defined by `corpus/suites/<name>.json`',
-    '(listed by `corpus/suites/lists.mjs`, fetched by `corpus/suites/fetch.mjs`, measured by `node corpus/compat/suite.mjs --suite=<name>`).',
-    'Derived suites re-summarise FATE folders and measure nothing.', '');
-  L.push('| suite | files | media | N | libvlc-wasm | FFmpeg | VLC 3 | Chromium | WebKit | Firefox | wasm fails in N | fixed by :demux=avformat |', '|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|');
-  for (const r of rows) {
-    if (!r.s) { L.push(`| ${r.name} | ${r.listed ?? '—'} | — | — | not measured yet | | | | | | | |`); continue; }
-    const o = r.s.overall;
-    const cell = (c) => (o[`${c}Measured`] ? pct(o[c], o.union) : '—');
-    L.push(`| [${r.name}](${r.page}) | ${o.files} | ${o.media} | ${o.union} | ${cell('wasm')} | ${cell('ffmpeg')} | ${cell('vlc')} | ${cell('chromium')} | ${cell('webkit')} | ${cell('firefox')} | ${r.s.actionable.length} | ${r.s.actionable.filter((a) => a.wasmAvformat).length} |`);
-  }
-  L.push('', '## What each suite is', '');
-  for (const r of rows) {
-    L.push(`- **${r.name}**: ${r.title}. Source: ${r.source}.${r.bytes ? ` ${(r.bytes / 1e6).toFixed(0)} MB listed.` : ''} Taken: ${r.subset}`);
-  }
-  L.push('', '## Biggest libvlc-wasm failure groups per suite', '');
-  for (const r of rows) {
-    if (!r.s?.actionable?.length) continue;
-    const groups = Object.entries(r.s.actionableByCause).slice(0, 4);
-    L.push(`- **${r.name}** (${r.s.actionable.length}): ${groups.map(([c, n]) => `${c} (${n})`).join('; ')}`);
-  }
-  writeFileSync(`${compat}/SUITES.md`, `${L.join('\n')}\n`);
+  writeFileSync(`${compat}/suites/index.json`, `${JSON.stringify({ date: new Date().toISOString().slice(0, 10), method: METHOD, suites }, null, 1)}\n`);
 }

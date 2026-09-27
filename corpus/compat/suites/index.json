@@ -1,0 +1,589 @@
+{
+ "date": "2026-09-27",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
+ "suites": [
+  {
+   "name": "fate",
+   "title": "FFmpeg's FATE",
+   "source": "https://fate-suite.ffmpeg.org/",
+   "subset": "the whole FATE sample suite (rsync of fate-suite.ffmpeg.org) plus the curated corpus (corpus/manifest.json)",
+   "overall": {
+    "files": 2633,
+    "media": 2223,
+    "union": 2186,
+    "unplayable": 46,
+    "ffmpeg": 2175,
+    "ffmpegMeasured": 2186,
+    "vlc": 1536,
+    "vlcMeasured": 2186,
+    "wasm": 2044,
+    "wasmMeasured": 2186,
+    "chromium": 518,
+    "chromiumMeasured": 2186,
+    "webkit": 546,
+    "webkitMeasured": 2186,
+    "firefox": 422,
+    "firefoxMeasured": 2186
+   },
+   "wasmFails": 142,
+   "fixedByAvformat": 11,
+   "topCauses": [
+    [
+     "no picture (decoder opened, nothing out)",
+     36
+    ],
+    [
+     "decoder produced no picture (buffer deadlock prevented)",
+     21
+    ],
+    [
+     "ES not detected: plays with :demux=<es>",
+     18
+    ],
+    [
+     "avcodec get_buffer() failed (pixel format not handled by VLC's avcodec glue)",
+     17
+    ],
+    [
+     "missing decoder (codec not in the wasm build)",
+     12
+    ]
+   ],
+   "summary": "fate-summary.json",
+   "matrix": "fate-matrix.json"
+  },
+  {
+   "name": "chromium",
+   "title": "Chromium media test data (media/test/data)",
+   "source": "https://github.com/chromium/chromium/tree/9ac9e1044de400849af3353f9a9c87a8df8df455/media/test/data",
+   "subset": "every audio/video file (images, YUV/raw frame dumps, JSON/HTML and manifests left out).",
+   "overall": {
+    "files": 386,
+    "media": 376,
+    "union": 322,
+    "unplayable": 55,
+    "ffmpeg": 318,
+    "ffmpegMeasured": 322,
+    "vlc": 250,
+    "vlcMeasured": 322,
+    "wasm": 290,
+    "wasmMeasured": 322,
+    "chromium": 206,
+    "chromiumMeasured": 322,
+    "webkit": 197,
+    "webkitMeasured": 322,
+    "firefox": 211,
+    "firefoxMeasured": 322
+   },
+   "wasmFails": 32,
+   "fixedByAvformat": 7,
+   "topCauses": [
+    [
+     "no picture (decoder opened, nothing out)",
+     15
+    ],
+    [
+     "demuxer choice: plays with :demux=avformat",
+     7
+    ],
+    [
+     "decoder produced no picture (buffer deadlock prevented)",
+     5
+    ],
+    [
+     "other / no clue in the log",
+     3
+    ],
+    [
+     "ES not detected: plays with :demux=<es>",
+     1
+    ]
+   ],
+   "bytes": 80066638,
+   "derived": null,
+   "summary": "suites/chromium-summary.json",
+   "matrix": "suites/chromium-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "dav1d",
+   "title": "dav1d test data (AV1)",
+   "source": "https://code.videolan.org/videolan/dav1d-test-data/-/tree/61afa1ceb6029be1a8ea3f6b9c9a9672700f13bb",
+   "subset": "everything except oss-fuzz/ (sanitizer crash repros, not playable media) and the argon/ entries (pointers into the separately licensed Argon suite).",
+   "overall": {
+    "files": 776,
+    "media": 754,
+    "union": 754,
+    "unplayable": 0,
+    "ffmpeg": 738,
+    "ffmpegMeasured": 754,
+    "vlc": 753,
+    "vlcMeasured": 754,
+    "wasm": 754,
+    "wasmMeasured": 754,
+    "chromium": 0,
+    "chromiumMeasured": 754,
+    "webkit": 0,
+    "webkitMeasured": 754,
+    "firefox": 0,
+    "firefoxMeasured": 754
+   },
+   "wasmFails": 0,
+   "fixedByAvformat": 0,
+   "topCauses": [],
+   "bytes": 50162888,
+   "derived": null,
+   "summary": "suites/dav1d-summary.json",
+   "matrix": "suites/dav1d-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "flac-test-files",
+   "title": "IETF CELLAR FLAC decoder test files",
+   "source": "https://github.com/ietf-wg-cellar/flac-test-files/tree/aa7b0c6cf32994c106ae517a08134c28a96ff5b2",
+   "subset": "all of them (about 310 MB).",
+   "overall": {
+    "files": 86,
+    "media": 82,
+    "union": 82,
+    "unplayable": 2,
+    "ffmpeg": 78,
+    "ffmpegMeasured": 82,
+    "vlc": 78,
+    "vlcMeasured": 82,
+    "wasm": 76,
+    "wasmMeasured": 82,
+    "chromium": 75,
+    "chromiumMeasured": 82,
+    "webkit": 70,
+    "webkitMeasured": 82,
+    "firefox": 77,
+    "firefoxMeasured": 82
+   },
+   "wasmFails": 6,
+   "fixedByAvformat": 4,
+   "topCauses": [
+    [
+     "demuxer choice: plays with :demux=avformat",
+     4
+    ],
+    [
+     "missing decoder (codec not in the wasm build)",
+     1
+    ],
+    [
+     "no demuxer accepted the file",
+     1
+    ]
+   ],
+   "bytes": 310020077,
+   "derived": null,
+   "summary": "suites/flac-test-files-summary.json",
+   "matrix": "suites/flac-test-files-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "gecko",
+   "title": "Firefox media mochitest files (dom/media/test)",
+   "source": "https://github.com/mozilla-firefox/firefox/tree/cdc95c93c91b09d3a4c38be355b5ef5bfd631075/dom/media/test",
+   "subset": "every audio/video file, including crashtests/ and reftest/; left out: dash/ and hls/ (manifest + segment trees), bare .m4s fragments (MSE-only, no init segment) and ^headers^ files.",
+   "overall": {
+    "files": 401,
+    "media": 362,
+    "union": 301,
+    "unplayable": 73,
+    "ffmpeg": 292,
+    "ffmpegMeasured": 301,
+    "vlc": 272,
+    "vlcMeasured": 301,
+    "wasm": 287,
+    "wasmMeasured": 301,
+    "chromium": 257,
+    "chromiumMeasured": 301,
+    "webkit": 216,
+    "webkitMeasured": 301,
+    "firefox": 267,
+    "firefoxMeasured": 301
+   },
+   "wasmFails": 14,
+   "fixedByAvformat": 2,
+   "topCauses": [
+    [
+     "decoder produced no picture (buffer deadlock prevented)",
+     5
+    ],
+    [
+     "harness artifact? (audio played, below threshold)",
+     3
+    ],
+    [
+     "demuxer choice: plays with :demux=avformat",
+     2
+    ],
+    [
+     "other / no clue in the log",
+     2
+    ],
+    [
+     "avcodec get_buffer() failed (pixel format not handled by VLC's avcodec glue)",
+     1
+    ]
+   ],
+   "bytes": 37083658,
+   "derived": null,
+   "summary": "suites/gecko-summary.json",
+   "matrix": "suites/gecko-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "gstreamer",
+   "title": "GStreamer integration test-suite media",
+   "source": "https://gstreamer.freedesktop.org/data/media/",
+   "subset": "every playable file; left out: per-frame reference PNGs and image sequences, HLS/DASH segment trees (bipbop, exMPD_BIP_TC1: need a streaming server), subtitles, scenarios, .media_info, redirect.mp4 and the noise file.",
+   "overall": {
+    "files": 101,
+    "media": 96,
+    "union": 98,
+    "unplayable": 0,
+    "ffmpeg": 96,
+    "ffmpegMeasured": 98,
+    "vlc": 92,
+    "vlcMeasured": 98,
+    "wasm": 97,
+    "wasmMeasured": 98,
+    "chromium": 46,
+    "chromiumMeasured": 98,
+    "webkit": 52,
+    "webkitMeasured": 98,
+    "firefox": 38,
+    "firefoxMeasured": 98
+   },
+   "wasmFails": 1,
+   "fixedByAvformat": 0,
+   "topCauses": [
+    [
+     "decoder produced no picture (buffer deadlock prevented)",
+     1
+    ]
+   ],
+   "bytes": 567572072,
+   "derived": null,
+   "summary": "suites/gstreamer-summary.json",
+   "matrix": "suites/gstreamer-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "h264-conformance",
+   "title": "H.264/AVC conformance bitstreams (JVT)",
+   "source": "https://fate-suite.ffmpeg.org/h264-conformance/",
+   "subset": "all of FATE's h264-conformance/ folder.",
+   "overall": {
+    "files": 197,
+    "media": 195,
+    "union": 192,
+    "unplayable": 3,
+    "ffmpeg": 192,
+    "ffmpegMeasured": 192,
+    "vlc": 116,
+    "vlcMeasured": 192,
+    "wasm": 192,
+    "wasmMeasured": 192,
+    "chromium": 0,
+    "chromiumMeasured": 192,
+    "webkit": 0,
+    "webkitMeasured": 192,
+    "firefox": 0,
+    "firefoxMeasured": 192
+   },
+   "wasmFails": 0,
+   "fixedByAvformat": 0,
+   "topCauses": [],
+   "bytes": 139889402,
+   "derived": "fate",
+   "summary": "suites/h264-conformance-summary.json",
+   "matrix": "suites/h264-conformance-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "hevc-conformance",
+   "title": "HEVC/H.265 conformance bitstreams (JCT-VC)",
+   "source": "https://fate-suite.ffmpeg.org/hevc-conformance/",
+   "subset": "all of FATE's hevc-conformance/ folder.",
+   "overall": {
+    "files": 188,
+    "media": 188,
+    "union": 186,
+    "unplayable": 2,
+    "ffmpeg": 186,
+    "ffmpegMeasured": 186,
+    "vlc": 143,
+    "vlcMeasured": 186,
+    "wasm": 167,
+    "wasmMeasured": 186,
+    "chromium": 0,
+    "chromiumMeasured": 186,
+    "webkit": 0,
+    "webkitMeasured": 186,
+    "firefox": 0,
+    "firefoxMeasured": 186
+   },
+   "wasmFails": 19,
+   "fixedByAvformat": 0,
+   "topCauses": [
+    [
+     "ES not detected: plays with :demux=<es>",
+     11
+    ],
+    [
+     "decoder produced no picture (buffer deadlock prevented)",
+     4
+    ],
+    [
+     "avcodec get_buffer() failed (pixel format not handled by VLC's avcodec glue)",
+     2
+    ],
+    [
+     "other / no clue in the log",
+     2
+    ]
+   ],
+   "bytes": 83634138,
+   "derived": "fate",
+   "summary": "suites/hevc-conformance-summary.json",
+   "matrix": "suites/hevc-conformance-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "libaom",
+   "title": "libaom AV1 decoder test vectors",
+   "source": "https://storage.googleapis.com/aom-test-data/",
+   "subset": "all AV1 decode vectors (about 7 MB); skipped: raw YUV/Y4M encoder inputs (~3.8 GB), fuzzer seed corpora and the invalid-* crash repros. The Argon conformance suite (AOM CWG) is not included: it is ~10 GB of streams behind a separate licence.",
+   "overall": {
+    "files": 244,
+    "media": 244,
+    "union": 244,
+    "unplayable": 0,
+    "ffmpeg": 244,
+    "ffmpegMeasured": 244,
+    "vlc": 244,
+    "vlcMeasured": 244,
+    "wasm": 244,
+    "wasmMeasured": 244,
+    "chromium": 2,
+    "chromiumMeasured": 244,
+    "webkit": 2,
+    "webkitMeasured": 244,
+    "firefox": 2,
+    "firefoxMeasured": 244
+   },
+   "wasmFails": 0,
+   "fixedByAvformat": 0,
+   "topCauses": [],
+   "bytes": 6517146,
+   "derived": null,
+   "summary": "suites/libaom-summary.json",
+   "matrix": "suites/libaom-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "libvpx",
+   "title": "libvpx VP8/VP9 decoder test vectors",
+   "source": "https://storage.googleapis.com/downloads.webmproject.org/test_data/libvpx/",
+   "subset": "all of them (small: about 30 MB).",
+   "overall": {
+    "files": 376,
+    "media": 376,
+    "union": 372,
+    "unplayable": 4,
+    "ffmpeg": 372,
+    "ffmpegMeasured": 372,
+    "vlc": 368,
+    "vlcMeasured": 372,
+    "wasm": 371,
+    "wasmMeasured": 372,
+    "chromium": 303,
+    "chromiumMeasured": 372,
+    "webkit": 298,
+    "webkitMeasured": 372,
+    "firefox": 243,
+    "firefoxMeasured": 372
+   },
+   "wasmFails": 1,
+   "fixedByAvformat": 0,
+   "topCauses": [
+    [
+     "avcodec get_buffer() failed (pixel format not handled by VLC's avcodec glue)",
+     1
+    ]
+   ],
+   "bytes": 29771216,
+   "derived": null,
+   "summary": "suites/libvpx-summary.json",
+   "matrix": "suites/libvpx-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "matroska-test-files",
+   "title": "Matroska test suite (IETF CELLAR)",
+   "source": "https://github.com/ietf-wg-cellar/matroska-test-files/tree/e6965e5ca666322ed93e2748a10a4f132309e005",
+   "subset": "all 8 files (about 185 MB).",
+   "overall": {
+    "files": 8,
+    "media": 8,
+    "union": 8,
+    "unplayable": 0,
+    "ffmpeg": 8,
+    "ffmpegMeasured": 8,
+    "vlc": 8,
+    "vlcMeasured": 8,
+    "wasm": 8,
+    "wasmMeasured": 8,
+    "chromium": 8,
+    "chromiumMeasured": 8,
+    "webkit": 0,
+    "webkitMeasured": 8,
+    "firefox": 4,
+    "firefoxMeasured": 8
+   },
+   "wasmFails": 0,
+   "fixedByAvformat": 0,
+   "topCauses": [],
+   "bytes": 185037405,
+   "derived": null,
+   "summary": "suites/matroska-test-files-summary.json",
+   "matrix": "suites/matroska-test-files-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "vlc-samples",
+   "title": "VLC samples archive (streams.videolan.org/samples), subset",
+   "source": "https://streams.videolan.org/samples/allsamples.txt",
+   "subset": "the archive is 54 GB and its README asks that bulk fetches over 1 GB be rate-limited, so: one file per codec/format subfolder of V-codecs/, A-codecs/ and game-formats/, and up to 5 files (round-robin over subfolders) from every other top-level folder, and one per archive/container/<format>/ (archive/ is the upload inbox, shown under several views); each the 16 kB-8 MB media file whose size is closest to 512 kB. Left out: fate-suite/ (FFmpeg FATE, measured separately), drivers32/ (codec DLLs), adaptive/ and playlists/ (need a streaming server), RAR volumes/, JPEG-seq/, PNG-seq/, yuv/, raw-video/ (image sequences and headerless frames).",
+   "overall": {
+    "files": 534,
+    "media": 455,
+    "union": 446,
+    "unplayable": 16,
+    "ffmpeg": 423,
+    "ffmpegMeasured": 446,
+    "vlc": 395,
+    "vlcMeasured": 446,
+    "wasm": 417,
+    "wasmMeasured": 446,
+    "chromium": 53,
+    "chromiumMeasured": 446,
+    "webkit": 86,
+    "webkitMeasured": 446,
+    "firefox": 43,
+    "firefoxMeasured": 446
+   },
+   "wasmFails": 29,
+   "fixedByAvformat": 4,
+   "topCauses": [
+    [
+     "missing decoder (codec not in the wasm build)",
+     5
+    ],
+    [
+     "decoder produced no picture (buffer deadlock prevented)",
+     5
+    ],
+    [
+     "other / no clue in the log",
+     4
+    ],
+    [
+     "demuxer choice: plays with :demux=avformat",
+     4
+    ],
+    [
+     "no demuxer accepted the file",
+     3
+    ]
+   ],
+   "bytes": 829639581,
+   "derived": null,
+   "summary": "suites/vlc-samples-summary.json",
+   "matrix": "suites/vlc-samples-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "vvc-conformance",
+   "title": "VVC/H.266 conformance bitstreams (JVET)",
+   "source": "https://fate-suite.ffmpeg.org/vvc-conformance/",
+   "subset": "all of FATE's vvc-conformance/ folder.",
+   "overall": {
+    "files": 32,
+    "media": 32,
+    "union": 32,
+    "unplayable": 0,
+    "ffmpeg": 32,
+    "ffmpegMeasured": 32,
+    "vlc": 0,
+    "vlcMeasured": 32,
+    "wasm": 0,
+    "wasmMeasured": 32,
+    "chromium": 0,
+    "chromiumMeasured": 32,
+    "webkit": 0,
+    "webkitMeasured": 32,
+    "firefox": 0,
+    "firefoxMeasured": 32
+   },
+   "wasmFails": 32,
+   "fixedByAvformat": 0,
+   "topCauses": [
+    [
+     "no picture (decoder opened, nothing out)",
+     32
+    ]
+   ],
+   "bytes": 4196513,
+   "derived": "fate",
+   "summary": "suites/vvc-conformance-summary.json",
+   "matrix": "suites/vvc-conformance-matrix.json",
+   "measured": true
+  },
+  {
+   "name": "wpt",
+   "title": "Web Platform Tests media files",
+   "source": "https://github.com/web-platform-tests/wpt/tree/f085a1efc1f58fbe263d384b1e335d656fe58e66",
+   "subset": "every audio/video file in those three folders (images, captions and manifests left out).",
+   "overall": {
+    "files": 88,
+    "media": 87,
+    "union": 83,
+    "unplayable": 4,
+    "ffmpeg": 83,
+    "ffmpegMeasured": 83,
+    "vlc": 81,
+    "vlcMeasured": 83,
+    "wasm": 83,
+    "wasmMeasured": 83,
+    "chromium": 80,
+    "chromiumMeasured": 83,
+    "webkit": 81,
+    "webkitMeasured": 83,
+    "firefox": 79,
+    "firefoxMeasured": 83
+   },
+   "wasmFails": 0,
+   "fixedByAvformat": 0,
+   "topCauses": [],
+   "bytes": 12735729,
+   "derived": null,
+   "summary": "suites/wpt-summary.json",
+   "matrix": "suites/wpt-matrix.json",
+   "measured": true
+  }
+ ]
+}

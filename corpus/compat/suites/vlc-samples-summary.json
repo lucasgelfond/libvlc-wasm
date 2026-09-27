@@ -1,7 +1,22 @@
 {
  "suite": "vlc-samples",
  "title": "VLC samples archive (streams.videolan.org/samples), subset",
+ "description": "The VideoLAN / Libav / MPlayer samples collection: the bug-report pile of real-world files in every container and codec VLC has had to deal with, many of them broken or odd on purpose.",
  "source": "https://streams.videolan.org/samples/allsamples.txt",
+ "homepage": "https://streams.videolan.org/samples/",
+ "license": "no stated licence: samples collected from bug reports for testing; free to download for testing (00-README)",
+ "fetched": "the file list is allsamples.txt; sizes from each folder's directory listing (one request at a time); files downloaded one at a time.",
+ "subset": "the archive is 54 GB and its README asks that bulk fetches over 1 GB be rate-limited, so: one file per codec/format subfolder of V-codecs/, A-codecs/ and game-formats/, and up to 5 files (round-robin over subfolders) from every other top-level folder, and one per archive/container/<format>/ (archive/ is the upload inbox, shown under several views); each the 16 kB-8 MB media file whose size is closest to 512 kB. Left out: fate-suite/ (FFmpeg FATE, measured separately), drivers32/ (codec DLLs), adaptive/ and playlists/ (need a streaming server), RAR volumes/, JPEG-seq/, PNG-seq/, yuv/, raw-video/ (image sequences and headerless frames).",
+ "method": {
+  "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
+  "plays": "the file has video and a picture came out, or it has audio and sound came out",
+  "ffmpeg": "ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0",
+  "vlc": "VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing",
+  "wasm": "tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted",
+  "browsers": "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
+  "denominator": "N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted",
+  "caveats": "many suite files are deliberately broken, truncated, single-frame or headerless; \"plays\" means something came out, not a bit-exact decode"
+ },
  "date": "2026-09-27",
  "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
  "tools": {
