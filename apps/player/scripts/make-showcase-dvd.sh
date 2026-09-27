@@ -136,6 +136,7 @@ XML
 spumux main.xml < main_bg.mpg > main.mpg 2>/dev/null
 spumux chapters.xml < chapters_bg.mpg > chaptersmenu.mpg 2>/dev/null
 
+printf '000000\nffffff\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n' > subs.rgb
 cat > dvd.xml <<'XML'
 <dvdauthor>
   <vmgm>
@@ -168,7 +169,11 @@ cat > dvd.xml <<'XML'
       <audio lang="es"/>
       <subpicture lang="en"/>
       <subpicture lang="es"/>
-      <pgc>
+      <!-- Subtitles start shown (SPRM2 = 0x40 | stream 0): a hidden stream
+           plays as forced-only in VLC, so choosing it later showed nothing.
+           The palette makes spumux's text white (index 1) edged black (0). -->
+      <pgc palette="subs.rgb">
+        <pre>subtitle=64;</pre>
         <vob file="feature_subs.mpg" chapters="0,0:12,0:24"/>
         <post>call vmgm menu 1;</post>
       </pgc>
