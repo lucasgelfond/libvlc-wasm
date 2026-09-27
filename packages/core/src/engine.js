@@ -151,7 +151,7 @@ export async function createEngine(factory, opts = {}) {
 export const EVENT = Object.freeze({
   STATE: 1, BUFFERING: 2, POSITION: 3, LENGTH: 4, TRACKS: 5, TRACK_SELECTED: 6,
   RATE: 7, CAPS: 8, VOUT: 9, STOPPING: 10, META: 11, CHAPTER: 12, TITLES: 13,
-  VOLUME: 14, MUTE: 15, PARSED: 16, MEDIA_CHANGED: 17, RECORDING: 18, PROGRAMS: 19, FRAME_STEP: 20, LOG: 100,
+  VOLUME: 14, MUTE: 15, PARSED: 16, MEDIA_CHANGED: 17, RECORDING: 18, PROGRAMS: 19, FRAME_STEP: 20, PERF: 21, LOG: 100,
 });
 
 export const STATE_NAMES = ['idle', 'opening', 'playing', 'paused', 'stopped', 'stopping', 'error'];

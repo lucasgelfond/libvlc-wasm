@@ -96,6 +96,33 @@ export interface Chapters {
   chapter: number;
 }
 
+/**
+ * Pushed by the engine about once a second while playing: how fast the video
+ * decoder works relative to real time. `decodeFps` is frames decoded per
+ * second the decoder was busy (its capacity), not per second of playback,
+ * which only ever equals the stream's frame rate.
+ */
+export interface PerformanceStats {
+  /** Frames per second of decoding time; null without video. */
+  decodeFps: number | null;
+  /** decodeFps / the stream's fps: 12 means it decodes 12x faster than it plays. */
+  realtime: number | null;
+  decodeMsPerFrame: number | null;
+  /** The stream's frame rate (or, when it has none, the displayed rate). */
+  fps: number | null;
+  /** Pictures lost (dropped) and displayed late in the interval. */
+  dropped: number;
+  late: number;
+  /** Decoded by the browser's WebCodecs (usually hardware), not VLC's software decoders. */
+  hardware: boolean;
+  decoder: 'WebCodecs' | 'software';
+  codec: string | null;
+  /** Seconds of audio decoding per second of playback. */
+  audioLoad: number | null;
+  /** Seconds this report covers. */
+  interval: number;
+}
+
 export interface PlayerEvents {
   statechange: PlayerState;
   opening: undefined; playing: undefined; paused: undefined; stopped: undefined; stopping: undefined;
@@ -115,6 +142,7 @@ export interface PlayerEvents {
   recording: { recording: boolean; path: string | null };
   programs: undefined;
   framestep: number;
+  performance: PerformanceStats;
 }
 
 declare class Emitter<E> {
