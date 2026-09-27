@@ -12,13 +12,12 @@ the servers used below set it for you.
 | [`vanilla/audio.html`](vanilla/audio.html) | VLC's output as a node in your Web Audio graph; trackers, chiptunes, MIDI with a SoundFont; EQ | same |
 | [`vanilla/wall.html`](vanilla/wall.html) | several players on one engine | same |
 | [`vanilla/url.html`](vanilla/url.html) | playing an http(s) URL through range requests | same |
-| [`svelte-player/`](svelte-player/) | a reusable Svelte `<VlcPlayer>` component in the smallest possible app (the full demo is [`apps/player`](../apps/player)) | `pnpm example:svelte` |
-| [`../apps/player/`](../apps/player/) | a polished minimal player on SvelteKit + shadcn-svelte | `pnpm --filter player dev` |
+| [`../apps/player/`](../apps/player/) | the full player (the site): SvelteKit + shadcn-svelte, DVD menus, subtitles, effects | `pnpm dev` |
 | [`node/probe.mjs`](node/probe.mjs) | headless probing and thumbnails under Node (`libvlc-wasm/node`) | `node examples/node/probe.mjs file.rm --thumbs=out` |
 
 Frameworks: `<vlc-player>` is a standard custom element, so it works as-is in React
 (`<vlc-player src={url} controls />`), Vue, Solid or Angular; for full control use the
-`Player` API the way `svelte-player/src/lib/VlcPlayer.svelte` does.
+`Player` API the way `apps/player/src/lib/session.svelte.ts` does.
 
 Hosting where you cannot set headers (GitHub Pages): load
 `libvlc-wasm/coi-serviceworker.js` first in `<head>`; it adds the isolation headers

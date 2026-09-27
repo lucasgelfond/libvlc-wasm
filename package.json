@@ -10,8 +10,7 @@
     "test:browser": "node tests/run-browser.mjs",
     "corpus": "node corpus/fetch.mjs",
     "verify": "node tests/verify-corpus.mjs",
-    "bench": "node bench/run.mjs",
-    "example:svelte": "pnpm --filter svelte-player dev"
+    "bench": "node bench/run.mjs"
   },
   "devDependencies": {
     "@ffmpeg/core": "0.12.10",

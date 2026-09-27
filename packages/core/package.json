@@ -33,12 +33,14 @@
     "wasm/libvlc.wasm",
     "wasm/VLC_COMMIT",
     "fonts",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "COPYING"
   ],
   "sideEffects": [
     "./src/element.js"
   ],
-  "license": "GPL-2.0-or-later",
+  "license": "MIT AND GPL-2.0-or-later",
   "keywords": [
     "vlc",
     "libvlc",

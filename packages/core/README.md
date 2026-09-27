@@ -173,6 +173,9 @@ AudioWorklet      ◀── reads float PCM ring straight from wasm memory ─�
 
 The wasm bundles libvlc/libvlccore and 260+ VLC modules with FFmpeg, dav1d, libvpx,
 libass, FreeType, HarfBuzz, libmatroska, libmodplug, game-music-emu, FluidLite,
-libxml2, libarchive and more. libvlc is LGPL-2.1+, but some bundled modules and
-contribs are GPL, so treat the binary as **GPL-2.0-or-later** unless you rebuild
-without them. The bundled Noto Sans font is OFL-1.1 (`fonts/OFL.txt`).
+libxml2, libarchive and more.
+
+The JavaScript in `src/` is **MIT**. The compiled engine in `wasm/` is
+**GPL-2.0-or-later**: libvlc is LGPL-2.1+, but some bundled modules and contribs
+(libdvdnav, libdvdread and others) are GPL, which makes the binary as a whole GPL.
+See `LICENSE` and `COPYING`. The bundled Noto Sans font is OFL-1.1 (`fonts/OFL.txt`).

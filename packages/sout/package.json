@@ -20,13 +20,15 @@
     "wasm/libvlc-sout.js",
     "wasm/libvlc-sout.wasm",
     "wasm/VLC_COMMIT",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "COPYING"
   ],
   "sideEffects": false,
   "peerDependencies": {
     "libvlc-wasm": "0.1.x"
   },
-  "license": "GPL-2.0-or-later",
+  "license": "MIT AND GPL-2.0-or-later",
   "keywords": [
     "vlc",
     "libvlc",

@@ -118,7 +118,8 @@ build.sh, build/           Docker toolchain (Debian + emsdk), VLC build, link, p
 native/                    the C side: bridge.c (API + threading), webaudio.c (aout),
                            webframe.c (vout), webcodecs.c (decoder), shared.h (layouts shared with JS)
 packages/core/             the npm package: src/ (JS SDK), wasm/ (built), fonts/
-examples/                  vanilla HTML pages, a Svelte app, a Node CLI
+apps/player/               the player site (SvelteKit), `pnpm dev`
+examples/                  vanilla HTML pages and a Node CLI
 tests/                     Node smoke test, browser harness, feature suite, corpus verifier
 corpus/                    manifest of 75 obscure samples, fetcher, native reference levels, results
 bench/                     browser vs native benchmarks, WASI runtime benchmark, comparisons
@@ -163,6 +164,14 @@ Cross-Origin-Embedder-Policy: require-corp
 
 ## License
 
-libvlc is LGPL-2.1+, but the build includes GPL modules and contribs, so the wasm is
-GPL-2.0-or-later. Our own code (bridge, modules, SDK, examples) follows the same license.
-Noto Sans (bundled for subtitles) is OFL-1.1.
+Two parts (see [LICENSE](LICENSE)):
+
+- **The code in this repository is MIT**: the SDK, types, the VLC modules and bridge in
+  `native/`, build scripts, tests, benchmarks and the player app.
+- **The compiled engine (`libvlc.wasm`) is GPL-2.0-or-later** ([COPYING](COPYING)). libvlc
+  itself is LGPL-2.1+, but the build links GPL modules and contribs (libdvdnav, libdvdread
+  and others), which makes the binary as a whole GPL. The patches in `build/patches` modify
+  VLC and stay under VLC's licenses.
+
+The npm packages carry both, as `"license": "MIT AND GPL-2.0-or-later"`. Noto Sans
+(bundled for subtitles) is OFL-1.1.
