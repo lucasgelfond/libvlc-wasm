@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Popover from '$lib/components/ui/popover';
-	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { Button } from '$lib/components/ui/button';
 	import { ROWS, bySection, type Cell, type Row } from '$lib/compat';
 	import RiListCheck3 from 'remixicon-svelte/icons/list-check-3';
@@ -40,7 +39,6 @@
 		{/snippet}
 	</Popover.Trigger>
 	<Popover.Content align="end" class="w-[min(560px,calc(100vw-2rem))] p-0">
-		<Tooltip.Provider delayDuration={150}>
 			<p class="border-border border-b px-4 py-3 text-sm font-semibold">What plays where</p>
 			<div class="max-h-[min(60vh,480px)] overflow-y-auto">
 				<table class="w-full text-xs">
@@ -56,17 +54,7 @@
 							{#each s.rows as r (r.id)}
 								<tr class="border-border border-t">
 									<td class="px-4 py-1.5">
-										<Tooltip.Root>
-											<Tooltip.Trigger>
-												{#snippet child({ props })}
-													<a {...props} href={r.wiki} target="_blank" rel="noreferrer" class="hover:text-primary underline-offset-2 hover:underline">{r.short}</a>
-												{/snippet}
-											</Tooltip.Trigger>
-											<Tooltip.Content side="top" align="start" class="block max-w-64">
-												<span class="block">{r.plain}</span>
-												<span class="mt-1 block font-mono text-[10px] opacity-70">{r.format}</span>
-											</Tooltip.Content>
-										</Tooltip.Root>
+										<a href={r.wiki} target="_blank" rel="noreferrer" class="hover:text-primary underline-offset-2 hover:underline">{r.short}</a>
 									</td>
 									{#each COLUMNS as [label, pick] (label)}{@render mark(pick(r))}{/each}
 								</tr>
@@ -76,8 +64,7 @@
 				</table>
 			</div>
 			<div class="border-border flex justify-end border-t p-2">
-				<Button href="/formats" variant="ghost" size="sm">See full comparison, with other browser tools (ffmpeg.wasm / vlc.js) and sample files <RiArrowRightLine /></Button>
+				<Button href="/formats" variant="ghost" size="sm">See full comparison <RiArrowRightLine /></Button>
 			</div>
-		</Tooltip.Provider>
 	</Popover.Content>
 </Popover.Root>
