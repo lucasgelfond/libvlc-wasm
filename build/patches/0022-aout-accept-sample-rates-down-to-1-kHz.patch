@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 22/29] aout: accept sample rates down to 1 kHz
+
+Streams below 4 kHz were refused outright, although the decoders handle
+them and the output resamples to whatever the device runs at: Chromium's
+3 kHz WAV and Firefox's 1 kHz Vorbis test files opened, decoded and were
+never heard. Accept rates down to 1 kHz.
+---
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/audio_output/dec.c b/src/audio_output/dec.c
+--- a/src/audio_output/dec.c
++++ b/src/audio_output/dec.c
+@@ -357,7 +357,8 @@ vlc_aout_stream * vlc_aout_stream_New(audio_output_t *p_aout,
+                  p_format->i_rate );
+         return NULL;
+     }
+-    if( p_format->i_rate < 4000 )
++    /* Test signals and old telephony go well below 4 kHz; resamplers cope */
++    if( p_format->i_rate < 1000 )
+     {
+         msg_Err( p_aout, "too low audio sample frequency (%u)",
+                  p_format->i_rate );
+-- 
+2.47.3
+

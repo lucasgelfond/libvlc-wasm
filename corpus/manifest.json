@@ -208,9 +208,6 @@
       "audio": "WMA Lossless",
       "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
       "notes": null,
-      "test": {
-        "knownIssue": "this 0.2 s clip only leaves the decoder at end-of-stream drain, already late, so VLC's audio core drops it (native VLC's file output ignores timing)"
-      },
       "sha256": "0dbe31e8b7bc8b589df5109cf6e2a1a782cdf8491ecbc1cc1fee887648ff45b7"
     },
     {
@@ -255,9 +252,6 @@
       "audio": "MP3",
       "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
       "notes": null,
-      "test": {
-        "knownIssue": "known issue: VLC 4's AVI demuxer hands the MP3 packetizer this truncated, index-less file's audio out of order (its MP3 frames play when extracted, and through FFmpeg's demuxer); a clean XviD+MP3 AVI plays"
-      },
       "sha256": "fd3040d7c3f93d7a9fe6501df9f1d48f636359af58f9cbcef46eb84e481d4be3"
     },
     {
@@ -273,7 +267,7 @@
       "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
       "notes": null,
       "test": {
-        "expectFail": "native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either (same AVI demuxer issue as the XviD file)"
+        "expectFail": "the first ~13 s of this file's MP3 track are zero bytes, not MP3 frames, so no player (VLC or FFmpeg) has audio in the test window; it starts at 13 s"
       },
       "sha256": "cffa4bb94f2d50d0f779de52027a38ca62b72e4e5d3d95f3b49f69d092a26330"
     },
@@ -800,9 +794,6 @@
       "audio": "TrueHD",
       "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere); ffprobe needs -f truehd",
       "notes": null,
-      "test": {
-        "knownIssue": "plays about half the time: its 0.1 s of audio only leaves the decoder at end-of-stream drain, right at the lateness limit of VLC's audio core (same as the WMA Lossless clip)"
-      },
       "sha256": "020c9b9e67f80de105663af191740f8b60f550107c9f765b632f4cd5efb1c6ab"
     },
     {
@@ -909,9 +900,6 @@
       "audio": "Shorten",
       "whyBrowserCant": "No browser Shorten decoder",
       "notes": null,
-      "test": {
-        "expectFail": "native VLC 3.0.24 also cannot play it: VLC's FFmpeg demuxer reaches end of file without a packet from this raw Shorten stream"
-      },
       "sha256": "bc75e9dfdb21409569b5245b3ca8b97db84e3a869dcfece5a1cee4dadb4ec79d"
     },
     {

@@ -425,7 +425,9 @@ static void api_player_new(wv_call_t *c)
     wv_ring_t *r = &p->ring;
     r->magic = WV_RING_MAGIC;
     r->rate = c->i[2] > 0 ? c->i[2] : 48000;
-    r->channels = c->i[3] == 1 ? 1 : 2;
+    /* 1, 2 or the 4, 6 and 8 channel layouts of webaudio.c */
+    r->channels = c->i[3] == 1 || c->i[3] == 4 || c->i[3] == 6 || c->i[3] == 8
+                ? c->i[3] : 2;
     r->capacity = c->i[4] > 0 ? c->i[4] : r->rate / 2;
     r->data = calloc((size_t)r->capacity * r->channels, sizeof(float));
     if (!r->data) { free(p); c->ret_i = 0; return; }

@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 33/33] avcodec: audio: keep the front centre pair of 7.1 wide layouts
+
+VLC has no front-left/right-of-centre channels, so the pair was dropped
+from every layout that has it ("2 channels are dropped"). DTS-HD MA 7.1
+is usually "7.1 (wide)": L R C LFE Ls Rs Lc Rc, with no side channels, and
+lost two of its eight channels.
+
+When a layout has the centre pair and no side channels, map the pair to
+the middle left/right channels, the positions VLC's 7.1 uses.
+---
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/modules/codec/avcodec/audio.c b/modules/codec/avcodec/audio.c
+--- a/modules/codec/avcodec/audio.c
++++ b/modules/codec/avcodec/audio.c
+@@ -687,11 +687,24 @@ static void SetupOutputFormat( decoder_t *p_dec, bool b_trust )
+ 
+         assert(stdc_count_ones(channel_layout_mask) == (unsigned)channel_count);
+ 
++        /* VLC has no front left/right of centre. In a layout without side
++         * channels (7.1 "wide", DTS-HD MA), put them there rather than
++         * dropping two channels. */
++        const bool b_wide = (channel_layout_mask & (AV_CH_FRONT_LEFT_OF_CENTER |
++                                                    AV_CH_FRONT_RIGHT_OF_CENTER)) &&
++                           !(channel_layout_mask & (AV_CH_SIDE_LEFT | AV_CH_SIDE_RIGHT));
+         for( unsigned i = 0; pi_channels_map[i][0]
+          && i_channels_src < channel_count; i++ )
+         {
+             if( channel_layout_mask & pi_channels_map[i][0] )
+-                pi_order_src[i_channels_src++] = pi_channels_map[i][1];
++            {
++                uint32_t chan = pi_channels_map[i][1];
++                if( b_wide && pi_channels_map[i][0] == AV_CH_FRONT_LEFT_OF_CENTER )
++                    chan = AOUT_CHAN_MIDDLELEFT;
++                else if( b_wide && pi_channels_map[i][0] == AV_CH_FRONT_RIGHT_OF_CENTER )
++                    chan = AOUT_CHAN_MIDDLERIGHT;
++                pi_order_src[i_channels_src++] = chan;
++            }
+         }
+ 
+         if( i_channels_src != channel_count && b_trust )
+-- 
+2.47.3
+

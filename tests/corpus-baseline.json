@@ -13,6 +13,7 @@
   "c64-sid-rob-hubbard-commando",
   "cenc-clearkey-mp4",
   "cinepak",
+  "dolby-truehd-atmos-8ch",
   "dts-es",
   "dts-in-mpeg-ts",
   "dvcpro-hd-720p50",
@@ -74,6 +75,7 @@
   "realvideo-g2-svt",
   "sandman-s3m",
   "sega-genesis-vgz-gzip-vgm",
+  "shorten",
   "smacker",
   "snes-spc",
   "sorenson-video-1",
@@ -82,9 +84,11 @@
   "true-audio-6-6-mb",
   "vobsub-idx-sub",
   "vp6f-nellymoser",
+  "wma-lossless-24-bit",
   "wma-voice-11k",
   "wmv7",
   "wmv8-x8-intra",
-  "wmv9-vc-1-simple-main-raw-rcv"
+  "wmv9-vc-1-simple-main-raw-rcv",
+  "xvid-mp3"
  ]
 }

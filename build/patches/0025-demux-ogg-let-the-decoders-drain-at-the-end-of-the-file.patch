@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 25/29] demux: ogg: let the decoders drain at the end of the file
+
+At the end of a group of logical streams the demuxer deletes its
+elementary streams and looks for a chained group. Deleting an ES kills its
+decoder at once, so whatever had just been sent was never played: with a
+skeleton track, or any group of more than one stream, a short file played
+nothing and a long one lost its tail.
+
+When nothing follows in the file, report the end of the stream and keep the
+ES, so the decoders drain as for any other demuxer.
+---
+ 1 file changed, 12 insertions(+)
+
+diff --git a/modules/demux/ogg.c b/modules/demux/ogg.c
+--- a/modules/demux/ogg.c
++++ b/modules/demux/ogg.c
+@@ -416,6 +416,18 @@ static int Demux( demux_t * p_demux )
+ 
+             vlc_tick_t i_lastdts = Ogg_GetLastDTS( p_demux );
+ 
++            /* Nothing follows: keep the elementary streams. Deleting them
++             * kills their decoders before they have played what was just
++             * sent, which is all of a short file. */
++            const uint8_t *p_peek;
++            if( p_sys->oy.fill <= p_sys->oy.returned &&
++                vlc_stream_Peek( p_demux->s, &p_peek, 1 ) < 1 )
++            {
++                if( i_lastdts != VLC_TICK_INVALID && likely( !p_sys->b_slave ) )
++                    es_out_SetPCR( p_demux->out, i_lastdts );
++                return VLC_DEMUXER_EOF;
++            }
++
+             /* We keep the ES to try reusing it in Ogg_BeginningOfStream
+              * only 1 ES is supported (common case for ogg web radio) */
+             if( p_sys->i_streams == 1 && p_sys->i_declared_streams == 1 && p_sys->pp_stream[0]->p_es )
+-- 
+2.47.3
+

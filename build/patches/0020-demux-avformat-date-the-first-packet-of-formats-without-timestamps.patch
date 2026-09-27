@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 20/29] demux: avformat: date the first packet of formats without timestamps
+
+Raw formats flagged AVFMT_NOTIMESTAMPS (Shorten, OSQ, ...) hand out packets
+without any timestamp when avformat has no parser for them. The audio
+decoder drops everything until it sees a first timestamp and the clock never
+gets a PCR, so these files open, read to the end and play nothing.
+
+Date the first packet of such a track (and the first one after a seek) from
+the current demuxer time; the decoder then counts samples from there.
+---
+ 1 file changed, 12 insertions(+)
+
+diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
+--- a/modules/demux/avformat/demux.c
++++ b/modules/demux/avformat/demux.c
+@@ -970,6 +970,18 @@ static int Demux( demux_t *p_demux )
+     if( pkt.duration > 0 && p_frame->i_length <= 0 )
+         p_frame->i_length = FROM_AVSCALE( pkt.duration, p_stream->time_base );
+ 
++    /* Formats without timestamps (raw Shorten, ...) may have no parser to
++     * make them up either. The decoder waits for a first timestamp and the
++     * clock for a PCR, so date the first packet of the track (again after
++     * a seek): the decoder counts samples from there. */
++    if( (p_sys->ic->iformat->flags & AVFMT_NOTIMESTAMPS) &&
++        p_frame->i_dts == VLC_TICK_INVALID && p_frame->i_pts == VLC_TICK_INVALID &&
++        p_track->i_pcr == VLC_TICK_INVALID )
++    {
++        p_frame->i_dts = p_frame->i_pts = VLC_TICK_0 +
++            (p_sys->i_pcr != VLC_TICK_INVALID ? p_sys->i_pcr : 0);
++    }
++
+     /* Add here notoriously bugged file formats/samples */
+     if( !strcmp( p_sys->fmt->name, "flv" ) )
+     {
+-- 
+2.47.3
+

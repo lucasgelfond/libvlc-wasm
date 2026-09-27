@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 27/29] packetizer: flac: do not trust a max_framesize smaller than the frames
+
+The packetizer gives up on a frame and resynchronises once it has read
+more than STREAMINFO's max_framesize without finding the next frame. Some
+encoders wrote a max_framesize smaller than their frames, and every frame
+of such a file was cut and dropped.
+
+Only enforce it when the frame is also bigger than any valid frame with
+the current header could be (every subframe verbatim); the CRC check still
+rejects garbage below that.
+---
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/modules/packetizer/flac.c b/modules/packetizer/flac.c
+--- a/modules/packetizer/flac.c
++++ b/modules/packetizer/flac.c
+@@ -105,6 +105,16 @@ static const int pi_channels_maps[9] =
+ };
+ 
+ 
++/* The largest a frame can be: every subframe stored verbatim, with a
++ * side channel one bit wider. Encoders have written a wrong max_framesize
++ * in STREAMINFO; it is only trusted up to this. */
++static size_t FLAC_WorstFrameSize( const struct flac_header_info *h )
++{
++    return FLAC_HEADER_SIZE_MAX + 2 /* CRC-16 */ +
++           (size_t) h->i_channels * (1 + ((size_t) h->i_frame_length *
++                                          (h->i_bits_per_sample + 1) + 7) / 8);
++}
++
+ /*****************************************************************************
+  * ProcessHeader: process Flac header.
+  *****************************************************************************/
+@@ -453,7 +463,8 @@ static block_t *Packetize(decoder_t *p_dec, block_t **pp_block)
+         }
+         else if( p_sys->b_stream_info &&
+                  p_sys->stream_info.max_framesize > FLAC_FRAME_SIZE_MIN &&
+-                 p_sys->stream_info.max_framesize < p_sys->i_offset )
++                 p_sys->stream_info.max_framesize < p_sys->i_offset &&
++                 FLAC_WorstFrameSize( &p_sys->headerinfo ) < p_sys->i_offset )
+         {
+             /* Something went wrong, truncate stream head and restart */
+             msg_Warn(p_dec, "discarding bytes as we're over framesize %u, %zu",
+-- 
+2.47.3
+

@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 21/29] demux: h26x: find HEVC streams that start with a delimiter or many parameter sets
+
+Two things kept the probe from recognising HEVC conformance streams (and
+Chromium's HDR10 test file) that the demuxer plays fine when forced:
+
+- An access unit delimiter was only accepted if bytes 4 and 5 were zero,
+  which is where the next start code sits only when it is 4 bytes long; the
+  NAL is 3 bytes, so check bytes 3 and 4. It also required a full
+  H26X_MIN_PEEK of data after the NAL, more than the first peek holds.
+- Streams may open with many parameter sets and SEI before the first
+  random access picture (one conformance stream sends 64 PPS). Look at up
+  to 128 NAL units; the peek size still bounds the search.
+---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/modules/demux/mpeg/h26x.c b/modules/demux/mpeg/h26x.c
+--- a/modules/demux/mpeg/h26x.c
++++ b/modules/demux/mpeg/h26x.c
+@@ -91,7 +91,8 @@ static int Control( demux_t *, int, va_list );
+ #define H26X_PEEK_CHUNK  (H26X_PACKET_SIZE * 4)
+ #define H26X_MIN_PEEK    (4 + 7 + 10)
+ #define H26X_MAX_PEEK    (H26X_PEEK_CHUNK * 8) /* max data to check */
+-#define H26X_NAL_COUNT   8 /* max # or NAL to check */
++#define H26X_NAL_COUNT   128 /* max # of NAL to check: streams can open with
++                                * many parameter sets and SEI (up to 64 PPS) */
+ 
+ /*****************************************************************************
+  * Probing
+@@ -151,8 +152,10 @@ static int ProbeHEVC( const uint8_t *p_peek, size_t i_peek, void *p_priv )
+    }
+    else if( i_type == HEVC_NAL_AUD ) /* AU */
+    {
+-        if( i_peek < H26X_MIN_PEEK ||
+-            p_peek[4] != 0 || p_peek[5] != 0 ) /* Must prefix another NAL */
++        /* 2 bytes of header, 1 of payload, then the next start code,
++         * which may be 3 bytes long */
++        if( i_peek < 5 ||
++            p_peek[3] != 0 || p_peek[4] != 0 ) /* Must prefix another NAL */
+             return -1;
+    }
+    else if( i_type == HEVC_NAL_PREF_SEI ) /* Prefix SEI */
+-- 
+2.47.3
+

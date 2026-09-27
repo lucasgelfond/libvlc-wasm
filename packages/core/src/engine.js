@@ -207,6 +207,14 @@ function webCodecsHost(getModule) {
     return p;
   }
 
+  /** Wasm memory as bytes. A pthread growing the memory leaves this thread's
+   * HEAPU8 on the old, shorter buffer until emscripten next notices, and a
+   * large frame malloc'd past its end then fails ("Invalid typed array length"). */
+  function heapU8(M) {
+    const buf = M.wasmMemory?.buffer;
+    return buf && M.HEAPU8.buffer !== buf ? new Uint8Array(buf) : M.HEAPU8;
+  }
+
   function make(sys, st) {
     const M = getModule();
     return new VideoDecoder({
@@ -229,7 +237,7 @@ function webCodecsHost(getModule) {
               const px = g.getImageData(0, 0, w, h).data;
               ptr = M._malloc(px.length);
               if (!ptr) return;
-              M.HEAPU8.set(px, ptr);
+              heapU8(M).set(px, ptr);
               M._wv_wc_push(sys, gen, ptr, FORMATS.RGBX, w, h, frame.timestamp, 0, w * 4, 0, 0, 0, 0, 0);
               ptr = 0; // C owns it now
               return;
@@ -242,7 +250,7 @@ function webCodecsHost(getModule) {
             const size = frame.allocationSize(opts);
             ptr = M._malloc(size);
             if (!ptr) return;
-            const layout = await frame.copyTo(new Uint8Array(M.HEAPU8.buffer, ptr, size), opts);
+            const layout = await frame.copyTo(new Uint8Array(heapU8(M).buffer, ptr, size), opts);
             if (st.closing) return;
             const l = (k) => layout[k] ?? { offset: 0, stride: 0 };
             M._wv_wc_push(sys, gen, ptr, FORMATS[format], rect.width, rect.height, frame.timestamp,

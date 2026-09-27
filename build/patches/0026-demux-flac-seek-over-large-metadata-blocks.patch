@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 26/29] demux: flac: seek over large metadata blocks
+
+Metadata blocks the demuxer does not parse were skipped with a NULL read,
+which the stream core serves 256 bytes at a time. The FLAC test suite has
+files with 16 MiB PADDING and APPLICATION blocks: skipping them took
+seconds before the first sample. Seek over the block instead, and only
+fall back to reading when the stream cannot seek.
+---
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/modules/demux/flac.c b/modules/demux/flac.c
+--- a/modules/demux/flac.c
++++ b/modules/demux/flac.c
+@@ -755,7 +755,11 @@ static int  ParseHeaders( demux_t *p_demux, es_format_t *p_fmt )
+                 ParsePicture( p_demux, p_peek, i_peek );
+         }
+ 
+-        if( vlc_stream_Read( p_demux->s, NULL, 4+i_len ) != (4+i_len) )
++        /* Seek over the block: PADDING or APPLICATION blocks can be
++         * megabytes, and skipping by reading goes 256 bytes at a time */
++        uint64_t i_next = vlc_stream_Tell( p_demux->s ) + 4 + i_len;
++        if( vlc_stream_Seek( p_demux->s, i_next ) != VLC_SUCCESS &&
++            vlc_stream_Read( p_demux->s, NULL, 4+i_len ) != (4+i_len) )
+             break;
+     }
+ 
+-- 
+2.47.3
+

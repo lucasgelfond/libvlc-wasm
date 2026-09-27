@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 23/29] codec: vorbis: decode streams with more than 8 channels
+
+Vorbis allows up to 255 channels; above 8 their order is application
+defined (Vorbis I, 4.3.9). The decoder refused anything above 8 after
+opening, so such a stream opened, decoded nothing and stalled the input
+("buffer deadlock prevented"). Pass up to INPUT_CHAN_MAX channels on without
+a layout, as the avcodec decoder does, and let the audio output mix them.
+---
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/modules/codec/vorbis.c b/modules/codec/vorbis.c
+--- a/modules/codec/vorbis.c
++++ b/modules/codec/vorbis.c
+@@ -90,7 +90,7 @@ typedef struct
+     /*
+     ** Channel reordering
+     */
+-    uint8_t pi_chan_table[AOUT_CHAN_MAX];
++    uint8_t pi_chan_table[INPUT_CHAN_MAX];
+ } decoder_sys_t;
+ 
+ static const int pi_channels_maps[9] =
+@@ -378,16 +378,19 @@ static int ProcessHeaders( decoder_t *p_dec )
+     p_dec->fmt_out.audio.i_rate     = p_sys->vi.rate;
+     p_dec->fmt_out.audio.i_channels = p_sys->vi.channels;
+ 
+-    if( p_dec->fmt_out.audio.i_channels >= ARRAY_SIZE(pi_channels_maps) )
++    if( p_dec->fmt_out.audio.i_channels == 0 ||
++        p_dec->fmt_out.audio.i_channels > INPUT_CHAN_MAX )
+     {
+-        msg_Err( p_dec, "invalid number of channels (1-%zu): %i",
+-                 ARRAY_SIZE(pi_channels_maps),
+-                 p_dec->fmt_out.audio.i_channels );
++        msg_Err( p_dec, "invalid number of channels (1-%d): %i",
++                 INPUT_CHAN_MAX, p_dec->fmt_out.audio.i_channels );
+         return VLC_EGENERIC;
+     }
+ 
++    /* Above 8 channels the order is application defined (Vorbis I 4.3.9):
++     * pass them on without a layout, like other decoders do */
+     p_dec->fmt_out.audio.i_physical_channels =
+-            pi_channels_maps[p_sys->vi.channels];
++        p_dec->fmt_out.audio.i_channels < ARRAY_SIZE(pi_channels_maps) ?
++            pi_channels_maps[p_sys->vi.channels] : 0;
+     p_dec->fmt_out.i_bitrate = __MAX( 0, (int32_t) p_sys->vi.bitrate_nominal );
+ 
+     date_Init( &p_sys->end_date, p_sys->vi.rate, 1 );
+-- 
+2.47.3
+

@@ -62,7 +62,8 @@ class VlcRingProcessor extends AudioWorkletProcessor {
 
     for (let c = 0; c < out.length; c++) {
       const dst = out[c];
-      const src = Math.min(c, ch - 1); // mono is copied to both speakers
+      if (c >= ch && ch > 1) { dst.fill(0); continue; } // more outputs than ring channels
+      const src = ch === 1 ? 0 : c; // mono is copied to every output
       let pos = read % cap;
       for (let k = 0; k < n; k++) {
         dst[k] = data[pos * ch + src] * gain;

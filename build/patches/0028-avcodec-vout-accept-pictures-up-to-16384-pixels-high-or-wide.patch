@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 28/29] avcodec, vout: accept pictures up to 16384 pixels high or wide
+
+Both the decoder and the video output refused pictures more than 8192
+pixels wide or high. HEVC level 6 allows 8444 lines, and the conformance
+streams PICSIZE_A/B (1056x8440) use them, so they decoded to nothing
+("Invalid frame size"). Allow up to 16384.
+---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/modules/codec/avcodec/video.c b/modules/codec/avcodec/video.c
+--- a/modules/codec/avcodec/video.c
++++ b/modules/codec/avcodec/video.c
+@@ -361,7 +361,8 @@ static int lavc_GetVideoFormat(decoder_t *dec, video_format_t *restrict fmt,
+         avcodec_align_dimensions2(ctx, &width, &height, aligns);
+     }
+ 
+-    if( width == 0 || height == 0 || width > 8192 || height > 8192 ||
++    /* HEVC level 6 allows 8444 lines (and conformance streams use them) */
++    if( width == 0 || height == 0 || width > 16384 || height > 16384 ||
+         width < ctx->width || height < ctx->height )
+     {
+         msg_Err(dec, "Invalid frame size %dx%d vsz %dx%d",
+diff --git a/src/video_output/video_output.c b/src/video_output/video_output.c
+--- a/src/video_output/video_output.c
++++ b/src/video_output/video_output.c
+@@ -219,8 +219,8 @@ static inline void VoutResetChronoLocked(vout_thread_sys_t *sys)
+ 
+ static bool VoutCheckFormat(const video_format_t *src)
+ {
+-    if (src->i_width == 0  || src->i_width  > 8192 ||
+-        src->i_height == 0 || src->i_height > 8192)
++    if (src->i_width == 0  || src->i_width  > 16384 ||
++        src->i_height == 0 || src->i_height > 16384)
+         return false;
+     if (src->i_sar_num <= 0 || src->i_sar_den <= 0)
+         return false;
+-- 
+2.47.3
+

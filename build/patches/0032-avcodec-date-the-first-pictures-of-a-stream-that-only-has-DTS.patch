@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 32/33] avcodec: date the first pictures of a stream that only has DTS
+
+Packets from elementary stream demuxers (raw H.264/HEVC) carry a DTS and
+no PTS. With frame threading, libavcodec hands neither back on the frame,
+and the decoder dates it by interpolating from the previous picture: the
+first pictures of a stream have none, so they were dropped as undated. A
+stream of one or two pictures showed nothing at all.
+
+Keep the packet's DTS with its frame info and use it when there is nothing
+to interpolate from.
+---
+ 1 file changed, 10 insertions(+)
+
+diff --git a/modules/codec/avcodec/video.c b/modules/codec/avcodec/video.c
+--- a/modules/codec/avcodec/video.c
++++ b/modules/codec/avcodec/video.c
+@@ -71,6 +71,7 @@ struct frame_info_s
+ #endif
+     bool b_eos;
+     bool b_display;
++    vlc_tick_t i_dts; /* of the packet, for frames that come out undated */
+ };
+ 
+ /*****************************************************************************
+@@ -1589,6 +1590,8 @@ static int DecodeBlock( decoder_t *p_dec, block_t **pp_block )
+             const bool b_eos = p_block && (p_block->i_flags & BLOCK_FLAG_END_OF_SEQUENCE);
+             p_frame_info->b_eos = b_eos;
+             p_frame_info->b_display = b_need_output_picture;
++            p_frame_info->i_dts = pkt->dts != AV_NOPTS_VALUE ?
++                                  FROM_AV_TS(pkt->dts) : VLC_TICK_INVALID;
+ 
+             int ret = avcodec_send_packet(p_context, pkt);
+             if( ret != 0 && ret != AVERROR(EAGAIN) )
+@@ -1662,6 +1665,13 @@ static int DecodeBlock( decoder_t *p_dec, block_t **pp_block )
+         vlc_tick_t i_pts;
+         if( av_pts == AV_NOPTS_VALUE )
+             i_pts = date_Get( &p_sys->pts );
++        /* Elementary streams carry only a DTS, which frame threading does not
++         * hand back: with nothing to interpolate from yet (the first
++         * pictures, or a stream of one or two), use the packet's own DTS
++         * rather than dropping the picture as undated. */
++        if( i_pts == VLC_TICK_INVALID && p_frame_info &&
++            p_frame_info->i_dts != VLC_TICK_INVALID )
++            i_pts = p_frame_info->i_dts;
+         else
+             i_pts = FROM_AV_TS(av_pts);
+ 
+-- 
+2.47.3
+

@@ -326,6 +326,15 @@ static int Decode(decoder_t *dec, block_t *block)
      * Packetizers do not flag key frames for every codec; after the first
      * packet we stop insisting and let the decoder judge. */
     if (sys->need_key && !key && fourcc != VLC_CODEC_VP9 && fourcc != VLC_CODEC_AV1) {
+        if (!sys->verified) {
+            /* The stream does not start on a random access point (intra
+             * refresh, or a cut starting on a non-IDR picture): WebCodecs
+             * would drop everything until an IDR that may never come, while
+             * avcodec recovers. Hand it over with this very block. */
+            msg_Dbg(dec, "%s does not start on a key frame, falling back", sys->codec);
+            var_Create(dec, "webcodecs-failed", VLC_VAR_VOID);
+            return VLCDEC_RELOAD;
+        }
         block_Release(block);
         return VLCDEC_SUCCESS;
     }
@@ -422,6 +431,11 @@ static char *codec_string(const es_format_t *fmt)
     int profile = fmt->i_profile, level = fmt->i_level;
     switch (fmt->i_codec) {
     case VLC_CODEC_H264:
+        /* High 10, 4:2:2, 4:4:4 (Predictive or CAVLC intra): browsers'
+         * software H.264 decoders are 8-bit 4:2:0 only, and some accept the
+         * configuration and then output nothing. avcodec decodes these. */
+        if (profile == 110 || profile == 122 || profile == 244 || profile == 44)
+            return NULL;
         if (profile <= 0) profile = 100;
         if (level <= 0) level = 51;
         if (asprintf(&s, "avc1.%02X00%02X", profile & 0xff, level & 0xff) < 0) s = NULL;

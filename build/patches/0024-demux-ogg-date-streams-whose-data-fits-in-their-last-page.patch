@@ -1,0 +1,86 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 24/29] demux: ogg: date streams whose data fits in their last page
+
+Vorbis packets only get a timestamp once a page ending with a granule
+follows data whose start is known; until then they wait in the queue, and
+the queue is dated backwards from the end granule. A stream whose audio
+fits in its last page never met that condition, so none of its blocks was
+ever sent: short Ogg clips opened and played nothing.
+
+Date the queue from the end granule on the last page too. When the blocks
+there hold more samples than the granule says, that is trimming of the
+end: keep the start at 0 rather than shifting every block before it, and
+clamp the last block to the real end time, not to the start time the
+variable had been reused for.
+---
+ 1 file changed, 19 insertions(+), 13 deletions(-)
+
+diff --git a/modules/demux/ogg.c b/modules/demux/ogg.c
+--- a/modules/demux/ogg.c
++++ b/modules/demux/ogg.c
+@@ -1128,24 +1128,27 @@ static vlc_tick_t Ogg_FixupOutputQueue( demux_t *p_demux, logical_stream_t *p_st
+     // PASS 2
+     if( i_enddts != VLC_TICK_INVALID )
+     {
++        const vlc_tick_t i_lastdts = i_enddts;
+         date_t d = p_stream->dts;
+         date_Set( &d, i_enddts );
+         i_enddts = date_Decrement( &d, i_total_samples );
+         if( i_enddts < VLC_TICK_0 )
+             i_enddts = VLC_TICK_0;
+-        vlc_tick_t difftopos = ( date_Get( &d ) < VLC_TICK_0 )
+-                             ? VLC_TICK_0 - date_Get( &d )
+-                             : 0;
+-        /* enforce positive values in date_t so we don't run
+-         * into impossible increment on INVALID */
+-        date_Set( &d, date_Get( &d ) + difftopos );
++        vlc_tick_t difftopos = 0;
++        if( date_Get( &d ) < VLC_TICK_0 )
++        {
++            /* The blocks hold more samples than the granule says. On the
++             * last page that is end trimming: the stream still starts at
++             * 0 and the decoder drops the excess at the end. Otherwise
++             * the start is trimmed. Either way, keep positive values in
++             * date_t so we don't run into impossible increment on INVALID */
++            if( !b_eos )
++                difftopos = VLC_TICK_0 - date_Get( &d );
++            date_Set( &d, VLC_TICK_0 );
++        }
+ 
+         assert(date_Get( &d ) != VLC_TICK_INVALID);
+ 
+-        /* truncate end */
+-        if( b_eos && date_Get( &d ) < VLC_TICK_0 )
+-            date_Set( &d, VLC_TICK_0 );
+-
+         for( block_t *p_block = p_stream->queue.p_blocks; p_block; p_block = p_block->p_next )
+         {
+             if( p_block->i_flags & BLOCK_FLAG_HEADER )
+@@ -1158,7 +1161,7 @@ static vlc_tick_t Ogg_FixupOutputQueue( demux_t *p_demux, logical_stream_t *p_st
+ 
+             /* Last page in the stream case, truncate end */
+             if( b_eos && p_block->p_next == NULL )
+-                p_block->i_dts = __MIN(p_block->i_dts, i_enddts);
++                p_block->i_dts = __MIN(p_block->i_dts, i_lastdts);
+ 
+             if( p_sys->i_nzpcr_offset )
+                 p_block->i_dts += p_sys->i_nzpcr_offset;
+@@ -1188,8 +1191,11 @@ static void Ogg_QueueBlocks( demux_t *p_demux, logical_stream_t *p_stream,
+     block_ChainLastAppend( &p_stream->queue.pp_append, p_block );
+ 
+     /* If we can have or compute block start from granule, it is set.
+-     * Otherwise the end dts will be used for reverse calculation */
+-    if( p_stream->i_pcr == VLC_TICK_INVALID && i_enddts != VLC_TICK_INVALID && p_block->i_dts != VLC_TICK_INVALID )
++     * Otherwise the end dts will be used for reverse calculation.
++     * A stream whose data fits in its last page never gets a start
++     * time: date it back from the final granule, or it is never sent. */
++    if( p_stream->i_pcr == VLC_TICK_INVALID && i_enddts != VLC_TICK_INVALID &&
++        ( p_block->i_dts != VLC_TICK_INVALID || b_eos ) )
+     {
+         /* fixup queue */
+         p_stream->i_pcr = Ogg_FixupOutputQueue( p_demux, p_stream, i_enddts, b_eos );
+-- 
+2.47.3
+

@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 19/29] demux: avi: do not skip data of a track while indexing ahead
+
+When a file has no usable index, Demux_Seekable indexes chunks as it meets
+them while looking for data a track needs. Any chunk it met was then made
+the current chunk of its track, even when that track was still part way
+through an earlier chunk (audio read by bytes) or had earlier chunks left:
+the rest of those were silently dropped. With MP3 in an index-less AVI the
+packetizer got the start of one chunk followed by the next one and never
+found a frame, so the file played without sound.
+
+Only take the chunk when it is the next one its track would read; any other
+chunk is just indexed and skipped, and read later from the index.
+---
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/modules/demux/avi/avi.c b/modules/demux/avi/avi.c
+index 24ec883..73b1302 100644
+--- a/modules/demux/avi/avi.c
++++ b/modules/demux/avi/avi.c
+@@ -1323,11 +1323,14 @@ static int Demux_Seekable( demux_t *p_demux )
+                     index.i_lengthtotal = index.i_length;
+                     int64_t i_indexid = avi_index_Append( &tk->idx, &p_sys->i_movi_lastchunk_pos, &index );
+ 
+-                    /* do we will read this data ? */
++                    /* do we will read this data ? Only if it is the next
++                     * chunk of that track: a track that is still inside an
++                     * earlier chunk (or has unread chunks left) must not jump
++                     * ahead, or the rest of its data is lost */
+                     if( i_indexid >= 0 &&
++                        tk->i_idxposc == (uint64_t) i_indexid &&
+                         AVI_GetDPTS( tk, tk->demuxctx.i_toread ) > -p_sys->i_read_increment )
+                     {
+-                        tk->i_idxposc = (unsigned int) i_indexid;
+                         tk->i_idxposb = 0;
+                         break;
+                     }
+-- 
+2.47.3
+

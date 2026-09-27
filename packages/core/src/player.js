@@ -47,8 +47,12 @@ export class Player extends Emitter {
       this._ownsContext = !audioContext;
     }
     const rate = this.audioContext?.sampleRate ?? 48000;
+    // Surround goes out as surround when the output can take it (5.1, 7.1:
+    // native/webaudio.c); VLC downmixes to whatever is picked here.
+    const maxOut = this.audioContext?.destination?.maxChannelCount ?? 2;
+    this._channels = maxOut >= 8 ? 8 : maxOut >= 6 ? 6 : 2;
     const { i: ptr } = await this.vlc._call('player_new', {
-      i: [this.vlc._instance, this.id, rate, 2, Math.round(rate * 0.5)],
+      i: [this.vlc._instance, this.id, rate, this._channels, Math.round(rate * 0.5)],
     });
     if (!ptr) throw new Error('libvlc_media_player_new() failed');
     // Unsigned: a player above 2 GB of wasm memory must not go negative.
@@ -70,9 +74,15 @@ export class Player extends Emitter {
     this.audioNode = new AudioWorkletNode(ctx, 'vlc-ring', {
       numberOfInputs: 0,
       numberOfOutputs: 1,
-      outputChannelCount: [2],
+      outputChannelCount: [this._channels],
+      channelInterpretation: 'speakers',
       processorOptions: { memory: this.vlc._memory, ringPtr: this.ringPtr },
     });
+    // The destination mixes down to its own channelCount (2 by default); let
+    // it carry the surround channels when the device has them.
+    if (this._channels > 2 && !this.opts.audioDestination && ctx.destination.channelCount < this._channels) {
+      try { ctx.destination.channelCount = this._channels; } catch { /* keep the downmix */ }
+    }
     this.audioNode.connect(this.opts.audioDestination ?? ctx.destination);
     /** Latest output level, 0..1: { peak, rms } over the last ~100 ms. */
     this.audioLevel = { peak: 0, rms: 0 };

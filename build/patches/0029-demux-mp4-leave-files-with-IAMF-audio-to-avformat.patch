@@ -1,0 +1,49 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:00:00 +0000
+Subject: [PATCH 29/29] demux: mp4: leave files with IAMF audio to avformat
+
+VLC has no IAMF (Immersive Audio Model and Formats) decoder, and an IAMF
+track is not something a decoder could take on its own: its Opus, AAC,
+FLAC or PCM substreams are described by the descriptors of the sample
+entry. FFmpeg's demuxer exposes those substreams. The MP4 demuxer took
+these files anyway and played their video in silence.
+
+When avformat is available, leave files with an IAMF track to it.
+---
+ 1 file changed, 14 insertions(+)
+
+diff --git a/modules/demux/mp4/mp4.c b/modules/demux/mp4/mp4.c
+--- a/modules/demux/mp4/mp4.c
++++ b/modules/demux/mp4/mp4.c
+@@ -37,6 +37,7 @@
+ #include <vlc_dialog.h>
+ #include <vlc_url.h>
+ #include <vlc_replay_gain.h>
++#include <vlc_modules.h>
+ #include <assert.h>
+ #include <limits.h>
+ #include <stdckdint.h>
+@@ -1400,6 +1401,19 @@ static int Open( vlc_object_t * p_this )
+         p_track->i_pts_offset = p_sys->i_max_pts_offset - p_track->i_pts_offset;
+     }
+ 
++    /* There is no IAMF (Immersive Audio) decoder: its audio is only
++     * reachable through FFmpeg's demuxer, which then plays the whole file */
++    for( unsigned i = 0; i < p_sys->i_tracks; i++ )
++    {
++        if( p_sys->track[i].b_ok &&
++            p_sys->track[i].fmt.i_codec == VLC_FOURCC('i','a','m','f') &&
++            module_exists( "avformat" ) )
++        {
++            msg_Dbg( p_demux, "leaving IAMF audio to avformat" );
++            goto error;
++        }
++    }
++
+     p_mvex = MP4_BoxGet( p_sys->p_moov, "mvex" );
+     if( p_mvex != NULL )
+     {
+-- 
+2.47.3
+

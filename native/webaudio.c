@@ -37,6 +37,10 @@
 #include "shared.h"
 
 #define CONSUMER_TIMEOUT VLC_TICK_FROM_MS(150) /* no heartbeat: nobody drains */
+/* Draining is only waiting, so it gives a busy page (or a worklet that has
+ * not rendered its first quantum yet) much longer before it concludes that
+ * nobody is listening: stopping early throws away all of a short clip. */
+#define DRAIN_TIMEOUT    VLC_TICK_FROM_SEC(1)
 #define REPORT_INTERVAL  VLC_TICK_FROM_MS(250) /* between timing reports */
 #define DRAIN_POLL       VLC_TICK_FROM_MS(10)
 #define MAX_LEAD         VLC_TICK_FROM_SEC(2)  /* longest silence padded in */
@@ -55,9 +59,12 @@ typedef struct
      * never be followed by a drain report meant for the flushed stream. */
     vlc_mutex_t lock;
     bool draining;
+    vlc_tick_t drain_start;
     uint32_t last_heartbeat;
     vlc_tick_t heartbeat_at;   /* when last_heartbeat was seen to change */
     uint32_t data_start;   /* ring position of the first real sample */
+    uint8_t chan_table[AOUT_CHAN_MAX]; /* VLC order to Web Audio order */
+    bool chan_reorder;
     vlc_tick_t first_pts;
     vlc_tick_t last_report;
 } aout_sys_t;
@@ -109,7 +116,8 @@ static uint32_t ring_write(wv_ring_t *r, const float *src, uint32_t n,
 /* Is anything draining the ring? A suspended AudioContext (autoplay policy)
  * or a page with no worklet never will, and waiting on it would back up the
  * decoder and then the demuxer, stalling video too. */
-static bool consumer_alive_locked(aout_sys_t *sys)
+static bool consumer_beat_within_locked(aout_sys_t *sys, vlc_tick_t since,
+                                        vlc_tick_t timeout)
 {
     uint32_t hb = atomic_load(&sys->ring->heartbeat);
     vlc_tick_t now = vlc_tick_now();
@@ -118,7 +126,12 @@ static bool consumer_alive_locked(aout_sys_t *sys)
         sys->heartbeat_at = now;
         return true;
     }
-    return now - sys->heartbeat_at < CONSUMER_TIMEOUT;
+    return now - __MAX(sys->heartbeat_at, since) < timeout;
+}
+
+static bool consumer_alive_locked(aout_sys_t *sys)
+{
+    return consumer_beat_within_locked(sys, VLC_TICK_0, CONSUMER_TIMEOUT);
 }
 
 static bool consumer_alive(aout_sys_t *sys)
@@ -160,7 +173,8 @@ static void DrainPoll(void *data)
     aout_sys_t *sys = aout->sys;
     wv_ring_t *r = sys->ring;
     vlc_mutex_lock(&sys->lock);
-    if (sys->draining && (ring_used(r) == 0 || !consumer_alive_locked(sys))) {
+    if (sys->draining && (ring_used(r) == 0 ||
+        !consumer_beat_within_locked(sys, sys->drain_start, DRAIN_TIMEOUT))) {
         sys->draining = false;
         aout_DrainedReport(aout); /* an atomic store: fine under the lock */
     }
@@ -174,6 +188,7 @@ static void Drain(audio_output_t *aout)
     aout_sys_t *sys = aout->sys;
     vlc_mutex_lock(&sys->lock);
     sys->draining = true;
+    sys->drain_start = vlc_tick_now();
     vlc_mutex_unlock(&sys->lock);
     vlc_timer_schedule(sys->drain_timer, false, DRAIN_POLL, DRAIN_POLL);
 }
@@ -184,6 +199,25 @@ static void StopDraining(aout_sys_t *sys)
     sys->draining = false;
     vlc_mutex_unlock(&sys->lock);
     vlc_timer_disarm(sys->drain_timer);
+}
+
+/* Web Audio's speaker layouts (Web Audio API, "Channel Ordering"): quad
+ * L R SL SR, 5.1 L R C LFE SL SR. 7.1 follows WAVE: L R C LFE BL BR SL SR. */
+static const uint32_t webaudio_chans_order[] = {
+    AOUT_CHAN_LEFT, AOUT_CHAN_RIGHT, AOUT_CHAN_CENTER, AOUT_CHAN_LFE,
+    AOUT_CHAN_REARLEFT, AOUT_CHAN_REARRIGHT, AOUT_CHAN_MIDDLELEFT,
+    AOUT_CHAN_MIDDLERIGHT, 0,
+};
+
+static uint32_t webaudio_layout(unsigned channels)
+{
+    switch (channels) {
+    case 1: return AOUT_CHAN_CENTER;
+    case 4: return AOUT_CHANS_4_0;
+    case 6: return AOUT_CHANS_5_1;
+    case 8: return AOUT_CHANS_7_1;
+    default: return AOUT_CHANS_STEREO;
+    }
 }
 
 static int Start(audio_output_t *aout, audio_sample_format_t *restrict fmt)
@@ -197,8 +231,12 @@ static int Start(audio_output_t *aout, audio_sample_format_t *restrict fmt)
     fmt->i_format = VLC_CODEC_FL32;
     fmt->i_rate = r->rate;
     fmt->channel_type = AUDIO_CHANNEL_TYPE_BITMAP;
-    fmt->i_physical_channels = r->channels == 1 ? AOUT_CHAN_CENTER : AOUT_CHANS_STEREO;
+    /* As many channels as the page's output takes (up to 7.1, see bridge.c);
+     * VLC's filters downmix anything wider and place narrower streams. */
+    fmt->i_physical_channels = webaudio_layout(r->channels);
     aout_FormatPrepare(fmt);
+    sys->chan_reorder = aout_CheckChannelReorder(NULL, webaudio_chans_order,
+                            fmt->i_physical_channels, sys->chan_table) != 0;
 
     sys->rate = r->rate;
     sys->started = false;
@@ -250,6 +288,10 @@ static void Play(audio_output_t *aout, block_t *block, vlc_tick_t date)
     }
 
     uint32_t n = block->i_nb_samples;
+    if (sys->chan_reorder)
+        aout_ChannelReorder(block->p_buffer, block->i_buffer,
+                            r->channels, sys->chan_table,
+                            VLC_CODEC_FL32);
     vlc_tick_t wait = consumer_alive(sys) ? WRITE_WAIT : 0;
     uint32_t done = ring_write(r, (const float *)block->p_buffer, n, wait);
     if (done < n)

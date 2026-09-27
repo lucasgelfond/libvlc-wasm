@@ -97,6 +97,10 @@ else
 fi
 # C64 SID music (libsidplay2, GPL).
 sed -i 's/ --disable-sidplay2//' "$UP"
+# libFLAC (FLAC that FFmpeg's decoder refuses, e.g. a blocksize of 1),
+# Theora (Ogg video) and spatialaudio (ambisonics and binaural rendering):
+# all build for emscripten, and native VLC has them.
+sed -i 's/ --disable-flac//; s/ --disable-theora//; s/ --disable-spatialaudio//' "$UP"
 if [ "${VARIANT:-default}" = sout ]; then
   # Keep VLC's stream output and the encoders: FFmpeg's, libvpx, x264
   # (patches/0012 teaches it emscripten) and x265.
