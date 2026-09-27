@@ -4,29 +4,33 @@ Date: Sun, 27 Sep 2026 16:23:00 +0000
 Subject: [PATCH 12/12] contrib: x264: build for emscripten
 
 x264's configure stops on an unknown system. Treat emscripten as Linux and
-build without assembly, which targets x86/ARM only.
+build without assembly, which targets x86/ARM only. Configure takes emcc and
+emar from the environment, so drop the cross prefix: with it, configure looks
+for wasm32-unknown-emscripten-strings and fails its endian test.
 ---
- contrib/src/x264/rules.mak             |  5 +++++
+ contrib/src/x264/rules.mak             |  7 +++++++
  contrib/src/x264/x264-emscripten.patch | 12 ++++++++++++
- 2 files changed, 17 insertions(+)
+ 2 files changed, 19 insertions(+)
  create mode 100644 contrib/src/x264/x264-emscripten.patch
 
 diff --git a/contrib/src/x264/rules.mak b/contrib/src/x264/rules.mak
 index de45c15..8137319 100644
 --- a/contrib/src/x264/rules.mak
 +++ b/contrib/src/x264/rules.mak
-@@ -47,6 +47,10 @@ endif
+@@ -47,6 +47,12 @@ endif
  endif
  endif
  
 +ifdef HAVE_EMSCRIPTEN
-+X264CONF += --disable-asm
++# No assembly for wasm; and no cross prefix, since configure would then look
++# for wasm32-unknown-emscripten-strings (emcc/emar come from the environment).
++X264CONF := $(filter-out --cross-prefix=%,$(X264CONF)) --disable-asm
 +endif
 +
  ifneq ($(filter arm aarch64, $(ARCH)),)
  ifndef HAVE_WIN32
  X264_ASM_USES_CC:=1
-@@ -72,6 +76,7 @@ x264 x26410b: %: x264-$(X264_VERSION).tar.xz .sum-%
+@@ -72,6 +78,7 @@ x264 x26410b: %: x264-$(X264_VERSION).tar.xz .sum-%
  	$(call update_autoconfig,.)
  	$(APPLY) $(SRC)/x264/x264-winstore.patch
  	$(APPLY) $(SRC)/x264/0001-osdep-use-direct-path-to-internal-x264.h.patch

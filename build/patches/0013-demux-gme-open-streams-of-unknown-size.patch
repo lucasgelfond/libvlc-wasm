@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 17:00:00 +0000
+Subject: [PATCH 13/13] demux: gme: open streams of unknown size
+
+A gzipped VGM (.vgz) reaches gme through the inflate stream filter, which
+cannot tell the decompressed size, so Open() gave up before identifying it
+and the file did not play. Read such a stream whole, as Open() already
+does for a zero-sized one.
+---
+ modules/demux/gme.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/modules/demux/gme.c b/modules/demux/gme.c
+index 47169d7..5d61e1e 100644
+--- a/modules/demux/gme.c
++++ b/modules/demux/gme.c
+@@ -77,8 +77,10 @@ static int Open (vlc_object_t *obj)
+     demux_t *demux = (demux_t *)obj;
+     uint64_t size;
+ 
++    /* A stream of unknown size (a gzipped .vgz, through the inflate stream
++     * filter) is read whole below, as a zero-sized one is. */
+     if (vlc_stream_GetSize(demux->s, &size))
+-        return VLC_EGENERIC;
++        size = 0;
+     if (size > LONG_MAX /* too big for GME */)
+         return VLC_EGENERIC;
+ 
+-- 
+2.47.3
+

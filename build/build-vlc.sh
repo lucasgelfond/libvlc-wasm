@@ -48,14 +48,17 @@ for p in "$PATCHES"/*.patch; do
   fi
 done
 
-# The upstream script is the source of truth for contrib/configure flags; we only
-# feed it our overrides through the environment (see patches/ for the rest).
+# The upstream script is the source of truth for contrib/configure flags; we
+# only feed it our overrides. It is restored first so that every edit below
+# starts from upstream's text, whatever an earlier build left behind.
 cd "$SRC"
+UP=extras/package/wasm-emscripten/build.sh
+git checkout -q -- "$UP"
 OPT_FLAGS=
 if [ "${PROFILE:-release}" = release ]; then
   # Upstream always configures --enable-debug, which means -Og and assertions
   # on every hot path: fine for CI, several times too slow to benchmark.
-  sed -i 's/--enable-debug/--disable-debug/' extras/package/wasm-emscripten/build.sh
+  sed -i 's/--enable-debug/--disable-debug/' "$UP"
   OPT_FLAGS="-O3"
 fi
 # Must match the contribs (patches/0002) and the link (link.sh). Given to
@@ -63,25 +66,24 @@ fi
 # host tools (extras/tools, built with gcc), which reject them.
 WASM_FLAGS="-msimd128 -fwasm-exceptions -sSUPPORT_LONGJMP=wasm"
 export VLC_CFLAGS="$OPT_FLAGS $WASM_FLAGS" VLC_LDFLAGS="$WASM_FLAGS"
-grep -q 'VLC_CFLAGS' extras/package/wasm-emscripten/build.sh ||
-  sed -i 's|    emconfigure "$VLC_SRCPATH"/configure|    CFLAGS="$VLC_CFLAGS" CXXFLAGS="$VLC_CFLAGS" LDFLAGS="$VLC_LDFLAGS" emconfigure "$VLC_SRCPATH"/configure|' extras/package/wasm-emscripten/build.sh
+sed -i 's|    emconfigure "$VLC_SRCPATH"/configure|    CFLAGS="$VLC_CFLAGS" CXXFLAGS="$VLC_CFLAGS" LDFLAGS="$VLC_LDFLAGS" emconfigure "$VLC_SRCPATH"/configure|' "$UP"
 # soxr's CMake mistakes -msimd128 for x86 SIMD and compiles CPUID inline asm;
 # VLC has other resamplers (samplerate, speex, ugly), so it is simply left out.
-grep -q -- '--disable-soxr' extras/package/wasm-emscripten/build.sh ||
-  sed -i 's/--disable-goom \\/--disable-goom --disable-soxr \\/' extras/package/wasm-emscripten/build.sh
-# DVD images and VIDEO_TS folders (dvdnav, with menus, and dvdread), but not
-# libdvdcss: unencrypted discs play, CSS-encrypted ones do not (patches/0005).
-grep -q -- '--enable-dvdnav' extras/package/wasm-emscripten/build.sh ||
-  sed -i 's/--disable-disc /--disable-disc --enable-dvdread --enable-dvdnav --disable-dvdcss /' extras/package/wasm-emscripten/build.sh
+sed -i 's/--disable-goom \\/--disable-goom --disable-soxr \\/' "$UP"
+# Discs: DVD images and VIDEO_TS folders (dvdnav, with menus) and Blu-ray
+# (libbluray, HDMV menus; no BD-J, which needs Java). No libdvdcss or libaacs:
+# unencrypted discs play, encrypted ones do not (patches/0005).
+sed -i 's/--disable-disc /--disable-dvdcss /' "$UP"
+# C64 SID music (libsidplay2, GPL).
+sed -i 's/ --disable-sidplay2//' "$UP"
 if [ "${VARIANT:-default}" = sout ]; then
-  # Keep VLC's stream output and FFmpeg's encoders/muxers.
-  sed -i 's/ --disable-sout//; s/--disable-sout --disable-vlm/--disable-vlm/' extras/package/wasm-emscripten/build.sh
-  # x264/x265 do not configure for an emscripten host; transcodes target
-  # WebM (libvpx VP8/VP9 + Opus/Vorbis) and FFmpeg's own encoders instead.
-  grep -q -- '--disable-x264' extras/package/wasm-emscripten/build.sh ||
-    sed -i 's/--disable-goom /--disable-goom --disable-x264 --disable-x26410b --disable-x265 --disable-twolame --disable-shout /' extras/package/wasm-emscripten/build.sh
+  # Keep VLC's stream output and the encoders: FFmpeg's, libvpx, x264
+  # (patches/0012 teaches it emscripten) and x265.
+  sed -i 's/ --disable-sout//' "$UP"
+  sed -i 's/--disable-goom /--disable-goom --disable-x26410b --disable-twolame --disable-shout /' "$UP"
 fi
-step "running extras/package/wasm-emscripten/build.sh ($PROFILE, ${VARIANT:-default})"
+grep -n 'bootstrap --' -A15 "$UP" | grep -o -- '--[a-z0-9-]*' | tr '\n' ' '; echo
+step "running extras/package/wasm-emscripten/build.sh (${PROFILE:-release}, ${VARIANT:-default})"
 MODE=${MODE:-1}
 sh extras/package/wasm-emscripten/build.sh --mode="$MODE"
 
