@@ -1,0 +1,181 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 20:30:00 +0000
+Subject: [PATCH] contrib: dvdcss: build for emscripten
+
+A browser has no optical drives, so there are no DVD ioctls to call: libdvdcss
+stopped at "DVD ioctls are unavailable on this system". On emscripten every
+ioctl fails instead, and libdvdcss handles disc images the way it does when a
+drive cannot be queried, by cracking title keys from the encrypted sectors.
+Only the WITH_DVDCSS=1 build of libvlc-wasm uses it (see build.sh).
+---
+ contrib/src/dvdcss/emscripten-no-ioctl.patch | 144 +
+ contrib/src/dvdcss/rules.mak                 | 1 +
+ 2 files changed, 145 insertions(+)
+
+diff --git a/contrib/src/dvdcss/emscripten-no-ioctl.patch b/contrib/src/dvdcss/emscripten-no-ioctl.patch
+new file mode 100644
+index 0000000..09bb72c
+--- /dev/null
++++ b/contrib/src/dvdcss/emscripten-no-ioctl.patch
+@@ -0,0 +1,145 @@
++--- dvdcss/src/ioctl.c.orig
+++++ dvdcss/src/ioctl.c
++@@ -230,6 +230,10 @@
++ 
++     *pi_copyright = p_buffer[ 4 ];
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -360,6 +364,10 @@
++ 
++     memcpy( p_key, p_buffer + 4, DVD_DISCKEY_SIZE );
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -492,6 +500,10 @@
++ 
++     memcpy( p_key, p_buffer + 5, DVD_KEY_SIZE );
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -591,6 +603,10 @@
++ 
++     *pi_agid = p_buffer[ 7 ] >> 6;
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -701,6 +717,10 @@
++ 
++     memcpy( p_challenge, p_buffer + 4, DVD_CHALLENGE_SIZE );
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -813,6 +833,10 @@
++ 
++     *pi_asf = p_buffer[ 7 ] & 1;
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -918,6 +942,10 @@
++ 
++     memcpy( p_key, p_buffer + 4, DVD_KEY_SIZE );
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -1003,6 +1031,10 @@
++     i_ret = DosDevIOCtl(i_fd, IOCTL_CDROMDISK, CDROMDISK_EXECMD,
++                         &sdc, sizeof(sdc), &ulParamLen,
++                         NULL, 0, &ulDataLen);
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -1122,6 +1154,10 @@
++     if (i_ret == 0)
++         memcpy(p_data_buffer, p_buffer, CPRM_MEDIA_ID_SIZE);
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -1271,6 +1307,10 @@
++         memcpy(p_mkb_pack, p_buffer + 4, CPRM_MKB_PACK_SIZE);
++     }
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -1383,6 +1423,10 @@
++                          &sdc, sizeof(sdc), &ulParamLen,
++                          p_buffer, sizeof(p_buffer), &ulDataLen );
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -1494,6 +1538,10 @@
++                          &sdc, sizeof(sdc), &ulParamLen,
++                          p_buffer, sizeof(p_buffer), &ulDataLen );
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
++@@ -1623,6 +1671,10 @@
++     *p_mask = p_buffer[ 5 ];
++     *p_scheme = p_buffer[ 6 ];
++ 
+++#elif defined( __EMSCRIPTEN__ )
+++    /* No drives in a browser: images only, whose keys are cracked */
+++    i_ret = -1;
+++
++ #else
++ #   error "DVD ioctls are unavailable on this system"
++ 
+diff --git a/contrib/src/dvdcss/rules.mak b/contrib/src/dvdcss/rules.mak
+index c743651..48c2879 100644
+--- a/contrib/src/dvdcss/rules.mak
++++ b/contrib/src/dvdcss/rules.mak
+@@ -25,6 +25,7 @@ $(TARBALLS)/libdvdcss-$(DVDCSS_VERSION).tar.bz2:
+ dvdcss: libdvdcss-$(DVDCSS_VERSION).tar.bz2 .sum-dvdcss
+ # dvdcss: libdvdcss-$(LIBDVDCSS_GITVERSION).tar.xz .sum-dvdcss
+ 	$(UNPACK)
++	$(APPLY) $(SRC)/dvdcss/emscripten-no-ioctl.patch
+ 	$(MOVE)
+ 
+ .dvdcss: dvdcss crossfile.meson
+-- 
+2.47.3
+
