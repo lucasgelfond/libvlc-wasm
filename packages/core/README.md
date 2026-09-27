@@ -101,10 +101,11 @@ phosphor, ivtc…), `setAdjust({ brightness, contrast, saturation, hue, gamma })
 ### Converting (the `sout` build)
 
 VLC's stream output — transcoding, remuxing, recording — makes the wasm 33 MB instead of 26
-(9.7 MB brotli instead of 7.9), so it is a separate build, loaded instead of the default one: `createVLC({ variant: 'sout' })`. `vlc.features.sout` says which you have.
+(9.7 MB brotli instead of 7.9), so it is a separate package, `@libvlc-wasm/sout`, loaded instead of the default engine. `vlc.features.sout` says which you have.
 
 ```js
-const vlc = await createVLC({ variant: 'sout' });
+import sout from '@libvlc-wasm/sout';   // npm i @libvlc-wasm/sout
+const vlc = await createVLC({ engine: sout });
 const webm = await vlc.transcode(file, { to: 'webm', width: 640, onProgress: (p) => bar.value = p });
 const mp4 = await vlc.transcode(mkv, { to: 'mp4', remux: true });   // no re-encoding
 const opus = await vlc.transcode(avi, { to: 'ogg', video: false });

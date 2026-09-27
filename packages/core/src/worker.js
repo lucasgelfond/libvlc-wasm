@@ -83,6 +83,9 @@ const methods = {
     // Another build of the engine (e.g. libvlc-sout.js, the transcoding
     // variant) is loaded from a URL, so bundlers do not have to know about it.
     const factory = moduleUrl ? (await import(/* @vite-ignore */ moduleUrl)).default : createDefaultModule;
+    // Where the engine script lives, for its pthread Workers (see engine.js).
+    const engineUrl = moduleUrl ?? new URL('../wasm/libvlc.js', import.meta.url).href;
+    const crossOrigin = new URL(engineUrl, self.location.href).origin !== self.location.origin;
     // Subtitles need a font file: there is no fontconfig and no system font
     // directory in wasm. Fetched alongside the wasm, so it costs no latency.
     const sfData = soundfont ? fetch(soundfont).then(async (r) => {
@@ -97,6 +100,9 @@ const methods = {
     engine = await createEngine(factory, {
       threads,
       locateFile: wasmUrl ? (p) => (p.endsWith('.wasm') ? wasmUrl : p) : undefined,
+      mainScriptUrlOrBlob: crossOrigin
+        ? new Blob([`import ${JSON.stringify(engineUrl)};`], { type: 'text/javascript' })
+        : undefined,
       onEvent,
       printErr: (s) => post({ type: 'event', player: 0, event: EVENT.LOG, a: 3, b: 0, str: s }),
     });

@@ -6,7 +6,7 @@
 <h1>Convert anything to something a browser plays</h1>
 <p class="lede">VLC's stream output in the browser: transcode a RealMedia, WMV, AVI or VOB to WebM
 (VP8 + Opus), or remux an MKV to MP4 without re-encoding. Uses the <code>sout</code> build:
-<code>createVLC({ variant: 'sout' })</code>. Nothing is uploaded.</p>
+<code>createVLC({ engine: sout })</code> with <code>@libvlc-wasm/sout</code>. Nothing is uploaded.</p>
 <div class="row">
   <input type="file" id="file">
   <select id="to"><option value="webm">WebM (VP8 + Opus)</option><option value="mp4">MP4 (MPEG-4 + AAC)</option>
@@ -20,9 +20,10 @@
 <video id="out" controls style="width:100%;border-radius:8px;display:none"></video>
 <script type="module">
   import { createVLC } from '../../packages/core/src/index.js';
+  import sout from '../../packages/sout/index.js';
 
   const $ = (id) => document.getElementById(id);
-  const vlc = await createVLC({ variant: 'sout' });
+  const vlc = await createVLC({ engine: sout });
   $('status').textContent = `ready (${vlc.features.sout ? 'with' : 'without'} stream output)`;
   $('go').onclick = async () => {
     const file = $('file').files[0];

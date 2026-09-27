@@ -18,8 +18,8 @@ export interface VLCOptions {
   workerUrl?: string | URL;
   /** Font files for subtitles; the first is the default face. `false` = none. Default: bundled Noto Sans. */
   fonts?: (string | URL)[] | false;
-  /** 'sout' loads the build with VLC's stream output (transcode/remux/record). */
-  variant?: 'default' | 'sout';
+  /** Another build of VLC to run: `import sout from '@libvlc-wasm/sout'` for transcode/remux/record. */
+  engine?: Engine;
   /** Load the engine from this libvlc*.js URL instead (self-hosting). */
   moduleUrl?: string | URL;
   /** A General MIDI SoundFont (.sf2); needed to play .mid files. */
@@ -240,7 +240,7 @@ export declare class VLC extends Emitter<VLCEvents> {
   }): Promise<{ blob: Blob; width: number; height: number }>;
   equalizerPresets(): Promise<{ presets: string[]; bands: number[] }>;
   /**
-   * Converts media with VLC's stream output (needs `variant: 'sout'`).
+   * Converts media with VLC's stream output (needs `createVLC({ engine: sout })` from @libvlc-wasm/sout).
    * Defaults: webm/mkv VP8 + Opus, mp4 MPEG-4 Part 2 + AAC, ogg Opus,
    * ts MPEG-2 + MP2, wav PCM. WebM is the one every browser plays back.
    */
@@ -267,6 +267,15 @@ export declare class VLC extends Emitter<VLCEvents> {
   }): Promise<File>;
   setLogLevel(level: VLCOptions['logLevel']): Promise<unknown>;
   destroy(): Promise<void>;
+}
+
+/** A build of VLC for createVLC({ engine }), e.g. the default export of @libvlc-wasm/sout. */
+export interface Engine {
+  name?: string;
+  /** The Emscripten loader (libvlc*.js). */
+  moduleUrl: string | URL;
+  /** Its .wasm, if not next to the loader. */
+  wasmUrl?: string | URL;
 }
 
 export declare function createVLC(opts?: VLCOptions): Promise<VLC>;

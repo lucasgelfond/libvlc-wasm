@@ -25,8 +25,8 @@ const LEVEL_NAMES = ['debug', 'debug', 'info', 'warn', 'error'];
  * @property {string[]} [args] extra libvlc_new() arguments, e.g. ['--deinterlace=1']
  * @property {string|URL} [wasmUrl] where libvlc.wasm is served, if not next to libvlc.js
  * @property {string|URL} [workerUrl] override the worker script (bundlers normally resolve it)
- * @property {'default'|'sout'} [variant] 'sout' loads the build with VLC's stream output, for
- *   transcode(), remuxing and recording (a separate, larger wasm).
+ * @property {{ moduleUrl: string|URL, wasmUrl?: string|URL }} [engine] another build of VLC to
+ *   run, e.g. `import sout from '@libvlc-wasm/sout'` for transcode(), remuxing and recording.
  * @property {string|URL} [moduleUrl] load the engine from this libvlc*.js instead (self-hosting).
  * @property {string|URL} [soundfont] a General MIDI .sf2 file; without one, .mid files
  *   do not play (VLC synthesises MIDI with FluidSynth). Fetched once at startup.
@@ -69,9 +69,17 @@ export class VLC extends Emitter {
 
   async _start() {
     const t0 = performance.now();
+    // Bundlers find and emit the worker from the literal new Worker(new URL())
+    // form, so it stays literal. Loaded from another origin (a CDN), the SDK
+    // cannot start a Worker from there: start it from a same-origin blob that
+    // imports the script instead.
+    const own = new URL('./worker.js', import.meta.url);
     this.worker = this.opts.workerUrl
       ? new Worker(this.opts.workerUrl, { type: 'module' })
-      : new Worker(new URL('./worker.js', import.meta.url), { type: 'module', name: 'libvlc' });
+      : own.origin === globalThis.location?.origin || own.protocol === 'blob:'
+        ? new Worker(new URL('./worker.js', import.meta.url), { type: 'module', name: 'libvlc' })
+        : new Worker(URL.createObjectURL(new Blob([`import ${JSON.stringify(own.href)};`], { type: 'text/javascript' })),
+          { type: 'module', name: 'libvlc' });
     this.worker.onmessage = (e) => this._onMessage(e.data);
     this.worker.onerror = (e) => this.emit('error', e);
     // VLC runs ~8 threads per playing file (input, decoders, vout, aout, clock,
@@ -81,14 +89,20 @@ export class VLC extends Emitter {
     const logLevel = LOG_LEVELS[this.opts.logLevel ?? 'warn'] ?? 3;
     const fonts = this.opts.fonts === false ? []
       : (this.opts.fonts ?? [new URL('../fonts/NotoSans-Regular.ttf', import.meta.url)]).map(String);
-    // The sout build (transcoding) ships next to the default one; either can
-    // also be self-hosted with moduleUrl.
-    const moduleUrl = this.opts.moduleUrl ? String(this.opts.moduleUrl)
-      : this.opts.variant === 'sout' ? new URL('../wasm/libvlc-sout.js', import.meta.url).href : undefined;
+    if (this.opts.variant === 'sout' && !this.opts.engine) {
+      throw new Error("The transcoding engine is its own package now: npm i @libvlc-wasm/sout, then\n" +
+        "  import sout from '@libvlc-wasm/sout';\n  const vlc = await createVLC({ engine: sout });");
+    }
+    // Another engine (the sout build, or a self-hosted copy) is loaded by URL,
+    // so bundlers only ship it to apps that import it.
+    const engine = this.opts.engine;
+    const moduleUrl = engine?.moduleUrl ? String(engine.moduleUrl)
+      : this.opts.moduleUrl ? String(this.opts.moduleUrl) : undefined;
+    const wasmUrl = engine?.wasmUrl ?? this.opts.wasmUrl;
     const { version, layout, fonts: fontFiles, soundfont } = await this._rpc('init', {
       threads, fonts, moduleUrl,
       soundfont: this.opts.soundfont ? String(this.opts.soundfont) : undefined,
-      wasmUrl: this.opts.wasmUrl ? String(this.opts.wasmUrl) : undefined,
+      wasmUrl: wasmUrl ? String(wasmUrl) : undefined,
     });
     const { features, ...v } = version;
     this.version = v;
@@ -182,7 +196,7 @@ export class VLC extends Emitter {
   }
 
   /**
-   * Converts media with VLC's stream output. Needs `createVLC({ variant: 'sout' })`.
+   * Converts media with VLC's stream output. Needs the @libvlc-wasm/sout engine: `createVLC({ engine: sout })`.
    *
    * @param {File|Blob|ArrayBuffer|Uint8Array|string} source
    * @param {{ to?: 'webm'|'mkv'|'mp4'|'ogg'|'ts'|'wav'|'mp3',
@@ -197,7 +211,7 @@ export class VLC extends Emitter {
    */
   async transcode(source, opts = {}) {
     if (!this.features.sout) {
-      throw new Error("transcode() needs the stream-output build: createVLC({ variant: 'sout' })");
+      throw new Error("transcode() needs the stream-output engine: import sout from '@libvlc-wasm/sout', then createVLC({ engine: sout })");
     }
     const to = opts.to ?? 'webm';
     const MUX = { webm: 'avformat{mux=webm}', mkv: 'mkv', mp4: 'mp4', ogg: 'ogg', ts: 'ts', wav: 'wav', mp3: 'dummy' };

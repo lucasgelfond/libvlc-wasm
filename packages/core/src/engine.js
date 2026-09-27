@@ -44,6 +44,10 @@ export async function createEngine(factory, opts = {}) {
   };
   moduleArg.wvWc = webCodecsHost(() => M);
   if (opts.locateFile) moduleArg.locateFile = opts.locateFile;
+  // VLC's threads are Workers running the engine script itself. Browsers
+  // refuse cross-origin Worker scripts, so an engine served from a CDN starts
+  // them from a same-origin blob that imports it.
+  if (opts.mainScriptUrlOrBlob) moduleArg.mainScriptUrlOrBlob = opts.mainScriptUrlOrBlob;
   if (opts.wasmBinary) moduleArg.wasmBinary = opts.wasmBinary;
   if (opts.wasmModule) {
     moduleArg.instantiateWasm = (imports, done) => {
@@ -54,6 +58,11 @@ export async function createEngine(factory, opts = {}) {
   if (opts.mainScriptUrlOrBlob) moduleArg.mainScriptUrlOrBlob = opts.mainScriptUrlOrBlob;
 
   const M = await factory(moduleArg);
+  // Results and player events come back through Emscripten's mailbox, woken
+  // by Atomics.waitAsync. WebKit sometimes misses that wakeup and whatever was
+  // queued then waits for good (a finished probe() never answered, about 1 in
+  // 30), so drain the mailbox on a timer too. Draining an empty one is a no-op.
+  setInterval(() => M._wv_pump(), 150);
   const L = Array.from({ length: 12 }, (_, k) => M._wv_call_layout(k));
   const names = M.UTF8ToString(M._wv_api_names()).split(',').filter(Boolean);
   const fnIndex = Object.fromEntries(names.map((n, k) => [n, k]));

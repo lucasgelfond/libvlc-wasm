@@ -704,7 +704,9 @@ static void api_parse(wv_call_t *c)
     libvlc_media_t *m = libvlc_media_new_location(c->s[0]);
     libvlc_parser_request_t req = {
         .version = 0, .media = m,
-        .parse_flags = libvlc_media_parse | libvlc_media_fetch_local,
+        /* No libvlc_media_fetch_local: this build has no art finder
+         * modules, so the fetch step only added latency to every probe. */
+        .parse_flags = libvlc_media_parse,
     };
     libvlc_parser_task *task = libvlc_parser_task_new_parse(get_parser(wi), &req, &parse_cbs, c);
     libvlc_media_release(m);
@@ -809,6 +811,12 @@ static void *control_main(void *unused)
 /* Exports called directly from the runtime thread. None of them touch libvlc. */
 
 EMSCRIPTEN_KEEPALIVE const char *wv_api_names(void) { return api_names; }
+
+/* Runs anything VLC's threads queued for this (the runtime) thread. Normally
+ * an Atomics.waitAsync wakeup does it; engine.js also calls this on a timer,
+ * because WebKit sometimes misses that wakeup and results (a finished probe())
+ * or events were then never delivered. */
+EMSCRIPTEN_KEEPALIVE void wv_pump(void) { emscripten_current_thread_process_queued_calls(); }
 
 EMSCRIPTEN_KEEPALIVE int wv_call_layout(int field)
 {

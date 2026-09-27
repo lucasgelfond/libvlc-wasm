@@ -11,7 +11,8 @@ const show = (r) => console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name.padEnd(52)}
 page.on('console', (m) => { if (m.text().startsWith('@@')) show(JSON.parse(m.text().slice(2))); });
 
 const results = await page.evaluate(async () => {
-  const vlc = await window.harness.ensureVLC({ variant: 'sout' });
+  const sout = (await import('/packages/sout/index.js')).default;
+  const vlc = await window.harness.ensureVLC({ engine: sout });
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const file = async (path) => new File([await (await fetch(`/corpus/media/${path}`)).blob()], path.split('/').pop());
   const out = [];

@@ -455,7 +455,7 @@ export class Player extends Emitter {
    */
   startRecording() {
     if (!this.vlc.features?.sout) {
-      return Promise.reject(new Error('recording needs the stream-output (sout) build of libvlc-wasm'));
+      return Promise.reject(new Error('recording needs the stream-output engine: createVLC({ engine: sout }) with @libvlc-wasm/sout'));
     }
     this._recording = new Promise((resolve) => { this._recordingDone = resolve; });
     return this._call('record', { i: [0, 1], s: ['/recordings'] });
