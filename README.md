@@ -72,8 +72,17 @@ lossless fallback to software when it can't.
 disc's own navigation commands. No libdvdcss, so CSS-encrypted discs do not play; unencrypted
 ones and decrypted images do.
 
-Not available in a browser: raw sockets (RTSP/UDP multicast), optical drives, hardware
-passthrough of Dolby/DTS, and an H.264/HEVC *encoder* (x264/x265 do not build for wasm).
+**Blu-ray**: unencrypted BDMV images through libbluray — playlists and chapters (tested),
+and HDMV (IG) menus, which libbluray renders but no test covers yet: no open-source tool
+authors them. No BD-J (Java) menus and no AACS/BD+, so commercial discs do not play.
+
+**Encrypted media**: MP4 with Common Encryption (`cenc`) plays when you have its key, i.e.
+ClearKey: `player.open(file, { decryptionKey })`. Widevine, PlayReady and FairPlay keys
+never leave the browser's CDM, which only decrypts into a `<video>` element, so those
+streams cannot be decrypted here.
+
+Not available in a browser: raw sockets (RTSP/UDP multicast), optical drives, and hardware
+passthrough of Dolby/DTS.
 
 ## Performance
 

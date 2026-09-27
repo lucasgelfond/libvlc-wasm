@@ -133,7 +133,8 @@ const webm = await vlc.transcode(file, { to: 'webm', onProgress: (f) => bar.valu
 const mkv = await vlc.transcode(file, { to: 'mkv', remux: true }); // copy streams, no re-encode
 ```
 
-Outputs a `File`. Targets: `webm`, `mkv`, `mp4`, `ogg`, `ts`, `wav`, `mp3`. It throws if a
+Outputs a `File`. Targets: `webm`, `mkv`, `mp4` (H.264 + AAC by default; `video: 'hevc'` for
+HEVC), `ogg`, `ts`, `wav`, `mp3`. It throws if a
 requested encoder does not exist rather than silently dropping the stream. Recording while
 playing (`player.startRecording()` / `stopRecording()`) also needs this engine.
 
@@ -151,13 +152,18 @@ playing (`player.startRecording()` / `stopRecording()`) also needs this engine.
 - `createVLC({ logLevel: 'debug' })` and `vlc.on('log', ...)` show VLC's own log, which is
   the first place to look when a file does not play.
 
+### Blu-ray and encrypted media
+
+An unencrypted Blu-ray image (`.iso`) opens like a DVD: playlists are `chapters.titles`,
+with chapters (libbluray; HDMV menus are libbluray's, untested here). A Common Encryption (`cenc`) MP4 plays with its
+key: `player.open(file, { decryptionKey: '<32 hex digits>' })` (ClearKey).
+
 ## What does not work
 
-- Encrypted media: DRM (EME) streams and CSS-encrypted DVDs.
-- Blu-ray menus and physical drives; network protocols other than HTTP(S) (no RTSP/UDP
-  sockets in a browser).
-- H.264/HEVC *encoding* (the sout build encodes VP8/VP9, MPEG-4, MPEG-2, Opus, Vorbis, AAC,
-  FLAC, MP3).
+- DRM whose keys stay in the browser's CDM (Widevine, PlayReady, FairPlay): EME decrypts
+  only into a `<video>` element, never into memory a page can read.
+- CSS-encrypted DVDs and AACS/BD+ Blu-rays (no libdvdcss/libaacs), and BD-J (Java) menus.
+- Physical drives, and network protocols other than HTTP(S) (no RTSP/UDP sockets).
 - A handful of files in the test corpus: see `corpus/compat/unplayable.md`.
 
 ## Working on this repo
