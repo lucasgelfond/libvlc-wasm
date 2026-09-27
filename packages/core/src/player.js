@@ -1,6 +1,6 @@
 import { Emitter } from './emitter.js';
 import { Renderer } from './renderer.js';
-import { RING } from './layout.js';
+import { RING, VIDEO } from './layout.js';
 import { EVENT, STATE_NAMES, checkOptions } from './engine.js';
 
 const ADJUST = { contrast: 1, brightness: 2, hue: 3, saturation: 4, gamma: 5 };
@@ -205,10 +205,12 @@ export class Player extends Emitter {
     this.duration = 0;
     this.tracks = [];
     this._setTime(0);
-    // If VLC's own demuxer finds no stream at all, open() tries once more with
-    // FFmpeg's (see STOPPING) -- unless the caller chose a demuxer.
+    // If VLC's own demuxer finds no stream, or nothing it found could be
+    // decoded, open() tries once more with FFmpeg's (see STOPPING) -- unless
+    // the caller chose a demuxer, or this is a transcode.
     this._sawStreams = false;
-    this._retry = media.some((o) => /^:?demux=/.test(o)) ? null : { mrl, media, autoplay };
+    this._outputAtOpen = this._outputCount();
+    this._retry = media.some((o) => /^:?(demux|sout)=/.test(o)) ? null : { mrl, media, autoplay };
     await this._call('open', { s: [mrl, media.join('\n')] });
     for (const m of previous) this.vlc._unmount(m);
     if (autoplay) await this.play();
@@ -576,9 +578,18 @@ export class Player extends Emitter {
     this._timeAt = performance.now();
   }
 
+  /** Pictures shown plus audio frames written, from the shared counters: 0 change = nothing decoded. */
+  _outputCount() {
+    const mem = this.vlc._memory;
+    const shown = Atomics.load(new Int32Array(mem, this.videoPtr + VIDEO.DISPLAYED * 4, 1), 0);
+    const written = Atomics.load(new Int32Array(mem, this.ringPtr + RING.WRITE * 4, 1), 0);
+    return (shown + written) >>> 0;
+  }
+
   /**
-   * VLC's demuxer claimed the file but found no stream in it (a DTS transport
-   * stream, say): open it again with FFmpeg's demuxer, once.
+   * VLC's demuxer found no stream in the file (a DTS transport stream), or
+   * nothing it found could be decoded (Ut Video in AVI): open it again with
+   * FFmpeg's demuxer, once.
    */
   async _retryWithFFmpeg() {
     const { mrl, media, autoplay } = this._retry;
@@ -649,7 +660,8 @@ export class Player extends Emitter {
         if (type === EVENT.CHAPTER) this.emit('chapterchange', { title: a, chapter: b, name: str });
         break;
       case EVENT.STOPPING:
-        if (STOP_REASON[a] !== 'user' && !this._sawStreams && this._retry) {
+        if (STOP_REASON[a] !== 'user' && this._retry &&
+            (!this._sawStreams || this._outputCount() === this._outputAtOpen)) {
           this._retryWithFFmpeg();
           break;
         }

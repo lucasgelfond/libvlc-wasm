@@ -1,0 +1,139 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 18:00:00 +0000
+Subject: [PATCH 16/17] avcodec: convert output VLC has no chroma for
+
+A decoder whose output pixel format has no VLC chroma (float EXR, 16-bit
+or float TIFF, some JPEG 2000 layouts) failed in get_buffer(). Convert such
+frames with swscale instead: to RGBA for RGB, grey, alpha, palette or float
+formats, to planar YUV of the same subsampling otherwise. Direct rendering
+is off for them.
+---
+ 1 file changed, 60 insertions(+), 2 deletions(-)
+
+diff --git a/modules/codec/avcodec/video.c b/modules/codec/avcodec/video.c
+index 53f3bd0..67bbcfe 100644
+--- a/modules/codec/avcodec/video.c
++++ b/modules/codec/avcodec/video.c
+@@ -38,6 +38,7 @@
+ #include <assert.h>
+ 
+ #include <libavcodec/avcodec.h>
++#include <libswscale/swscale.h>
+ #include <libavutil/mem.h>
+ #include <libavutil/pixdesc.h>
+ #include <libavutil/mastering_display_metadata.h>
+@@ -117,6 +118,11 @@ typedef struct
+ 
+     /* for direct rendering */
+     bool        b_direct_rendering;
++    /* libavcodec output VLC has no chroma for (float EXR, 16-bit TIFF, JPEG
++     * 2000's odd layouts): converted to conv_fmt with swscale, not directly
++     * rendered. AV_PIX_FMT_NONE when not converting. */
++    enum AVPixelFormat conv_fmt;
++    struct SwsContext *sws;
+     bool        b_dr_failure; /* Protected by lock */
+ 
+     /* Hack to force display of still pictures */
+@@ -290,6 +296,26 @@ static void lavc_Frame8PaletteCopy( video_palette_t *dst, const uint8_t *src )
+ /**
+  * Sets the decoder output format.
+  */
++/* The layout to convert an output format VLC cannot take into: RGBA for RGB,
++ * greyscale, alpha, paletted or float formats, else planar YUV with the same
++ * chroma subsampling. AV_PIX_FMT_NONE if swscale cannot read it. */
++static enum AVPixelFormat lavc_ConversionFormat(enum AVPixelFormat pix_fmt)
++{
++    const AVPixFmtDescriptor *desc = av_pix_fmt_desc_get(pix_fmt);
++    if (desc == NULL || (desc->flags & (AV_PIX_FMT_FLAG_HWACCEL | AV_PIX_FMT_FLAG_BITSTREAM))
++     || !sws_isSupportedInput(pix_fmt))
++        return AV_PIX_FMT_NONE;
++    if ((desc->flags & (AV_PIX_FMT_FLAG_RGB | AV_PIX_FMT_FLAG_ALPHA |
++                        AV_PIX_FMT_FLAG_PAL | AV_PIX_FMT_FLAG_FLOAT))
++     || desc->nb_components < 3)
++        return AV_PIX_FMT_RGBA;
++    if (desc->log2_chroma_w == 1 && desc->log2_chroma_h == 1)
++        return AV_PIX_FMT_YUV420P;
++    if (desc->log2_chroma_w == 1)
++        return AV_PIX_FMT_YUV422P;
++    return AV_PIX_FMT_YUV444P;
++}
++
+ static int lavc_GetVideoFormat(decoder_t *dec, video_format_t *restrict fmt,
+                                AVCodecContext *ctx, enum AVPixelFormat pix_fmt,
+                                enum AVPixelFormat sw_pix_fmt)
+@@ -303,8 +329,17 @@ static int lavc_GetVideoFormat(decoder_t *dec, video_format_t *restrict fmt,
+     {   /* software decoding */
+         int aligns[AV_NUM_DATA_POINTERS];
+ 
++        decoder_sys_t *sys = dec->p_sys;
++        sys->conv_fmt = AV_PIX_FMT_NONE;
+         if (GetVlcChroma(fmt, pix_fmt))
+-            return -1;
++        {
++            enum AVPixelFormat conv = lavc_ConversionFormat(pix_fmt);
++            if (conv == AV_PIX_FMT_NONE || GetVlcChroma(fmt, conv))
++                return -1;
++            msg_Dbg(dec, "converting %s output to %s", av_get_pix_fmt_name(pix_fmt),
++                    av_get_pix_fmt_name(conv));
++            sys->conv_fmt = conv;
++        }
+ 
+         /* The libavcodec palette can only be fetched when the first output
+          * frame is decoded. Assume that the current chroma is RGB32 while we
+@@ -450,6 +485,25 @@ static int lavc_CopyPicture(decoder_t *dec, picture_t *pic, AVFrame *frame)
+ 
+     video_format_t test_chroma;
+     video_format_Init(&test_chroma, 0);
++    if (GetVlcChroma(&test_chroma, frame->format) != VLC_SUCCESS
++     && sys->conv_fmt != AV_PIX_FMT_NONE)
++    {
++        sys->sws = sws_getCachedContext(sys->sws, frame->width, frame->height,
++                                        frame->format, frame->width, frame->height,
++                                        sys->conv_fmt, SWS_BICUBIC, NULL, NULL, NULL);
++        if (sys->sws == NULL)
++            return VLC_EGENERIC;
++        uint8_t *dst[4] = { NULL };
++        int dst_stride[4] = { 0 };
++        for (int i = 0; i < pic->i_planes && i < 4; i++)
++        {
++            dst[i] = pic->p[i].p_pixels;
++            dst_stride[i] = pic->p[i].i_pitch;
++        }
++        sws_scale(sys->sws, (const uint8_t *const *)frame->data, frame->linesize,
++                  0, frame->height, dst, dst_stride);
++        return VLC_SUCCESS;
++    }
+     if (GetVlcChroma(&test_chroma, frame->format) != VLC_SUCCESS)
+     {
+         const char *name = av_get_pix_fmt_name(frame->format);
+@@ -619,6 +673,8 @@ static int InitVideoDecCommon( decoder_t *p_dec )
+ 
+     /* ***** libavcodec direct rendering ***** */
+     p_sys->b_direct_rendering = false;
++    p_sys->conv_fmt = AV_PIX_FMT_NONE;
++    p_sys->sws = NULL;
+     p_sys->b_dr_failure = false;
+     if( var_CreateGetBool( p_dec, "avcodec-dr" ) &&
+        (p_codec->capabilities & AV_CODEC_CAP_DR1) &&
+@@ -1786,6 +1842,7 @@ void EndVideoDec( vlc_object_t *obj )
+ 
+     cc_Flush( &p_sys->cc );
+     avcodec_free_context( &ctx );
++    sws_freeContext( p_sys->sws );
+ 
+     if( p_sys->p_va )
+         ffmpeg_CloseVa(p_dec, NULL);
+@@ -1924,7 +1981,8 @@ static int lavc_dr_GetFrame(struct AVCodecContext *ctx, AVFrame *frame, int flag
+     if (sys->b_dr_failure)
+         return -1;
+ 
+-    if (ctx->pix_fmt == AV_PIX_FMT_PAL8)
++    /* A converted format is decoded into libavcodec's buffers. */
++    if (ctx->pix_fmt == AV_PIX_FMT_PAL8 || sys->conv_fmt != AV_PIX_FMT_NONE)
+         return -1;
+ 
+     picture_t *pic = decoder_NewPicture(dec);
+-- 
+2.47.3
+

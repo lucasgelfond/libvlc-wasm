@@ -1,0 +1,62 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 18:00:00 +0000
+Subject: [PATCH 14/17] demux: h26x: find streams that start with an access unit delimiter
+
+The probe skipped 4 bytes after each NAL it read, but an access unit
+delimiter is 2 bytes long, so the zeros of the next start code were skipped
+too and the stream was never recognised: most H.264 conformance streams
+start that way. Resume right after the NAL header instead, accept a 3-byte
+start code at the head of the file, and the extensions the conformance
+suites use (.26l, .jsv, .jvt, .avc).
+---
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/modules/demux/mpeg/h26x.c b/modules/demux/mpeg/h26x.c
+index cef4210..47a1bf2 100644
+--- a/modules/demux/mpeg/h26x.c
++++ b/modules/demux/mpeg/h26x.c
+@@ -266,13 +266,14 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
+         return VLC_EGENERIC;
+     }
+ 
+-    /* First check for first AnnexB header */
++    /* First check for first AnnexB header, with a 4 or 3 byte start code */
+     if( vlc_stream_Peek( p_demux->s, &p_peek, H26X_MIN_PEEK ) == H26X_MIN_PEEK &&
+-       !memcmp( p_peek, annexb_startcode, 4 ) )
++       (!memcmp( p_peek, annexb_startcode, 4 ) ||
++        !memcmp( p_peek, &annexb_startcode[1], 3 )) )
+     {
+         ssize_t i_peek = H26X_MIN_PEEK;
+         size_t i_peek_target = H26X_MIN_PEEK;
+-        ssize_t i_probe_offset = 4;
++        ssize_t i_probe_offset = p_peek[2] == 0x01 ? 3 : 4;
+         const uint8_t *p_probe = p_peek;
+         bool b_synced = true;
+         unsigned i_bitflow = 0;
+@@ -309,7 +310,11 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
+             if( i_ret != 0 )
+                 break;
+ 
+-            i_probe_offset += 4;
++            /* Resume the search right after the NAL header: an access unit
++             * delimiter is only 2 bytes long, and skipping further would
++             * step over the zeros of the next start code. */
++            i_probe_offset += 1;
++            i_bitflow = 0;
+             b_synced = false;
+         }
+     }
+@@ -376,7 +381,8 @@ static int GenericOpen( demux_t *p_demux, const char *psz_module,
+ static int OpenH264( vlc_object_t * p_this )
+ {
+     h264_probe_ctx_t ctx = { 0, 0 };
+-    const char *rgi_psz_ext[] = { ".h264", ".264", ".bin", ".bit", ".raw", NULL };
++    const char *rgi_psz_ext[] = { ".h264", ".264", ".bin", ".bit", ".raw",
++                                  ".26l", ".jsv", ".jvt", ".avc", NULL };
+     const char *rgi_psz_mime[] = { "video/H264", "video/h264", "video/avc", NULL };
+ 
+     return GenericOpen( (demux_t*)p_this, "h264", VLC_CODEC_H264, ProbeH264,
+-- 
+2.47.3
+

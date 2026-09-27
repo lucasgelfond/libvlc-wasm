@@ -149,8 +149,33 @@ static void on_buffering(void *o, float b) { emit(((wv_player_t *)o)->id, EV_BUF
 static void on_rate(void *o, float r) { emit(((wv_player_t *)o)->id, EV_RATE, r, 0, NULL); }
 static void on_caps(void *o, libvlc_capability_t old, libvlc_capability_t caps)
 { (void) old; emit(((wv_player_t *)o)->id, EV_CAPS, caps, 0, NULL); }
-static void on_position(void *o, libvlc_time_t t, double pos)
-{ emit(((wv_player_t *)o)->id, EV_POSITION, (double)t, pos, NULL); }
+/* Time comes from the player's clock (libvlc_media_player_watch_time), not
+ * on_position_changed: that also relays what demuxers answer DEMUX_GET_TIME
+ * with, which for some is their read position -- libbluray's runs half a
+ * second ahead of the picture -- so the two sources made time jump back and
+ * forth. The page interpolates between points. */
+static void on_time_update(void *o, const libvlc_media_player_time_point_t *v)
+{
+    /* Points from before the demuxer's normal time was known are negative. */
+    if (v->ts_us < 0)
+        return;
+    emit(((wv_player_t *)o)->id, EV_POSITION, (double)v->ts_us, v->position,
+         NULL);
+}
+static void on_time_paused(void *o, libvlc_time_t system_date_us)
+{ (void) o; (void) system_date_us; }
+static void on_time_seek(void *o, const libvlc_media_player_time_point_t *v)
+{
+    if (v != NULL && v->ts_us >= 0)
+        emit(((wv_player_t *)o)->id, EV_POSITION, (double)v->ts_us, v->position, NULL);
+}
+static const struct libvlc_media_player_watch_time_cbs time_cbs = {
+    .version = 0,
+    .on_update = on_time_update,
+    .on_paused = on_time_paused,
+    .on_seek = on_time_seek,
+};
+#define TIME_PERIOD_US 100000 /* at most 10 updates a second */
 static void on_length(void *o, libvlc_time_t len) { emit(((wv_player_t *)o)->id, EV_LENGTH, (double)len, 0, NULL); }
 static void on_tracks(void *o, libvlc_list_action_t a, libvlc_track_type_t t, const char *id)
 { emit(((wv_player_t *)o)->id, EV_TRACKS, a, t, id); }
@@ -184,7 +209,6 @@ static const struct libvlc_media_player_cbs player_cbs = {
     .on_buffering_changed = on_buffering,
     .on_rate_changed = on_rate,
     .on_capabilities_changed = on_caps,
-    .on_position_changed = on_position,
     .on_length_changed = on_length,
     .on_track_list_changed = on_tracks,
     .on_track_selection_changed = on_track_selected,
@@ -418,12 +442,14 @@ static void api_player_new(wv_call_t *c)
     var_SetString(obj, "window", "webwindow");
     libvlc_audio_set_callbacks(p->mp, audio_unused_play, NULL, NULL, NULL, NULL, r);
     libvlc_audio_output_set(p->mp, "webaudio");
+    libvlc_media_player_watch_time(p->mp, TIME_PERIOD_US, &time_cbs, p);
     c->ret_i = (int32_t)(intptr_t)p;
 }
 
 static void api_player_release(wv_call_t *c)
 {
     wv_player_t *p = P;
+    libvlc_media_player_unwatch_time(p->mp);
     libvlc_media_player_release(p->mp);
     free(p->ring.data);
     free(p);
