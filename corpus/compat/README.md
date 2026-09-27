@@ -26,5 +26,5 @@ here plays sound.
 Caveats: "decodes" is not "plays well" — the native columns count decoded frames and samples,
 while libvlc-wasm's is checked on screen and in the audio output. Several corpus files are
 deliberately short or truncated test fixtures (see each sample's `test` note in the manifest), and
-ffmpeg.wasm can only convert a file, not play it. `unplayable.md` records why the files that
-play nowhere do not.
+ffmpeg.wasm can only convert a file, not play it. Each sample's `test` note in the manifest
+records why a file that plays nowhere does not; the site's formats page shows them.

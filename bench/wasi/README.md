@@ -4,7 +4,7 @@ How much slower is FFmpeg's C decoder when it runs as WebAssembly, per runtime? 
 media-decoding counterpart of the chart *"Baseline WebAssembly slowdown by release year (plain
 wasm32-wasi, no SIMD)"* in Frank Denis's
 [Performance of WebAssembly runtimes in 2026](https://00f.net/2026/06/23/webassembly-runtimes-2026/),
-which measured libsodium. Results land in `RESULTS.md` / `results.json` after a run.
+which measured libsodium. Results land in `results.json` after a run; the player site's /benchmarks page renders them.
 
 ## Reproduce
 
@@ -12,7 +12,7 @@ which measured libsodium. Results land in `RESULTS.md` / `results.json` after a 
 bench/wasi/setup-tools.sh     # runtimes: brew + downloads into bench/wasi/tools/ (~2 GB)
 bench/wasi/build.sh           # FFmpeg 9.0 x3 + wasm2c builds into bench/wasi/out/ (~2 min, -j4)
 node bench/wasi/run.mjs --smoke   # 1 clip, 1 iteration, every runtime: checks they all work
-node bench/wasi/run.mjs           # the sweep: 3 iterations, writes RESULTS.md + results.json
+node bench/wasi/run.mjs           # the sweep: 3 iterations, writes results.json
 ```
 
 `run.mjs` options: `--iters N`, `--clips h264,hevc`, `--runtimes wasmtime,wavm`,
@@ -118,7 +118,7 @@ AOT compile time is measured once and reported separately; compiled artifacts ar
 | `decode.c` | the benchmark driver (libavformat + libavcodec) |
 | `build.sh` | FFmpeg 9.0 native / wasm / wasm-simd builds, plus wasm2c builds |
 | `setup-tools.sh` | installs/builds the runtimes |
-| `run.mjs` | runs the matrix, validates output, writes `results.json` + `RESULTS.md` |
+| `run.mjs` | runs the matrix, validates output, writes `results.json` |
 | `wasi-host.mjs` | `node:wasi` host for Node and Bun |
 | `wasm2c-wasi-host.c` | minimal WASI preview1 host for wasm2c output |
 | `tools/`, `src/`, `build/`, `out/` | downloads and build output (gitignored) |

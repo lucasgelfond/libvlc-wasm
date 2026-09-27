@@ -1,0 +1,14 @@
+{
+ "note": "Other browser media packages, compared by what they are rather than measured (the VLC ports and ffmpeg.wasm are measured: ports-matrix.json, corpus/compat/compat.json). Rendered on the site's /benchmarks page.",
+ "packages": [
+  { "name": "libvlc-wasm", "url": "https://github.com/lucasgelfond/libvlc-wasm", "what": "VLC 4 player engine", "playsInPage": "yes: canvas + Web Audio, VLC's clock", "formats": "VLC's demuxers + FFmpeg + gme, modplug, sidplay, FluidSynth", "subtitles": "yes (libass, freetype)", "size": "25.7 MB wasm, ~7.8 MB brotli" },
+  { "name": "ffmpeg.wasm", "version": "0.12", "url": "https://github.com/ffmpegwasm/ffmpeg.wasm", "what": "the FFmpeg CLI in wasm", "playsInPage": "no: transcode, then hand the result to <video>", "formats": "FFmpeg", "subtitles": "burned in, via transcoding", "size": "31 MB wasm, ~7 MB brotli" },
+  { "name": "libav.js", "version": "6.10", "url": "https://github.com/Yahweasel/libav.js", "what": "FFmpeg's libraries with a JS API", "playsInPage": "no: you drive demuxing and decoding", "formats": "configurable variants", "subtitles": "no", "size": "1-15 MB per variant" },
+  { "name": "mediabunny", "version": "1.60", "url": "https://github.com/Vanilagy/mediabunny", "what": "TypeScript demux/mux + WebCodecs", "playsInPage": "through your own rendering", "formats": "MP4/MOV/WebM/MKV/Ogg/WAV/MP3/ADTS/FLAC; codecs = what WebCodecs decodes", "subtitles": "no", "size": "no wasm" },
+  { "name": "web-demuxer", "version": "4.0", "url": "https://github.com/bilibili/web-demuxer", "what": "FFmpeg demuxers in wasm + WebCodecs", "playsInPage": "through your own rendering", "formats": "many containers; only codecs WebCodecs decodes", "subtitles": "no", "size": "~4 MB" },
+  { "name": "ogv.js", "version": "1.9", "url": "https://github.com/bvibber/ogv.js", "what": "Ogg/WebM decoders (Theora, VP8/9, AV1, Vorbis, Opus)", "playsInPage": "yes", "formats": "Ogg/WebM only", "subtitles": "no", "size": "~4 MB" },
+  { "name": "jsmpeg", "url": "https://github.com/phoboslab/jsmpeg", "what": "MPEG-1 video + MP2 audio in JS", "playsInPage": "yes", "formats": "MPEG-TS / MPEG-1 only", "subtitles": "no", "size": "small" },
+  { "name": "hls.js / Shaka / dash.js", "url": "https://github.com/video-dev/hls.js", "what": "adaptive streaming over MSE", "playsInPage": "yes", "formats": "only what MSE plays", "subtitles": "WebVTT/TTML", "size": "0.1-1 MB" },
+  { "name": "chiptune3 / libopenmpt builds", "url": "https://github.com/DrSnuggles/chiptune", "what": "tracker playback", "playsInPage": "audio", "formats": "tracker formats only", "subtitles": "n/a", "size": "~1.5 MB" }
+ ]
+}

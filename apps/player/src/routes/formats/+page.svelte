@@ -61,6 +61,10 @@
 				<RiArrowLeftLine class="size-3.5" /> Back to the player
 			</a>
 			<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
+			<p class="text-muted-foreground text-sm">
+				What plays, measured with every tool on curated files and public test suites. Speed, size and the other ports are on the
+				<a href="/benchmarks" class="text-foreground underline underline-offset-2">benchmarks page</a>.
+			</p>
 		</header>
 
 		<section class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-4 lg:grid-cols-7">
@@ -141,7 +145,7 @@
 		</div>
 
 		{#if SUITES.length}
-			<section class="flex flex-col gap-4">
+			<section id="test-suites" class="flex scroll-mt-6 flex-col gap-4">
 				<h2 class="font-display text-2xl font-semibold tracking-tight">Test suites</h2>
 				<Tabs.Root bind:value={suite}>
 					<Tabs.List class="h-auto flex-wrap">

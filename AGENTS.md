@@ -167,9 +167,11 @@ key: `player.open(file, { decryptionKey: '<32 hex digits>' })` (ClearKey).
 
 - DRM whose keys stay in the browser's CDM (Widevine, PlayReady, FairPlay): EME decrypts
   only into a `<video>` element, never into memory a page can read.
-- CSS-encrypted DVDs and AACS/BD+ Blu-rays (no libdvdcss/libaacs), and BD-J (Java) menus.
+- CSS-encrypted DVDs in the published packages (build your own engine with
+  `WITH_DVDCSS=1 ./build.sh`), AACS/BD+ Blu-rays, and BD-J (Java) menus.
 - Physical drives, and network protocols other than HTTP(S) (no RTSP/UDP sockets).
-- A handful of files in the test corpus: see `corpus/compat/unplayable.md`.
+- A handful of files in the test corpus and suites: see the failures on the site's formats page
+  (from `corpus/compat/*-summary.json`).
 
 ## Working on this repo
 

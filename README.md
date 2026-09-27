@@ -1,301 +1,154 @@
 # libvlc-wasm
 
-**VLC 4's engine, compiled to WebAssembly, as a JavaScript SDK.** It plays the media browsers
-can't — RealMedia, WMV/WMA, DivX/Xvid AVIs, DVD and Blu-ray images, MPEG-TS with AC-3/DTS,
-FLV/VP6, QuickTime/Sorenson, Bink/Smacker/RoQ and PlayStation video, TrueHD/MLP/Musepack/APE,
-tracker modules, chiptunes (SNES, Genesis, NES, C64), MIDI, MKV with ASS subtitles — through
-VLC's own demuxers, clock, audio pipeline, subtitle renderer and filters, and hands
-H.264/HEVC/VP9/AV1 to the browser's hardware decoders through WebCodecs when it can.
+libvlc-wasm compiles VLC 4's engine to WebAssembly and offers it as a JavaScript SDK. The package, in doing so, lets developers play media files that browsers [cannot handle natively](https://libvlc.lucasgelfond.online/formats). This includes some wacky stuff like playing DVD menus in the browser:
+
+![A DVD's menus, clicked through in the browser](docs/demo.gif)
+
+It handles a pretty baffling number of formats and is quite performant, making use of fast web technologies like WebGL for the video player and WebCodecs for native-speed decoding. It does not load whole videos into memory, but rather uses file seeks; memory use stays flat with large files. It's very fast; it can play native-codec supported files through at >600fps on my Mac, and even the slowest cases are several multiples better than realtime. It's also much more performant than simply transcoding something with ffmpeg.wasm and playing it in the browser.
+
+## Comparisons to other work
+
+libvlc-wasm exceeds native VLC 3 compatibility and is near parity with VLC 4. There's a full comparison between it, native VLC, other in-browser VLC and VLC-like libraries, and built-in browser support on the site, at [libvlc.lucasgelfond.online/formats](https://libvlc.lucasgelfond.online/formats).
+
+You can also look at its pass rate on [a ton](https://libvlc.lucasgelfond.online/formats#test-suites) of test suites versus other similar packages, and how it performs against several speed benchmarks [here](https://libvlc.lucasgelfond.online/benchmarks).
+
+There's some [prior](https://code.videolan.org/jbk/vlc.js) [art](https://github.com/addyosmani/vlc.js) [here](https://github.com/Krowemoh/vlc.js) but most efforts at "VLC in the browser" use an older, prebuilt WASM bundle. Inspired by [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm), which I co-maintain, libvlc-wasm includes the tooling to easily rebuild from source on top of VLC source code. This package also includes a pretty extensive testing harness that makes it easy to make changes or bump the source commit without lots of manual checks.
+
+## A note on LLMs
+
+I used LLMs, particularly Claude Opus 5.5, very heavily in development here. In essence: I pointed Claude at the libvlc source, a set of obscure-format files to test with, some reference implementations from the internet, and some existing C-library-to-WASM ports like [@uswriting/exiftool](https://github.com/6over3/exiftool), [neslinesli93/qpdf-wasm](https://github.com/neslinesli93/qpdf-wasm), and [dlemstra/magick-wasm](https://github.com/dlemstra/magick-wasm). I steered a bunch throughout re what to include/leave out, how to implement patching / benchmarking / testing. I also built the demo interface, did manual QA, and wrote the words in this README and on the site.
+
+In essence, this is to say: I am greatly indebted to the work that precedes this, particularly the existing libvlc source; little of this is truly "original." I think it remains valuable to publish packages like this because they are composable, reusable, and abstract complexity for other developers. For example, rather than spending a few days wrangling WASM, spending a ton of tokens, and wrangling Claude, other developers can just install the SDK. In any case though: this is very much glue work on top of [lots of phenomenal prior art](https://x.com/garrytan/status/1909255029372203090) (including other vlc.js-in-the-browser implementations).
+
+[AGENTS.md](AGENTS.md) includes a much more verbose description of how the package was constructed, and also how to install / use its API.
+
+### Using this package
 
 ```sh
-npm install libvlc-wasm            # playback, probing, thumbnails
-npm install libvlc-wasm-sout       # optional: transcoding, remuxing, recording
+npm install libvlc-wasm          # playback, probing, thumbnails
+npm install libvlc-wasm-sout     # optional: transcoding, remuxing, recording
 ```
 
-```js
-import { createVLC } from 'libvlc-wasm';
-
-const vlc = await createVLC();
-const player = await vlc.createPlayer({ canvas });
-await player.open(fileInput.files[0]);        // File, Blob, bytes, URL, or [idx, sub]
-player.on('timeupdate', (t) => console.log(t));
-console.log(await vlc.probe(file));           // ffprobe-style, no playback
-```
+**HTML**: a drop-in for `<video>` ([examples/vanilla/element.html](examples/vanilla/element.html)):
 
 ```html
 <script type="module">import 'libvlc-wasm/element';</script>
 <vlc-player src="old-trailer.rm" controls autoplay></vlc-player>
 ```
 
-The full API, with the things that are easy to get wrong, is in [AGENTS.md](AGENTS.md); the
-types are in [packages/core/src/index.d.ts](packages/core/src/index.d.ts). The player site
-(`apps/player`, `pnpm dev`) is meant to go up at libvlc.lucasgelfond.online.
+**JS**: the full player API ([examples/vanilla/minimal.html](examples/vanilla/minimal.html)):
 
-**Status**: working SDK, published on npm. Of 93 curated files in formats browsers can't play
-(DVD and Blu-ray images and ClearKey MP4 included), libvlc-wasm plays 88; desktop VLC 3 plays 82,
-Chrome 17, Safari 25, Firefox 16. Over FFmpeg's whole FATE sample suite it plays 2,041 of the
-2,183 files native FFmpeg or VLC can (FFmpeg 2,172, VLC 3 1,535), and it is measured against
-more public suites (conformance streams, codec test vectors, browser test media) on the
-player site's formats page (`/formats`). It runs in Chrome, Safari and
-Firefox, in dev and production builds.
+```js
+import { createVLC } from 'libvlc-wasm';
 
-**It is VLC throughout.** Every file goes through libvlc's player: VLC's input thread,
-demuxers, decoders, clock, and audio and video outputs. FFmpeg is there the way it is in
-desktop VLC, behind VLC's own `avcodec` and `avformat` modules. The JavaScript never demuxes
-or decodes: when VLC's native demuxer finds nothing playable in a file, `open()` asks VLC
-once more with its `:demux=avformat` option, as `vlc --demux=avformat` would on the desktop.
+const vlc = await createVLC();                     // one engine per page
+const player = await vlc.createPlayer({ canvas }); // draws into a <canvas>
+await player.open(fileInput.files[0]);             // File, Blob, bytes or URL
+player.on('timeupdate', (t) => console.log(t, player.duration));
 
-## What it does
-
-**Playback**: play/pause/stop, precise and fast seek, rate 0.25–4× (pitch-preserving), frame
-stepping both ways, AB-loop, gapless next-media queue, volume up to 200%, several players at
-once, screen wake lock.
-**Video**: WebGL2 rendering of the decoder's native layout (4:2:0/4:2:2/4:4:4, NV12, 10-bit,
-RGB) with the stream's colour range and matrix — exact to 1–2/255 in every engine — correct
-sample aspect ratio, fit modes, aspect/crop override, deinterlacing (yadif, bob, ivtc, …),
-picture adjustments, marquee and logo overlays, snapshots, teletext, program selection.
-**Audio**: VLC's A/V clock driven by the real playback position of an AudioWorklet, 10-band EQ
-with VLC's presets, stereo modes, output routed into your own Web Audio graph, a level meter,
-MIDI via FluidSynth with a SoundFont you supply.
-**Subtitles**: libass (ASS/SSA with styling), SRT/VTT/SUB/USF/TTML, VobSub, DVB, CEA-608,
-external files, delay and scale. The font is only downloaded when a subtitle needs it.
-**Without playing**: `probe()` (container, tracks, codecs, metadata) and `thumbnail()` (JPEG).
-**Converting** (`libvlc-wasm-sout`, `createVLC({ engine: sout })`): `transcode()` to
-WebM/MP4/MKV/Ogg/TS/WAV/MP3 — H.264 (x264) and HEVC (x265), VP8/VP9, AAC, Opus… — lossless
-`remux`, and `startRecording()` while playing.
-**Inputs**: `File`/`Blob` (read on demand, never copied), bytes, http(s) URLs (range
-requests), multi-file groups (VIDEO_TS folders, `.idx` + `.sub`). Also runs headless under
-Node for probing and thumbnails.
-**Decoding**: FFmpeg, dav1d, libvpx, mpg123, gme, libmodplug, libsidplay2 and VLC's own
-decoders in wasm; **WebCodecs** (hardware) for H.264, HEVC, VP9 and AV1 when the browser can,
-with automatic fallback to software when it can't.
-
-**DVD**: ISO images and VIDEO_TS folders through dvdnav — menus (by mouse or keys), titles,
-chapters, audio and subtitle languages, the disc's own navigation commands.
-
-**CSS-encrypted DVDs**: libvlc-wasm does not distribute libdvdcss, the way Debian, Ubuntu and
-Fedora leave it out of their archives but let users build it themselves:
-
-```sh
-WITH_DVDCSS=1 ./build.sh     # fetches libdvdcss from VideoLAN and compiles it on your machine
+console.log(await vlc.probe(file));                // tracks and metadata, no playback
 ```
 
-The engine lands in `build/engines/dvdcss/` (ignored by git, never packaged or published).
-Serve its two files yourself and load them with
-`createVLC({ engine: { moduleUrl: '/libvlc-dvdcss.js', wasmUrl: '/libvlc-dvdcss.wasm' } })`.
-Whether you may use it depends on where you live.
+**React**: `<vlc-player>` is a standard custom element, so it works as-is; reach for the
+`Player` through `el.player` when you need more:
 
-**Blu-ray**: unencrypted BDMV images through libbluray: playlists and chapters (tested), and
-HDMV menus (libbluray renders them; a test disc with a menu is being authored). No
-BD-J (Java) menus and no AACS/BD+, so commercial discs do not play.
+```jsx
+import 'libvlc-wasm/element';
 
-**Encrypted media**: MP4 with Common Encryption (`cenc`) plays when you have its key
-(ClearKey): `player.open(file, { decryptionKey })`. Widevine, PlayReady and FairPlay keys never
-leave the browser's CDM, which only decrypts into a `<video>` element.
+export function Video({ src }) {
+  return <vlc-player src={src} controls style={{ width: '100%', aspectRatio: '16 / 9' }} />;
+}
+```
 
-Not available in a browser: raw sockets (RTSP/UDP multicast), optical drives, hardware
-passthrough of Dolby/DTS.
+**Svelte**: the same element, or the API in an effect
+([apps/player/src/lib/session.svelte.ts](apps/player/src/lib/session.svelte.ts) is the whole demo site's player):
 
-## Using it in an app
+```svelte
+<script>
+  import { createVLC } from 'libvlc-wasm';
+  let { file } = $props();
+  let canvas;
+  $effect(() => {
+    let player;
+    createVLC().then(async (vlc) => {
+      player = await vlc.createPlayer({ canvas });
+      await player.open(file);
+    });
+    return () => player?.destroy();
+  });
+</script>
 
-Pages must be **cross-origin isolated** (VLC's threads need `SharedArrayBuffer`):
+<canvas bind:this={canvas}></canvas>
+```
+
+Note that in any case, pages must be cross-origin isolated so that they can use `SharedArrayBuffer`. Set these two headers on every response:
 
 ```
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Embedder-Policy: require-corp
 ```
 
-- **Vite / SvelteKit**: `import vlc from 'libvlc-wasm/vite'` and add `vlc()` to `plugins`. It
-  sets the headers in dev and preview and keeps the engine out of dependency pre-bundling.
-- **Production**: set the headers on your host (Cloudflare/Netlify `_headers`, nginx
-  `add_header`); `apps/player/static/_headers` is a working example.
-- **Hosts without headers** (GitHub Pages): load `libvlc-wasm/coi-serviceworker.js` first.
-- Serve `libvlc.wasm` compressed: about 25.7 MB raw (24.5 MiB), 10 MB gzip, 7.8 MB brotli.
+- **Vite / SvelteKit**: `import vlc from 'libvlc-wasm/vite'` and add `vlc()` to `plugins` (dev and preview).
+- **Cloudflare / Netlify**: a `_headers` file, like [apps/player/static/_headers](apps/player/static/_headers).
+- **Hosts without headers** (GitHub Pages): load `libvlc-wasm/coi-serviceworker.js` first in `<head>`.
 
-**Size and bundling.** The SDK's own JavaScript is about 40 KB; the engine is one wasm file
-fetched by the first `createVLC()`. Bundlers emit it as an asset; nothing downloads it until
-then. `tests/bundle.mjs` builds real Vite apps and checks it:
+The SDK's JavaScript is about 40 KB; the engine is one ~25 MB wasm (~8 MB brotli), fetched by the first `createVLC()`. `await import('libvlc-wasm')` keeps it off pages until it's needed.
 
-| how the app uses it | entry JS | downloaded on page load | downloaded when used |
-|---|---|---|---|
-| `import { createVLC }` + `probe()` | 36 KB | 36 KB | +26 MB |
-| `createPlayer()` + play | 36 KB | 36 KB | +27 MB |
-| `<vlc-player>` element | 42 KB | 42 KB | +27 MB |
-| `await import('libvlc-wasm')` on demand | 37 KB | **2 KB** | +26 MB |
-| transcoding engine imported on demand | 37 KB | 37 KB | +35 MB (only the sout wasm) |
+## Building from source
 
-A browser compiles a wasm module as a whole, so tree shaking cannot drop parts of it; lazy
-`import()` is how to keep it off pages that don't need it.
-
-## Performance
-
-Apple M5, Chrome 153, 1080p30 clips; full tables and method in
-[bench/results/RESULTS.md](bench/results/RESULTS.md), summary image in
-[bench/results/chart.png](bench/results/chart.png).
-
-- **Startup**: `createVLC()` is ready in about **210–230 ms** (worker, wasm compile, threads,
-  `libvlc_new`). First frame of a file typically **20–100 ms** after `open()`.
-- **Hardware path**: with WebCodecs, H.264, HEVC, VP9 and AV1 play through at **410–550 fps**:
-  the player's pacing ceiling, not the decoder.
-- **Software path** (everything else, or when the browser lacks a codec), the full player vs the
-  same player natively (VLC 3, software), 1080p, one thread:
-
-  | codec | native VLC | libvlc-wasm | ffmpeg.wasm (decode only) |
-  |---|---|---|---|
-  | H.264 | 99 fps | 65 fps | 57 fps |
-  | HEVC | 177 fps | 110 fps | 89 fps |
-  | VP9 | 242 fps | 136 fps | 128 fps |
-  | AV1 (dav1d) | 146 fps | 70 fps | no decoder |
-  | MPEG-4 ASP | 554 fps | 282 fps | 396 fps |
-  | MPEG-2 | 567 fps | 358 fps | 538 fps |
-
-  Even the slowest are twice real time at 1080p30. Where native has hand-written SIMD (dav1d,
-  parts of FFmpeg) the gap is widest, since wasm can only autovectorize C.
-- **vs converting first**: the first frame of a RealVideo file takes libvlc-wasm **42 ms**;
-  ffmpeg.wasm has to convert it before a `<video>` can show it (about 1.2 s for 10 s of video).
-- **WASI runtimes**: the same FFmpeg decoder C code on WAVM, WAMR, WasmEdge, wasm2c, Wasmer,
-  Wasmtime, Wazero, Node and Bun vs native: [bench/wasi](bench/wasi/).
-
-## Compared with other "VLC in the browser" projects
-
-Every web VLC port there is, measured on the same files: addyosmani/vlc.js, Krowemoh/vlc.js,
-jbk/vlc.js (its published demo and a build from source) and addyosmani/webvlc, plus ffmpeg.wasm
-and the browsers themselves — see [bench/compare/COMPARISON.md](bench/compare/COMPARISON.md)
-and the site's formats page. The existing ports run a
-2022–2024 VLC 4 snapshot with no build scripts (or none that still work), no audio output of
-their own and no API; libvlc-wasm builds current VLC master from source with four small
-modules of its own — `webaudio`, `webframe`, `webcodecs`, `webwindow` — and a short series
-of upstreamable patches.
-
-## Repository
-
-```
-build.sh, build/        Docker toolchain (Debian + emsdk), VLC build, link, patches/
-native/                 the C side: bridge.c (API + threading), webaudio.c (audio out),
-                        webframe.c (video out), webcodecs.c (decoder), webwindow.c (pointer input),
-                        shared.h (memory layouts shared with JS)
-packages/core/          the libvlc-wasm npm package: src/ (JS SDK), wasm/ (built), fonts/
-packages/sout/          the libvlc-wasm-sout npm package (transcoding engine)
-apps/player/            the player site (SvelteKit): pnpm dev
-examples/               vanilla HTML pages and a Node CLI
-tests/                  every test suite; tests/all.mjs runs them all
-corpus/                 test media: manifest, fetchers, R2 sync, compatibility matrices
-bench/                  benchmarks, the chart, other ports, WASI runtimes
-.claude/skills/verify/  the procedure for checking a VLC update or native change
-```
-
-## Building
-
-Needs Docker. The first build fetches VLC and builds its ~60 contribs (FFmpeg, dav1d, libass…):
-about 20–40 minutes on an M-series Mac; later builds are incremental.
+The build fetches VLC, builds its dependencies (FFmpeg, dav1d, libass, etc). It takes about 20 minutes on my M5 MacBook Pro, probably an hour or so on a CI runner. It needs Docker.
 
 ```sh
-./build.sh                 # toolchain image, VLC for wasm, link -> packages/core/wasm/
-./build.sh link            # relink only (a minute): after changing native/
-VARIANT=sout ./build.sh    # the transcoding engine -> packages/sout/wasm/, its own build tree
-WITH_DVDCSS=1 ./build.sh   # your own engine with libdvdcss -> build/engines/dvdcss/ (never shipped)
-PROFILE=debug ./build.sh   # assertions and symbols; PROFILE=names keeps function names only
+./build.sh                    # toolchain image, VLC for wasm, link → packages/core/wasm/
+./build.sh link               # relink only (a minute or two): after changing native/
+PROFILE=debug ./build.sh      # assertions and symbols
+VARIANT=sout ./build.sh       # the stream-output build (libvlc-sout.wasm), its own build tree
 VLC_COMMIT=<sha> ./build.sh   # try another VLC master commit
+WITH_DVDCSS=1 ./build.sh      # your own engine with libdvdcss → build/engines/dvdcss/
 ```
 
-VLC's source is pinned in `build.sh`; our changes to it are `build/patches/`, one
-`git format-patch` file per fix with a message saying why. Updating VLC: see
-[.claude/skills/verify/SKILL.md](.claude/skills/verify/SKILL.md).
+VLC's source is pinned in `build.sh`; changes to it live in [build/patches](build/patches), one `git format-patch` file per fix with a message saying why.
 
-## Running the player site
+Passing the argument `WITH_DVDCSS=1` will bundle CSS-encrypted DVD processing into your binary. This is disabled in the default build because [distributing libdvdcss has questionable legal status](https://en.wikipedia.org/wiki/Libdvdcss). The engine it builds is never packaged or published; serve its two files yourself and load them with `createVLC({ engine: { moduleUrl, wasmUrl } })`.
+
+## Testing / Benchmarking
+
+**Test media.** Nothing large is in git; manifests, hashes and results are.
+
+```sh
+node corpus/fetch.mjs                     # the curated corpus (corpus/manifest.json), from its original hosts
+rsync -a rsync://fate-suite.ffmpeg.org/fate-suite/ corpus/fate/   # FFmpeg's FATE suite (1.3 GB)
+node corpus/suites/fetch.mjs <name>       # another suite (corpus/suites/<name>.json: libvpx, dav1d, wpt…)
+node corpus/r2-sync.mjs pull              # or all of the above at once, from the project's R2 bucket
+sh tests/make-fixtures.sh && sh tests/make-colors.sh   # generated fixtures (ffmpeg); DVD/Blu-ray ones via
+                                                       # tests/make-dvd.sh, make-bluray*.sh (Docker)
+```
+
+**Tests.** Every browser the tests launch is muted.
 
 ```sh
 pnpm install
-pnpm dev                                  # http://localhost:5180 (samples copied on first run)
-pnpm --filter player build                # static build in apps/player/build
-cd apps/player && npx wrangler deploy     # Cloudflare (wrangler.jsonc, static/_headers)
+pnpm test:quick   # ~2 min: node smoke, features + transcoding in Chromium, colours, the demo site
+pnpm test         # ~15 min: Chrome, Safari and Firefox, the corpus baseline, npm tarballs, bundle sizes
 ```
 
-URL parameters for quick checks: `?sample=dvd` (or `bluray`, `playstation`, `c64`, …),
-`?url=https://…` to play a URL, `?test=<corpus file>`.
+Checking a VLC update or a native change, cheapest first: [.claude/skills/verify/SKILL.md](.claude/skills/verify/SKILL.md).
 
-## Testing
-
-Everything, silently (every browser the tests launch is muted, including WebKit, which has no
-mute switch of its own):
+**Regenerating the numbers on the site.** Each script writes JSON the site renders:
 
 ```sh
-pnpm test:quick     # ~2 min: node smoke, features + transcoding in Chromium, colours, the site
-pnpm test           # ~15 min: all three browsers, the corpus baseline, npm tarballs, bundle sizes
-pnpm test -- --only=features,sout --engines=webkit    # a subset
+node tests/verify-corpus.mjs --engines=chromium,webkit,firefox   # libvlc-wasm + browsers on the curated corpus
+node corpus/compat/build.mjs                  # native VLC, native FFmpeg and ffmpeg.wasm on the corpus
+node corpus/compat/suite.mjs --suite=fate     # a test suite with every tool (--suite=libvpx, wpt, …)
+sh bench/make-media.sh && node bench/run.mjs  # decode speed, startup, size (needs FFmpeg and VLC.app)
+node bench/compare/vlcjs.mjs --engine=webkit  # the other web VLC ports: vlcjs, jbk, krowemoh, webvlc.mjs,
+node bench/compare/ports-matrix.mjs           # each per engine, then merged into ports × browsers
+node bench/wasi/run.mjs                       # WebAssembly runtimes
+pnpm dev                                      # then open /formats and /benchmarks
 ```
-
-| suite | what it checks |
-|---|---|
-| `tests/node-smoke.mjs` | probe and thumbnail under Node |
-| `tests/features.mjs` | 29 playback features: seek, rate, AB loop, tracks, subtitles, DVD menus by mouse and keys, Blu-ray, ClearKey, URLs, two players… |
-| `tests/sout.mjs` | 12 transcodes (H.264, HEVC, VP8, Opus, MP3…), remux, recording |
-| `tests/colors.mjs` | colour accuracy per pixel layout (within 8/255) |
-| `tests/app.mjs` | the player site end to end: sample menu, DVD click-through, `?sample=`, a picked file, the formats page |
-| `tests/corpus-check.mjs` | every curated sample in `tests/corpus-baseline.json` still plays |
-| `tests/package.mjs` | the packed npm tarballs in a fresh Vite app: play and transcode |
-| `tests/bundle.mjs` | what each way of importing the SDK ships and downloads |
-
-Fixtures the suites use are generated, not downloaded: `sh tests/make-fixtures.sh`,
-`sh tests/make-colors.sh` (need ffmpeg), and in Docker `tests/make-dvd.sh`,
-`tests/make-bluray.sh` and `tests/make-bluray-menu.sh` (commands at the top of each). The `verify` skill
-(`.claude/skills/verify/`) is the cheapest-first procedure for checking a change.
-
-## Test media
-
-| what | where it comes from | how to get it |
-|---|---|---|
-| curated corpus (93 files, `corpus/manifest.json`) | FFmpeg's sample server, VLC's sample archive, others; each entry has its URL and sha256 | `node corpus/fetch.mjs` |
-| FFmpeg FATE suite (2,540 files, 1.3 GB) | `rsync://fate-suite.ffmpeg.org/fate-suite/` | `rsync -a rsync://fate-suite.ffmpeg.org/fate-suite/ corpus/fate/` |
-| other suites (conformance, libvpx/libaom/dav1d vectors, browser test media, …) | listed in `corpus/suites/<name>.json` | `node corpus/suites/fetch.mjs <name>` |
-| all of the above, in one place | the project's R2 bucket `libvlc-wasm-media` (needs access to the Cloudflare account) | `node corpus/r2-sync.mjs pull` (`push` after adding files) |
-| app samples | `apps/player/static/samples/` (disc images committed; the rest copied or downloaded) | `node apps/player/scripts/samples.mjs` (runs before `pnpm dev`) |
-
-All media directories are gitignored; the manifests, hashes and results are committed.
-
-## Measuring format support
-
-```sh
-node tests/verify-corpus.mjs --engines=chromium,webkit,firefox   # libvlc-wasm + browsers on the corpus
-node corpus/compat/build.mjs                  # native VLC, native FFmpeg, ffmpeg.wasm -> compat.json
-node corpus/compat/fate.mjs                   # the FATE suite with every tool -> fate-*.json
-node corpus/compat/suite.mjs --suite=libvpx   # any other suite -> corpus/compat/suites/
-```
-
-Each step caches per file (`--resume`, `--retry=<status>` to re-measure) and writes a
-summary the formats page reads. "Plays" means the same for every tool: a file with video
-shows a picture, a file with audio makes sound (measured silently).
-
-## Benchmarks
-
-```sh
-sh bench/make-media.sh                  # 5 s of 1080p30 per codec -> bench/media/
-node bench/run.mjs                      # native FFmpeg, native VLC, libvlc-wasm, ffmpeg.wasm -> bench/results/
-node bench/chart.mjs                    # bench/results/chart.png (also copied to the site)
-node bench/compare/vlcjs.mjs            # the other web VLC ports (krowemoh.mjs, jbk.mjs, webvlc.mjs; --engine=)
-sh bench/wasi/setup-tools.sh && node bench/wasi/run.mjs   # WASI runtimes
-```
-
-Native columns need FFmpeg and VLC.app installed; `--threads=1,4`, `--only=h264` and
-`--skip=native,ffmpegwasm` narrow a run.
-
-## Publishing
-
-`packages/core` and `packages/sout` publish to npm as `libvlc-wasm` and `libvlc-wasm-sout`
-(same version; `libvlc-wasm-sout` peers on `libvlc-wasm`). CI builds, tests and publishes on a
-`v*` tag with provenance (`.github/workflows/build.yml`). By hand: `pnpm publish` in each
-package, core first, or `npm stage publish` with a staging-only token.
 
 ## License
 
-Two parts (see [LICENSE](LICENSE)):
+A ton of the dependencies rely on the GPL. I love free software but also you should use this package however you want. **The code in this repository — the SDK, the patches, the build scripts, bridge, tests, benchmarks, player app — are all [licensed under MIT](LICENSE).**
 
-- **The code in this repository is MIT**: the SDK, types, the VLC modules and bridge in
-  `native/`, build scripts, tests, benchmarks and the player app.
-- **The compiled engine (`libvlc.wasm`) is GPL-2.0-or-later** ([COPYING](COPYING)). libvlc
-  itself is LGPL-2.1+, but the build links GPL modules and contribs (libdvdnav, libdvdread
-  and others), which makes the binary as a whole GPL. The patches in `build/patches` modify
-  VLC and stay under VLC's licenses.
-
-The npm packages carry both, as `"license": "MIT AND GPL-2.0-or-later"`. Noto Sans (bundled
-for subtitles) is OFL-1.1.
+The compiled engine / binary this ships, however, is based on libvlc which is LGPL-2.1+, and links to many GPL modules. As such, the whole binary is [GPL](COPYING).

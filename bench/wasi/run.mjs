@@ -346,54 +346,10 @@ const fpsRow = (label, get) => `| ${label} | ${clips.map((c) => { const v = get(
 const best = (variant) => results.filter((r) => r.variant === variant && r.runtime !== 'native' && r.geomean_slowdown)
   .sort((a, b) => a.geomean_slowdown - b.geomean_slowdown)[0];
 const bestBase = best('base');
-const md = `# WASI runtime benchmark: FFmpeg 9.0 video decode (1080p30, 5 s clips)
-
-Generated ${meta.date} on ${meta.host}. ${ITERS} iteration(s), median fps per cell.
-Slowdown = native fps / runtime fps, where native is **the same C code** (FFmpeg built with
-\`--disable-asm\`) compiled by clang -O3 for arm64. Lower is better; 1.00x = native.
-Single-threaded decode, video only. See README.md for methodology and caveats.
-
-## Baseline: plain wasm32-wasip1, no SIMD (the 00f.net chart's "plain" build)
-
-${table('base')}
-
-## Same, built with -msimd128 (compiler autovectorization only, no hand-written SIMD)
-
-${table('simd')}
-
-## Absolute fps (context)
-
-| Build | ${clips.map((c) => c.codec).join(' | ')} |
-|---|${clips.map(() => '---:').join('|')}|
-${fpsRow('native C, no asm (the 1.00x baseline)', (c) => nativeFps[c.short])}
-${fpsRow('Homebrew ffmpeg, NEON asm, -threads 1', (c) => brew[c.short])}
-${bestBase ? fpsRow(`best wasm, no SIMD (${bestBase.label})`, (c) => bestBase.clips[c.short].median_fps) : ''}
-
-Homebrew's numbers come from \`ffmpeg -threads 1 -benchmark -i clip -an -f null -\` and include
-demux + null muxing; they show what hand-written NEON buys over the C the wasm builds run.
-
-## AOT compile time (untimed in the tables above)
-
-| Runtime | no SIMD | SIMD |
-|---|---:|---:|
-${[...new Set(results.map((r) => r.runtime))].filter((id) => ['wavm', 'wamr', 'wasmedge', 'wasmer-llvm', 'wasmer', 'wasmtime'].includes(id)).map((id) => {
-  const c = (v) => meta.compileSeconds[`${id}/${v}`];
-  const f = (x) => (x == null ? 'n/a' : `${x.toFixed(1)} s`);
-  return `| ${results.find((r) => r.runtime === id).label} | ${f(c('base'))} | ${f(c('simd'))} |`;
-}).join('\n')}
-
-wasm2c is compiled by build.sh (wasm2c + clang), not here. Wazero, Node and Bun compile at
-instantiation, before decode.c starts its clock.
-
-## Versions
-
-${Object.entries(meta.versions).map(([k, v]) => `- **${k}**: ${v}`).join('\n')}
-`;
 
 if (WRITE) {
   writeFileSync(path.join(HERE, 'results.json'), JSON.stringify({ meta, clips, native_fps: nativeFps, homebrew_ffmpeg_fps: brew, results }, null, 2));
-  writeFileSync(path.join(HERE, 'RESULTS.md'), md);
-  console.log(`\nwrote ${path.join(HERE, 'results.json')} and RESULTS.md`);
+  console.log(`\nwrote ${path.join(HERE, 'results.json')} (the site's /benchmarks page renders it)`);
 } else {
   console.log('\n' + table('base') + (VARIANTS.includes('simd') ? '\n\n' + table('simd') : ''));
 }

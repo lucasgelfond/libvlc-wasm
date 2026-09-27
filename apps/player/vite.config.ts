@@ -66,6 +66,9 @@ export default defineConfig({
 				'../../corpus/compat/fate-summary.json',
 				'../../corpus/compat/fate-matrix.json',
 				'../../corpus/compat/suites',
+				'../../bench/results',
+				'../../bench/wasi/results.json',
+				'../../bench/compare',
 				'../../corpus/suites',
 				'../../corpus/plain-english.json',
 				'../../corpus/formats.json'

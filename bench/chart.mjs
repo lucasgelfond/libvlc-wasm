@@ -144,7 +144,7 @@ if (existsSync(fatePath)) {
 }
 out.push(text(PAD, y, 'VLC columns run the whole player (demux, decode, copy, WebGL upload) at 32x; FFmpeg columns decode only. Native VLC is forced to software decoding.', { size: 11, fill: MUTED }));
 y += 16;
-out.push(text(PAD, y, 'Sources: bench/run.mjs, bench/results/RESULTS.md, corpus/compat/build.mjs, tests/verify-corpus.mjs, corpus/compat/fate.mjs.', { size: 11, fill: MUTED }));
+out.push(text(PAD, y, 'Sources: bench/run.mjs, corpus/compat/build.mjs, tests/verify-corpus.mjs, corpus/compat/fate.mjs (JSON in the repository; the site renders them).', { size: 11, fill: MUTED }));
 y += PAD - 10;
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${y}" viewBox="0 0 ${W} ${y}" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
