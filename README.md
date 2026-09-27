@@ -59,6 +59,9 @@ a level meter, MIDI via FluidSynth with a SoundFont you supply.
 **Subtitles**: libass (ASS/SSA with styling), SRT/VTT/SUB/USF/TTML, VobSub, DVB, CEA-608,
 external files, delay and scale.
 **Without playing**: `probe()` (container, tracks, codecs, metadata) and `thumbnail()` (JPEG).
+**Converting** (the `sout` build, `createVLC({ variant: 'sout' })`, a 33 MB wasm instead of 26: 9.7 MB brotli instead of 7.9): `transcode()` to
+WebM/MP4/Ogg/TS/WAV/MP3, lossless `remux`, and `startRecording()` while playing. A 22 s
+RealVideo 4 file becomes a WebM every browser plays in ~6 s.
 **Inputs**: `File`/`Blob` (read on demand — never copied), bytes, http(s) URLs (range requests),
 multi-file groups, VLC MRLs. Also runs headless under Node for probing/thumbnails.
 **Decoding**: FFmpeg, dav1d, libvpx, mpg123, gme, libmodplug and VLC's own decoders in wasm;
@@ -66,8 +69,7 @@ multi-file groups, VLC MRLs. Also runs headless under Node for probing/thumbnail
 lossless fallback to software when it can't.
 
 Not available in a browser: raw sockets (RTSP/UDP multicast), optical drives, hardware
-passthrough of Dolby/DTS. Built but not enabled by default: VLC's stream output (transcoding,
-remuxing, recording) — see [build profiles](#build-profiles).
+passthrough of Dolby/DTS, and an H.264/HEVC *encoder* (x264/x265 do not build for wasm).
 
 ## Performance
 
@@ -94,7 +96,8 @@ Apple M5, Chrome 153, 1080p30 clips; full tables and method in
 - **vs transcoding**: showing the first frame of a RealVideo file takes libvlc-wasm **21 ms**;
   with ffmpeg.wasm you transcode first (0.2 s load + ~0.7 s for 10 s of video at ~20× real time,
   so minutes for a feature film).
-- **Size**: 24.7 MB wasm, 9.9 MB gzip, 7.6 MB brotli (ffmpeg.wasm-mt: 31.2 / 9.8 / 7.0 MB).
+- **Size**: 25.9 MB wasm, 10.3 MB gzip, 7.9 MB brotli; the `sout` build 33.4 / 12.6 / 9.7 MB
+  (ffmpeg.wasm-mt: 31.2 / 9.8 / 7.0 MB).
 - **WASI runtimes**: the same FFmpeg decoder C code in wasm on WAVM, WAMR, WasmEdge, wasm2c,
   Wasmer, Wasmtime, Wazero, Node and Bun vs native: [bench/wasi](bench/wasi/).
 
@@ -127,14 +130,17 @@ about 20 minutes on an M-series Mac, an hour on a CI runner; later builds are in
 ./build.sh              # toolchain image, VLC for wasm, link → packages/core/wasm/
 ./build.sh link         # relink only (seconds): after changing native/
 PROFILE=debug ./build.sh   # assertions and symbols
+VARIANT=sout ./build.sh    # the stream-output build (libvlc-sout.wasm), its own build tree
 VLC_COMMIT=<sha> ./build.sh   # try another VLC master commit
 pnpm install && node tests/node-smoke.mjs && node tests/features.mjs
 sh tests/make-fixtures.sh && node corpus/fetch.mjs && node tests/verify-corpus.mjs
 ```
 
-The three VLC patches (`build/patches/`) are small and upstreamable: a `jpeg` option declared only
+The four VLC patches (`build/patches/`) are small and upstreamable: a `jpeg` option declared only
 under `ENABLE_SOUT` (asserts in no-sout builds), native wasm exceptions for contribs (libmatroska
-throws during ordinary parsing), and a libass fallback font on emscripten.
+throws during ordinary parsing), a libass fallback font on emscripten, and a fix for an
+out-of-bounds index and use-after-free in the transcoder's PCR sync (`pcr_sync.c`), hidden by
+asserts in debug builds and a crash in about 1 transcode in 3 of RealMedia without it.
 
 ## Serving
 
@@ -146,7 +152,7 @@ Cross-Origin-Embedder-Policy: require-corp
 ```
 
 `examples/vanilla/serve.mjs` is a 60-line reference server. Serve `libvlc.wasm` compressed:
-25 MB raw, about 10 MB gzip / 7 MB brotli.
+26 MB raw, about 10 MB gzip / 8 MB brotli.
 
 ## License
 

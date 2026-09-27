@@ -32,7 +32,7 @@ Netlify/Cloudflare Pages: a `_headers` file. Anything cross-origin you load (med
 URLs, fonts) then needs CORS or `Cross-Origin-Resource-Policy`.
 
 Also serve `libvlc.wasm` with `Content-Type: application/wasm` so it compiles while
-it downloads, and compressed (it is ~25 MB raw, ~7 MB brotli).
+it downloads, and compressed (it is ~26 MB raw, ~8 MB brotli).
 
 ## API
 
@@ -95,8 +95,8 @@ phosphor, ivtc…), `setAdjust({ brightness, contrast, saturation, hue, gamma })
 
 ### Converting (the `sout` build)
 
-VLC's stream output — transcoding, remuxing, recording — adds ~7 MB of wasm, so it is a
-separate build: `createVLC({ variant: 'sout' })`. `vlc.features.sout` says which you have.
+VLC's stream output — transcoding, remuxing, recording — makes the wasm 33 MB instead of 26
+(9.7 MB brotli instead of 7.9), so it is a separate build, loaded instead of the default one: `createVLC({ variant: 'sout' })`. `vlc.features.sout` says which you have.
 
 ```js
 const vlc = await createVLC({ variant: 'sout' });

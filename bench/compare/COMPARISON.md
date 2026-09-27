@@ -43,6 +43,7 @@ and its A/V and color handling come from 2022-era patches that were never upstre
 | A/V sync | VLC clock driven by the worklet's real play position | VideoLabs' emworklet aout | browser |
 | Subtitles | libass + bundled font, SRT/VTT/VobSub/DVB/608, external files | no libass in the binary | WebVTT via `<track>` |
 | Headless probe / thumbnails | yes (browser and Node) | no | no |
+| Transcode / remux / record | yes, optional `sout` build (VP8/Opus WebM, MP4, Ogg, MP3…) | no | no |
 | API | typed `createVLC`/`Player`, `<vlc-player>`, events, ~60 operations | demo-internal wrapper | React component |
 | Runs in Safari / Firefox | yes (tested WebKit, Firefox) | untested upstream; needs COEP credentialless | yes |
 
