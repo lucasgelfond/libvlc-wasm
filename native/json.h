@@ -1,22 +1,35 @@
+/*****************************************************************************
+ * json.h: a minimal JSON writer
+ *****************************************************************************
+ * Copyright (C) 2026 Lucas Gelfond
+ *
+ * SPDX-License-Identifier: MIT
+ * See LICENSE at the root of the libvlc-wasm repository. Linked into VLC,
+ * which is (L)GPL, the resulting binary is distributed under the GPL.
+ *****************************************************************************/
+
 /* A tiny append-only JSON writer: enough for track lists and metadata. */
 #ifndef WV_JSON_H
 #define WV_JSON_H
 
+#include <math.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct { char *buf; size_t len, cap; bool comma; } json_t;
+/* failed: an allocation failed; json_take() then returns "null" rather than
+ * a truncated document JSON.parse would throw on. */
+typedef struct { char *buf; size_t len, cap; bool comma, failed; } json_t;
 
 static void json_raw(json_t *j, const char *s, size_t n)
 {
     if (j->len + n + 1 > j->cap) {
         size_t cap = j->cap ? j->cap : 256;
         while (cap < j->len + n + 1) cap *= 2;
-        char *b = realloc(j->buf, cap);
-        if (!b) return;
+        char *b = j->failed ? NULL : realloc(j->buf, cap);
+        if (!b) { j->failed = true; return; }
         j->buf = b; j->cap = cap;
     }
     memcpy(j->buf + j->len, s, n);
@@ -58,7 +71,10 @@ static void json_knum(json_t *j, const char *k, double v)
 {
     char b[40];
     json_key(j, k);
-    snprintf(b, sizeof b, "%.17g", v);
+    if (isfinite(v))
+        snprintf(b, sizeof b, "%.17g", v);
+    else
+        strcpy(b, "null"); /* JSON has no NaN or Infinity */
     json_s(j, b);
     j->comma = true;
 }
@@ -68,6 +84,15 @@ static void json_kobj(json_t *j, const char *k) { json_key(j, k); json_s(j, "{")
 static void json_karr(json_t *j, const char *k) { json_key(j, k); json_s(j, "["); j->comma = false; }
 
 /* Returns the buffer (caller frees); never NULL. */
-static char *json_take(json_t *j) { char *b = j->buf; if (!b) b = strdup(""); j->buf = NULL; return b; }
+static char *json_take(json_t *j)
+{
+    char *b = j->buf;
+    j->buf = NULL;
+    if (j->failed || b == NULL) {
+        free(b);
+        b = strdup("null");
+    }
+    return b;
+}
 
 #endif

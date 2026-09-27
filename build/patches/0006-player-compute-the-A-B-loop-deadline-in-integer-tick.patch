@@ -1,5 +1,7 @@
-From: libvlc-wasm <noreply@libvlc-wasm>
-Subject: [PATCH] player: A-B loop deadline: integer ticks, divide by the rate
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 06/12] player: compute the A-B loop deadline in integer ticks
 
 vlc_player_GetAtoBLoopDeadline() returned `now + (b_time - ts) * rate` with a
 float rate, so the whole sum was computed in float. A float's step at 2^50 is
@@ -11,9 +13,14 @@ to A continuously -- or late. Clocks counting from boot hide it at ms scale.
 It also multiplied the remaining media time by the rate where it must divide
 (at 2x the loop fired late, at 0.5x early).
 ---
+ src/player/player.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/player/player.c b/src/player/player.c
+index 1200603..fd8d4ea 100644
 --- a/src/player/player.c
 +++ b/src/player/player.c
-@@ -213,7 +213,10 @@
+@@ -213,7 +213,10 @@ vlc_player_GetAtoBLoopDeadline(vlc_player_t *player)
              return VLC_TICK_MIN;
          b_time = input->abloop_state[1].pos * input->length;
      }

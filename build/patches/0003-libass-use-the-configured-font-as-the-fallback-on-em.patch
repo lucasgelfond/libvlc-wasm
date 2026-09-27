@@ -1,3 +1,16 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 03/12] libass: use the configured font as the fallback on
+ emscripten
+
+A browser has no font provider, so libass can only use the fonts it was given.
+Make the configured default font its fallback, or no style naming an
+unavailable family (almost all of them) renders.
+---
+ modules/codec/libass.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
 index f88e134..5f7007c 100644
 --- a/modules/codec/libass.c

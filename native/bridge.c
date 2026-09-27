@@ -1,3 +1,13 @@
+/*****************************************************************************
+ * bridge.c: the libvlc API as called from JavaScript
+ *****************************************************************************
+ * Copyright (C) 2026 Lucas Gelfond
+ *
+ * SPDX-License-Identifier: MIT
+ * See LICENSE at the root of the libvlc-wasm repository. Linked into VLC,
+ * which is (L)GPL, the resulting binary is distributed under the GPL.
+ *****************************************************************************/
+
 /*
  * The C side of libvlc-wasm: every libvlc call the JavaScript API makes lands
  * here.
@@ -14,6 +24,10 @@
  * VLC's own threads report events the same way, with MAIN_THREAD_ASYNC_EM_ASM,
  * which never blocks the caller.
  */
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <emscripten.h>
 #include <emscripten/threading.h>
 #include <pthread.h>
@@ -26,9 +40,6 @@
 #include <vlc/vlc.h>
 
 /* VLC's internal variable API: see api_player_new (selecting our vout). */
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 #include <vlc_common.h>
 #include <vlc_variables.h>
 #include <vlc_window.h>
@@ -59,6 +70,7 @@ static pthread_cond_t queue_wait = PTHREAD_COND_INITIALIZER;
 static wv_call_t *queue_head, *queue_tail;
 static pthread_t control_thread;
 static atomic_bool control_started;
+#define CONTROL_STACK (1 << 20) /* libvlc calls nest deeply (open, parse) */
 
 static void complete(wv_call_t *c)
 {
@@ -353,6 +365,7 @@ static void api_instance_new(wv_call_t *c)
         argv[argc++] = a;
 
     wv_instance_t *wi = calloc(1, sizeof *wi);
+    if (!wi) { c->ret_i = 0; return; }
     atomic_store(&wi->log_level, 3); /* warnings and errors */
     wi->vlc = libvlc_new(argc, argv);
     if (!wi->vlc) { free(wi); c->ret_i = 0; return; }
@@ -370,6 +383,7 @@ static void api_player_new(wv_call_t *c)
 {
     wv_instance_t *wi = (wv_instance_t *)(intptr_t)c->i[0];
     wv_player_t *p = calloc(1, sizeof *p);
+    if (!p) { c->ret_i = 0; return; }
     p->id = c->i[1];
     p->inst = wi;
     atomic_store(&p->video.front, -1);
@@ -381,6 +395,7 @@ static void api_player_new(wv_call_t *c)
     r->channels = c->i[3] == 1 ? 1 : 2;
     r->capacity = c->i[4] > 0 ? c->i[4] : r->rate / 2;
     r->data = calloc((size_t)r->capacity * r->channels, sizeof(float));
+    if (!r->data) { free(p); c->ret_i = 0; return; }
     atomic_store(&r->volume_milli, 1000);
 
     p->mp = libvlc_media_player_new(wi->vlc, &player_cbs, p);
@@ -396,6 +411,7 @@ static void api_player_new(wv_call_t *c)
     /* ...and its window is ours too (native/webwindow.c), so the page's mouse
      * reaches VLC: DVD menus are clickable. */
     vlc_mutex_init(&p->window.lock);
+    vlc_cond_init(&p->window.idle);
     var_Create(obj, "webwindow-data", VLC_VAR_ADDRESS);
     var_SetAddress(obj, "webwindow-data", &p->window);
     var_Create(obj, "window", VLC_VAR_STRING);
@@ -548,7 +564,6 @@ static void api_media_info(wv_call_t *c)
     libvlc_media_release(m);
 }
 
-static libvlc_equalizer_t *current_eq;
 /* i1 preset index, -1 = off; d0 preamp dB if i2 */
 static void api_set_equalizer(wv_call_t *c)
 {
@@ -557,8 +572,8 @@ static void api_set_equalizer(wv_call_t *c)
     if (!eq) { c->ret_i = -1; return; }
     if (c->i[2]) libvlc_audio_equalizer_set_preamp(eq, (float)c->d[0]);
     c->ret_i = libvlc_media_player_set_equalizer(MP, eq);
-    if (current_eq) libvlc_audio_equalizer_release(current_eq);
-    current_eq = eq;
+    /* The player copies the settings and keeps no reference. */
+    libvlc_audio_equalizer_release(eq);
 }
 
 static void api_equalizer_presets(wv_call_t *c)
@@ -624,18 +639,39 @@ static void api_navigate(wv_call_t *c) { libvlc_media_player_navigate(MP, (unsig
 static void api_mouse(wv_call_t *c)
 {
     wv_window_t *w = &P->window;
-    vlc_mutex_lock(&w->lock);
     c->ret_i = -1;
-    if (w->wnd != NULL && w->width && w->height) {
-        int x = (int)(c->d[0] * w->width), y = (int)(c->d[1] * w->height);
-        switch (c->i[1]) {
-        case 0: vlc_window_ReportMouseMoved(w->wnd, x, y); break;
-        case 1: vlc_window_ReportMouseMoved(w->wnd, x, y);
-                vlc_window_ReportMousePressed(w->wnd, MOUSE_BUTTON_LEFT); break;
-        case 2: vlc_window_ReportMouseReleased(w->wnd, MOUSE_BUTTON_LEFT); break;
-        }
-        c->ret_i = 0;
+    /* Report outside the lock: a report runs vout filters and variable
+     * callbacks, and the window's disable/destroy callbacks take w->lock
+     * while the vout holds its own locks. `reporting` keeps the window alive
+     * meanwhile (webwindow.c Destroy waits for it). */
+    vlc_mutex_lock(&w->lock);
+    vlc_window_t *wnd = w->wnd;
+    unsigned width = w->width, height = w->height;
+    if (wnd == NULL || width == 0 || height == 0) {
+        vlc_mutex_unlock(&w->lock);
+        return;
     }
+    w->reporting++;
+    vlc_mutex_unlock(&w->lock);
+
+    int x = (int)(c->d[0] * width), y = (int)(c->d[1] * height);
+    switch (c->i[1]) {
+    case 0:
+        vlc_window_ReportMouseMoved(wnd, x, y);
+        break;
+    case 1:
+        vlc_window_ReportMouseMoved(wnd, x, y);
+        vlc_window_ReportMousePressed(wnd, MOUSE_BUTTON_LEFT);
+        break;
+    case 2:
+        vlc_window_ReportMouseReleased(wnd, MOUSE_BUTTON_LEFT);
+        break;
+    }
+    c->ret_i = 0;
+
+    vlc_mutex_lock(&w->lock);
+    if (--w->reporting == 0)
+        vlc_cond_broadcast(&w->idle);
     vlc_mutex_unlock(&w->lock);
 }
 static void api_set_teletext(wv_call_t *c)
@@ -701,14 +737,16 @@ static const struct libvlc_parser_cbs parse_cbs = { .version = 0, .on_parsed = p
 static void api_parse(wv_call_t *c)
 {
     wv_instance_t *wi = (wv_instance_t *)(intptr_t)c->i[0];
-    libvlc_media_t *m = libvlc_media_new_location(c->s[0]);
+    libvlc_parser_t *parser = get_parser(wi);
+    libvlc_media_t *m = parser ? libvlc_media_new_location(c->s[0]) : NULL;
+    if (!m) { c->ret_i = -1; return; }
     libvlc_parser_request_t req = {
         .version = 0, .media = m,
         /* No libvlc_media_fetch_local: this build has no art finder
          * modules, so the fetch step only added latency to every probe. */
         .parse_flags = libvlc_media_parse,
     };
-    libvlc_parser_task *task = libvlc_parser_task_new_parse(get_parser(wi), &req, &parse_cbs, c);
+    libvlc_parser_task *task = libvlc_parser_task_new_parse(parser, &req, &parse_cbs, c);
     libvlc_media_release(m);
     if (!task || libvlc_parser_submit(wi->parser, task) != 0) {
         if (task) libvlc_parser_task_release(task);
@@ -726,9 +764,11 @@ static void thumb_done(void *opaque, libvlc_parser_task *task, libvlc_picture_t 
         size_t size = 0;
         const unsigned char *buf = libvlc_picture_get_buffer(pic, &size);
         c->ret_s = malloc(size);
-        memcpy(c->ret_s, buf, size);
-        c->ret_i = (int32_t)size;
-        c->ret_d = libvlc_picture_get_width(pic) * 65536.0 + libvlc_picture_get_height(pic);
+        if (c->ret_s) {
+            memcpy(c->ret_s, buf, size);
+            c->ret_i = (int32_t)size;
+            c->ret_d = libvlc_picture_get_width(pic) * 65536.0 + libvlc_picture_get_height(pic);
+        }
     }
     libvlc_parser_task_release(task);
     complete(c);
@@ -740,7 +780,9 @@ static const struct libvlc_thumbnailer_cbs thumb_cbs = { .version = 0, .on_ended
 static void api_thumbnail(wv_call_t *c)
 {
     wv_instance_t *wi = (wv_instance_t *)(intptr_t)c->i[0];
-    libvlc_media_t *m = libvlc_media_new_location(c->s[0]);
+    libvlc_parser_t *parser = get_parser(wi);
+    libvlc_media_t *m = parser ? libvlc_media_new_location(c->s[0]) : NULL;
+    if (!m) { c->ret_i = -1; return; }
     libvlc_thumbnailer_request_t req = {
         .version = 0, .media = m,
         .width = (unsigned)c->i[1], .height = (unsigned)c->i[2], .crop = c->i[3],
@@ -754,7 +796,7 @@ static void api_thumbnail(wv_call_t *c)
         req.seek.value.pos = c->d[1];
     }
     req.seek.speed = c->i[4] ? libvlc_media_thumbnail_seek_fast : libvlc_media_thumbnail_seek_precise;
-    libvlc_parser_task *task = libvlc_parser_task_new_thumbnail(get_parser(wi), &req, &thumb_cbs, c);
+    libvlc_parser_task *task = libvlc_parser_task_new_thumbnail(parser, &req, &thumb_cbs, c);
     libvlc_media_release(m);
     if (!task || libvlc_parser_submit(wi->parser, task) != 0) {
         if (task) libvlc_parser_task_release(task);
@@ -827,6 +869,8 @@ EMSCRIPTEN_KEEPALIVE int wv_call_layout(int field)
         offsetof(wv_player_t, ring), offsetof(wv_player_t, video),
         offsetof(wv_ring_t, data),
     };
+    if (field < 0 || (size_t)field >= ARRAY_SIZE(offsets))
+        return -1;
     return offsets[field];
 }
 
@@ -835,9 +879,17 @@ EMSCRIPTEN_KEEPALIVE void wv_submit(wv_call_t *c)
     if (!atomic_exchange(&control_started, true)) {
         pthread_attr_t attr;
         pthread_attr_init(&attr);
-        pthread_attr_setstacksize(&attr, 1 << 20);
-        pthread_create(&control_thread, &attr, control_main, NULL);
+        pthread_attr_setstacksize(&attr, CONTROL_STACK);
+        int err = pthread_create(&control_thread, &attr, control_main, NULL);
         pthread_attr_destroy(&attr);
+        if (err != 0) {
+            /* Answer now rather than queue a call nothing will ever run; the
+             * next call tries again. */
+            atomic_store(&control_started, false);
+            c->ret_i = -1;
+            complete(c);
+            return;
+        }
     }
     c->next = NULL;
     pthread_mutex_lock(&queue_lock);

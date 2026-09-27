@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 12/12] contrib: x264: build for emscripten
+
+x264's configure stops on an unknown system. Treat emscripten as Linux and
+build without assembly, which targets x86/ARM only.
+---
+ contrib/src/x264/rules.mak             |  5 +++++
+ contrib/src/x264/x264-emscripten.patch | 12 ++++++++++++
+ 2 files changed, 17 insertions(+)
+ create mode 100644 contrib/src/x264/x264-emscripten.patch
+
+diff --git a/contrib/src/x264/rules.mak b/contrib/src/x264/rules.mak
+index de45c15..8137319 100644
+--- a/contrib/src/x264/rules.mak
++++ b/contrib/src/x264/rules.mak
+@@ -47,6 +47,10 @@ endif
+ endif
+ endif
+ 
++ifdef HAVE_EMSCRIPTEN
++X264CONF += --disable-asm
++endif
++
+ ifneq ($(filter arm aarch64, $(ARCH)),)
+ ifndef HAVE_WIN32
+ X264_ASM_USES_CC:=1
+@@ -72,6 +76,7 @@ x264 x26410b: %: x264-$(X264_VERSION).tar.xz .sum-%
+ 	$(call update_autoconfig,.)
+ 	$(APPLY) $(SRC)/x264/x264-winstore.patch
+ 	$(APPLY) $(SRC)/x264/0001-osdep-use-direct-path-to-internal-x264.h.patch
++	$(APPLY) $(SRC)/x264/x264-emscripten.patch
+ 	$(MOVE)
+ 
+ .x264: x264
+diff --git a/contrib/src/x264/x264-emscripten.patch b/contrib/src/x264/x264-emscripten.patch
+new file mode 100644
+index 0000000..90829b8
+--- /dev/null
++++ b/contrib/src/x264/x264-emscripten.patch
+@@ -0,0 +1,12 @@
++--- x264/configure.orig
+++++ x264/configure
++@@ -736,6 +736,9 @@ case $host_os in
++     *haiku*)
++         SYS="HAIKU"
++         ;;
+++    *emscripten*)
+++        SYS="LINUX"
+++        ;;
++     *)
++         die "Unknown system $host, edit the configure"
++         ;;

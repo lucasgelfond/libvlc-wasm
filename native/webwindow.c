@@ -1,3 +1,13 @@
+/*****************************************************************************
+ * webwindow.c: vout window carrying a web page's pointer input
+ *****************************************************************************
+ * Copyright (C) 2026 Lucas Gelfond
+ *
+ * SPDX-License-Identifier: MIT
+ * See LICENSE at the root of the libvlc-wasm repository. Linked into VLC,
+ * which is (L)GPL, the resulting binary is distributed under the GPL.
+ *****************************************************************************/
+
 /*
  * webwindow: the "window" a webframe video output draws into.
  *
@@ -53,11 +63,26 @@ static void Disable(vlc_window_t *wnd)
     vlc_mutex_unlock(&w->lock);
 }
 
+/* The bridge reports mouse events without holding w->lock (the report runs
+ * vout filters and variable callbacks), so the window must not go away under
+ * one: wait for any in progress. A disabled window is still valid, so only
+ * destroy waits. */
+static void Destroy(vlc_window_t *wnd)
+{
+    wv_window_t *w = wnd->sys;
+    vlc_mutex_lock(&w->lock);
+    if (w->wnd == wnd)
+        w->wnd = NULL;
+    while (w->reporting > 0)
+        vlc_cond_wait(&w->idle, &w->lock);
+    vlc_mutex_unlock(&w->lock);
+}
+
 static const struct vlc_window_operations ops = {
     .enable = Enable,
     .disable = Disable,
     .resize = Resize,
-    .destroy = Disable,
+    .destroy = Destroy,
 };
 
 static int Open(vlc_window_t *wnd)
@@ -66,14 +91,17 @@ static int Open(vlc_window_t *wnd)
     if (w == NULL)
         return VLC_EGENERIC;
     wnd->type = VLC_WINDOW_TYPE_DUMMY;
+    /* The page never reports double clicks, and VLC must not synthesise any:
+     * its double click toggles fullscreen, which has no meaning here. */
+    wnd->info.has_double_click = true;
     wnd->sys = w;
     wnd->ops = &ops;
     return VLC_SUCCESS;
 }
 
 vlc_module_begin()
-    set_shortname("WebWindow")
-    set_description("Pointer input from a web page's canvas")
+    set_shortname(N_("WebWindow"))
+    set_description(N_("Pointer input from a web page's canvas"))
     set_subcategory(SUBCAT_VIDEO_VOUT)
     set_capability("vout window", 0)
     set_callback(Open)

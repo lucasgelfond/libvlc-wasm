@@ -1,5 +1,8 @@
-From: libvlc-wasm <noreply@libvlc-wasm>
-Subject: [PATCH] transcode: pcr_sync: fix out-of-bounds and use-after-free
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 04/12] transcode: pcr_sync: fix an out-of-bounds read and a
+ use-after-free
 
 Two bugs that only the (release-disabled) asserts would catch, both hit when
 an ES starts after PCR events are queued -- RealMedia's audio, say:
@@ -15,9 +18,14 @@ an ES starts after PCR events are queued -- RealMedia's audio, say:
 In a wasm build (no asserts, no MMU) this was an out-of-bounds trap in about
 1 transcode in 3 of a RealVideo 4 + Cook file.
 ---
+ modules/stream_out/transcode/pcr_sync.c | 45 ++++++++++++++++++-------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
+
+diff --git a/modules/stream_out/transcode/pcr_sync.c b/modules/stream_out/transcode/pcr_sync.c
+index 2553a39..3873fac 100644
 --- a/modules/stream_out/transcode/pcr_sync.c
 +++ b/modules/stream_out/transcode/pcr_sync.c
-@@ -157,19 +157,23 @@
+@@ -157,19 +157,23 @@ static int pcr_sync_SignalPCRLocked(vlc_pcr_sync_t *pcr_sync, vlc_tick_t pcr)
          return VLC_ENOMEM;
      }
  
@@ -49,7 +57,7 @@ In a wasm build (no asserts, no MMU) this was an out-of-bounds trap in about
      }
  
      event->pcr = pcr;
-@@ -250,6 +254,17 @@
+@@ -250,6 +254,17 @@ void vlc_pcr_sync_DelESID(vlc_pcr_sync_t *pcr_sync, unsigned int id)
  #define pcr_event_NextEntry(head, entry)                                                           \
      vlc_list_next_entry_or_null(head, entry, pcr_event_t, node)
  
@@ -67,7 +75,7 @@ In a wasm build (no asserts, no MMU) this was an out-of-bounds trap in about
  vlc_tick_t
  vlc_pcr_sync_SignalFrameOutput(vlc_pcr_sync_t *pcr_sync, unsigned int id, const vlc_frame_t *frame)
  {
-@@ -265,14 +280,19 @@
+@@ -265,14 +280,19 @@ vlc_pcr_sync_SignalFrameOutput(vlc_pcr_sync_t *pcr_sync, unsigned int id, const
      if (pcr_event == NULL)
          goto no_pcr;
  
@@ -90,7 +98,7 @@ In a wasm build (no asserts, no MMU) this was an out-of-bounds trap in about
      }
  
      assert(pcr_event->entries_left != 0);
-@@ -294,8 +314,7 @@
+@@ -294,8 +314,7 @@ vlc_pcr_sync_SignalFrameOutput(vlc_pcr_sync_t *pcr_sync, unsigned int id, const
          goto no_pcr;
  
  return_pcr:

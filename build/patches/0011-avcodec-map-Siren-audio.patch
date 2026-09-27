@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 11/12] avcodec: map Siren audio
+
+FFmpeg decodes Siren, but without a mapping Vivo 2 audio tracks came out as
+'undf' and played nothing.
+---
+ modules/codec/avcodec/fourcc.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/modules/codec/avcodec/fourcc.c b/modules/codec/avcodec/fourcc.c
+index ab38a67..60f06fc 100644
+--- a/modules/codec/avcodec/fourcc.c
++++ b/modules/codec/avcodec/fourcc.c
+@@ -490,6 +490,9 @@ static const struct vlc_avcodec_fourcc audio_codecs[] =
+     /* AV_CODEC_ID_QDMC */
+     /* AV_CODEC_ID_CELT */
+     { VLC_CODEC_G723_1, AV_CODEC_ID_G723_1 },
++#if LIBAVCODEC_VERSION_CHECK(60, 3, 100) /* FFmpeg 6.0 has the Siren decoder */
++    { VLC_CODEC_SIREN, AV_CODEC_ID_SIREN },
++#endif
+     /* AV_CODEC_ID_G729 */
+     /* AV_CODEC_ID_8SVX_EXP */
+     /* AV_CODEC_ID_8SVX_FIB */

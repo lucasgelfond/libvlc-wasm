@@ -1,3 +1,13 @@
+/*****************************************************************************
+ * webcodecs.c: video decoder backed by the browser's WebCodecs
+ *****************************************************************************
+ * Copyright (C) 2026 Lucas Gelfond
+ *
+ * SPDX-License-Identifier: MIT
+ * See LICENSE at the root of the libvlc-wasm repository. Linked into VLC,
+ * which is (L)GPL, the resulting binary is distributed under the GPL.
+ *****************************************************************************/
+
 /*
  * webcodecs: a VLC video decoder backed by the browser's WebCodecs
  * VideoDecoder, i.e. the platform's (usually hardware) H.264/HEVC/VP9/AV1
@@ -29,6 +39,8 @@
 #include <vlc_codec.h>
 #include <vlc_picture.h>
 
+#include "shared.h"
+
 #define MAX_QUEUED   16   /* decoded frames waiting for the decoder thread */
 #define MAX_INFLIGHT 6    /* packets submitted but not yet decoded */
 
@@ -39,7 +51,7 @@ typedef struct
     unsigned width, height, planes;
     unsigned offset[4], stride[4];
     int64_t ts;
-    int colour; /* bit 0 known, bit 1 full range, bits 4-7 matrix (1 BT.601, 2 BT.709, 3 BT.2020) */
+    int colour; /* WV_COLOUR_* bits */
 } wc_frame_t;
 
 typedef struct
@@ -56,6 +68,7 @@ typedef struct
     bool        need_key;
     bool        verified;  /* the browser has decoded a first frame */
     uint8_t    *xps;       /* Annex B parameter sets for key frames (H.264/HEVC) */
+    uint8_t    *description; /* avcC/hvcC, read by JS in open() */
     unsigned    nal_length; /* NAL length-prefix size (avcC/hvcC), 0 for Annex B */
     size_t      xps_size;
     char       *codec;
@@ -74,19 +87,31 @@ EMSCRIPTEN_KEEPALIVE void wv_wc_opened(decoder_sys_t *sys, int ok)
     vlc_mutex_unlock(&sys->lock);
 }
 
-/* format: 0 I420, 1 NV12, 2 I420P10, 3 I422, 4 I444, 5 RGBX, 6 BGRX */
+/* A decoded frame, copied into data (malloc'd by JS, ours now). format is an
+ * enum wv_layout; colour is WV_COLOUR_* bits (WV_COLOUR_KNOWN if the frame
+ * described itself). */
 EMSCRIPTEN_KEEPALIVE void wv_wc_push(decoder_sys_t *sys, uint32_t gen, uint8_t *data,
                                      int format, unsigned w, unsigned h, double ts,
                                      unsigned o0, unsigned s0, unsigned o1, unsigned s1,
                                      unsigned o2, unsigned s2, int colour)
 {
-    static const vlc_fourcc_t chroma[] = {
-        VLC_CODEC_I420, VLC_CODEC_NV12, VLC_CODEC_I420_10L, VLC_CODEC_I422,
-        VLC_CODEC_I444, VLC_CODEC_RGBX, VLC_CODEC_BGRX,
+    static const vlc_fourcc_t chroma[WV_LAYOUT_COUNT] = {
+        [WV_LAYOUT_I420] = VLC_CODEC_I420,
+        [WV_LAYOUT_I422] = VLC_CODEC_I422,
+        [WV_LAYOUT_I444] = VLC_CODEC_I444,
+        [WV_LAYOUT_NV12] = VLC_CODEC_NV12,
+        [WV_LAYOUT_I420_10] = VLC_CODEC_I420_10L,
+        [WV_LAYOUT_RGBX] = VLC_CODEC_RGBX,
+        [WV_LAYOUT_BGRX] = VLC_CODEC_BGRX,
     };
-    static const unsigned planes[] = { 3, 2, 3, 3, 3, 1, 1 };
+    static const unsigned planes[WV_LAYOUT_COUNT] = {
+        [WV_LAYOUT_I420] = 3, [WV_LAYOUT_I422] = 3, [WV_LAYOUT_I444] = 3,
+        [WV_LAYOUT_NV12] = 2, [WV_LAYOUT_I420_10] = 3,
+        [WV_LAYOUT_RGBX] = 1, [WV_LAYOUT_BGRX] = 1,
+    };
     vlc_mutex_lock(&sys->lock);
-    if (gen != sys->gen || sys->queued == MAX_QUEUED || format < 0 || format > 6) {
+    if (gen != sys->gen || sys->queued == MAX_QUEUED ||
+        format < 0 || format >= WV_LAYOUT_COUNT) {
         vlc_mutex_unlock(&sys->lock);
         free(data);
         return;
@@ -133,12 +158,13 @@ static void output_frame(decoder_t *dec, wc_frame_t *f)
         /* The browser's decoder knows the frame's colour description (a
          * hardware decoder may even hand back full range from a limited
          * stream); trust it over the container's. */
-        if (f->colour & 1) {
-            v->color_range = (f->colour & 2) ? COLOR_RANGE_FULL : COLOR_RANGE_LIMITED;
-            switch ((f->colour >> 4) & 0xf) {
-            case 1: v->space = COLOR_SPACE_BT601; break;
-            case 2: v->space = COLOR_SPACE_BT709; break;
-            case 3: v->space = COLOR_SPACE_BT2020; break;
+        if (f->colour & WV_COLOUR_KNOWN) {
+            v->color_range = (f->colour & WV_COLOUR_FULL_RANGE) ? COLOR_RANGE_FULL
+                                                                : COLOR_RANGE_LIMITED;
+            switch ((f->colour >> WV_COLOUR_MATRIX_SHIFT) & 0xf) {
+            case WV_MATRIX_BT601:  v->space = COLOR_SPACE_BT601; break;
+            case WV_MATRIX_BT709:  v->space = COLOR_SPACE_BT709; break;
+            case WV_MATRIX_BT2020: v->space = COLOR_SPACE_BT2020; break;
             default: break;
             }
         }
@@ -272,11 +298,16 @@ static int Decode(decoder_t *dec, block_t *block)
             if (vlc_cond_timedwait(&sys->wait, &sys->lock, deadline))
                 break;
         vlc_mutex_unlock(&sys->lock);
+        /* VideoDecoder.flush() leaves it expecting a key frame. */
+        sys->need_key = true;
         output_ready(dec);
         return VLCDEC_SUCCESS;
     }
 
-    if (sys->failed) {
+    vlc_mutex_lock(&sys->lock);
+    bool failed = sys->failed;
+    vlc_mutex_unlock(&sys->lock);
+    if (failed) {
         /* Hand the stream to the next decoder (avcodec, dav1d): mark this
          * ES so Open refuses it, and leave the block untouched for it. */
         msg_Warn(dec, "WebCodecs failed on %s, falling back", sys->codec);
@@ -361,7 +392,10 @@ static int Decode(decoder_t *dec, block_t *block)
     vlc_mutex_unlock(&sys->lock);
 
     output_ready(dec);
-    return sys->failed ? VLCDEC_ECRITICAL : VLCDEC_SUCCESS;
+    /* A failure seen here is handled on the next call, which hands that
+     * block to the next decoder (VLCDEC_RELOAD); VLCDEC_ECRITICAL would stop
+     * video altogether. */
+    return VLCDEC_SUCCESS;
 }
 
 static void Flush(decoder_t *dec)
@@ -442,8 +476,14 @@ static int Open(vlc_object_t *obj)
     if ((in->i_codec == VLC_CODEC_H264 || in->i_codec == VLC_CODEC_HEVC) && in->i_extra > 4) {
         const uint8_t *e = in->p_extra;
         if (e[0] == 1) {
-            description = e;
-            description_size = in->i_extra;
+            /* A copy: JS reads it asynchronously, after Open may have
+             * returned and fmt_in gone. */
+            sys->description = malloc(in->i_extra);
+            if (sys->description != NULL) {
+                memcpy(sys->description, e, in->i_extra);
+                description = sys->description;
+                description_size = in->i_extra;
+            }
             if (in->i_codec == VLC_CODEC_H264)
                 sys->nal_length = (e[4] & 3) + 1;
             else if (in->i_extra > 21)
@@ -468,12 +508,8 @@ static int Open(vlc_object_t *obj)
     vlc_mutex_unlock(&sys->lock);
     if (result != 1) {
         msg_Dbg(dec, "WebCodecs cannot decode %s here", codec);
-        free(codec);
-        free(sys->xps);
-        /* If JS never answered it may still call back: let it free sys. */
-        MAIN_THREAD_ASYNC_EM_ASM({ Module["wvWc"].close($0, $1); }, sys, result == 0);
-        if (result != 0)
-            free(sys);
+        /* JS may not have answered yet: it frees sys when it is done. */
+        MAIN_THREAD_ASYNC_EM_ASM({ Module["wvWc"].close($0); }, sys);
         return VLC_EGENERIC;
     }
     msg_Dbg(dec, "decoding %s with WebCodecs", codec);
@@ -495,25 +531,33 @@ static void Close(vlc_object_t *obj)
         free(sys->queue[k].data);
     sys->queued = 0;
     vlc_mutex_unlock(&sys->lock);
-    /* The JS side keeps its record until close() runs there, and wv_wc_push
-     * checks the generation, so sys must outlive any callback in flight: it is
-     * freed by JS once the VideoDecoder is closed. */
-    MAIN_THREAD_ASYNC_EM_ASM({ Module["wvWc"].close($0, true); }, sys);
-    free(sys->codec);
-    free(sys->xps);
+    /* wv_wc_push checks the generation, and JS frees sys (wv_wc_free) once
+     * nothing it has in flight can call back into it. */
+    MAIN_THREAD_ASYNC_EM_ASM({ Module["wvWc"].close($0); }, sys);
 }
 
+/* The only place sys is freed: JS calls it once close() has run there and
+ * every call it had in flight (open, verify, drain, frame copies) has settled,
+ * so no callback can reach sys afterwards -- even when C gave up waiting. */
 EMSCRIPTEN_KEEPALIVE void wv_wc_free(decoder_sys_t *sys)
 {
+    for (unsigned k = 0; k < sys->queued; k++)
+        free(sys->queue[k].data);
+    free(sys->codec);
+    free(sys->xps);
+    free(sys->description);
     free(sys);
 }
 
+#define WEBCODECS_TEXT N_("Use WebCodecs")
+#define WEBCODECS_LONGTEXT N_("Decode H.264, HEVC, VP9 and AV1 with the " \
+    "browser's decoders when it can.")
+
 vlc_module_begin()
-    set_shortname("WebCodecs")
-    set_description("WebCodecs (browser / hardware) video decoder")
+    set_shortname(N_("WebCodecs"))
+    set_description(N_("WebCodecs (browser / hardware) video decoder"))
     set_capability("video decoder", 20000) /* above dav1d (10000) and avcodec */
     set_subcategory(SUBCAT_INPUT_VCODEC)
-    add_bool("webcodecs", true, "Use WebCodecs",
-             "Decode H.264, HEVC, VP9 and AV1 with the browser's decoders when it can.")
+    add_bool("webcodecs", true, WEBCODECS_TEXT, WEBCODECS_LONGTEXT)
     set_callbacks(Open, Close)
 vlc_module_end()

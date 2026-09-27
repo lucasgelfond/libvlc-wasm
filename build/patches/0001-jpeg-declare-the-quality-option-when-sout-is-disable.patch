@@ -1,3 +1,15 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:22:59 +0000
+Subject: [PATCH 01/12] jpeg: declare the quality option when sout is disabled
+
+OpenEncoder() reads jpeg-quality for both submodules, but the option was only
+declared in the sout encoder's submodule. Without sout var_Create() asserted on
+the unknown type the first time a snapshot was encoded.
+---
+ modules/codec/jpeg.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 diff --git a/modules/codec/jpeg.c b/modules/codec/jpeg.c
 index 6aa7781..377ec38 100644
 --- a/modules/codec/jpeg.c

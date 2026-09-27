@@ -1,3 +1,13 @@
+/*****************************************************************************
+ * webaudio.c: audio output into an AudioWorklet ring buffer
+ *****************************************************************************
+ * Copyright (C) 2026 Lucas Gelfond
+ *
+ * SPDX-License-Identifier: MIT
+ * See LICENSE at the root of the libvlc-wasm repository. Linked into VLC,
+ * which is (L)GPL, the resulting binary is distributed under the GPL.
+ *****************************************************************************/
+
 /*
  * webaudio: a VLC audio output that writes into a ring buffer in wasm memory,
  * drained by an AudioWorklet on the page (packages/core/src/audio-worklet.js).
@@ -26,15 +36,27 @@
 
 #include "shared.h"
 
+#define CONSUMER_TIMEOUT VLC_TICK_FROM_MS(150) /* no heartbeat: nobody drains */
+#define REPORT_INTERVAL  VLC_TICK_FROM_MS(250) /* between timing reports */
+#define DRAIN_POLL       VLC_TICK_FROM_MS(10)
+#define MAX_LEAD         VLC_TICK_FROM_SEC(2)  /* longest silence padded in */
+#define PAD_WAIT         VLC_TICK_FROM_MS(50)
+#define WRITE_WAIT       VLC_TICK_FROM_MS(400) /* longest Play() blocks */
+
 typedef struct
 {
     wv_ring_t *ring;
-    uint32_t last_heartbeat;
-    vlc_tick_t heartbeat_at;   /* when last_heartbeat was seen to change */
     unsigned rate;
     bool started;          /* first real sample written since start/flush */
     vlc_timer_t drain_timer;
-    atomic_bool draining; /* set on the decoder thread, read on the timer thread */
+    /* The drain timer's callback runs on its own thread, and disarming the
+     * timer does not wait for a callback already running: lock protects the
+     * drain state and the heartbeat, which both threads use, so a Flush can
+     * never be followed by a drain report meant for the flushed stream. */
+    vlc_mutex_t lock;
+    bool draining;
+    uint32_t last_heartbeat;
+    vlc_tick_t heartbeat_at;   /* when last_heartbeat was seen to change */
     uint32_t data_start;   /* ring position of the first real sample */
     vlc_tick_t first_pts;
     vlc_tick_t last_report;
@@ -55,14 +77,12 @@ static uint32_t ring_write(wv_ring_t *r, const float *src, uint32_t n,
     vlc_tick_t deadline = vlc_tick_now() + max_wait;
     uint32_t done = 0;
 
-    while (done < n)
-    {
+    while (done < n) {
         uint32_t space = cap - ring_used(r);
-        if (space == 0)
-        {
+        if (space == 0) {
             if (vlc_tick_now() >= deadline)
                 break;
-            vlc_tick_sleep(VLC_TICK_FROM_MS(4));
+            vlc_tick_sleep(VLC_TICK_FROM_MS(4)); /* about a render quantum */
             continue;
         }
         uint32_t w = atomic_load(&r->write);
@@ -70,15 +90,12 @@ static uint32_t ring_write(wv_ring_t *r, const float *src, uint32_t n,
         uint32_t pos = w % cap;
         uint32_t first = __MIN(chunk, cap - pos);
         float *dst = r->data + (size_t)pos * ch;
-        if (src)
-        {
+        if (src) {
             memcpy(dst, src + (size_t)done * ch, (size_t)first * ch * sizeof(float));
             if (chunk > first)
                 memcpy(r->data, src + (size_t)(done + first) * ch,
                        (size_t)(chunk - first) * ch * sizeof(float));
-        }
-        else
-        {
+        } else {
             memset(dst, 0, (size_t)first * ch * sizeof(float));
             if (chunk > first)
                 memset(r->data, 0, (size_t)(chunk - first) * ch * sizeof(float));
@@ -92,7 +109,7 @@ static uint32_t ring_write(wv_ring_t *r, const float *src, uint32_t n,
 /* Is anything draining the ring? A suspended AudioContext (autoplay policy)
  * or a page with no worklet never will, and waiting on it would back up the
  * decoder and then the demuxer, stalling video too. */
-static bool consumer_alive(aout_sys_t *sys)
+static bool consumer_alive_locked(aout_sys_t *sys)
 {
     uint32_t hb = atomic_load(&sys->ring->heartbeat);
     vlc_tick_t now = vlc_tick_now();
@@ -101,7 +118,15 @@ static bool consumer_alive(aout_sys_t *sys)
         sys->heartbeat_at = now;
         return true;
     }
-    return now - sys->heartbeat_at < VLC_TICK_FROM_MS(150);
+    return now - sys->heartbeat_at < CONSUMER_TIMEOUT;
+}
+
+static bool consumer_alive(aout_sys_t *sys)
+{
+    vlc_mutex_lock(&sys->lock);
+    bool alive = consumer_alive_locked(sys);
+    vlc_mutex_unlock(&sys->lock);
+    return alive;
 }
 
 static void report_timing(audio_output_t *aout)
@@ -120,7 +145,7 @@ static void report_timing(audio_output_t *aout)
      * master clock ("coefficient too unstable"); a few per second keep it
      * down to a few percent, and VLC only asks for about one per second. */
     vlc_tick_t now = vlc_tick_now();
-    if (sys->last_report != VLC_TICK_INVALID && now - sys->last_report < VLC_TICK_FROM_MS(250))
+    if (sys->last_report != VLC_TICK_INVALID && now - sys->last_report < REPORT_INTERVAL)
         return;
     sys->last_report = now;
     vlc_tick_t latency = VLC_TICK_FROM_US(atomic_load(&r->latency_us));
@@ -134,13 +159,12 @@ static void DrainPoll(void *data)
     audio_output_t *aout = data;
     aout_sys_t *sys = aout->sys;
     wv_ring_t *r = sys->ring;
-    if (!sys->draining)
-        return;
-    if (ring_used(r) == 0 || !consumer_alive(sys)) {
+    vlc_mutex_lock(&sys->lock);
+    if (sys->draining && (ring_used(r) == 0 || !consumer_alive_locked(sys))) {
         sys->draining = false;
-        vlc_timer_disarm(sys->drain_timer);
-        aout_DrainedReport(aout);
+        aout_DrainedReport(aout); /* an atomic store: fine under the lock */
     }
+    vlc_mutex_unlock(&sys->lock);
 }
 
 /* Without this the core stops the stream once the last block is *queued*,
@@ -148,13 +172,17 @@ static void DrainPoll(void *data)
 static void Drain(audio_output_t *aout)
 {
     aout_sys_t *sys = aout->sys;
+    vlc_mutex_lock(&sys->lock);
     sys->draining = true;
-    vlc_timer_schedule(sys->drain_timer, false, VLC_TICK_FROM_MS(10), VLC_TICK_FROM_MS(10));
+    vlc_mutex_unlock(&sys->lock);
+    vlc_timer_schedule(sys->drain_timer, false, DRAIN_POLL, DRAIN_POLL);
 }
 
 static void StopDraining(aout_sys_t *sys)
 {
+    vlc_mutex_lock(&sys->lock);
     sys->draining = false;
+    vlc_mutex_unlock(&sys->lock);
     vlc_timer_disarm(sys->drain_timer);
 }
 
@@ -212,9 +240,9 @@ static void Play(audio_output_t *aout, block_t *block, vlc_tick_t date)
         vlc_tick_t latency = VLC_TICK_FROM_US(atomic_load(&r->latency_us));
         vlc_tick_t lead = date - vlc_tick_now() - latency;
         uint32_t pad = 0;
-        if (lead > 0 && lead < VLC_TICK_FROM_SEC(2))
+        if (lead > 0 && lead < MAX_LEAD)
             pad = samples_from_vlc_tick(lead, sys->rate);
-        ring_write(r, NULL, pad, consumer_alive(sys) ? VLC_TICK_FROM_MS(50) : 0);
+        ring_write(r, NULL, pad, consumer_alive(sys) ? PAD_WAIT : 0);
         sys->data_start = atomic_load(&r->write);
         sys->first_pts = block->i_pts;
         sys->started = true;
@@ -222,7 +250,7 @@ static void Play(audio_output_t *aout, block_t *block, vlc_tick_t date)
     }
 
     uint32_t n = block->i_nb_samples;
-    vlc_tick_t wait = consumer_alive(sys) ? VLC_TICK_FROM_MS(400) : 0;
+    vlc_tick_t wait = consumer_alive(sys) ? WRITE_WAIT : 0;
     uint32_t done = ring_write(r, (const float *)block->p_buffer, n, wait);
     if (done < n)
         atomic_fetch_add(&r->dropped, n - done);
@@ -263,6 +291,7 @@ static int Open(vlc_object_t *obj)
     if (unlikely(sys == NULL))
         return VLC_ENOMEM;
     sys->ring = ring;
+    vlc_mutex_init(&sys->lock);
     if (vlc_timer_create(&sys->drain_timer, DrainPoll, aout) != 0) {
         free(sys);
         return VLC_ENOMEM;
@@ -288,8 +317,8 @@ static void Close(vlc_object_t *obj)
 }
 
 vlc_module_begin()
-    set_shortname("WebAudio")
-    set_description("Web Audio (AudioWorklet) audio output")
+    set_shortname(N_("WebAudio"))
+    set_description(N_("Web Audio (AudioWorklet) audio output"))
     set_capability("audio output", 0)
     set_subcategory(SUBCAT_AUDIO_AOUT)
     set_callbacks(Open, Close)

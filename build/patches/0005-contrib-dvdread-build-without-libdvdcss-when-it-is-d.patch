@@ -1,0 +1,58 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 05/12] contrib: dvdread: build without libdvdcss when it is
+ disabled
+
+dvdread hard-depended on dvdcss. With --disable-dvdcss it now builds with
+-Dlibdvdcss=disabled, which reads unencrypted discs and disc images.
+
+dvd_filesystem.h defines _LARGEFILE64_SOURCE too late for musl, which then
+never declares off64_t; off_t is 64-bit on emscripten, as on the BSDs.
+---
+ contrib/src/dvdread/emscripten-off64_t.patch | 12 ++++++++++++
+ contrib/src/dvdread/rules.mak                |  7 +++++++
+ 2 files changed, 19 insertions(+)
+ create mode 100644 contrib/src/dvdread/emscripten-off64_t.patch
+
+diff --git a/contrib/src/dvdread/emscripten-off64_t.patch b/contrib/src/dvdread/emscripten-off64_t.patch
+new file mode 100644
+index 0000000..50e1fe6
+--- /dev/null
++++ b/contrib/src/dvdread/emscripten-off64_t.patch
+@@ -0,0 +1,12 @@
++--- dvdread/src/dvdread/dvd_filesystem.h
+++++ dvdread/src/dvdread/dvd_filesystem.h
++@@ -37,7 +37,8 @@
++ #elif defined(__GLIBC__)
++ /* sys/types.h may have been included before _LARGEFILE64_SOURCE was defined. */
++ typedef __off64_t off64_t;
++-#elif defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
+++#elif defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__) || \
+++      defined(__EMSCRIPTEN__)
++ /* off_t is already 64 bit here so off64_t is not provided. */
++ typedef off_t off64_t;
++ #endif
+diff --git a/contrib/src/dvdread/rules.mak b/contrib/src/dvdread/rules.mak
+index 7a4a42a..f0909b5 100644
+--- a/contrib/src/dvdread/rules.mak
++++ b/contrib/src/dvdread/rules.mak
+@@ -31,11 +31,18 @@ $(TARBALLS)/libdvdread-$(LIBDVDREAD_VERSION).tar.xz:
+ dvdread: libdvdread-$(LIBDVDREAD_VERSION).tar.xz .sum-dvdread
+ # dvdread: libdvdread-$(LIBDVDREAD_GITVERSION).tar.xz .sum-dvdread
+ 	$(UNPACK)
++	$(APPLY) $(SRC)/dvdread/emscripten-off64_t.patch
+ 	$(MOVE)
+ 
++# Without libdvdcss (bootstrap --disable-dvdcss), unencrypted discs and
++# images still play.
++ifneq ($(filter dvdcss,$(PKGS_DISABLE)),)
++DVDREAD_CONF := -Dlibdvdcss=disabled
++else
+ DEPS_dvdread = dvdcss $(DEPS_dvdcss)
+ 
+ DVDREAD_CONF := -Dlibdvdcss=enabled
++endif
+ 
+ .dvdread: dvdread crossfile.meson
+ 	$(REQUIRE_GPL)

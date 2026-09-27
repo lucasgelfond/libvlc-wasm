@@ -1,3 +1,13 @@
+/*****************************************************************************
+ * webframe.c: video output into shared memory for a WebGL page
+ *****************************************************************************
+ * Copyright (C) 2026 Lucas Gelfond
+ *
+ * SPDX-License-Identifier: MIT
+ * See LICENSE at the root of the libvlc-wasm repository. Linked into VLC,
+ * which is (L)GPL, the resulting binary is distributed under the GPL.
+ *****************************************************************************/
+
 /*
  * webframe: a VLC video output that hands frames to the page's WebGL
  * renderer (packages/core/src/renderer.js) through shared memory.
@@ -24,7 +34,6 @@
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include <vlc_common.h>
 #include <vlc_plugin.h>
@@ -33,48 +42,52 @@
 
 #include "shared.h"
 
+/* How long Close() gives the page to take the last frame, and to finish an
+ * upload, before the buffers go away. */
+#define CLOSE_WAIT_MS 100
+
 typedef struct
 {
     wv_video_t *v;
     uint8_t *mem;
+    picture_t *buffer[WV_VIDEO_BUFFERS]; /* pictures over v->planes */
     int idx;       /* buffer filled by prepare(), published by display() */
     unsigned x0, y0, w0, h0; /* the source region the buffers hold */
 } vout_display_sys_t;
 
-/* Layout codes shared with renderer.js (low byte of wv_video_t.chroma). */
-static const struct {
+/* What the shader draws, indexed by enum wv_layout. */
+static const struct
+{
     vlc_fourcc_t fourcc;
-    uint32_t code;
     unsigned bpp, cw, ch, planes;
-} LAYOUTS[] = {
-    { VLC_CODEC_I420,     0, 1, 2, 2, 3 },
-    { VLC_CODEC_I422,     1, 1, 2, 1, 3 },
-    { VLC_CODEC_I444,     2, 1, 1, 1, 3 },
-    { VLC_CODEC_NV12,     3, 1, 2, 2, 2 },
-    { VLC_CODEC_I420_10L, 4, 2, 2, 2, 3 },
-    { VLC_CODEC_RGBX,     5, 4, 1, 1, 1 },  /* packed; already RGB */
-    { VLC_CODEC_BGRX,     6, 4, 1, 1, 1 },  /* Firefox's hardware frames */
+} layouts[WV_LAYOUT_COUNT] = {
+    [WV_LAYOUT_I420]    = { VLC_CODEC_I420,     1, 2, 2, 3 },
+    [WV_LAYOUT_I422]    = { VLC_CODEC_I422,     1, 2, 1, 3 },
+    [WV_LAYOUT_I444]    = { VLC_CODEC_I444,     1, 1, 1, 3 },
+    [WV_LAYOUT_NV12]    = { VLC_CODEC_NV12,     1, 2, 2, 2 },
+    [WV_LAYOUT_I420_10] = { VLC_CODEC_I420_10L, 2, 2, 2, 3 },
+    [WV_LAYOUT_RGBX]    = { VLC_CODEC_RGBX,     4, 1, 1, 1 },
+    [WV_LAYOUT_BGRX]    = { VLC_CODEC_BGRX,     4, 1, 1, 1 },
 };
 
 static unsigned align_up(unsigned v, unsigned a) { return (v + a - 1) / a * a; }
 
 static uint32_t describe_colour(const video_format_t *f, uint32_t code)
 {
-    /* bit 8 full range; bits 12-15 matrix (0 BT.601, 1 BT.709, 2 BT.2020);
-     * bits 16-19 transfer (0 SDR, 1 PQ, 2 HLG) -- see renderer.js */
     uint32_t matrix;
     switch (f->space) {
-    case COLOR_SPACE_BT709:  matrix = 1; break;
-    case COLOR_SPACE_BT2020: matrix = 2; break;
-    case COLOR_SPACE_BT601:  matrix = 0; break;
+    case COLOR_SPACE_BT709:  matrix = WV_MATRIX_BT709; break;
+    case COLOR_SPACE_BT2020: matrix = WV_MATRIX_BT2020; break;
+    case COLOR_SPACE_BT601:  matrix = WV_MATRIX_BT601; break;
     default: /* undefined: the usual convention, by size */
-        matrix = f->i_visible_height >= 720 ? 1 : 0;
+        matrix = f->i_visible_height >= 720 ? WV_MATRIX_BT709 : WV_MATRIX_BT601;
         break;
     }
     uint32_t transfer = f->transfer == TRANSFER_FUNC_SMPTE_ST2084 ? 1
                       : f->transfer == TRANSFER_FUNC_HLG ? 2 : 0;
-    uint32_t full = f->color_range == COLOR_RANGE_FULL ? 1 : 0;
-    return code | (full << 8) | (matrix << 12) | (transfer << 16);
+    return code | (f->color_range == COLOR_RANGE_FULL ? WV_COLOUR_FULL_RANGE : 0)
+                | (matrix << WV_COLOUR_MATRIX_SHIFT)
+                | (transfer << WV_COLOUR_TRANSFER_SHIFT);
 }
 
 static void Prepare(vout_display_t *vd, picture_t *pic,
@@ -90,17 +103,7 @@ static void Prepare(vout_display_t *vd, picture_t *pic,
     while (idx == front || idx == reading)
         idx++;
 
-    picture_resource_t rsc = { .p_sys = NULL };
-    for (int k = 0; k < PICTURE_PLANE_MAX; k++) {
-        rsc.p[k].p_pixels = v->planes[idx][k < 3 ? k : 0];
-        rsc.p[k].i_lines = k < 3 ? v->lines[k] : 0;
-        rsc.p[k].i_pitch = k < 3 ? v->pitch[k] : 0;
-    }
-    picture_t *dst = picture_NewFromResource(vd->fmt, &rsc);
-    if (dst != NULL) {
-        picture_CopyPixels(dst, pic);
-        picture_Release(dst);
-    }
+    picture_CopyPixels(sys->buffer[idx], pic);
     sys->idx = idx;
 }
 
@@ -120,16 +123,23 @@ static void Close(vout_display_t *vd)
     /* A clip that ends right after its last frame (a one-frame file, a still
      * followed by EOF) closes the display before the page's next animation
      * frame: give the page a moment to upload what it has not seen yet. */
-    for (int spin = 0; spin < 100 && atomic_load(&v->front) >= 0
-                       && atomic_load(&v->drawn) != atomic_load(&v->seq); spin++)
-        usleep(1000);
+    for (int ms = 0; ms < CLOSE_WAIT_MS && atomic_load(&v->front) >= 0
+                     && atomic_load(&v->drawn) != atomic_load(&v->seq); ms++)
+        vlc_tick_sleep(VLC_TICK_FROM_MS(1));
     atomic_store(&v->front, -1);
     atomic_fetch_add(&v->format_gen, 1);
     /* Let an upload in progress finish before the memory goes away. */
-    for (int spin = 0; spin < 100 && atomic_load(&v->reading) >= 0; spin++)
-        usleep(1000);
+    for (int ms = 0; ms < CLOSE_WAIT_MS && atomic_load(&v->reading) >= 0; ms++)
+        vlc_tick_sleep(VLC_TICK_FROM_MS(1));
     memset(v->planes, 0, sizeof v->planes);
-    free(sys->mem);
+    for (int b = 0; b < WV_VIDEO_BUFFERS; b++)
+        picture_Release(sys->buffer[b]);
+    /* A page that is still uploading (a stalled tab) holds a pointer into the
+     * buffers: leaking them is better than freeing memory being read. */
+    if (atomic_load(&v->reading) < 0)
+        free(sys->mem);
+    else
+        msg_Warn(vd, "page still reading a frame, leaking its buffers");
     free(sys);
 }
 
@@ -149,6 +159,10 @@ static int SetSourceCrop(vout_display_t *vd, const video_format_t *fmt)
 {
     vout_display_sys_t *sys = vd->sys;
     wv_video_t *v = sys->v;
+    /* The crop is given in the source's orientation, but the buffers hold the
+     * rotated picture: let the core crop instead. */
+    if (vd->source->orientation != ORIENT_NORMAL)
+        return VLC_EGENERIC;
     unsigned x = fmt->i_x_offset > sys->x0 ? fmt->i_x_offset - sys->x0 : 0;
     unsigned y = fmt->i_y_offset > sys->y0 ? fmt->i_y_offset - sys->y0 : 0;
     unsigned w = fmt->i_visible_width, h = fmt->i_visible_height;
@@ -158,7 +172,10 @@ static int SetSourceCrop(vout_display_t *vd, const video_format_t *fmt)
         if (x + w > sys->w0) w = sys->w0 - x;
         if (y + h > sys->h0) h = sys->h0 - y;
     }
-    v->crop_x = x; v->crop_y = y; v->crop_w = w; v->crop_h = h;
+    v->crop_x = x;
+    v->crop_y = y;
+    v->crop_w = w;
+    v->crop_h = h;
     atomic_fetch_add(&v->format_gen, 1);
     return VLC_SUCCESS;
 }
@@ -181,10 +198,16 @@ static int Open(vout_display_t *vd, video_format_t *fmtp, vlc_video_context *con
     video_format_t fmt;
     video_format_ApplyRotation(&fmt, vd->source);
 
-    unsigned pick = 0; /* anything the shader cannot draw becomes I420 */
-    for (unsigned k = 0; k < ARRAY_SIZE(LAYOUTS); k++)
-        if (fmt.i_chroma == LAYOUTS[k].fourcc) { pick = k; break; }
-    fmt.i_chroma = LAYOUTS[pick].fourcc;
+    /* Anything the shader cannot draw is converted by the core: to I420, or
+     * to RGBX for RGB sources, which would otherwise lose alpha and precision
+     * on the way through YUV. */
+    unsigned pick = vlc_fourcc_IsYUV(fmt.i_chroma) ? WV_LAYOUT_I420 : WV_LAYOUT_RGBX;
+    for (unsigned k = 0; k < WV_LAYOUT_COUNT; k++)
+        if (fmt.i_chroma == layouts[k].fourcc) {
+            pick = k;
+            break;
+        }
+    fmt.i_chroma = layouts[pick].fourcc;
 
     /* Visible picture only: the core crops for us (as with vmem). */
     unsigned w = fmt.i_visible_width, h = fmt.i_visible_height;
@@ -192,8 +215,8 @@ static int Open(vout_display_t *vd, video_format_t *fmtp, vlc_video_context *con
     fmt.i_height = fmt.i_visible_height = h;
     fmt.i_x_offset = fmt.i_y_offset = 0;
 
-    const unsigned bpp = LAYOUTS[pick].bpp, cw = LAYOUTS[pick].cw, chh = LAYOUTS[pick].ch;
-    const unsigned nplanes = LAYOUTS[pick].planes;
+    const unsigned bpp = layouts[pick].bpp, cw = layouts[pick].cw, chh = layouts[pick].ch;
+    const unsigned nplanes = layouts[pick].planes;
     /* Chroma pitches are the luma pitch over the horizontal subsampling, so a
      * single texture-coordinate crop (visible / pitch) fits every plane. */
     unsigned pitch[3] = { align_up(w * bpp, 64 * cw), 0, 0 };
@@ -216,9 +239,22 @@ static int Open(vout_display_t *vd, video_format_t *fmtp, vlc_video_context *con
     memset(mem, 0, align_up(frame, 64) * WV_VIDEO_BUFFERS);
     for (int b = 0; b < WV_VIDEO_BUFFERS; b++) {
         uint8_t *base = mem + align_up(frame, 64) * b;
+        picture_resource_t rsc = { .p_sys = NULL };
         for (unsigned k = 0; k < 3; k++) {
             v->planes[b][k] = base;
+            rsc.p[k].p_pixels = base;
+            rsc.p[k].i_lines = lines[k];
+            rsc.p[k].i_pitch = pitch[k];
             base += (size_t)pitch[k] * lines[k];
+        }
+        sys->buffer[b] = picture_NewFromResource(&fmt, &rsc);
+        if (sys->buffer[b] == NULL) {
+            while (b-- > 0)
+                picture_Release(sys->buffer[b]);
+            memset(v->planes, 0, sizeof v->planes);
+            free(mem);
+            free(sys);
+            return VLC_ENOMEM;
         }
     }
     sys->v = v;
@@ -231,8 +267,11 @@ static int Open(vout_display_t *vd, video_format_t *fmtp, vlc_video_context *con
 
     v->width = w;
     v->height = h;
-    v->chroma = describe_colour(&fmt, LAYOUTS[pick].code);
-    for (unsigned k = 0; k < 3; k++) { v->pitch[k] = pitch[k]; v->lines[k] = lines[k]; }
+    v->chroma = describe_colour(&fmt, pick);
+    for (unsigned k = 0; k < 3; k++) {
+        v->pitch[k] = pitch[k];
+        v->lines[k] = lines[k];
+    }
     v->sar_num = fmt.i_sar_num ? fmt.i_sar_num : 1;
     v->sar_den = fmt.i_sar_den ? fmt.i_sar_den : 1;
     atomic_store(&v->front, -1);
@@ -245,8 +284,8 @@ static int Open(vout_display_t *vd, video_format_t *fmtp, vlc_video_context *con
 }
 
 vlc_module_begin()
-    set_shortname("WebFrame")
-    set_description("Shared-memory frames for a WebGL page")
+    set_shortname(N_("WebFrame"))
+    set_description(N_("Shared-memory frames for a WebGL page"))
     set_subcategory(SUBCAT_VIDEO_VOUT)
     set_callback_display(Open, 0)
 vlc_module_end()

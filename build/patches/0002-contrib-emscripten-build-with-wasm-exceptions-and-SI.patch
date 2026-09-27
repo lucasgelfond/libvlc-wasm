@@ -1,3 +1,17 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:22:59 +0000
+Subject: [PATCH 02/12] contrib: emscripten: build with wasm exceptions and
+ SIMD
+
+libebml and libmatroska throw during ordinary parsing; with exceptions compiled
+out, every such throw aborts the whole module. setjmp/longjmp (libpng,
+libjpeg) must then use the matching wasm mechanism, since the JS-based one
+cannot be linked with -fwasm-exceptions.
+---
+ contrib/src/main.mak | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
 index 1fcd41d..6aeb42a 100644
 --- a/contrib/src/main.mak

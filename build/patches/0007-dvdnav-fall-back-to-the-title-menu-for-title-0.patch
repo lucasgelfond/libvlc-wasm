@@ -1,28 +1,36 @@
-From: libvlc-wasm <noreply@libvlc-wasm>
-Subject: [PATCH] dvdnav: selecting title 0 falls back to the title menu
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 07/12] dvdnav: fall back to the title menu for title 0
 
 Selecting title 0 ("the menu") only called the root menu, so on discs whose
 only menu is the VMG title menu it failed with "cannot set title/chapter"
 and there was no way back to the menu. Fall back to DVD_MENU_Title, as
 CallRootTitleMenu() already does when the disc is opened.
 ---
+ modules/access/dvdnav.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/modules/access/dvdnav.c b/modules/access/dvdnav.c
+index ec417e9..98988ee 100644
 --- a/modules/access/dvdnav.c
 +++ b/modules/access/dvdnav.c
-@@ -808,11 +808,20 @@
+@@ -808,11 +808,20 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
  
          case DEMUX_SET_TITLE:
              i = va_arg( args, int );
+-            if( i == 0 && dvdnav_menu_call( p_sys->dvdnav, DVD_MENU_Root )
 +            /* Title 0 is "the menu": the root menu of the title set, or,
 +             * on discs that only have one, the VMG title menu -- the same
 +             * fallback as when the disc is opened. */
 +            DVDMenuID_t menu = DVD_MENU_Root;
-             if( i == 0 && dvdnav_menu_call( p_sys->dvdnav, DVD_MENU_Root )
++            if( i == 0 && dvdnav_menu_call( p_sys->dvdnav, menu )
                    != DVDNAV_STATUS_OK )
              {
 -                msg_Warn( p_demux, "cannot set title/chapter" );
 -                return VLC_EGENERIC;
 +                menu = DVD_MENU_Title;
-+                if( dvdnav_menu_call( p_sys->dvdnav, DVD_MENU_Title )
++                if( dvdnav_menu_call( p_sys->dvdnav, menu )
 +                      != DVDNAV_STATUS_OK )
 +                {
 +                    msg_Warn( p_demux, "cannot set title/chapter" );
@@ -31,7 +39,7 @@ CallRootTitleMenu() already does when the disc is opened.
              }
  
              if( i != 0 )
-@@ -830,7 +839,7 @@
+@@ -830,7 +839,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
              if( i != 0 )
                  p_sys->cur_seekpoint = 0;
              else

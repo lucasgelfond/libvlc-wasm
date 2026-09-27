@@ -1,5 +1,8 @@
-From: libvlc-wasm <noreply@libvlc-wasm>
-Subject: [PATCH] vout: EOF waits for a picture taken from the fifo but not yet shown
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: lucas gelfond <lucasgelfond@gmail.com>
+Date: Sun, 27 Sep 2026 16:23:00 +0000
+Subject: [PATCH 08/12] vout: EOF waits for a picture taken from the fifo but
+ not yet shown
 
 At end of file the input asks vout_IsEmpty(), which only looked at the
 decoder fifo. PreparePicture() pops a picture before RenderPicture() waits
@@ -7,9 +10,14 @@ for its display time, so a clip whose last pictures are still waiting (a
 two-frame MS Screen 2 file, a lone still) was declared finished and stopped
 before they were ever shown. Track the popped-but-unrendered picture.
 ---
+ src/video_output/video_output.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
+
+diff --git a/src/video_output/video_output.c b/src/video_output/video_output.c
+index bde65e6..d19a0c4 100644
 --- a/src/video_output/video_output.c
 +++ b/src/video_output/video_output.c
-@@ -83,6 +83,9 @@
+@@ -83,6 +83,9 @@ typedef struct vout_thread_sys_t
      bool clock_nowait; /* protected by vlc_clock_Lock()/vlc_clock_Unlock() */
      bool wait_interrupted;
      bool first_picture;
@@ -19,7 +27,7 @@ before they were ever shown. Track the popped-but-unrendered picture.
  
      vlc_clock_t     *clock;
      vlc_clock_listener_id *clock_listener_id;
-@@ -286,7 +289,8 @@
+@@ -286,7 +289,8 @@ bool vout_IsEmpty(vout_thread_t *vout)
      assert(sys->decoder_fifo);
  
      picture_fifo_Lock(sys->decoder_fifo);
@@ -29,7 +37,7 @@ before they were ever shown. Track the popped-but-unrendered picture.
      picture_fifo_Unlock(sys->decoder_fifo);
      return empty;
  }
-@@ -1076,6 +1080,8 @@
+@@ -1076,6 +1080,8 @@ static picture_t *PreparePicture(vout_thread_sys_t *vout, bool reuse_decoded,
          } else {
              picture_fifo_Lock(sys->decoder_fifo);
              decoded = picture_fifo_Pop(sys->decoder_fifo);
@@ -38,14 +46,13 @@ before they were ever shown. Track the popped-but-unrendered picture.
              picture_fifo_Unlock(sys->decoder_fifo);
              if (decoded == NULL)
                  break;
-@@ -1582,11 +1588,10 @@
-             picture_Release(sys->displayed.current);
+@@ -1583,10 +1589,9 @@ static int DisplayNextFrame(vout_thread_sys_t *sys)
          sys->displayed.current = next;
      }
--
+ 
 -    if (!next)
 -        return VLC_EGENERIC;
- 
+-
 -    return RenderPicture(sys, RENDER_PICTURE_NEXT);
 +    int ret = next ? RenderPicture(sys, RENDER_PICTURE_NEXT) : VLC_EGENERIC;
 +    atomic_store(&sys->render_pending, false);
@@ -53,7 +60,7 @@ before they were ever shown. Track the popped-but-unrendered picture.
  }
  
  static bool UpdateCurrentPicture(vout_thread_sys_t *sys)
-@@ -1652,8 +1657,20 @@
+@@ -1652,7 +1657,19 @@ static bool UpdateCurrentPicture(vout_thread_sys_t *sys)
      return true;
  }
  
@@ -63,18 +70,17 @@ before they were ever shown. Track the popped-but-unrendered picture.
 + * by the time DisplayPictureOnce() returns, so the input may now treat an
 + * empty fifo as "everything shown" and signal EOF. */
  static vlc_tick_t DisplayPicture(vout_thread_sys_t *vout)
- {
++{
 +    vlc_tick_t deadline = DisplayPictureOnce(vout);
 +    atomic_store(&vout->render_pending, false);
 +    return deadline;
 +}
 +
 +static vlc_tick_t DisplayPictureOnce(vout_thread_sys_t *vout)
-+{
+ {
      vout_thread_sys_t *sys = vout;
  
-     assert(sys->clock);
-@@ -2258,6 +2275,7 @@
+@@ -2258,6 +2275,7 @@ vout_thread_t *vout_Create(vlc_object_t *object)
  
      vout_control_Init(&sys->control);
      atomic_init(&sys->control_is_terminated, false);

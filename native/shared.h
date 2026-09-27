@@ -1,3 +1,13 @@
+/*****************************************************************************
+ * shared.h: memory layouts shared with JavaScript
+ *****************************************************************************
+ * Copyright (C) 2026 Lucas Gelfond
+ *
+ * SPDX-License-Identifier: MIT
+ * See LICENSE at the root of the libvlc-wasm repository. Linked into VLC,
+ * which is (L)GPL, the resulting binary is distributed under the GPL.
+ *****************************************************************************/
+
 /*
  * Shared-memory layouts read directly by JavaScript.
  *
@@ -9,6 +19,7 @@
 #define WV_SHARED_H
 
 #include <stdatomic.h>
+#include <stddef.h>
 #include <stdint.h>
 
 #include <vlc_common.h>
@@ -44,6 +55,29 @@ typedef struct wv_ring
  * writes into the one being uploaded. */
 #define WV_VIDEO_BUFFERS 3
 
+/* Pixel layouts the page's shader draws: the low byte of wv_video_t.chroma,
+ * and the format webcodecs.c's wv_wc_push() takes. renderer.js and engine.js
+ * (webCodecsHost) use the same numbers. */
+enum wv_layout
+{
+    WV_LAYOUT_I420,
+    WV_LAYOUT_I422,
+    WV_LAYOUT_I444,
+    WV_LAYOUT_NV12,
+    WV_LAYOUT_I420_10,  /* 10-bit little-endian */
+    WV_LAYOUT_RGBX,     /* packed, already RGB */
+    WV_LAYOUT_BGRX,     /* Firefox's hardware frames */
+    WV_LAYOUT_COUNT
+};
+
+/* Colour description bits, above the layout byte. */
+#define WV_COLOUR_FULL_RANGE    (1u << 8)
+#define WV_COLOUR_MATRIX_SHIFT  12       /* enum wv_matrix */
+#define WV_COLOUR_TRANSFER_SHIFT 16      /* 0 SDR, 1 PQ, 2 HLG */
+#define WV_COLOUR_KNOWN         (1u << 24) /* webcodecs: the frame said so */
+
+enum wv_matrix { WV_MATRIX_BT601, WV_MATRIX_BT709, WV_MATRIX_BT2020 };
+
 typedef struct wv_video
 {
     _Atomic uint32_t seq;         /*  0 bumped on every displayed frame */
@@ -52,7 +86,7 @@ typedef struct wv_video
     _Atomic uint32_t format_gen;  /*  3 bumped whenever buffers are (re)allocated */
     uint32_t width;               /*  4 */
     uint32_t height;              /*  5 */
-    uint32_t chroma;              /*  6 layout | full range << 8 | matrix << 12 | transfer << 16 */
+    uint32_t chroma;              /*  6 wv_layout | WV_COLOUR_* bits */
     uint32_t pitch[3];            /*  7..9 */
     uint32_t lines[3];            /* 10..12 */
     uint8_t *planes[WV_VIDEO_BUFFERS][3]; /* 13..21 */
@@ -71,8 +105,27 @@ typedef struct wv_video
 typedef struct wv_window
 {
     vlc_mutex_t lock;
+    vlc_cond_t idle;              /* signalled when reporting drops to 0 */
     struct vlc_window *wnd;       /* NULL while no video output is open */
     unsigned width, height;       /* the window VLC asked for (picture size) */
+    unsigned reporting;           /* reports in progress, made outside lock */
 } wv_window_t;
+
+/* The indices above are hardcoded in packages/core/src/layout.js and
+ * audio-worklet.js: fail the build rather than the page if they drift. */
+#define WV_AT(type, field, index) \
+    _Static_assert(offsetof(type, field) == (index) * 4, #type "." #field " moved")
+_Static_assert(sizeof(void *) == 4, "the layouts assume wasm32");
+WV_AT(wv_ring_t, heartbeat, 16);
+WV_AT(wv_ring_t, data, 17);
+WV_AT(wv_video_t, chroma, 6);
+WV_AT(wv_video_t, planes, 13);
+WV_AT(wv_video_t, displayed, 22);
+WV_AT(wv_video_t, drawn, 23);
+WV_AT(wv_video_t, sar_num, 24);
+WV_AT(wv_video_t, crop_x, 26);
+WV_AT(wv_video_t, crop_h, 29);
+_Static_assert(sizeof(wv_video_t) == 30 * 4, "wv_video_t size changed");
+#undef WV_AT
 
 #endif
