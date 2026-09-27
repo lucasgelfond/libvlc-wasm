@@ -146,6 +146,8 @@ export declare class Player extends Emitter<PlayerEvents> {
   readonly state: PlayerState;
   /** Seconds; 0 until known. */
   readonly duration: number;
+  /** 0..1 through the media; known even when `duration` is 0. */
+  readonly position: number;
   readonly tracks: Track[];
   readonly chapters: Chapters;
   readonly seekable: boolean;

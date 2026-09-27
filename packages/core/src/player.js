@@ -204,6 +204,7 @@ export class Player extends Emitter {
     if (decryptionKey) media.push(':demux=avformat', `:avformat-options={decryption_key=${decryptionKey}}`);
     this.duration = 0;
     this.tracks = [];
+    this._position = 0;
     this._setTime(0, { snap: true });
     // Track and chapter lists fetched for the previous file can still be on
     // their way back: they are dropped by generation (_refreshTracks/_refreshChapters).
@@ -273,7 +274,10 @@ export class Player extends Emitter {
   get currentTime() {
     if (this.state !== 'playing') return this._time;
     const now = performance.now();
-    const target = this._time + ((now - this._timeAt) / 1000) * this._rate;
+    // VLC sends a point every 100 ms while the clock runs. Past the last one by
+    // more than a moment, the clock has stalled (buffering, or the end of the
+    // file): hold rather than run on and then snap back.
+    const target = this._time + (Math.min(now - this._timeAt, 400) / 1000) * this._rate;
     if (this._shown == null || Math.abs(target - this._shown) > 0.5) {
       this._shown = target;
     } else {
@@ -284,6 +288,13 @@ export class Player extends Emitter {
     this._shownAt = now;
     return this.duration ? Math.min(this._shown, this.duration) : this._shown;
   }
+
+  /**
+   * 0..1 through the media, as VLC last reported it. Known even when the
+   * duration is not (VLC falls back to the read position): a PlayStation STR
+   * or a C64 tune still has one.
+   */
+  get position() { return this._position ?? 0; }
 
   set currentTime(s) { this.seek(s).catch(() => {}); }
 
@@ -673,6 +684,7 @@ export class Player extends Emitter {
       }
       case EVENT.POSITION:
         if (this._staleTime) break;
+        this._position = b;
         this._setTime(a / 1e6);
         break;
       case EVENT.LENGTH:

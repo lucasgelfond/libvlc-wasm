@@ -9,6 +9,7 @@
 		max,
 		loaded = null,
 		disabled = false,
+		indeterminate = false,
 		step = 5,
 		onscrub,
 		oncommit,
@@ -19,6 +20,8 @@
 		/** 0..1: how far ahead the file has been read. */
 		loaded?: number | null;
 		disabled?: boolean;
+		/** Playing, but with no length or position to show (a looping chiptune): a moving sheen, no thumb. */
+		indeterminate?: boolean;
 		/** Seconds an arrow key moves. */
 		step?: number;
 		/** While dragging: where the pointer is. */
@@ -84,8 +87,13 @@
 				style="transform: scaleX({Math.max(0, Math.min(1, loaded))})"
 			></div>
 		{/if}
-		<div class="bg-primary absolute inset-0 origin-left will-change-transform" style="transform: scaleX({frac})"></div>
+		{#if indeterminate}
+			<div class="sheen bg-primary/70 absolute inset-y-0 w-1/4 rounded-full"></div>
+		{:else}
+			<div class="bg-primary absolute inset-0 origin-left will-change-transform" style="transform: scaleX({frac})"></div>
+		{/if}
 	</div>
+	{#if !indeterminate}
 	<!-- The thumb spans the bar's width and translates by a percentage of it, so
 	     its position needs no measurement either. -->
 	<div class="pointer-events-none absolute inset-x-0 top-1/2 will-change-transform" style="transform: translateX({frac * 100}%)">
@@ -95,4 +103,18 @@
 				: ''}"
 		></div>
 	</div>
+	{/if}
 </div>
+
+<style>
+	.sheen {
+		animation: sheen 2.4s ease-in-out infinite;
+	}
+	@keyframes sheen {
+		from { transform: translateX(-100%); }
+		to { transform: translateX(400%); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.sheen { animation: none; width: 100%; opacity: 0.4; }
+	}
+</style>

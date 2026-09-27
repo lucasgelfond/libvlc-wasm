@@ -20,6 +20,7 @@ const SUITES = [
   ...engines.map((e) => ['sout', 'tests/sout.mjs', [`--engine=${e}`], 'packages/sout/wasm/libvlc-sout.wasm']),
   ['colors', 'tests/colors.mjs', [], 'bench/media/colors/i420.mpg'],
   ['app', 'tests/app.mjs', [], 'apps/player/node_modules'],
+  ['samples', 'tests/samples.mjs', [], 'apps/player/node_modules'],
   ...(quick ? [] : [['corpus', 'tests/corpus-check.mjs', [], 'corpus/media/realmedia']]),
   ...(quick ? [] : [['package', 'tests/package.mjs', [], 'packages/core/wasm/libvlc.wasm']]),
   ...(quick ? [] : [['bundle', 'tests/bundle.mjs', [], 'packages/sout/wasm/libvlc-sout.wasm']]),

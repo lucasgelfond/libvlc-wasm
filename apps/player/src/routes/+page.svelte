@@ -13,6 +13,7 @@
 	import About from '$lib/components/About.svelte';
 	import cone from '$lib/assets/cone.svg';
 	import { Session, formatTime } from '$lib/session.svelte';
+	import type { PerformanceStats } from 'libvlc-wasm';
 	import { SAMPLES, loadSample, type Sample } from '$lib/samples';
 	import { ROWS } from '$lib/compat';
 	import RiPlayFill from 'remixicon-svelte/icons/play-fill';
@@ -62,6 +63,7 @@
 	// picture inside it: resizing to each file's shape made the page jump
 	// between files, and between a disc's menus and its titles.
 	const aspect = 16 / 9;
+	const byTime = $derived(session.duration > 0);
 	const iconButton = 'text-white hover:bg-white/15 hover:text-white';
 	// Only when real time is missing: short clips end a frame or two before their stated length.
 	const shortEnd = $derived(session.duration - session.time > Math.max(2, session.duration * 0.05));
@@ -139,6 +141,15 @@
 		return out;
 	}
 
+
+	function perfTitle(p: PerformanceStats) {
+		const decoder = p.hardware ? 'hardware (WebCodecs)' : 'software (VLC)';
+		return [
+			`${p.decodeMsPerFrame?.toFixed(2)} ms per frame, ${p.decodeFps?.toFixed(0)} frames/s of decoding for a ${p.fps?.toFixed(3).replace(/\.?0+$/, '')} fps stream`,
+			`Decoder: ${decoder}${p.codec ? `, ${p.codec}` : ''}`,
+			`Last ${p.interval.toFixed(1)} s: ${p.dropped} dropped, ${p.late} late`
+		].join('\n');
+	}
 
 	function toggleFullscreen() {
 		if (document.fullscreenElement) document.exitFullscreen();
@@ -290,15 +301,19 @@
 
 					<div class="flex flex-col gap-0.5 border-t border-white/10 bg-neutral-950 px-3 pt-1 pb-1.5 text-white"
 					>
+						<!-- Without a duration (a PlayStation STR, a C64 tune) VLC still
+						     knows how far through the file it is: the bar runs on that. -->
 						<SeekBar
-							max={session.duration || 1}
-							value={session.duration ? (scrub ?? session.time) : 0}
+							max={byTime ? session.duration : 1}
+							value={scrub ?? (byTime ? session.time : session.position)}
 							loaded={session.loaded}
-							disabled={!session.duration}
+							disabled={!byTime && !session.position}
+							indeterminate={!byTime && !session.position && session.playing && session.time > 1}
+							step={byTime ? 5 : 0.02}
 							onscrub={(v) => (scrub = v)}
 							oncommit={async (v) => {
 								scrub = v;
-								await session.seek(v);
+								await (byTime ? session.seek(v) : session.seekPosition(v));
 								scrub = null;
 							}}
 						/>
@@ -333,10 +348,15 @@
 								</Popover.Content>
 							</Popover.Root>
 							<span class="ml-1 text-xs text-white/85 tabular-nums">
-								{formatTime(scrub ?? session.time)}{#if session.duration}<span class="text-white/50"> / {formatTime(session.duration)}</span>{/if}
+								{formatTime(byTime ? (scrub ?? session.time) : session.time)}{#if session.duration}<span class="text-white/50"> / {formatTime(session.duration)}</span>{/if}
 							</span>
 							{#if session.rate !== 1}<span class="ml-2 rounded bg-white/15 px-1.5 py-0.5 text-[10px] font-medium">{session.rate}×</span>{/if}
 							<div class="ml-auto flex items-center gap-1">
+								{#if session.perf?.realtime}
+									<span class="mr-1 text-xs text-white/60 tabular-nums" title={perfTitle(session.perf)} data-testid="perf">
+										decodes {session.perf.realtime.toFixed(session.perf.realtime < 10 ? 1 : 0)}× realtime{session.perf.hardware ? ' · hardware (WebCodecs)' : ''}
+									</span>
+								{/if}
 								{#if session.hasMenu}
 									<Button variant="ghost" size="sm" class="{iconButton} gap-1.5 px-2" onclick={() => session.menu()} aria-label="Disc menu">
 										<RiDiscLine class="size-5" /> <span class="text-xs">Menu</span>

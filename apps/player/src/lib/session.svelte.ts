@@ -1,4 +1,4 @@
-import { createVLC, type MediaInfo, type Player, type Track, type VLC } from 'libvlc-wasm';
+import { createVLC, type MediaInfo, type PerformanceStats, type Player, type Track, type VLC } from 'libvlc-wasm';
 
 const SUBTITLE = /\.(srt|ass|ssa|vtt|sub|idx|smi|sami|usf|ttml|dfxp|mpl|jss|rt|pjs|psb|scc|stl)$/i;
 export const isSubtitle = (f: File) => SUBTITLE.test(f.name);
@@ -36,6 +36,8 @@ export class Session {
 
 	state = $state('idle');
 	time = $state(0);
+	/** 0..1 through the file: what the seek bar shows when the duration is unknown. */
+	position = $state(0);
 	duration = $state(0);
 	volume = $state(1);
 	muted = $state(false);
@@ -61,6 +63,8 @@ export class Session {
 	subtitleDelay = $state(0);
 	audioDelay = $state(0);
 	stats = $state<Record<string, number> | null>(null);
+	/** The engine's pushed decoding performance (the 'performance' event); null until the first. */
+	perf = $state<PerformanceStats | null>(null);
 	/** How far VLC has read into the file, 0..1, for the seek bar; null when that means nothing (discs, URLs). */
 	loaded = $state<number | null>(null);
 
@@ -82,7 +86,10 @@ export class Session {
 		try {
 			// ?webcodecs=0 forces software decoding (handy for comparing).
 			const q = new URLSearchParams(location.search);
-			const vlc = await createVLC({ logLevel: 'error', args: q.get('webcodecs') === '0' ? ['--no-webcodecs'] : [] });
+			// Dev only: ?engine=/path/libvlc.js tries another build of the engine.
+			const engineUrl = import.meta.env.DEV ? q.get('engine') : null;
+			const engine = engineUrl ? { moduleUrl: engineUrl, wasmUrl: engineUrl.replace(/\.js$/, '.wasm') } : undefined;
+			const vlc = await createVLC({ logLevel: 'error', engine, args: q.get('webcodecs') === '0' ? ['--no-webcodecs'] : [] });
 			// The page may have gone while VLC started; nothing else would release it.
 			if (this.#destroyed) return void vlc.destroy();
 			this.vlc = vlc;
@@ -112,11 +119,13 @@ export class Session {
 				else this.ended = true;
 			});
 			p.on('error', (e) => { this.error = e.message; });
+			p.on('performance', (s) => { this.perf = s; });
 			this.presets = (await this.vlc.equalizerPresets()).presets;
 			if (this.#destroyed) return;
 			const tick = () => {
 				this.#raf = requestAnimationFrame(tick);
 				this.time = p.currentTime;
+				this.position = p.position;
 			};
 			tick();
 			// The demuxer's read position runs ahead of playback (VLC reads ahead
@@ -180,6 +189,7 @@ export class Session {
 		this.title = this.chapter = -1;
 		this.duration = 0;
 		this.stats = null;
+		this.perf = null;
 		const idx = it.subtitles.find((s) => /\.idx$/i.test(s.name));
 		await p.open(it.url ?? (it.disc ? it.files : it.files[0]), {
 			subtitles: idx ? [idx, ...it.subtitles.filter((s) => s !== idx)] : it.subtitles[0]
@@ -196,6 +206,7 @@ export class Session {
 		this.titles = [];
 		this.duration = 0;
 		this.stats = null;
+		this.perf = null;
 		await this.player?.stop();
 	}
 
@@ -240,6 +251,8 @@ export class Session {
 		if (this.ended && this.player) { this.ended = false; return this.player.play(); }
 		return this.player?.togglePause();
 	}
+	/** Seeks to a fraction of the file: for media whose duration is unknown. */
+	seekPosition(f: number) { return this.player?.seekToPosition(Math.max(0, Math.min(1, f))); }
 	seek(t: number) { return this.player?.seek(Math.max(0, Math.min(t, this.duration || t))); }
 	skip(dt: number) { return this.seek(this.time + dt); }
 	setVolume(v: number) { if (this.player) { this.player.volume = v; this.volume = v; } }
