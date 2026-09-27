@@ -63,6 +63,8 @@ export default defineConfig({
 				'../../node_modules',
 				'../../corpus/media',
 				'../../corpus/compat/compat.json',
+				'../../corpus/compat/fate-summary.json',
+				'../../corpus/compat/fate-matrix.json',
 				'../../corpus/plain-english.json',
 				'../../corpus/formats.json'
 			]

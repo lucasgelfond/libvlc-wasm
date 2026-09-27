@@ -2,6 +2,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import * as Tabs from '$lib/components/ui/tabs';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
+	import FateTable from '$lib/components/FateTable.svelte';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 	import RiDownload2Line from 'remixicon-svelte/icons/download-2-line';
 	import RiSearchLine from 'remixicon-svelte/icons/search-line';
@@ -150,4 +151,5 @@
 			</table>
 		</div>
 
+		<FateTable {query} />
 	</main>

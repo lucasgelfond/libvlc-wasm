@@ -6,11 +6,14 @@
     "build": "./build.sh",
     "link": "./build.sh link",
     "dev": "pnpm --filter player dev",
+    "test": "node tests/all.mjs",
+    "test:quick": "node tests/all.mjs --quick",
     "test:node": "node tests/node-smoke.mjs",
     "test:browser": "node tests/run-browser.mjs",
     "corpus": "node corpus/fetch.mjs",
     "verify": "node tests/verify-corpus.mjs",
-    "bench": "node bench/run.mjs"
+    "bench": "node bench/run.mjs",
+    "fate": "node corpus/compat/fate.mjs"
   },
   "devDependencies": {
     "@ffmpeg/core": "0.12.10",
