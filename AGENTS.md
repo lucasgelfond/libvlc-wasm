@@ -103,7 +103,9 @@ player.chapters.titles;        // DVD titles; player.setTitle(i), player.setChap
 Mouse input on the canvas already drives menu buttons when the canvas was given to
 `createPlayer`/`attach`. If you draw your own UI over it, forward with
 `player.pointer('move' | 'down' | 'up', x, y)` using 0..1 coordinates.
-Only unencrypted discs play: there is no libdvdcss.
+Blu-ray images with HDMV (IG) menus work the same way: the Top Menu is a menu title, and
+`navigate()`, `menu()` and the mouse drive its buttons. BD-J (Java) menus are not supported.
+Only unencrypted discs play: there is no libdvdcss (or libaacs).
 
 ### Picture and sound
 

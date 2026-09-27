@@ -354,6 +354,47 @@ const results = await page.evaluate(async () => {
     return `${p.chapters.titles.length} title(s), ${p.chapters.chapters.length} chapters, ${codecs}`;
   });
 
+  await test('Blu-ray image: HDMV menu by keys and mouse (libbluray IG)', async () => {
+    // tests/make-bluray-menu.sh: First Play jumps to the Top Menu, an IG page
+    // on 1280x720 with PLAY (x 240-560) and CHAPTER 2 (x 720-1040), both at
+    // y 500-600. PLAY is title 1 (the movie from 0 s), CHAPTER 2 title 2 (from
+    // its mark at 3 s). A selected button is filled yellow, a normal one blue.
+    const f = await file('t_bluray_menu.iso');
+    await p.stop();
+    await p.open(f);
+    await waitFor(() => p.renderer.framesDrawn > 2 && p.inMenu && p.title === 0, 8000, 'the Top Menu');
+    const fill = (x) => {
+      p.renderer.draw();
+      const shot = new OffscreenCanvas(canvas.width, canvas.height);
+      shot.getContext('2d').drawImage(canvas, 0, 0);
+      const [r, g, b] = shot.getContext('2d').getImageData(Math.round(x / 1280 * canvas.width), Math.round(515 / 720 * canvas.height), 1, 1).data;
+      return r > 200 && g > 160 && b < 80 ? 'yellow' : b > 120 && r < 100 ? 'blue' : `rgb(${r},${g},${b})`;
+    };
+    const buttons = () => `${fill(260)}/${fill(740)}`;
+    await waitFor(() => buttons() === 'yellow/blue', 3000, `PLAY selected (buttons ${buttons()})`);
+    // Keys: right selects CHAPTER 2, activate plays from the second chapter.
+    await p.navigate('right');
+    await waitFor(() => buttons() === 'blue/yellow', 2000, `CHAPTER 2 selected (buttons ${buttons()})`);
+    await p.navigate('activate');
+    await waitFor(() => p.title === 2 && !p.inMenu && p.currentTime >= 2.9 && p.currentTime < 6, 5000,
+      `title 2 from 3 s (title ${p.title}, at ${p.currentTime.toFixed(2)})`);
+    const fromMark = p.currentTime;
+    // Back to the menu, then the mouse: CHAPTER 2 selected by key, hovering
+    // PLAY selects it, a click plays title 1 from the start.
+    assert(await p.menu(), 'menu() found no menu');
+    await waitFor(() => p.inMenu && buttons() === 'yellow/blue', 4000, `back in the menu (buttons ${buttons()})`);
+    await p.navigate('right');
+    await waitFor(() => buttons() === 'blue/yellow', 2000, `CHAPTER 2 selected again (buttons ${buttons()})`);
+    await waitFor(() => p.pointer('move', 400 / 1280, 550 / 720), 2000, 'a video window to point at');
+    await waitFor(() => buttons() === 'yellow/blue', 2000, `hover selects PLAY (buttons ${buttons()})`);
+    await p.pointer('down', 400 / 1280, 550 / 720);
+    await p.pointer('up', 400 / 1280, 550 / 720);
+    await waitFor(() => p.title === 1 && !p.inMenu && p.chapters.chapters.length === 3, 4000, `title 1 after the click (title ${p.title})`);
+    await sleep(1000);
+    assert(p.currentTime < 2.9, `title 1 at ${p.currentTime.toFixed(2)} s, not from the start`);
+    return `keys → title 2 at ${fromMark.toFixed(2)} s; hover + click → title 1 at ${p.currentTime.toFixed(2)} s`;
+  });
+
   await test('two players at once', async () => {
     const c2 = document.createElement('canvas');
     document.body.append(c2);

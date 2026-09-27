@@ -186,9 +186,14 @@ static void on_tracks(void *o, libvlc_list_action_t a, libvlc_track_type_t t, co
 static void on_track_selected(void *o, libvlc_track_type_t t, const char *un, const char *sel)
 { (void) un; emit(((wv_player_t *)o)->id, EV_TRACK_SELECTED, t, 0, sel); }
 static void on_titles(void *o) { emit(((wv_player_t *)o)->id, EV_TITLES, 0, 0, NULL); }
+/* `c` is not read: the player can report a chapter the title's list does not
+ * have (a Blu-ray going from a title back to its menu announces the menu with
+ * the old title's chapter), and then it points past the list -- VLC only
+ * asserts the index -- so its name was a wild pointer. The page names the
+ * chapter from the list it fetches, which is bounds-checked. */
 static void on_chapter(void *o, const libvlc_title_description_t *t, unsigned ti,
                        const libvlc_chapter_description_t *c, unsigned ci)
-{ (void) t; emit(((wv_player_t *)o)->id, EV_CHAPTER, ti, ci, c ? c->psz_name : NULL); }
+{ (void) t; (void) c; emit(((wv_player_t *)o)->id, EV_CHAPTER, ti, ci, NULL); }
 static void on_vout(void *o, unsigned n) { emit(((wv_player_t *)o)->id, EV_VOUT, n, 0, NULL); }
 static void on_stopping(void *o, libvlc_media_t *m, libvlc_stopping_reason_t r)
 { (void) m; emit(((wv_player_t *)o)->id, EV_STOPPING, r, 0, NULL); }

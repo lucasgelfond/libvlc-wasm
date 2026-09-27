@@ -693,10 +693,16 @@ export class Player extends Emitter {
         this._pendingTracks = setTimeout(() => this._refreshTracks().catch(() => {}), 30);
         break;
       case EVENT.TITLES:
-      case EVENT.CHAPTER:
         this._refreshChapters().catch(() => {});
-        if (type === EVENT.CHAPTER) this.emit('chapterchange', { title: a, chapter: b, name: str });
         break;
+      case EVENT.CHAPTER: {
+        // Named from the refreshed list: VLC's own name can be a stale pointer (bridge.c on_chapter).
+        const gen = this._mediaGen;
+        this._refreshChapters().then(() => {
+          if (gen === this._mediaGen) this.emit('chapterchange', { title: a, chapter: b, name: this.chapters.chapters[b]?.name ?? null });
+        }, () => {});
+        break;
+      }
       case EVENT.STOPPING:
         if (STOP_REASON[a] !== 'user' && this._retry &&
             (!this._sawStreams || this._outputCount() === this._outputAtOpen)) {

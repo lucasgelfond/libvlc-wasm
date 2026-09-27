@@ -237,8 +237,8 @@ pnpm test -- --only=features,sout --engines=webkit    # a subset
 | `tests/bundle.mjs` | what each way of importing the SDK ships and downloads |
 
 Fixtures the suites use are generated, not downloaded: `sh tests/make-fixtures.sh`,
-`sh tests/make-colors.sh` (need ffmpeg), and in Docker `tests/make-dvd.sh` and
-`tests/make-bluray.sh` (commands at the top of each). The `verify` skill
+`sh tests/make-colors.sh` (need ffmpeg), and in Docker `tests/make-dvd.sh`,
+`tests/make-bluray.sh` and `tests/make-bluray-menu.sh` (commands at the top of each). The `verify` skill
 (`.claude/skills/verify/`) is the cheapest-first procedure for checking a change.
 
 ## Test media
