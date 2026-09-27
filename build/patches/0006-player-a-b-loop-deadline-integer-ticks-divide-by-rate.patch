@@ -1,0 +1,27 @@
+From: libvlc-wasm <noreply@libvlc-wasm>
+Subject: [PATCH] player: A-B loop deadline: integer ticks, divide by the rate
+
+vlc_player_GetAtoBLoopDeadline() returned `now + (b_time - ts) * rate` with a
+float rate, so the whole sum was computed in float. A float's step at 2^50 is
+2^27, so where vlc_tick_now() counts from the Unix epoch (emscripten's
+CLOCK_MONOTONIC is performance.timeOrigin-based, ~1.8e15 us) the deadline was
+rounded to a 134 s grid: the loop fired tens of seconds early -- seeking back
+to A continuously -- or late. Clocks counting from boot hide it at ms scale.
+
+It also multiplied the remaining media time by the rate where it must divide
+(at 2x the loop fired late, at 0.5x early).
+---
+--- a/src/player/player.c
++++ b/src/player/player.c
+@@ -213,7 +213,10 @@
+             return VLC_TICK_MIN;
+         b_time = input->abloop_state[1].pos * input->length;
+     }
+-    return now + (b_time - ts) * input->rate;
++    /* Media time runs `rate` times faster than the system clock. Keep the
++     * sum in integer ticks: `now + float` is computed in float, which has a
++     * 2^27 us (134 s) step at an epoch-based tick like emscripten's. */
++    return now + (vlc_tick_t)((b_time - ts) / input->rate);
+ }
+ 
+ static void *
