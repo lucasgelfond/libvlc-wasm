@@ -37,14 +37,30 @@ fi
 
 # Idempotent on purpose: re-applying (or resetting and re-applying) would
 # bump the mtime of contrib/src/main.mak, and every contrib depends on it.
+# A patch that neither reverses nor applies is an older version of itself,
+# left in the tree by an earlier build: only the files it touches are reset,
+# and the earlier patches' hunks for those files put back, before applying it.
 step "applying patches"
 for p in "$PATCHES"/*.patch; do
   [ -e "$p" ] || continue
   if git -C "$SRC" apply -R --check "$p" 2>/dev/null; then
     echo "  $(basename "$p") (already applied)"
-  else
+  elif git -C "$SRC" apply --check "$p" 2>/dev/null; then
     echo "  $(basename "$p")"
-    git -C "$SRC" apply "$p"
+    git -C "$SRC" apply --whitespace=nowarn "$p"
+  else
+    echo "  $(basename "$p") (an older version is applied: resetting its files)"
+    files=$(git -C "$SRC" apply --numstat "$p" | cut -f3)
+    for f in $files; do
+      git -C "$SRC" checkout -q HEAD -- "$f" 2>/dev/null || rm -f "$SRC/$f"
+    done
+    for q in "$PATCHES"/*.patch; do
+      [ "$q" = "$p" ] && break
+      for f in $files; do
+        git -C "$SRC" apply --whitespace=nowarn --include="$f" "$q"
+      done
+    done
+    git -C "$SRC" apply --whitespace=nowarn "$p"
   fi
 done
 
