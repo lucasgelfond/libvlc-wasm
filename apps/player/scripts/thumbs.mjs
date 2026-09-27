@@ -22,8 +22,17 @@ for (const name of files) {
   try {
     const info = await vlc.probe(path);
     if (!info.tracks.some((t) => t.type === 'video') && !/\.iso$/i.test(name)) { console.log(`thumbs: ${name}: audio only`); continue; }
-    // Some formats cannot seek by position (id RoQ): fall back to a time.
-    const shot = await vlc.thumbnail(path, { position: 0.3, width: 640 }).catch(() => vlc.thumbnail(path, { time: 1, width: 640, fast: false }));
+    // Several candidate frames; keep the one with the most detail. A JPEG's
+    // size is a good proxy: black or flat frames compress to almost nothing.
+    // Some formats cannot seek by position (id RoQ), so times are tried too.
+    const tries = [0.15, 0.3, 0.45, 0.6, 0.75].map((position) => ({ position, width: 640 }))
+      .concat([1, 3, 6].map((time) => ({ time, width: 640, fast: false })));
+    let shot = null;
+    for (const t of tries) {
+      const s = await vlc.thumbnail(path, t).catch(() => null);
+      if (s && (!shot || s.jpeg.length > shot.jpeg.length)) shot = s;
+    }
+    if (!shot) throw new Error('no frame at any position');
     const { jpeg, width, height } = shot;
     writeFileSync(`${out}/${name}.jpg`, jpeg);
     console.log(`thumbs: ${name} ${width}x${height}`);

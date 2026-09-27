@@ -5,6 +5,8 @@
 export type Sample = {
 	/** For links: /?sample=<id>. */
 	id: string;
+	/** The file format, short: what the sample menu lists. */
+	label: string;
 	/** What the gallery card shows: a thumbnail (video, disc) or a tile (audio). */
 	kind: 'video' | 'audio' | 'disc';
 	/** Files to open together (a DVD folder is several); the first is the one shown. */
@@ -21,6 +23,7 @@ export type Sample = {
 export const SAMPLES: Sample[] = [
 	{
 		id: 'dvd',
+		label: 'DVD disc image (.iso)',
 		kind: 'disc',
 		files: ['gen/t_dvd.iso'],
 		title: 'A DVD, with its menu',
@@ -30,6 +33,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'realmedia',
+		label: 'RealMedia (.rm)',
 		kind: 'video',
 		files: ['realmedia/realvideo-3-cook.rm'],
 		title: 'A RealPlayer video',
@@ -38,6 +42,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'bink',
+		label: 'Bink video (.bik)',
 		kind: 'video',
 		files: ['game-and-oddball-video/bink-video.bik'],
 		title: 'A video game cutscene',
@@ -46,6 +51,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'tracker',
+		label: 'Scream Tracker module (.s3m)',
 		kind: 'audio',
 		files: ['chiptune-tracker-midi/sandman-s3m.s3m'],
 		title: 'A tracker module',
@@ -54,6 +60,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'snes',
+		label: 'SNES music (.spc)',
 		kind: 'audio',
 		files: ['chiptune-tracker-midi/snes-spc.spc'],
 		title: 'Super Nintendo music',
@@ -62,6 +69,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'subtitles',
+		label: 'Matroska with ASS subtitles (.mkv)',
 		kind: 'video',
 		files: ['subtitles-and-captions/mpeg-4-asp-vorbis-16-ass-ssa-tracks.mkv'],
 		title: 'Anime fansub, 16 subtitle tracks',
@@ -71,6 +79,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'wmv',
+		label: 'Windows Media (.wmv)',
 		kind: 'video',
 		files: ['windows-media/wmv7.wmv'],
 		title: 'An early-2000s Windows Media clip',
@@ -79,6 +88,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'truehd',
+		label: 'Dolby TrueHD (.thd)',
 		kind: 'audio',
 		files: ['rare-and-surround-audio/dolby-truehd-atmos-8ch.thd'],
 		title: 'Blu-ray surround audio',
@@ -87,6 +97,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'quake',
+		label: 'id RoQ video (.roq)',
 		kind: 'video',
 		files: ['game-and-oddball-video/id-roq-quake-3-logo.roq'],
 		title: 'The Quake III intro',
@@ -95,6 +106,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'playstation',
+		label: 'PlayStation STR (.str)',
 		kind: 'video',
 		files: ['game-and-oddball-video/playstation-str-mdec-xa.str'],
 		title: 'A PlayStation 1 movie',
@@ -103,6 +115,7 @@ export const SAMPLES: Sample[] = [
 	},
 	{
 		id: 'flash',
+		label: 'Flash video (.flv)',
 		kind: 'video',
 		files: ['flash/vp6f-nellymoser.flv'],
 		title: 'A Flash video',

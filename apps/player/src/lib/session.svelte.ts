@@ -172,6 +172,20 @@ export class Session {
 		});
 	}
 
+	/** Back to the start: an empty playlist and nothing playing. */
+	async reset() {
+		for (const it of this.playlist) if (it.thumb) URL.revokeObjectURL(it.thumb);
+		this.playlist = [];
+		this.current = -1;
+		this.ended = false;
+		this.tracks = [];
+		this.chapters = [];
+		this.titles = [];
+		this.duration = 0;
+		this.stats = null;
+		await this.player?.stop();
+	}
+
 	remove(i: number) {
 		const it = this.playlist[i];
 		if (it?.thumb) URL.revokeObjectURL(it.thumb);

@@ -4,9 +4,6 @@
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
-	import RiCheckLine from 'remixicon-svelte/icons/check-line';
-	import RiCloseLine from 'remixicon-svelte/icons/close-line';
-	import RiSubtractLine from 'remixicon-svelte/icons/subtract-line';
 	import RiDownload2Line from 'remixicon-svelte/icons/download-2-line';
 	import RiSearchLine from 'remixicon-svelte/icons/search-line';
 
@@ -56,19 +53,19 @@
 	<Tooltip.Root>
 		<Tooltip.Trigger>
 			{#snippet child({ props })}
-				<span
+				<td
 					{...props}
-					class="mx-auto grid size-6 place-items-center rounded-full {k === 'yes'
-						? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+					class="border-background border-x-2 px-1 py-2.5 text-center {k === 'yes'
+						? 'bg-emerald-500/35 dark:bg-emerald-500/30'
 						: k === 'partial'
-							? 'bg-amber-500/15 text-amber-600 dark:text-amber-400'
+							? 'bg-amber-500/35 dark:bg-amber-500/30'
 							: k === 'no'
-								? 'bg-red-500/15 text-red-600 dark:text-red-400'
-								: 'text-muted-foreground/50'}"
+								? 'bg-red-500/25 dark:bg-red-500/22'
+								: ''}"
 					aria-label="{label}: {text}"
 				>
-					{#if k === 'yes'}<RiCheckLine class="size-4" />{:else if k === 'no'}<RiCloseLine class="size-4" />{:else}<RiSubtractLine class="size-4" />{/if}
-				</span>
+					{#if k === 'untested'}<span class="text-muted-foreground/40 text-xs">n/a</span>{/if}
+				</td>
 			{/snippet}
 		</Tooltip.Trigger>
 		<Tooltip.Content class="block max-w-72">
@@ -119,6 +116,14 @@
 			</Tabs.Root>
 		</div>
 
+		<div class="text-muted-foreground -mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-emerald-500/60"></span>plays</span>
+			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-amber-500/60"></span>partly (one of its streams)</span>
+			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-red-500/50"></span>does not play</span>
+			<span class="inline-flex items-center gap-1.5"><span class="text-muted-foreground/50">n/a</span>not tested</span>
+			<span class="sm:ml-auto">Hover any cell for what was measured</span>
+		</div>
+
 		<div class="border-border bg-card overflow-x-auto rounded-2xl border">
 			<table class="w-full min-w-[820px] text-sm">
 				<thead class="text-muted-foreground text-left text-xs">
@@ -165,7 +170,7 @@
 									</Tooltip.Root>
 								</td>
 								{#each COLUMNS as c (c.label)}
-									<td class="px-1 py-2.5 text-center">{@render mark(c.pick(r), c.label)}</td>
+									{@render mark(c.pick(r), c.label)}
 								{/each}
 								<td class="px-4 py-2.5">
 									<a href={r.url} target="_blank" rel="noreferrer" class="group/sample text-primary inline-flex items-center gap-1 text-xs font-medium whitespace-nowrap">

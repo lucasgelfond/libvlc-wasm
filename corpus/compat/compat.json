@@ -4,13 +4,13 @@
   "nativeVlc": "3.0.24",
   "ffmpeg": "ffmpeg version 9.0.2",
   "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
-  "libvlcWasm": "corpus/results/results.json (2026-09-27T14:26:03.908Z)",
+  "libvlcWasm": "corpus/results/results.json (2026-09-27T15:28:06.307Z)",
   "browsers": [
    "chromium",
    "webkit",
    "firefox"
   ],
-  "vlcjs": "addyosmani/vlc.js, bench/compare/vlcjs-results.json (2026-09-27T06:32:24.893Z)"
+  "vlcjs": "addyosmani/vlc.js, bench/compare/vlcjs-results.json (2026-09-27T15:33:28.858Z)"
  },
  "samples": [
   {
@@ -68,7 +68,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "149 pictures displayed; decoders video:avcodec"
+    "note": "144 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -108,7 +108,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "264 pictures displayed; 9.52 s audio, peak -24.5 dB; decoders audio:avcodec, video:avcodec"
+    "note": "265 pictures displayed; 9.52 s audio, peak -24.5 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -189,7 +189,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "149 pictures displayed; 10.35 s audio, peak -4.2 dB; decoders audio:avcodec, video:avcodec"
+    "note": "135 pictures displayed; 10.35 s audio, peak -4.2 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -270,7 +270,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "219 pictures displayed; decoders video:avcodec"
+    "note": "218 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -351,7 +351,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "151 pictures displayed; 10.24 s audio, peak -14.9 dB; decoders audio:avcodec, video:avcodec"
+    "note": "149 pictures displayed; 10.24 s audio, peak -14.9 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -433,7 +433,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "25 pictures displayed; decoders video:avcodec"
+    "note": "24 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -473,7 +473,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "23 pictures displayed; decoders video:avcodec"
+    "note": "22 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -796,7 +796,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "76 pictures displayed; decoders video:avcodec"
+    "note": "75 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -877,7 +877,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "132 pictures displayed; 8.925 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
+    "note": "133 pictures displayed; 8.925 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -999,7 +999,7 @@
    "nativeVlc": {
     "video": true,
     "audio": false,
-    "note": "240 pictures displayed; no audio decoded; decoders video:avcodec, audio:speex"
+    "note": "239 pictures displayed; no audio decoded; decoders video:avcodec, audio:speex"
    },
    "ffmpeg": {
     "video": true,
@@ -1040,7 +1040,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "1 pictures displayed; decoders video:avcodec"
+    "note": "2 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1080,7 +1080,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "25 pictures displayed; decoders video:avcodec"
+    "note": "24 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1241,7 +1241,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "198 pictures displayed; decoders video:avcodec"
+    "note": "197 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1281,7 +1281,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "295 pictures displayed; 10.031 s audio, peak -14.1 dB; decoders video:videotoolbox, audio:faad"
+    "note": "296 pictures displayed; 10.031 s audio, peak -14.1 dB; decoders video:videotoolbox, audio:faad"
    },
    "ffmpeg": {
     "video": true,
@@ -1322,7 +1322,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "165 pictures displayed; 13.003 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
+    "note": "162 pictures displayed; 13.003 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1363,7 +1363,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "198 pictures displayed; 10.32 s audio, peak -0.4 dB; decoders video:avcodec, audio:avcodec"
+    "note": "199 pictures displayed; 10.32 s audio, peak -0.4 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1404,7 +1404,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "54 pictures displayed; decoders video:avcodec"
+    "note": "55 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1767,7 +1767,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "26 pictures displayed; decoders video:avcodec"
+    "note": "27 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1847,7 +1847,7 @@
    "nativeVlc": {
     "video": true,
     "audio": true,
-    "note": "9 pictures displayed; 0.418 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
+    "note": "7 pictures displayed; 0.418 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -1893,7 +1893,7 @@
    "ffmpeg": {
     "video": false,
     "audio": true,
-    "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [in#0/vivo @ 0xc9b004000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
+    "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [in#0/vivo @ 0xc81004000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
    },
    "ffmpegWasm": {
     "video": false,
@@ -2455,7 +2455,7 @@
    "ffmpeg": {
     "video": false,
     "audio": false,
-    "note": "0 video frames; no audio decoded; error: [in#0/mpegts @ 0x7d4c28000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
+    "note": "0 video frames; no audio decoded; error: [in#0/mpegts @ 0xb62c24000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
    },
    "ffmpegWasm": {
     "video": false,
@@ -2534,7 +2534,7 @@
    "nativeVlc": {
     "video": true,
     "audio": null,
-    "note": "134 pictures displayed; decoders video:avcodec"
+    "note": "135 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -2661,7 +2661,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x8db00c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x8f700c000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2701,7 +2701,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x98900c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x919004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2741,7 +2741,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x9d7004000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0xaa500c000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2776,12 +2776,12 @@
    "nativeVlc": {
     "video": null,
     "audio": true,
-    "note": "10.1 s audio, peak -3 dB; decoders audio:araw"
+    "note": "10.1 s audio, peak -2.9 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0xa8f004000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x7db004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2821,7 +2821,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x80ec28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0xa57004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2861,7 +2861,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0xbcf00c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0xa72c28000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2901,7 +2901,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x881004000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0xae5004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2941,7 +2941,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x80ec28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x93ec28000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -2981,7 +2981,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x730c28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0xbeac28000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
@@ -3021,7 +3021,7 @@
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x77300c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x869004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,

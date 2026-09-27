@@ -9,6 +9,7 @@
 	import Playlist from '$lib/components/Playlist.svelte';
 	import FormatsPopover from '$lib/components/FormatsPopover.svelte';
 	import SampleMenu from '$lib/components/SampleMenu.svelte';
+	import About from '$lib/components/About.svelte';
 	import { Session, formatTime } from '$lib/session.svelte';
 	import { SAMPLES, loadSample, type Sample } from '$lib/samples';
 	import { ROWS } from '$lib/compat';
@@ -31,14 +32,11 @@
 	let canvas: HTMLCanvasElement;
 	let stage: HTMLDivElement;
 	let fileInput: HTMLInputElement;
-	let folderInput: HTMLInputElement;
 	let subInput: HTMLInputElement;
 	let dragging = $state(false);
 	let fullscreen = $state(false);
-	let idle = $state(false);
 	let scrub = $state<number | null>(null);
 	let scrubbing = false;
-	let idleTimer = 0;
 	let loadingSample = $state<string | null>(null);
 	let volumeOpen = $state(false);
 
@@ -58,7 +56,6 @@
 	});
 
 	const opened = $derived(session.current >= 0);
-	const showControls = $derived(!idle || !session.playing || scrub !== null || volumeOpen);
 	// The stage takes the shape of what is drawn (pixel aspect, forced aspect
 	// ratio and crop included); audio gets a 16:9 card.
 	const aspect = $derived.by(() => {
@@ -100,7 +97,7 @@
 			const r = ROWS.find((x) => x.id === test);
 			if (!r) return toast.error(`No test file called "${test}".`);
 			try {
-				await addFiles(await loadSample({ id: r.id, kind: r.hasVideo ? 'video' : 'audio', files: [r.file], title: r.name, plain: r.plain, format: r.format }));
+				await addFiles(await loadSample({ id: r.id, label: r.name, kind: r.hasVideo ? 'video' : 'audio', files: [r.file], title: r.name, plain: r.plain, format: r.format }));
 			} catch {
 				toast.error(`${r.name} isn't bundled with this site. Download it and drop it here: ${r.url}`);
 			}
@@ -146,11 +143,6 @@
 		return out;
 	}
 
-	function poke() {
-		idle = false;
-		clearTimeout(idleTimer);
-		idleTimer = window.setTimeout(() => (idle = true), 2500);
-	}
 
 	function toggleFullscreen() {
 		if (document.fullscreenElement) document.exitFullscreen();
@@ -181,7 +173,6 @@
 		else if (k === '<') session.setRate(Math.max(0.25, +(session.rate - 0.25).toFixed(2)));
 		else return;
 		e.preventDefault();
-		poke();
 	}
 </script>
 
@@ -205,25 +196,31 @@
 />
 
 <input bind:this={fileInput} type="file" multiple class="hidden" onchange={(e) => addFiles(e.currentTarget.files)} />
-<input bind:this={folderInput} type="file" webkitdirectory class="hidden" onchange={(e) => addFiles(e.currentTarget.files)} />
 <input bind:this={subInput} type="file" multiple class="hidden" onchange={(e) => session.addSubtitles([...(e.currentTarget.files ?? [])])} />
 
 <Tooltip.Provider delayDuration={400}>
 	<main class="mx-auto flex min-h-svh max-w-[1400px] flex-col gap-4 px-4 py-4 sm:px-6">
 		<header class="flex items-center gap-3">
-			<svg viewBox="0 0 32 32" class="size-8 shrink-0" aria-hidden="true">
-				<rect width="32" height="32" rx="8" class="fill-primary" />
-				<path d="M16 6 8.5 24h15z" class="fill-primary-foreground" />
-				<path d="M10.2 20h11.6" class="stroke-primary" stroke-width="2" />
-			</svg>
-			<div class="min-w-0 flex-1">
-				<h1 class="font-display truncate text-lg leading-tight font-semibold tracking-tight">{opened ? session.name : 'libvlc-wasm'}</h1>
-				{#if opened && codecs.length}
-					<p class="text-muted-foreground truncate font-mono text-[11px]">
-						{codecs.join(' · ')}{#if video?.width}&nbsp;· {video.width}×{video.height}{/if}
-					</p>
-				{/if}
-			</div>
+			<button
+				type="button"
+				onclick={() => { session.reset(); history.replaceState(null, '', '/'); }}
+				class="flex min-w-0 flex-1 items-center gap-3 text-left"
+				aria-label="Back to the start"
+			>
+				<svg viewBox="0 0 32 32" class="size-8 shrink-0" aria-hidden="true">
+					<rect width="32" height="32" rx="8" class="fill-primary" />
+					<path d="M16 6 8.5 24h15z" class="fill-primary-foreground" />
+					<path d="M10.2 20h11.6" class="stroke-primary" stroke-width="2" />
+				</svg>
+				<span class="min-w-0 flex-1">
+					<span class="font-display block truncate text-lg leading-tight font-semibold tracking-tight">{opened ? session.name : 'libvlc-wasm'}</span>
+					{#if opened && codecs.length}
+						<span class="text-muted-foreground block truncate font-mono text-[11px]">
+							{codecs.join(' · ')}{#if video?.width}&nbsp;· {video.width}×{video.height}{/if}
+						</span>
+					{/if}
+				</span>
+			</button>
 			<FormatsPopover />
 			{#if session.playlist.length}
 				<SampleMenu onpick={openSample} disabled={!session.ready || !!loadingSample} loading={loadingSample} />
@@ -231,20 +228,22 @@
 			{/if}
 		</header>
 
-		<section class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-			<div class="flex min-w-0 flex-col gap-4">
+		{#if !opened}<About />{/if}
+
+		<section class="grid flex-1 gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+			<div class="flex min-h-0 min-w-0 flex-col gap-4">
 				<div
 					bind:this={stage}
 					role="region"
 					aria-label="Player"
-					class="relative mx-auto w-full overflow-hidden rounded-xl bg-black shadow-sm ring-1 ring-black/10 {opened ? '' : 'hidden'} {idle &&
-					session.playing
-						? 'cursor-none'
+					class="mx-auto flex w-full flex-col overflow-hidden rounded-xl bg-black shadow-sm ring-1 ring-black/10 {opened ? '' : 'hidden'} {fullscreen
+						? 'h-svh rounded-none'
 						: ''}"
-					style={fullscreen ? '' : `aspect-ratio: ${aspect}; max-width: calc((100svh - 180px) * ${aspect})`}
-					onpointermove={poke}
-					onpointerleave={() => (idle = true)}
+					style={fullscreen ? '' : `max-width: calc((100svh - 240px) * ${aspect})`}
 				>
+					<!-- The picture, with the controls underneath rather than over it:
+					     VLC draws subtitles into the bottom of the frame. -->
+					<div class="relative w-full {fullscreen ? 'min-h-0 flex-1' : ''}" style={fullscreen ? '' : `aspect-ratio: ${aspect}`}>
 					<canvas
 						bind:this={canvas}
 						class="absolute inset-0 size-full"
@@ -286,11 +285,9 @@
 							<div class="size-8 animate-spin rounded-full border-2 border-white/20 border-t-white"></div>
 						</div>
 					{/if}
+					</div>
 
-					<div
-						class="absolute inset-x-3 bottom-3 flex flex-col gap-0.5 rounded-2xl bg-black/55 px-3 pt-1 pb-1.5 text-white shadow-lg ring-1 ring-white/10 backdrop-blur-md transition-opacity duration-300 {showControls
-							? ''
-							: 'pointer-events-none opacity-0'}"
+					<div class="flex flex-col gap-0.5 border-t border-white/10 bg-neutral-950 px-3 pt-1 pb-1.5 text-white"
 					>
 						<!-- The slider also reports programmatic value changes, so only a
 						     pointer or key actually on it counts as scrubbing. -->
@@ -375,7 +372,7 @@
 								fileInput.click();
 							}
 						}}
-						class="group border-border hover:border-primary/60 hover:bg-primary/5 focus-visible:ring-ring flex min-h-80 cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-8 text-center transition-colors outline-none focus-visible:ring-2 {dragging
+						class="group border-border hover:border-primary/60 hover:bg-primary/5 focus-visible:ring-ring flex min-h-80 flex-1 cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-8 text-center transition-colors outline-none focus-visible:ring-2 {dragging
 							? 'border-primary bg-primary/10'
 							: ''} {session.ready ? '' : 'cursor-wait opacity-70'}"
 					>
@@ -384,7 +381,7 @@
 						</span>
 						<span class="flex flex-col gap-1.5">
 							<span class="font-display text-xl font-semibold tracking-tight">
-								{session.ready ? (dragging ? 'Drop to play' : 'Drop videos, music or folders here') : 'Starting VLC…'}
+								{session.ready ? (dragging ? 'Drop to play' : 'Drop files or folders for playback') : 'Starting VLC…'}
 							</span>
 							<span class="text-muted-foreground text-sm">Nothing is uploaded, all playback occurs totally in your browser.</span>
 						</span>
@@ -393,10 +390,6 @@
 							<SampleMenu onpick={openSample} disabled={!session.ready || !!loadingSample} loading={loadingSample} />
 						</span>
 					</div>
-					<p class="text-muted-foreground -mt-2 text-center text-xs">
-						A whole folder, such as a DVD's VIDEO_TS or a season of episodes?
-						<button type="button" class="text-primary font-medium hover:underline" onclick={() => folderInput.click()} disabled={!session.ready}>Choose a folder</button>
-					</p>
 				{/if}
 
 				{#if session.playlist.length}
@@ -408,7 +401,7 @@
 
 			</div>
 
-			<aside class="bg-card border-border flex max-h-[calc(100svh-6rem)] min-h-96 flex-col rounded-xl border p-3 lg:sticky lg:top-4">
+			<aside class="bg-card border-border flex min-h-96 flex-col rounded-xl border p-3 lg:sticky lg:top-4 lg:max-h-[calc(100svh-2rem)]">
 				<SidePanel {session} onsubtitlefile={() => subInput.click()} />
 			</aside>
 		</section>

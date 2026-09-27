@@ -3,9 +3,6 @@
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { Button } from '$lib/components/ui/button';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
-	import RiCheckLine from 'remixicon-svelte/icons/check-line';
-	import RiCloseLine from 'remixicon-svelte/icons/close-line';
-	import RiSubtractLine from 'remixicon-svelte/icons/subtract-line';
 	import RiListCheck3 from 'remixicon-svelte/icons/list-check-3';
 	import RiArrowRightLine from 'remixicon-svelte/icons/arrow-right-line';
 
@@ -23,18 +20,18 @@
 
 {#snippet mark(v: Cell | boolean | null)}
 	{@const k = verdict(v)}
-	<span
-		class="mx-auto grid size-5 place-items-center rounded-full {k === 'yes'
-			? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+	<td
+		class="border-popover border-x-2 px-1 py-1.5 text-center {k === 'yes'
+			? 'bg-emerald-500/35 dark:bg-emerald-500/30'
 			: k === 'partial'
-				? 'bg-amber-500/15 text-amber-600'
+				? 'bg-amber-500/35 dark:bg-amber-500/30'
 				: k === 'no'
-					? 'bg-red-500/15 text-red-600 dark:text-red-400'
-					: 'text-muted-foreground/50'}"
+					? 'bg-red-500/25 dark:bg-red-500/22'
+					: ''}"
 		aria-label={k}
 	>
-		{#if k === 'yes'}<RiCheckLine class="size-3.5" />{:else if k === 'no'}<RiCloseLine class="size-3.5" />{:else}<RiSubtractLine class="size-3.5" />{/if}
-	</span>
+		{#if k === 'untested'}<span class="text-muted-foreground/40 text-[10px]">n/a</span>{/if}
+	</td>
 {/snippet}
 
 <Popover.Root>
@@ -48,7 +45,7 @@
 			<div class="border-border border-b p-4">
 				<p class="text-sm font-semibold">What plays where</p>
 				<p class="text-muted-foreground mt-1 text-xs">
-					{libvlc.yes} of {libvlc.tested} hard formats from the test corpus play here. Hover a name for what it is; each links to a test file.
+					{libvlc.yes} of {libvlc.tested} hard formats from the test corpus play here. Green plays, amber partly, red not; hover a name for what it is.
 				</p>
 			</div>
 			<div class="max-h-[min(60vh,480px)] overflow-y-auto">
@@ -71,13 +68,13 @@
 													<a {...props} href={r.url} target="_blank" rel="noreferrer" class="hover:text-primary underline-offset-2 hover:underline">{r.name}</a>
 												{/snippet}
 											</Tooltip.Trigger>
-											<Tooltip.Content side="right" class="block max-w-64">
+											<Tooltip.Content side="top" align="start" class="block max-w-64">
 												<span class="block">{r.plain}</span>
 												<span class="mt-1 block font-mono text-[10px] opacity-70">{r.format}</span>
 											</Tooltip.Content>
 										</Tooltip.Root>
 									</td>
-									{#each COLUMNS as [label, pick] (label)}<td class="px-1 py-1.5">{@render mark(pick(r))}</td>{/each}
+									{#each COLUMNS as [label, pick] (label)}{@render mark(pick(r))}{/each}
 								</tr>
 							{/each}
 						</tbody>
