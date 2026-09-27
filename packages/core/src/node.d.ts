@@ -9,6 +9,7 @@ export interface NodeVLC {
 }
 
 export declare function createVLC(opts?: {
+  /** pthreads started up front (default 8). */
   threads?: number;
   logLevel?: 'debug' | 'info' | 'warn' | 'error' | 'off';
   args?: string[];

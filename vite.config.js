@@ -1,7 +1,7 @@
 // Dev server for tests/ and bench/: cross-origin isolated so SharedArrayBuffer works.
 import { defineConfig } from 'vite';
 import { createReadStream, statSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { resolve, sep } from 'node:path';
 
 const ISOLATION = {
   'Cross-Origin-Opener-Policy': 'same-origin',
@@ -18,7 +18,8 @@ function rawMedia(mount) {
     configureServer(server) {
       server.middlewares.use(mount, (req, res, next) => {
         const path = resolve(base, decodeURIComponent(req.url.split('?')[0]).replace(/^\/+/, ''));
-        if (!path.startsWith(base)) return next();
+        // With the separator: /corpus/media-private must not pass for /corpus/media.
+        if (!path.startsWith(base + sep)) return next();
         let st;
         try { st = statSync(path); } catch { return next(); }
         if (!st.isFile()) return next();

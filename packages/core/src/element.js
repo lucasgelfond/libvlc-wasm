@@ -44,6 +44,7 @@ export class VlcPlayerElement extends HTMLElement {
 
   #player = null;
   #ready = null;
+  #token = null;
   #src = null;
   #raf = 0;
   #seeking = false;
@@ -84,6 +85,7 @@ export class VlcPlayerElement extends HTMLElement {
     this.#player?.destroy();
     this.#player = null;
     this.#ready = null;
+    this.#token = null;
   }
 
   attributeChangedCallback(name, _old, value) {
@@ -91,6 +93,10 @@ export class VlcPlayerElement extends HTMLElement {
     if (name === 'controls') this.#ui.bar.hidden = value == null;
     if (name === 'muted') this.muted = value != null;
     if (name === 'volume' && value != null) this.volume = +value;
+    if (name === 'fit' && this.#player?.renderer) {
+      this.#player.renderer.fit = value ?? 'contain';
+      this.#player.renderer.draw();
+    }
   }
 
   /** The libvlc-wasm Player (tracks, subtitles, filters...), once created. */
@@ -106,16 +112,17 @@ export class VlcPlayerElement extends HTMLElement {
   }
 
   get currentTime() { return this.#player?.currentTime ?? 0; }
-  set currentTime(t) { this.#player?.seek(t); }
+  // Setters cannot hand back a promise; errors surface through the 'error' event.
+  set currentTime(t) { this.#player?.seek(t).catch(() => {}); }
   get duration() { return this.#player?.duration || NaN; }
   get paused() { return !this.#player || this.#player.paused; }
   get ended() { return this.#player?.state === 'stopped'; }
   get volume() { return this.#player?.volume ?? 1; }
-  set volume(v) { this.#ensure().then((p) => { p.volume = v; }); }
+  set volume(v) { this.#ensure().then((p) => { p.volume = v; }, () => {}); }
   get muted() { return this.#player?.muted ?? this.hasAttribute('muted'); }
-  set muted(m) { this.#ensure().then((p) => { p.muted = m; }); }
+  set muted(m) { this.#ensure().then((p) => { p.muted = m; }, () => {}); }
   get playbackRate() { return this.#player?.rate ?? 1; }
-  set playbackRate(r) { this.#ensure().then((p) => { p.rate = r; }); }
+  set playbackRate(r) { this.#ensure().then((p) => { p.rate = r; }, () => {}); }
   get autoplay() { return this.hasAttribute('autoplay'); }
 
   async play() { const p = await this.#ensure(); return p.play(); }
@@ -123,14 +130,25 @@ export class VlcPlayerElement extends HTMLElement {
   async stop() { return this.#player?.stop(); }
 
   #ensure() {
-    this.#ready ??= (async () => {
+    if (this.#ready) return this.#ready;
+    const token = (this.#token = {});
+    this.#ready = (async () => {
       const vlc = await sharedVLC();
       const p = await vlc.createPlayer({ canvas: this.#ui.canvas, fit: this.getAttribute('fit') ?? 'contain' });
+      // Removed from the page while the engine started: disconnectedCallback
+      // had no player to release then, so release it here rather than draw.
+      if (this.#token !== token) {
+        p.destroy();
+        throw new DOMException('<vlc-player> was removed from the page', 'AbortError');
+      }
       if (this.hasAttribute('muted')) p.muted = true;
       this.#wire(p);
       this.#player = p;
       return p;
-    })().catch((e) => { this.#message(e.message); this.#fire('error', { error: e }); throw e; });
+    })().catch((e) => {
+      if (e.name !== 'AbortError') { this.#message(e.message); this.#fire('error', { error: e }); }
+      throw e;
+    });
     return this.#ready;
   }
 
@@ -143,6 +161,7 @@ export class VlcPlayerElement extends HTMLElement {
       await p.open(src, { autoplay: this.autoplay });
       this.#fire('loadstart');
     } catch (e) {
+      if (e.name === 'AbortError') return;
       this.#message(e.message);
       this.#fire('error', { error: e });
     }

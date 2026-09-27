@@ -21,6 +21,11 @@ export class Emitter {
     });
   }
 
+  /** @internal drops every handler (on destroy, so listeners do not keep the object alive) */
+  _clearHandlers() {
+    this.#handlers.clear();
+  }
+
   emit(type, detail) {
     for (const fn of this.#handlers.get(type) ?? []) {
       try { fn(detail); } catch (e) { queueMicrotask(() => { throw e; }); }

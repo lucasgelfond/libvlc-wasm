@@ -8,18 +8,19 @@
 // client. See README.md for the full API.
 import { Emitter } from './emitter.js';
 import { Player } from './player.js';
-import { EVENT } from './engine.js';
+import { EVENT, LOG_LEVELS, checkOptions } from './engine.js';
 
 export { Player };
+/** VLC's player states by number, as `stats().state` reports them. */
+export { STATE_NAMES } from './engine.js';
 
-const LOG_LEVELS = { debug: 0, info: 2, notice: 2, warn: 3, warning: 3, error: 4, off: 99 };
 const LEVEL_NAMES = ['debug', 'debug', 'info', 'warn', 'error'];
 
 /**
  * @typedef {object} VLCOptions
  * @property {number} [threads] pthreads started up front. VLC and FFmpeg start
  *   threads per stream; a pre-started pool keeps playback from waiting on
- *   worker startup. Default: min(hardwareConcurrency, 8) + 4.
+ *   worker startup. Default: 20.
  * @property {'debug'|'info'|'warn'|'error'|'off'} [logLevel] default 'warn'
  * @property {number} [decoderThreads] FFmpeg threads per decoder (default min(cores, 4))
  * @property {string[]} [args] extra libvlc_new() arguments, e.g. ['--deinterlace=1']
@@ -62,6 +63,7 @@ export class VLC extends Emitter {
     this._pending = new Map();
     this._seq = 0;
     this._nextPlayer = 1;
+    this._timers = new Set();
     this._urls = {
       worklet: new URL('./audio-worklet.js', import.meta.url).href,
     };
@@ -111,7 +113,7 @@ export class VLC extends Emitter {
     this._layout = layout;
     this._memory = await this._rpc('memory');
     this._instance = await this._rpc('instance', {
-      args: [
+      args: checkOptions([
         '--no-video-title-show',
         // The player creates its audio output before our callbacks exist;
         // start it on the silent one so that first attempt does not log an error.
@@ -121,7 +123,7 @@ export class VLC extends Emitter {
         ...(fontFiles.length ? [`--freetype-font=${fontFiles[0]}`, '--ssa-fontsdir=/fonts'] : []),
         ...(soundfont ? [`--soundfont=${soundfont}`] : []),
         ...(this.opts.args ?? []),
-      ],
+      ], 'args'),
       logLevel,
     });
     /** Milliseconds from createVLC() to ready (worker, wasm compile, pthreads, libvlc_new). */
@@ -205,8 +207,9 @@ export class VLC extends Emitter {
    *           name?: string, onProgress?: (fraction: number) => void }} [opts]
    *   `remux` copies the streams into the new container without re-encoding (fast,
    *   lossless). Otherwise defaults are browser-playable: WebM = VP8 + Opus,
-   *   MP4 = MPEG-4 Part 2 + AAC. `video`/`audio` take VLC codec names ('VP80', 'VP90',
-   *   'mp4v', 'mjpg', 'opus', 'mp4a', 'mpga', 'flac', 's16l') or false to drop the stream.
+   *   MP4 = H.264 + AAC. `video`/`audio` take VLC codec names ('h264', 'hevc', 'VP80',
+   *   'VP90', 'mp4v', 'mjpg', 'opus', 'mp4a', 'mpga', 'flac', 's16l') or false to drop
+   *   the stream.
    * @returns {Promise<File>}
    */
   async transcode(source, opts = {}) {
@@ -216,11 +219,16 @@ export class VLC extends Emitter {
     const to = opts.to ?? 'webm';
     const MUX = { webm: 'avformat{mux=webm}', mkv: 'mkv', mp4: 'mp4', ogg: 'ogg', ts: 'ts', wav: 'wav', mp3: 'dummy' };
     const DEFAULTS = {
-      webm: ['VP80', 'opus'], mkv: ['VP80', 'opus'], mp4: ['mp4v', 'mp4a'], ogg: [false, 'opus'],
+      webm: ['VP80', 'opus'], mkv: ['VP80', 'opus'], mp4: ['h264', 'mp4a'], ogg: [false, 'opus'],
       ts: ['mp2v', 'mpga'], wav: [false, 's16l'], mp3: [false, 'mp3'],
     };
     // Encoders named outright, so VLC does not first try FFmpeg's (absent) ones.
-    const ENCODERS = { VP80: 'vpx', VP90: 'vpx' };
+    // x264/x265 run without SIMD in wasm: their fastest presets keep a
+    // transcode near real time instead of several times slower.
+    const ENCODERS = {
+      VP80: 'vpx', VP90: 'vpx',
+      h264: 'x264{preset=veryfast}', hevc: 'x265',
+    };
     if (!MUX[to]) throw new Error(`unknown container "${to}"`);
     const base = (opts.name ?? (source?.name ?? 'output').replace(/\.[^.]+$/, '')).replace(/[^\w.-]+/g, '_');
     const dst = `/out/${base}-${Date.now().toString(36)}.${to}`;
@@ -245,10 +253,15 @@ export class VLC extends Emitter {
       const done = new Promise((resolve, reject) => {
         player.on('ended', resolve);
         player.on('error', reject);
+        player.on('destroy', () => reject(new Error('transcode: VLC was destroyed')));
       });
+      done.catch(() => {}); // settled after an early throw below, when nobody awaits it
       const progress = opts.onProgress
-        ? setInterval(async () => opts.onProgress(Math.max(0, Math.min(1, (await player.stats()).position))), 250)
+        ? setInterval(() => player.stats()
+          .then((s) => opts.onProgress(Math.max(0, Math.min(1, s.position))))
+          .catch(() => {}), 250)
         : 0;
+      if (progress) this._timers.add(progress);
       try {
         // Frame-threaded FFmpeg decoding feeding the transcoder races at the
         // end of the stream (a wasm OOB in about 1 run in 3, RealVideo 4 in
@@ -264,6 +277,7 @@ export class VLC extends Emitter {
         await done;
       } finally {
         clearInterval(progress);
+        this._timers.delete(progress);
       }
     } finally {
       // Releasing the player tears the sout chain down, which is when muxers
@@ -302,13 +316,23 @@ export class VLC extends Emitter {
 
   /** Stops every player and terminates the worker. */
   async destroy() {
+    for (const t of this._timers) clearInterval(t);
+    this._timers.clear();
     await Promise.allSettled([...this._players.values()].map((p) => p.destroy()));
+    // Stops the engine's timer; bounded, since a wedged worker is terminated anyway.
+    await Promise.race([this._rpc('dispose').catch(() => {}), new Promise((r) => setTimeout(r, 500))]);
     this.worker.terminate();
+    this._destroyed = true;
+    // Nothing will answer now: settle whatever is still waiting.
+    const err = new Error('VLC destroyed');
+    for (const p of this._pending.values()) p.reject(err);
+    this._pending.clear();
   }
 
   // --- internals ------------------------------------------------------------
 
   _rpc(method, args, transfer) {
+    if (this._destroyed) return Promise.reject(new Error('VLC destroyed'));
     const id = ++this._seq;
     return new Promise((resolve, reject) => {
       this._pending.set(id, { resolve, reject });
@@ -323,7 +347,12 @@ export class VLC extends Emitter {
 
   /** @internal */
   async _mount(source, name) {
-    if (typeof source === 'string' || source instanceof URL) return this._rpc('mount', { source: String(source) });
+    if (typeof source === 'string' || source instanceof URL) {
+      // Relative to the page, like <video src>; the worker would resolve it against itself.
+      let url = String(source);
+      try { url = new URL(url, globalThis.document?.baseURI ?? globalThis.location?.href).href; } catch { /* the worker says why */ }
+      return this._rpc('mount', { source: url });
+    }
     if (source instanceof Blob) return this._rpc('mount', { source });
     if (Array.isArray(source) && source.every((f) => f instanceof Blob)) return this._rpc('mount', { source });
     if (source instanceof ArrayBuffer || ArrayBuffer.isView(source)) {

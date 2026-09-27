@@ -43,6 +43,7 @@
 
 	onMount(() => {
 		if (import.meta.env.DEV) (window as unknown as { session: Session }).session = session;
+		// session.start() gives up quietly if the page is gone by the time VLC is up.
 		session.start(canvas).then(() => {
 			if (session.ready) openFromQuery();
 		});
@@ -152,8 +153,11 @@
 
 	function onKey(e: KeyboardEvent) {
 		session.unlockAudio();
-		if (!opened || (e.target as HTMLElement).closest('input, [role=menu], [role=slider], [role=listbox], [role=combobox], [role=tab]')) return;
+		const target = e.target as HTMLElement;
+		if (!opened || target.closest('input, textarea, select, [contenteditable], [role=menu], [role=slider], [role=listbox], [role=combobox], [role=tab]')) return;
 		const k = e.key;
+		// A focused button or link already acts on Space and Enter itself.
+		if ((k === ' ' || k === 'Enter') && target.closest('button, a[href], summary, [role=button], [role=link], [role=menuitem], [role=checkbox], [role=switch]')) return;
 		// On a disc menu the arrows and Enter move between its buttons.
 		const nav = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', Enter: 'activate', ' ': 'activate' } as const;
 		if (session.inMenu && k in nav) {
@@ -196,8 +200,19 @@
 	}}
 />
 
-<input bind:this={fileInput} type="file" multiple class="hidden" onchange={(e) => addFiles(e.currentTarget.files)} />
-<input bind:this={subInput} type="file" multiple class="hidden" onchange={(e) => session.addSubtitles([...(e.currentTarget.files ?? [])])} />
+<!-- Cleared after each pick so choosing the same file again still fires change. -->
+<input bind:this={fileInput} type="file" multiple class="hidden" onchange={(e) => { const files = [...(e.currentTarget.files ?? [])]; e.currentTarget.value = ''; addFiles(files); }} />
+<input
+	bind:this={subInput}
+	type="file"
+	multiple
+	class="hidden"
+	onchange={(e) => {
+		const files = [...(e.currentTarget.files ?? [])];
+		e.currentTarget.value = '';
+		session.addSubtitles(files).catch((err) => toast.error((err as Error).message));
+	}}
+/>
 
 <Tooltip.Provider delayDuration={400}>
 	<main class="mx-auto flex min-h-svh max-w-[1400px] flex-col gap-4 px-4 py-4 sm:px-6">

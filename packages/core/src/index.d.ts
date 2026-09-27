@@ -84,6 +84,8 @@ export interface PlayerStats extends Partial<MediaStats> {
 }
 
 export type PlayerState = 'idle' | 'opening' | 'playing' | 'paused' | 'stopped' | 'stopping' | 'error';
+/** Player states by VLC's number for them, as `stats().state` reports it. */
+export declare const STATE_NAMES: readonly PlayerState[];
 
 export interface Chapters {
   titles: { name: string | null; duration: number; menu: boolean }[];
@@ -131,6 +133,12 @@ export interface OpenOptions {
   options?: string[];
   /** File name to give bytes, so VLC can use the extension. */
   name?: string;
+  /**
+   * The 128-bit key (32 hex digits) of a Common Encryption (cenc) MP4 -- ClearKey
+   * DRM. Widevine, PlayReady and FairPlay keys never leave the browser's CDM, so
+   * those streams cannot be decrypted here.
+   */
+  decryptionKey?: string;
 }
 
 export declare class Player extends Emitter<PlayerEvents> {
@@ -146,6 +154,8 @@ export declare class Player extends Emitter<PlayerEvents> {
   readonly audioContext?: AudioContext;
   /** Latest output level over the last ~100 ms. */
   readonly audioLevel: { peak: number; rms: number };
+  /** Audio frames the worklet has played so far; 0 without audio. */
+  readonly audioFramesPlayed: number;
   /** Seconds, interpolated between VLC's updates. Setting it seeks. */
   currentTime: number;
   /** Playback rate (VLC time-stretches audio). */
@@ -206,10 +216,12 @@ export declare class Player extends Emitter<PlayerEvents> {
     { border: [number, number, number, number] } | null): Promise<unknown>;
   /** Needs a build with sout (`vlc.features.sout`). */
   startRecording(): Promise<void>;
-  stopRecording(): Promise<File>;
+  /** Rejects if VLC has not closed the file after `timeout` ms (default 10000). */
+  stopRecording(opts?: { timeout?: number }): Promise<File>;
   info(): Promise<MediaInfo | null>;
   stats(): Promise<PlayerStats>;
   snapshot(type?: string, quality?: number): Promise<Blob>;
+  /** Idempotent: later calls return the first call's promise. */
   destroy(): Promise<void>;
 }
 
@@ -243,7 +255,7 @@ export declare class VLC extends Emitter<VLCEvents> {
   equalizerPresets(): Promise<{ presets: string[]; bands: number[] }>;
   /**
    * Converts media with VLC's stream output (needs `createVLC({ engine: sout })` from libvlc-wasm-sout).
-   * Defaults: webm/mkv VP8 + Opus, mp4 MPEG-4 Part 2 + AAC, ogg Opus,
+   * Defaults: webm/mkv VP8 + Opus, mp4 H.264 + AAC, ogg Opus,
    * ts MPEG-2 + MP2, wav PCM. WebM is the one every browser plays back.
    */
   transcode(source: Source | SourceGroup, opts?: {
@@ -251,7 +263,7 @@ export declare class VLC extends Emitter<VLCEvents> {
     to?: 'webm' | 'mkv' | 'mp4' | 'ogg' | 'ts' | 'wav' | 'mp3';
     /** Copy the streams as they are into the new container (no re-encoding). */
     remux?: boolean;
-    /** VLC fourcc of the video encoder ('VP80', 'mp4v', 'mp2v'…), or false to drop video. Throws if there is no such encoder. */
+    /** VLC fourcc of the video encoder ('h264', 'hevc', 'VP80', 'VP90', 'mp4v', 'mp2v'…), or false to drop video. Throws if there is no such encoder. */
     video?: string | false;
     /** VLC fourcc of the audio encoder ('opus', 'vorb', 'mp4a', 'mp3', 'flac', 's16l'…), or false to drop audio. */
     audio?: string | false;

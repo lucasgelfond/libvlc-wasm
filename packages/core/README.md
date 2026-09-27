@@ -118,13 +118,14 @@ const opus = await vlc.transcode(avi, { to: 'ogg', video: false });
 ```
 
 Output is a `File`, built in memory. Encoders (checked by `tests/sout.mjs` and by hand):
-video VP8 (`'VP80'`), MPEG-4 Part 2 (`'mp4v'`), MPEG-1/2 (`'mp1v'`, `'mp2v'`); audio Opus,
+video H.264 (`'h264'`, x264), HEVC (`'hevc'`, x265), VP8 (`'VP80'`), MPEG-4 Part 2
+(`'mp4v'`), MPEG-1/2 (`'mp1v'`, `'mp2v'`); audio Opus,
 Vorbis (`'vorb'`), AAC (`'mp4a'`), MP3 (`'mp3'`), MP2 (`'mpga'`), FLAC and PCM (`'s16l'`).
 VP9 (`'VP90'`) encodes but is slow and currently loses its final lookahead frames. If VLC
 has no encoder for a stream you asked for, `transcode()` throws rather than returning a
-file without it. There is no H.264/HEVC encoder
-(x264/x265 do not build for wasm), so for something every browser plays back, use WebM
-(VP8 + Opus): MPEG-4 Part 2 in MP4 plays in Chrome and Firefox but not Safari. Remuxing
+file without it. MP4 defaults to H.264 + AAC, which every browser plays back; x264 and
+x265 run without SIMD in wasm, so H.264 uses the `veryfast` preset and HEVC is slower
+than realtime at HD sizes. Remuxing
 copies streams as they are, so it is fast and lossless but keeps their codecs.
 A software VP8 encode runs a few times faster than realtime at SD sizes.
 

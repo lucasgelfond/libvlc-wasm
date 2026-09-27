@@ -1,5 +1,5 @@
 // The dedicated Worker that owns the wasm instance. The page talks to it with
-// {id, method, args} messages (see client.js); frames and audio never pass
+// {id, method, args} messages (see VLC._rpc in index.js); frames and audio never pass
 // through here — the page reads them straight out of shared wasm memory.
 import createDefaultModule from '../wasm/libvlc.js';
 import { createEngine, EVENT } from './engine.js';
@@ -16,25 +16,52 @@ function onEvent(player, type, a, b, str) {
 }
 
 /**
+ * A name that stays inside the directory it is created in: no separators, no
+ * "." or "..", no control characters. The extension survives, since VLC picks
+ * demuxers by it.
+ */
+function safeName(name, fallback) {
+  const base = String(name ?? '').split(/[/\\]/).pop().replace(/[\x00-\x1f\x7f]/g, '_');
+  return base && base !== '.' && base !== '..' ? base : fallback;
+}
+
+/** A File under a safe name; rewrapping a File references its data, it does not copy it. */
+function safeFile(f, fallback) {
+  const name = safeName(f.name, fallback);
+  return name === f.name ? f : new File([f], name, { type: f.type, lastModified: f.lastModified });
+}
+
+/**
  * Makes any supported source reachable by VLC and returns its MRL.
  * File/Blob are mounted with WORKERFS: VLC reads them lazily through
  * FileReaderSync, so a 4 GB file costs no memory up front. Bytes go into
- * MEMFS. URLs are passed through when VLC can reach them itself; http(s) is
- * mapped onto an Emscripten lazy file (synchronous ranged XHR from this
- * worker), because a browser gives VLC no sockets.
+ * MEMFS. http(s) is mapped onto an Emscripten lazy file (synchronous ranged
+ * XHR from this worker), because a browser gives VLC no sockets; blob: and
+ * data: URLs are read into a Blob here. Any other scheme would reach VLC as a
+ * raw MRL (its own access modules, other paths in this filesystem), so it is
+ * refused.
  */
-function toMrl(src) {
+async function toMrl(src) {
   if (typeof src === 'string') {
-    if (/^https?:/i.test(src)) {
+    let url;
+    try { url = new URL(src); } catch { throw new Error(`not a URL: ${src}`); }
+    if (url.protocol === 'http:' || url.protocol === 'https:') {
       const dir = `/url/${++mountSeq}`;
       FS.mkdirTree(dir);
-      const name = decodeURIComponent(new URL(src).pathname.split('/').pop() || 'stream');
+      let last = url.pathname.split('/').pop();
+      try { last = decodeURIComponent(last); } catch { /* malformed escape: keep it raw */ }
+      const name = safeName(last, 'stream');
       FS.createLazyFile(dir, name, src, true, false);
       const mrl = `file://${dir}/${encodeURIComponent(name)}`;
       mounts.set(mrl, { dir, kind: 'lazy', path: `${dir}/${name}` });
       return mrl;
     }
-    return src; // file:///..., or a VLC MRL such as a playlist or archive path
+    if (url.protocol === 'blob:' || url.protocol === 'data:') {
+      const r = await fetch(src);
+      if (!r.ok) throw new Error(`${url.protocol} URL: HTTP ${r.status}`);
+      return toMrl(await r.blob());
+    }
+    throw new Error(`unsupported URL scheme "${url.protocol}": pass an http(s), blob: or data: URL, or a File/Blob/bytes`);
   }
   const dir = `/mnt/${++mountSeq}`;
   FS.mkdirTree(dir);
@@ -42,8 +69,9 @@ function toMrl(src) {
   if (Array.isArray(src)) {
     // Files that refer to each other by name (idx + sub, cue + bin, a
     // playlist and its entries) share one directory; the first is opened.
+    src = src.map((f, k) => (f instanceof File ? safeFile(f, `part${k}`) : f));
     const files = src.filter((f) => f instanceof File);
-    const blobs = src.filter((f) => !(f instanceof File)).map((b, k) => ({ name: b.name || `part${k}`, data: b }));
+    const blobs = src.filter((f) => !(f instanceof File)).map((b, k) => ({ name: safeName(b.name, `part${k}`), data: b }));
     FS.mount(engine.Module.WORKERFS, { files, blobs }, dir);
     // The files of a VIDEO_TS folder are a disc: open the folder with
     // dvdnav (menus, titles) rather than one of its files.
@@ -52,15 +80,15 @@ function toMrl(src) {
       mounts.set(mrl, { dir, kind: 'workerfs' });
       return mrl;
     }
-    name = src[0].name || 'part0';
+    name = safeName(src[0].name, 'part0');
     mounts.set(`file://${dir}/${encodeURIComponent(name)}`, { dir, kind: 'workerfs' });
   } else if (src instanceof Blob) {
-    name = src.name || 'media';
+    name = safeName(src.name, 'media');
     FS.mount(engine.Module.WORKERFS,
-      src instanceof File ? { files: [src] } : { blobs: [{ name, data: src }] }, dir);
+      src instanceof File ? { files: [safeFile(src, name)] } : { blobs: [{ name, data: src }] }, dir);
     mounts.set(`file://${dir}/${encodeURIComponent(name)}`, { dir, kind: 'workerfs' });
   } else {
-    name = src.name || 'media';
+    name = safeName(src.name, 'media');
     FS.writeFile(`${dir}/${name}`, new Uint8Array(src.data));
     mounts.set(`file://${dir}/${encodeURIComponent(name)}`, { dir, kind: 'memfs', path: `${dir}/${name}` });
   }
@@ -141,6 +169,8 @@ const methods = {
 
   mount({ source }) { return toMrl(source); },
 
+  dispose() { engine?.dispose(); },
+
   /** Hands a file VLC wrote (a recording) to the page and deletes it here. */
   takeFile({ path }) {
     const data = FS.readFile(path);
@@ -150,15 +180,13 @@ const methods = {
   unmount({ mrl }) { release(mrl); },
 
   // Every remaining method is a bridge call: {name, i, d, s, ret}.
-  async call({ name, i, d, s, ret }) {
-    const r = await engine.call(name, { i, d, s }, ret);
-    return r;
-  },
+  call({ name, i, d, s, ret }) { return engine.call(name, { i, d, s }, ret); },
 };
 
 self.onmessage = async (e) => {
   const { id, method, args } = e.data;
   try {
+    if (!Object.hasOwn(methods, method)) throw new Error(`unknown method ${method}`);
     const result = await methods[method](args ?? {});
     post({ type: 'result', id, result });
   } catch (err) {

@@ -6,6 +6,7 @@
 	import { Kbd } from '$lib/components/ui/kbd';
 	import Pick from './Pick.svelte';
 	import { trackLabel, formatTime, type Session } from '$lib/session.svelte';
+	import { STATE_NAMES } from 'libvlc-wasm';
 	import RiCamera3Line from 'remixicon-svelte/icons/camera-3-line';
 	import RiSkipForwardLine from 'remixicon-svelte/icons/skip-forward-line';
 	import RiClosedCaptioningLine from 'remixicon-svelte/icons/closed-captioning-line';
@@ -40,7 +41,6 @@
 		return () => clearInterval(t);
 	});
 
-	const STATE = ['idle', 'opening', 'playing', 'paused', 'stopping', 'ended', 'error'];
 	const kbit = (v?: number) => (v ? `${Math.round(v * 8000)} kbit/s` : '—');
 	const bytes = (v?: number) => (!v ? '—' : v > 1e6 ? `${(v / 1e6).toFixed(1)} MB` : `${Math.round(v / 1e3)} KB`);
 	const statRows = $derived.by(() => {
@@ -48,7 +48,7 @@
 		if (!s) return [];
 		return [
 			['Section', 'Playback'],
-			['State', STATE[s.state] ?? String(s.state)],
+			['State', STATE_NAMES[s.state] ?? String(s.state)],
 			['Position', `${formatTime(s.time)} / ${formatTime(s.length)}`],
 			['Speed', `${s.rate}×`],
 			['Section', 'Input'],

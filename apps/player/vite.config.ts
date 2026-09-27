@@ -53,6 +53,20 @@ export default defineConfig({
 	// as pthread workers: keep the dependency optimiser away from it.
 	optimizeDeps: { exclude: ['libvlc-wasm'] },
 	// In this monorepo the SDK is a workspace package outside the app's root.
-	server: { fs: { allow: ['../..'] } },
+	// Listed one by one rather than the repo root, which /@fs/ would then serve
+	// whole (build output, scratch files, anything untracked).
+	server: {
+		fs: {
+			allow: [
+				'.',
+				'../../packages',
+				'../../node_modules',
+				'../../corpus/media',
+				'../../corpus/compat/compat.json',
+				'../../corpus/plain-english.json',
+				'../../corpus/formats.json'
+			]
+		}
+	},
 	worker: { format: 'es' }
 });

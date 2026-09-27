@@ -64,6 +64,7 @@ export class Session {
 	stats = $state<Record<string, number> | null>(null);
 
 	#raf = 0;
+	#destroyed = false;
 
 	get item() { return this.playlist[this.current] ?? null; }
 	get name() { return this.item?.name ?? ''; }
@@ -79,10 +80,14 @@ export class Session {
 		try {
 			// ?webcodecs=0 forces software decoding (handy for comparing).
 			const q = new URLSearchParams(location.search);
-			this.vlc = await createVLC({ logLevel: 'error', args: q.get('webcodecs') === '0' ? ['--no-webcodecs'] : [] });
+			const vlc = await createVLC({ logLevel: 'error', args: q.get('webcodecs') === '0' ? ['--no-webcodecs'] : [] });
+			// The page may have gone while VLC started; nothing else would release it.
+			if (this.#destroyed) return void vlc.destroy();
+			this.vlc = vlc;
 			this.version = this.vlc.version.version.split(' ')[0];
 			this.startupMs = Math.round(this.vlc.startupMs);
 			const p = await this.vlc.createPlayer({ canvas });
+			if (this.#destroyed) return;
 			this.player = p;
 			p.on('statechange', (s) => { this.state = s; });
 			p.on('durationchange', (d) => { this.duration = d; });
@@ -106,6 +111,7 @@ export class Session {
 			});
 			p.on('error', (e) => { this.error = e.message; });
 			this.presets = (await this.vlc.equalizerPresets()).presets;
+			if (this.#destroyed) return;
 			const tick = () => {
 				this.#raf = requestAnimationFrame(tick);
 				this.time = p.currentTime;
@@ -113,7 +119,7 @@ export class Session {
 			tick();
 			this.ready = true;
 		} catch (e) {
-			this.error = (e as Error).message;
+			if (!this.#destroyed) this.error = (e as Error).message;
 		}
 	}
 
@@ -148,7 +154,10 @@ export class Session {
 
 	/** Adds a remote file: VLC reads it with ranged requests, so the server must allow CORS. */
 	async addUrl(url: string) {
-		const name = decodeURIComponent(new URL(url).pathname.split('/').pop() || url);
+		const u = new URL(url);
+		if (u.protocol !== 'http:' && u.protocol !== 'https:') throw new Error('only http(s) URLs can be opened');
+		let name = u.pathname.split('/').pop() || url;
+		try { name = decodeURIComponent(name); } catch { /* keep it escaped */ }
 		this.playlist = [...this.playlist, { name, files: [], url, subtitles: [], disc: false, info: null, thumb: null }];
 		await this.play(this.playlist.length - 1);
 	}
@@ -218,6 +227,7 @@ export class Session {
 		}
 		const k = this.playlist.indexOf(it);
 		if (k >= 0) this.playlist[k] = { ...it, info, thumb };
+		else if (thumb) URL.revokeObjectURL(thumb); // removed while it was being described
 	}
 
 	/** Browsers start audio only after a click or key; any one will do. */
@@ -272,11 +282,14 @@ export class Session {
 		a.href = URL.createObjectURL(blob);
 		a.download = `${this.name.replace(/\.[^.]+$/, '') || 'frame'}-${this.time.toFixed(2)}s.png`;
 		a.click();
-		URL.revokeObjectURL(a.href);
+		// The download starts asynchronously; revoking now can cancel it.
+		setTimeout(() => URL.revokeObjectURL(a.href), 5000);
 	}
 
 	destroy() {
+		this.#destroyed = true;
 		cancelAnimationFrame(this.#raf);
+		for (const it of this.playlist) if (it.thumb) URL.revokeObjectURL(it.thumb);
 		this.vlc?.destroy();
 	}
 }

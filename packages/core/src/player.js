@@ -1,7 +1,7 @@
 import { Emitter } from './emitter.js';
 import { Renderer } from './renderer.js';
 import { RING } from './layout.js';
-import { EVENT, STATE_NAMES } from './engine.js';
+import { EVENT, STATE_NAMES, checkOptions } from './engine.js';
 
 const ADJUST = { contrast: 1, brightness: 2, hue: 3, saturation: 4, gamma: 5 };
 const TRACK_TYPE = { audio: 0, video: 1, text: 2 };
@@ -36,6 +36,7 @@ export class Player extends Emitter {
     this._raf = 0;
     this._lastTimeEmit = 0;
     this._pendingTracks = 0;
+    this.audioFramesPlayed = 0;
   }
 
   /** @internal */
@@ -50,9 +51,10 @@ export class Player extends Emitter {
       i: [this.vlc._instance, this.id, rate, 2, Math.round(rate * 0.5)],
     });
     if (!ptr) throw new Error('libvlc_media_player_new() failed');
-    this.ptr = ptr;
-    this.ringPtr = ptr + this.vlc._layout.playerRing;
-    this.videoPtr = ptr + this.vlc._layout.playerVideo;
+    // Unsigned: a player above 2 GB of wasm memory must not go negative.
+    this.ptr = ptr >>> 0;
+    this.ringPtr = this.ptr + this.vlc._layout.playerRing;
+    this.videoPtr = this.ptr + this.vlc._layout.playerVideo;
 
     if (this.audioContext) await this._initAudio();
     if (canvas) this.attach(canvas, { fit });
@@ -161,9 +163,12 @@ export class Player extends Emitter {
       const r = this.renderer.tick();
       if (r === 'grow' && !this._growing) {
         this._growing = true;
-        await this.vlc._refreshMemory();
-        this.renderer?.bind(this.vlc._memory, this.videoPtr);
-        this._growing = false;
+        try {
+          await this.vlc._refreshMemory();
+          this.renderer?.bind(this.vlc._memory, this.videoPtr);
+        } catch { /* destroyed meanwhile; the next frame retries otherwise */ } finally {
+          this._growing = false;
+        }
       }
       if (now - lastLatencyCheck > 1000) { lastLatencyCheck = now; this._updateLatency(); }
       if (this.state === 'playing' && now - this._lastTimeEmit > 250) {
@@ -180,18 +185,30 @@ export class Player extends Emitter {
    *   input or drop, bytes, an http(s) URL (needs CORS + range requests), or a
    *   VLC MRL.
    * @param {{ autoplay?: boolean, startTime?: number, subtitles?: File|Blob|string,
-   *           options?: string[], name?: string }} [opts]
+   *           options?: string[], name?: string, decryptionKey?: string }} [opts]
+   *   decryptionKey: hex key for a CENC-encrypted (ClearKey) MP4.
    */
   async open(source, opts = {}) {
-    const { autoplay = true, startTime, subtitles, options = [] } = opts;
+    const { autoplay = true, startTime, subtitles, options = [], decryptionKey } = opts;
+    checkOptions(options, 'open() options');
+    if (decryptionKey != null && !/^[0-9a-f]{32}$/i.test(decryptionKey)) {
+      throw new Error('open(): decryptionKey must be 32 hex digits (a 128-bit ClearKey/CENC key)');
+    }
     const mrl = await this.vlc._mount(source, opts.name);
     const previous = this._mrls;
     this._mrls = [mrl];
     const media = [...options];
     if (startTime) media.push(`:start-time=${startTime}`);
+    // Common Encryption (cenc, AES-CTR) with a known key: FFmpeg's MP4 demuxer
+    // decrypts; VLC's own does not.
+    if (decryptionKey) media.push(':demux=avformat', `:avformat-options={decryption_key=${decryptionKey}}`);
     this.duration = 0;
     this.tracks = [];
     this._setTime(0);
+    // If VLC's own demuxer finds no stream at all, open() tries once more with
+    // FFmpeg's (see STOPPING) -- unless the caller chose a demuxer.
+    this._sawStreams = false;
+    this._retry = media.some((o) => /^:?demux=/.test(o)) ? null : { mrl, media, autoplay };
     await this._call('open', { s: [mrl, media.join('\n')] });
     for (const m of previous) this.vlc._unmount(m);
     if (autoplay) await this.play();
@@ -238,17 +255,18 @@ export class Player extends Emitter {
     return this.duration ? Math.min(t, this.duration) : t;
   }
 
-  set currentTime(s) { this.seek(s); }
+  set currentTime(s) { this.seek(s).catch(() => {}); }
 
   get paused() { return this.state !== 'playing'; }
 
   get rate() { return this._rate; }
-  set rate(r) { this._call('set_rate', { d: [r] }); }
+  // Setters cannot return the promise: failures (a destroyed player) are dropped.
+  set rate(r) { this._call('set_rate', { d: [r] }).catch(() => {}); }
 
   get volume() { return this._volume; }
   set volume(v) {
     this._volume = Math.max(0, Math.min(2, v));
-    this._call('set_volume', { i: [0, Math.round(this._volume * 100)] });
+    this._call('set_volume', { i: [0, Math.round(this._volume * 100)] }).catch(() => {});
     // VLC 4 only reports volume changes from a running audio output, so
     // reflect the request immediately rather than waiting on it.
     this.emit('volumechange', { volume: this._volume, muted: this._muted });
@@ -257,7 +275,7 @@ export class Player extends Emitter {
   get muted() { return this._muted; }
   set muted(m) {
     this._muted = !!m;
-    this._call('set_mute', { i: [0, m ? 1 : 0] });
+    this._call('set_mute', { i: [0, m ? 1 : 0] }).catch(() => {});
     this.emit('volumechange', { volume: this._volume, muted: this._muted });
   }
 
@@ -473,14 +491,28 @@ export class Player extends Emitter {
     return this._call('record', { i: [0, 1], s: ['/recordings'] });
   }
 
-  /** @returns {Promise<File>} the recorded file */
-  async stopRecording() {
+  /**
+   * @param {{ timeout?: number }} [opts] ms to wait for VLC to close the file (default 10000)
+   * @returns {Promise<File>} the recorded file
+   */
+  async stopRecording({ timeout = 10000 } = {}) {
     if (!this._recording) throw new Error('not recording');
-    await this._call('record', { i: [0, 0], s: ['/recordings'] });
-    const path = await this._recording;
+    const recording = this._recording;
     this._recording = null;
-    const { name, data } = await this.vlc._rpc('takeFile', { path });
-    return new File([data], name);
+    let timer;
+    try {
+      await this._call('record', { i: [0, 0], s: ['/recordings'] });
+      // VLC names the file when it closes it; if that event never comes
+      // (nothing was written, or the player went away) give up.
+      const path = await Promise.race([recording, new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`stopRecording: no file from VLC after ${timeout} ms`)), timeout);
+      })]);
+      const { name, data } = await this.vlc._rpc('takeFile', { path });
+      return new File([data], name);
+    } finally {
+      clearTimeout(timer);
+      this._recordingDone = null;
+    }
   }
 
   /** Metadata, tracks and VLC's input/decoder statistics for the current media. */
@@ -503,29 +535,38 @@ export class Player extends Emitter {
     return new Promise((res) => c.toBlob(res, type, quality));
   }
 
-  async destroy() {
-    cancelAnimationFrame(this._raf);
-    this._unlistenPointer?.();
-    this._wakeLock(false);
-    this.renderer?.destroy();
-    this.renderer = null;
-    this.audioNode?.port.postMessage({ type: 'detach' });
-    this.audioNode?.disconnect();
-    if (this._ownsContext) await this.audioContext?.close().catch(() => {});
-    if (this.ptr) {
-      await this._call('stop');
-      await this._call('player_release');
-      this.ptr = 0;
-    }
-    for (const m of this._mrls) this.vlc._unmount(m);
-    this.vlc._players.delete(this.id);
-    this.emit('destroy');
+  /** Releases the player; safe to call more than once (later calls share the first's promise). */
+  destroy() {
+    // Taken synchronously so nothing issued from here on reaches a player
+    // that is being released.
+    const ptr = this.ptr;
+    this.ptr = 0;
+    this._destroying ??= (async () => {
+      cancelAnimationFrame(this._raf);
+      clearTimeout(this._pendingTracks);
+      this._unlistenPointer?.();
+      this._wakeLock(false);
+      this.renderer?.destroy();
+      this.renderer = null;
+      this.audioNode?.port.postMessage({ type: 'detach' });
+      this.audioNode?.disconnect();
+      if (this._ownsContext) await this.audioContext?.close().catch(() => {});
+      if (ptr) {
+        await this.vlc._call('stop', { i: [ptr] }).catch(() => {});
+        await this.vlc._call('player_release', { i: [ptr] }).catch(() => {});
+      }
+      for (const m of this._mrls) this.vlc._unmount(m);
+      this.vlc._players.delete(this.id);
+      this.emit('destroy');
+      this._clearHandlers();
+    })();
+    return this._destroying;
   }
 
   /** Slot i[0] is always the player; callers pass a placeholder 0 there. */
   _call(name, args = {}, ret) {
     if (!this.ptr) return Promise.reject(new Error('player destroyed'));
-    if (args.i?.length && args.i[0] !== 0) throw new Error(`internal: ${name} must leave i[0] for the player`);
+    if (args.i?.length && args.i[0] !== 0) return Promise.reject(new Error(`internal: ${name} must leave i[0] for the player`));
     const i = [this.ptr, ...(args.i ?? []).slice(1)];
     return this.vlc._call(name, { ...args, i }, ret);
   }
@@ -533,6 +574,21 @@ export class Player extends Emitter {
   _setTime(t) {
     this._time = t;
     this._timeAt = performance.now();
+  }
+
+  /**
+   * VLC's demuxer claimed the file but found no stream in it (a DTS transport
+   * stream, say): open it again with FFmpeg's demuxer, once.
+   */
+  async _retryWithFFmpeg() {
+    const { mrl, media, autoplay } = this._retry;
+    this._retry = null;
+    try {
+      await this._call('open', { s: [mrl, [...media, ':demux=avformat'].join('\n')] });
+      if (autoplay) await this.play();
+    } catch (e) {
+      this.emit('error', e);
+    }
   }
 
   async _refreshTracks() {
@@ -561,7 +617,7 @@ export class Player extends Emitter {
         this.state = STATE_NAMES[a] ?? 'idle';
         this._wakeLock(this.state === 'playing' && this.opts.keepAwake !== false);
         if (this.state === 'playing') this._timeAt = performance.now();
-        if (this.state === 'paused') this._setTime(this.currentTimeAt(prev));
+        if (this.state === 'paused') this._setTime(this._currentTimeAt(prev));
         // Like <video>, keep the last picture when the media ended by itself.
         if (this.state === 'stopped' && !this._ended) this.renderer?.clear();
         if (this.state === 'opening') this._ended = false;
@@ -580,6 +636,8 @@ export class Player extends Emitter {
       case EVENT.RATE: this._rate = a; this.emit('ratechange', a); break;
       case EVENT.CAPS: this.seekable = !!(a & 1); this.emit('capabilities', { seekable: !!(a & 1), pausable: !!(a & 2) }); break;
       case EVENT.TRACKS:
+        this._sawStreams = true;
+        // fall through
       case EVENT.TRACK_SELECTED:
         // A file with many tracks announces them one by one; refetch once.
         clearTimeout(this._pendingTracks);
@@ -591,6 +649,10 @@ export class Player extends Emitter {
         if (type === EVENT.CHAPTER) this.emit('chapterchange', { title: a, chapter: b, name: str });
         break;
       case EVENT.STOPPING:
+        if (STOP_REASON[a] !== 'user' && !this._sawStreams && this._retry) {
+          this._retryWithFFmpeg();
+          break;
+        }
         this._ended = STOP_REASON[a] === 'ended';
         if (this._ended) this.emit('ended');
         if (STOP_REASON[a] === 'error') this.emit('error', new Error('VLC could not play this media (see the log)'));
@@ -624,7 +686,8 @@ export class Player extends Emitter {
     } catch { /* not visible, or denied: nothing to do */ }
   }
 
-  currentTimeAt(prevState) {
+  /** @internal the interpolated time as of a state change away from `prevState` */
+  _currentTimeAt(prevState) {
     if (prevState !== 'playing') return this._time;
     return this._time + ((performance.now() - this._timeAt) / 1000) * this._rate;
   }
