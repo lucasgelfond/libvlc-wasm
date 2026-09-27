@@ -73,5 +73,20 @@
   "external-xm": "A FastTracker 2 module (.xm), 90s demoscene music with its own instrument samples.",
   "sandman-s3m": "A Scream Tracker 3 module (.s3m) from the 90s PC demoscene.",
   "for-a-change-it": "An Impulse Tracker module (.it), the late-90s tracker format.",
-  "openmpt-test-xm": "A FastTracker 2 test file from OpenMPT, exercising unusual playback rules."
+  "openmpt-test-xm": "A FastTracker 2 test file from OpenMPT, exercising unusual playback rules.",
+  "everyday-mp4-h264-aac": "The everyday video file: what phones, cameras and most of the web produce.",
+  "everyday-mp4-hevc-aac": "HEVC video, as recorded by recent iPhones and used for 4K.",
+  "everyday-mp4-av1-aac": "AV1, the royalty-free successor to VP9, in an MP4.",
+  "everyday-webm-vp9-opus": "The web-native video format, VP9 with Opus sound.",
+  "everyday-webm-av1-opus": "AV1 in WebM, as streaming sites increasingly serve.",
+  "everyday-webm-vp8-vorbis": "The original WebM from 2010: VP8 with Vorbis sound.",
+  "everyday-mkv-h264-aac": "An ordinary Matroska file, the usual container for downloaded video.",
+  "everyday-mov-prores-pcm": "A ProRes edit master from Final Cut or a pro camera.",
+  "everyday-avi-mpeg4-mp3": "An AVI in the style of every 2000s download folder.",
+  "everyday-audio-mp3": "An MP3.",
+  "everyday-audio-m4a": "AAC audio, as bought from iTunes.",
+  "everyday-audio-flac": "Lossless FLAC, the audiophile standard.",
+  "everyday-audio-wav": "Uncompressed WAV.",
+  "everyday-audio-ogg": "Ogg Vorbis, the open format of 2000s games and Linux.",
+  "everyday-audio-opus": "Opus, the modern voice and music codec behind WebRTC and Discord."
 }

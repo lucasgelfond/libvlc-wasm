@@ -4,31 +4,21 @@
 -->
 <script lang="ts">
 	const link = 'text-foreground underline decoration-foreground/30 underline-offset-2 hover:decoration-foreground';
+	const a = (href: string) => ({ href, target: '_blank', rel: 'noreferrer', class: link });
 </script>
 
 <div class="text-muted-foreground flex max-w-3xl flex-col gap-3 text-sm leading-relaxed">
 	<p>
-		libvlc-wasm compiles
-		<a class={link} href="https://www.videolan.org/vlc/libvlc.html" target="_blank" rel="noreferrer">libvlc</a>, the engine inside VLC media player,
-		to WebAssembly, so the formats VLC plays run in an ordinary web page: no plugin, no server, no upload. It builds
-		<a class={link} href="https://code.videolan.org/videolan/vlc" target="_blank" rel="noreferrer">VLC 4's own source</a>
-		with <a class={link} href="https://emscripten.org" target="_blank" rel="noreferrer">Emscripten</a>, starting from VideoLAN's upstream WebAssembly
-		build scripts, and changes it in only a few small places: ten patches, each fixing a bug or a gap that any port would hit. Around that it adds
-		what a browser needs: a video output that draws through WebGL, an audio output on Web Audio, a decoder that hands H.264, HEVC, VP9 and AV1 to
-		the browser's hardware through WebCodecs, pointer input for DVD menus, and a JavaScript API over it all.
+		libvlc-wasm compiles <a {...a('https://www.videolan.org/vlc/libvlc.html')}>libvlc</a>, the internals of VLC Media Player, into WebAssembly, and
+		hooks it into the browser (video through WebGL, audio outputs through Web Audio, and decoding with WebCodecs). It takes inspiration from several
+		vlc.js implementations (<a {...a('https://code.videolan.org/jbk/vlc.js')}>1</a>, <a {...a('https://github.com/addyosmani/vlc.js')}>2</a>,
+		<a {...a('https://github.com/Krowemoh/vlc.js')}>3</a>, <a {...a('https://github.com/addyosmani/webvlc')}>4</a>), most of which have incomplete
+		format support or work off of an outdated VLC source. It is inspired by other efforts to port essential media processing libraries to wasm like
+		<a {...a('https://github.com/neslinesli93/qpdf-wasm')}>qpdf</a>, <a {...a('https://github.com/6over3/exiftool')}>exiftool</a>,
+		<a {...a('https://github.com/ffmpegwasm/ffmpeg.wasm')}>ffmpeg</a>, and <a {...a('https://github.com/dlemstra/magick-wasm')}>imagemagick</a>.
 	</p>
 	<p>
-		It takes inspiration from earlier attempts at VLC in the browser:
-		<a class={link} href="https://code.videolan.org/jbk/vlc.js" target="_blank" rel="noreferrer">vlc.js</a>
-		(VideoLAN's asm.js proof of concept),
-		<a class={link} href="https://code.videolan.org/videolan/vlc/-/merge_requests/184" target="_blank" rel="noreferrer">VLC's upstream wasm32-emscripten support</a>,
-		<a class={link} href="https://github.com/addyosmani/vlc.js" target="_blank" rel="noreferrer">addyosmani/vlc.js</a>,
-		<a class={link} href="https://github.com/addyosmani/webvlc" target="_blank" rel="noreferrer">webvlc</a> and
-		<a class={link} href="https://github.com/Krowemoh/vlc.js" target="_blank" rel="noreferrer">Krowemoh/vlc.js</a>; and from other native
-		libraries brought to the web:
-		<a class={link} href="https://github.com/ffmpegwasm/ffmpeg.wasm" target="_blank" rel="noreferrer">ffmpeg.wasm</a>,
-		<a class={link} href="https://github.com/6over3/exiftool" target="_blank" rel="noreferrer">ExifTool</a>,
-		<a class={link} href="https://github.com/neslinesli93/qpdf-wasm" target="_blank" rel="noreferrer">qpdf-wasm</a> and
-		<a class={link} href="https://github.com/ArtifexSoftware/mupdf.js" target="_blank" rel="noreferrer">mupdf.js</a>.
+		You can also use libvlc-wasm in your projects via <a {...a('https://www.npmjs.com/package/libvlc-wasm')}>npm</a>. Or, you can try it below!
 	</p>
+	<p>Built in New York City by <a {...a('https://lucasgelfond.online')}>Lucas Gelfond</a> (and Claude!)</p>
 </div>

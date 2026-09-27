@@ -12,6 +12,7 @@ const only = process.argv[2];
 const jobs = [];
 for (const s of manifest.samples) {
   if (only && s.category !== only && s.id !== only) continue;
+  if (!s.url) continue; // generated locally (s.generated names the script)
   jobs.push({ id: s.id, url: s.url, file: s.file });
   for (const c of s.companions ?? []) jobs.push({ id: `${s.id} (companion)`, ...c });
 }

@@ -5,6 +5,10 @@
  */
 import compat from '../../../../corpus/compat/compat.json';
 import plain from '../../../../corpus/plain-english.json';
+import formatsJson from '../../../../corpus/formats.json';
+
+/** id -> [short name, Wikipedia article]. */
+const FORMATS = formatsJson as unknown as Record<string, [string, string]>;
 
 export type Verdict = 'yes' | 'partial' | 'no' | 'untested';
 export type Cell = { verdict: Verdict; note: string };
@@ -14,6 +18,9 @@ type Decode = { video: boolean | null; audio: boolean | null; note?: string } | 
 export type Row = {
 	id: string;
 	name: string;
+	/** Short format name, linked to its Wikipedia article. */
+	short: string;
+	wiki: string;
 	category: string;
 	plain: string;
 	format: string;
@@ -65,11 +72,14 @@ function row(s: Sample): Row {
 	return {
 		id: s.id,
 		name: s.name,
+		short: FORMATS[s.id]?.[0] ?? s.name,
+		wiki: `https://en.wikipedia.org/wiki/${FORMATS[s.id]?.[1] ?? ''}`,
 		category: s.category,
 		plain: (plain as Record<string, string>)[s.id] ?? '',
 		format: [s.container, s.video, s.audio].filter((x) => x && x !== 'none').join(' · '),
 		file: s.file,
-		url: s.url,
+		// Generated files (the everyday formats) ship with the app.
+		url: s.url ?? `/samples/${s.file}`,
 		bytes: s.bytes,
 		hasVideo: wantVideo,
 		whyBrowserCant: s.whyBrowserCant ?? '',

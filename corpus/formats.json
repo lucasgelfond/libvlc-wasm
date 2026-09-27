@@ -1,0 +1,362 @@
+{
+  "realvideo-3-cook": [
+    "RealVideo 3",
+    "RealVideo"
+  ],
+  "realvideo-g2-svt": [
+    "RealVideo G2",
+    "RealVideo"
+  ],
+  "realvideo-4-cook-rmvb": [
+    "RealMedia variable bitrate (.rmvb)",
+    "RealMedia"
+  ],
+  "realaudio-cook": [
+    "RealAudio Cook",
+    "RealAudio"
+  ],
+  "realaudio-sipr-8-5k": [
+    "RealAudio SIPR",
+    "RealAudio"
+  ],
+  "realaudio-28-8": [
+    "RealAudio 28.8",
+    "RealAudio"
+  ],
+  "realvideo-2-in-matroska": [
+    "RealVideo 2 in Matroska",
+    "RealVideo"
+  ],
+  "realvideo-2-sipr-a-v-sync-bug": [
+    "RealVideo 2",
+    "RealVideo"
+  ],
+  "wmv8-x8-intra": [
+    "Windows Media Video 8",
+    "Windows_Media_Video"
+  ],
+  "wmv7": [
+    "Windows Media Video 7",
+    "Windows_Media_Video"
+  ],
+  "wmv9-vc-1-simple-main-raw-rcv": [
+    "VC-1 (WMV9)",
+    "VC-1"
+  ],
+  "ms-mpeg4-v3-divx-in-asf": [
+    "Microsoft MPEG-4 v3",
+    "MPEG-4_Part_2"
+  ],
+  "wma-voice-11k": [
+    "Windows Media Audio Voice",
+    "Windows_Media_Audio"
+  ],
+  "wma-lossless-24-bit": [
+    "Windows Media Audio Lossless",
+    "Windows_Media_Audio"
+  ],
+  "ms-screen-codec-2-wmv9-screen": [
+    "Windows Media Screen",
+    "Windows_Media_Video"
+  ],
+  "ms-mpeg4-v1": [
+    "Microsoft MPEG-4 v1",
+    "MPEG-4_Part_2"
+  ],
+  "xvid-mp3": [
+    "Xvid",
+    "Xvid"
+  ],
+  "divx-5-mp3": [
+    "DivX 5",
+    "DivX"
+  ],
+  "cinepak": [
+    "Cinepak",
+    "Cinepak"
+  ],
+  "indeo-3": [
+    "Indeo 3",
+    "Indeo"
+  ],
+  "indeo-4-partial": [
+    "Indeo 4",
+    "Indeo"
+  ],
+  "indeo-5": [
+    "Indeo 5",
+    "Indeo"
+  ],
+  "motion-jpeg-mu-law-10-mb": [
+    "Motion JPEG",
+    "Motion_JPEG"
+  ],
+  "dvcpro-hd-720p50": [
+    "DVCPRO HD",
+    "DV_(video_format)"
+  ],
+  "on2-vp5-speex": [
+    "On2 VP5",
+    "On2_Technologies"
+  ],
+  "dvd-vob-single-frame-dvd-subs": [
+    "DVD subtitles (VOB)",
+    "VOB"
+  ],
+  "mpeg-1-system-stream": [
+    "MPEG-1",
+    "MPEG-1"
+  ],
+  "dvd-vob-mpeg-2-ac-3-5-mb": [
+    "DVD video (VOB)",
+    "VOB"
+  ],
+  "mpeg-2-field-encoded-ts": [
+    "Interlaced MPEG-2",
+    "MPEG-2"
+  ],
+  "dts-in-mpeg-ts": [
+    "DTS in MPEG-TS",
+    "MPEG_transport_stream"
+  ],
+  "flash-vp6-sorenson-on2": [
+    "Flash Video (VP6)",
+    "Flash_Video"
+  ],
+  "flv-with-h-264-aac": [
+    "Flash Video (H.264)",
+    "Flash_Video"
+  ],
+  "vp6f-nellymoser": [
+    "Nellymoser",
+    "Asao_(codec)"
+  ],
+  "3gpp-h-263-amr-nb": [
+    "H.263 with AMR",
+    "H.263"
+  ],
+  "3gp-h-263-phone-clip": [
+    "3GP",
+    "3GP_and_3G2"
+  ],
+  "sorenson-video-1": [
+    "Sorenson Video 1",
+    "Sorenson_Media"
+  ],
+  "sorenson-video-3": [
+    "Sorenson Video 3",
+    "Sorenson_Media"
+  ],
+  "qdesign-music-2": [
+    "QDesign Music",
+    "QDesign"
+  ],
+  "ima4-adpcm": [
+    "IMA ADPCM",
+    "Adaptive_differential_pulse-code_modulation"
+  ],
+  "mace-3-1": [
+    "MACE",
+    "Audio_Interchange_File_Format"
+  ],
+  "smacker": [
+    "Smacker",
+    "Smacker_video"
+  ],
+  "bink-video": [
+    "Bink",
+    "Bink_Video"
+  ],
+  "id-roq-quake-3-logo": [
+    "id RoQ",
+    "Quake_III_Arena"
+  ],
+  "autodesk-flic-640x480": [
+    "Autodesk FLIC",
+    "FLIC_(file_format)"
+  ],
+  "autodesk-flc-320x200": [
+    "Autodesk FLC",
+    "FLIC_(file_format)"
+  ],
+  "nuppelvideo-mythtv": [
+    "NuppelVideo",
+    "MythTV"
+  ],
+  "vivo-2-vivoactive": [
+    "VivoActive",
+    "Vivo_Software"
+  ],
+  "playstation-str-mdec-xa": [
+    "PlayStation STR",
+    "PlayStation_(console)"
+  ],
+  "ac-3-5-1-448k": [
+    "Dolby Digital (AC-3)",
+    "Dolby_Digital"
+  ],
+  "e-ac-3-5-1-with-spx": [
+    "Dolby Digital Plus",
+    "Dolby_Digital_Plus"
+  ],
+  "dts-es": [
+    "DTS-ES",
+    "DTS,_Inc."
+  ],
+  "dolby-truehd-atmos-8ch": [
+    "Dolby TrueHD",
+    "Dolby_TrueHD"
+  ],
+  "mlp-440-hz": [
+    "MLP",
+    "Meridian_Lossless_Packing"
+  ],
+  "musepack-sv8": [
+    "Musepack SV8",
+    "Musepack"
+  ],
+  "musepack-sv7": [
+    "Musepack SV7",
+    "Musepack"
+  ],
+  "monkey-s-audio": [
+    "Monkey's Audio",
+    "Monkey%27s_Audio"
+  ],
+  "true-audio-6-6-mb": [
+    "True Audio",
+    "Comparison_of_audio_coding_formats"
+  ],
+  "amr-nb-12-2k": [
+    "AMR",
+    "Adaptive_Multi-Rate_audio_codec"
+  ],
+  "shorten": [
+    "Shorten",
+    "Shorten_(codec)"
+  ],
+  "hevc-main10-dolby-vision-p7-in-mkv": [
+    "Dolby Vision",
+    "Dolby_Vision"
+  ],
+  "dvb-subtitles-in-ts": [
+    "DVB subtitles",
+    "Subtitles"
+  ],
+  "vobsub-idx-sub": [
+    "VobSub",
+    "DirectVobSub"
+  ],
+  "mpeg-2-es-with-eia-608-closed-captions": [
+    "EIA-608 captions",
+    "EIA-608"
+  ],
+  "mpeg-4-asp-vorbis-16-ass-ssa-tracks": [
+    "ASS/SSA subtitles",
+    "SubStation_Alpha"
+  ],
+  "h-264-2x-mp3-vobsub-in-mkv": [
+    "Matroska with VobSub",
+    "Matroska"
+  ],
+  "snes-spc": [
+    "SNES SPC",
+    "Super_Nintendo_Entertainment_System"
+  ],
+  "nes-nsf-tetris-gb-rip": [
+    "NES Sound Format",
+    "Nintendo_Entertainment_System"
+  ],
+  "sega-genesis-vgz-gzip-vgm": [
+    "VGM (Sega Genesis)",
+    "VGM_(file_format)"
+  ],
+  "c64-sid-rob-hubbard-commando": [
+    "C64 SID",
+    "MOS_Technology_6581"
+  ],
+  "standard-midi-file": [
+    "MIDI",
+    "MIDI"
+  ],
+  "axelf-mod-15-sample-soundtracker-no-m-k-": [
+    "Soundtracker MOD",
+    "MOD_(file_format)"
+  ],
+  "external-xm": [
+    "FastTracker 2 XM",
+    "XM_(file_format)"
+  ],
+  "sandman-s3m": [
+    "Scream Tracker 3",
+    "S3M"
+  ],
+  "for-a-change-it": [
+    "Impulse Tracker",
+    "Impulse_Tracker"
+  ],
+  "openmpt-test-xm": [
+    "FastTracker 2 XM (edge cases)",
+    "XM_(file_format)"
+  ],
+  "everyday-mp4-h264-aac": [
+    "MP4 (H.264)",
+    "MP4_file_format"
+  ],
+  "everyday-mp4-hevc-aac": [
+    "MP4 (HEVC)",
+    "High_Efficiency_Video_Coding"
+  ],
+  "everyday-mp4-av1-aac": [
+    "MP4 (AV1)",
+    "AV1"
+  ],
+  "everyday-webm-vp9-opus": [
+    "WebM (VP9)",
+    "WebM"
+  ],
+  "everyday-webm-av1-opus": [
+    "WebM (AV1)",
+    "AV1"
+  ],
+  "everyday-webm-vp8-vorbis": [
+    "WebM (VP8)",
+    "VP8"
+  ],
+  "everyday-mkv-h264-aac": [
+    "Matroska (H.264)",
+    "Matroska"
+  ],
+  "everyday-mov-prores-pcm": [
+    "QuickTime (ProRes)",
+    "Apple_ProRes"
+  ],
+  "everyday-avi-mpeg4-mp3": [
+    "AVI (MPEG-4)",
+    "Audio_Video_Interleave"
+  ],
+  "everyday-audio-mp3": [
+    "MP3",
+    "MP3"
+  ],
+  "everyday-audio-m4a": [
+    "AAC (.m4a)",
+    "Advanced_Audio_Coding"
+  ],
+  "everyday-audio-flac": [
+    "FLAC",
+    "FLAC"
+  ],
+  "everyday-audio-wav": [
+    "WAV",
+    "WAV"
+  ],
+  "everyday-audio-ogg": [
+    "Ogg Vorbis",
+    "Vorbis"
+  ],
+  "everyday-audio-opus": [
+    "Opus",
+    "Opus_(audio_format)"
+  ]
+}

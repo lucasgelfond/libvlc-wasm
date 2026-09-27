@@ -36,7 +36,7 @@
 	const rows = $derived(
 		ROWS.filter((r) => (kind === 'all' ? true : kind === 'video' ? r.hasVideo : !r.hasVideo)).filter((r) => {
 			const q = query.trim().toLowerCase();
-			return !q || [r.name, r.plain, r.format, r.file].some((s) => s.toLowerCase().includes(q));
+			return !q || [r.short, r.name, r.plain, r.format, r.file].some((s) => s.toLowerCase().includes(q));
 		})
 	);
 	const sections = $derived(bySection(rows));
@@ -161,7 +161,9 @@
 								<td class="px-4 py-2.5">
 									<Tooltip.Root>
 										<Tooltip.Trigger>
-											{#snippet child({ props })}<span {...props} class="cursor-help font-medium decoration-dotted underline-offset-4 hover:underline">{r.name}</span>{/snippet}
+											{#snippet child({ props })}
+												<a {...props} href={r.wiki} target="_blank" rel="noreferrer" class="hover:text-primary font-medium underline-offset-4 hover:underline">{r.short}</a>
+											{/snippet}
 										</Tooltip.Trigger>
 										<Tooltip.Content side="right" class="block max-w-72">
 											<span class="block">{r.plain}</span>

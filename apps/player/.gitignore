@@ -25,3 +25,4 @@ vite.config.ts.timestamp-*
 static/samples/*
 !static/samples/t_dvd.iso
 !static/samples/thumbs/
+!static/samples/everyday/

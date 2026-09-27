@@ -2,7 +2,7 @@
 	import * as Popover from '$lib/components/ui/popover';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { Button } from '$lib/components/ui/button';
-	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
+	import { ROWS, bySection, type Cell, type Row } from '$lib/compat';
 	import RiListCheck3 from 'remixicon-svelte/icons/list-check-3';
 	import RiArrowRightLine from 'remixicon-svelte/icons/arrow-right-line';
 
@@ -15,7 +15,6 @@
 		['Firefox', (r) => r.browsers.firefox]
 	];
 	const verdict = (v: Cell | boolean | null) => (v == null ? 'untested' : typeof v === 'boolean' ? (v ? 'yes' : 'no') : v.verdict);
-	const libvlc = count(ROWS, (r) => r.libvlcWasm);
 </script>
 
 {#snippet mark(v: Cell | boolean | null)}
@@ -42,12 +41,7 @@
 	</Popover.Trigger>
 	<Popover.Content align="end" class="w-[min(560px,calc(100vw-2rem))] p-0">
 		<Tooltip.Provider delayDuration={150}>
-			<div class="border-border border-b p-4">
-				<p class="text-sm font-semibold">What plays where</p>
-				<p class="text-muted-foreground mt-1 text-xs">
-					{libvlc.yes} of {libvlc.tested} hard formats from the test corpus play here. Green plays, amber partly, red not; hover a name for what it is.
-				</p>
-			</div>
+			<p class="border-border border-b px-4 py-3 text-sm font-semibold">What plays where</p>
 			<div class="max-h-[min(60vh,480px)] overflow-y-auto">
 				<table class="w-full text-xs">
 					<thead class="bg-popover text-muted-foreground sticky top-0 z-10">
@@ -65,7 +59,7 @@
 										<Tooltip.Root>
 											<Tooltip.Trigger>
 												{#snippet child({ props })}
-													<a {...props} href={r.url} target="_blank" rel="noreferrer" class="hover:text-primary underline-offset-2 hover:underline">{r.name}</a>
+													<a {...props} href={r.wiki} target="_blank" rel="noreferrer" class="hover:text-primary underline-offset-2 hover:underline">{r.short}</a>
 												{/snippet}
 											</Tooltip.Trigger>
 											<Tooltip.Content side="top" align="start" class="block max-w-64">
@@ -82,7 +76,7 @@
 				</table>
 			</div>
 			<div class="border-border flex justify-end border-t p-2">
-				<Button href="/formats" variant="ghost" size="sm">Full comparison, with ffmpeg.wasm and vlc.js <RiArrowRightLine /></Button>
+				<Button href="/formats" variant="ghost" size="sm">See full comparison, with other browser tools (ffmpeg.wasm / vlc.js) and sample files <RiArrowRightLine /></Button>
 			</div>
 		</Tooltip.Provider>
 	</Popover.Content>
