@@ -51,7 +51,7 @@ for (const s of samples) {
   const t0 = Date.now();
   const c = s.test?.mode === 'subtitles-over'
     ? { url: media(s.test.video), subtitles: [media(s.file), ...(s.companions ?? []).map((x) => media(x.file))] }
-    : { url: media(s.file) };
+    : { url: media(s.file), options: s.test?.options ?? [] };
   let r;
   try {
     r = await Promise.race([

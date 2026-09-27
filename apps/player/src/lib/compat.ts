@@ -48,7 +48,8 @@ const CATEGORY: Record<string, string> = {
 	'rare-and-surround-audio': 'Surround and rare audio',
 	'modern-codecs': 'Modern codecs',
 	'subtitles-and-captions': 'Subtitles and captions',
-	'chiptune-tracker-midi': 'Chiptunes, trackers and MIDI'
+	'chiptune-tracker-midi': 'Chiptunes, trackers and MIDI',
+	'discs-and-drm': 'Discs and DRM'
 };
 export const categoryName = (c: string) => CATEGORY[c] ?? c;
 

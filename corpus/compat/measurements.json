@@ -1321,6 +1321,51 @@
    "noDecoder": [],
    "late": 0,
    "timedOut": false
+  },
+  "cenc-clearkey-mp4": {
+   "frames": 11,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:faad",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dvd-video-iso": {
+   "frames": 588,
+   "audioSeconds": 0.96,
+   "peakDb": -91,
+   "demux": [],
+   "decoders": [
+    "spu:spudec",
+    "video:avcodec",
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": true
+  },
+  "bluray-bdmv-iso": {
+   "frames": 181,
+   "audioSeconds": 8.992,
+   "peakDb": -21.1,
+   "demux": [
+    "ts"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": true
   }
  },
  "ffmpeg": {
@@ -3061,6 +3106,73 @@
     "errorLines": 0,
     "samples": 144000,
     "peakDb": -17.9
+   }
+  },
+  "dvd-video-iso": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3",
+     "subtitle:dvd_subtitle",
+     "audio:mp2"
+    ],
+    "firstError": "[in#0/mpeg @ 0x7d9004000] Could not find codec parameters for stream 4 (Audio: mp2, 0 channels): unspecified frame size",
+    "errorLines": 1,
+    "frames": 300
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3",
+     "subtitle:dvd_subtitle",
+     "audio:mp2"
+    ],
+    "firstError": "[in#0/mpeg @ 0xafac28000] Could not find codec parameters for stream 4 (Audio: mp2, 0 channels): unspecified frame size",
+    "errorLines": 3,
+    "samples": 433152,
+    "peakDb": -90.3
+   }
+  },
+  "bluray-bdmv-iso": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:ac3"
+    ],
+    "firstError": "[h264 @ 0x8f8c90380] error while decoding MB 1 0, bytestream 13694",
+    "errorLines": 395,
+    "frames": 216
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:ac3"
+    ],
+    "firstError": "[h264 @ 0x750c1c380] error while decoding MB 1 0, bytestream 13694",
+    "errorLines": 395,
+    "samples": 866304,
+    "peakDb": 0
+   }
+  },
+  "cenc-clearkey-mp4": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 75
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 132300,
+    "peakDb": -17.7
    }
   }
  },
@@ -4979,6 +5091,79 @@
     "errorLines": 0,
     "samples": 144000,
     "peakDb": -17.9,
+    "code": 0
+   }
+  },
+  "dvd-video-iso": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3",
+     "subtitle:dvd_subtitle",
+     "audio:mp2"
+    ],
+    "firstError": "Could not find codec parameters for stream 4 (Audio: mp2, 0 channels): unspecified frame size",
+    "errorLines": 2,
+    "frames": 300,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3",
+     "subtitle:dvd_subtitle",
+     "audio:mp2"
+    ],
+    "firstError": "[mpeg @ 0xdeea80] Could not find codec parameters for stream 4 (Audio: mp2, 0 channels): unspecified frame size",
+    "errorLines": 1,
+    "samples": 866304,
+    "peakDb": -91,
+    "code": 0
+   }
+  },
+  "bluray-bdmv-iso": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:ac3"
+    ],
+    "firstError": "[h264 @ 0xdef340] error while decoding MB 1 0, bytestream 13694",
+    "errorLines": 297,
+    "frames": 216,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:ac3"
+    ],
+    "firstError": "[h264 @ 0xdef380] error while decoding MB 1 0, bytestream 13694",
+    "errorLines": 301,
+    "samples": 866304,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "cenc-clearkey-mp4": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 75,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 133120,
+    "peakDb": -17.7,
     "code": 0
    }
   }

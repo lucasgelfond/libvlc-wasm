@@ -1,5 +1,5 @@
 {
- "date": "2026-09-27T15:54:37.753Z",
+ "date": "2026-09-27T18:42:11.412Z",
  "nativeEngines": [
   "chromium",
   "webkit",
@@ -43,32 +43,32 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 88,
-     "distinctFrames": 28,
+     "framesDrawn": 89,
+     "distinctFrames": 29,
      "maxVariance": 5984
     },
     "audio": {
      "peak": 0.5032,
-     "framesPlayed": 179522,
+     "framesPlayed": 179518,
      "audibleFraction": 0.89,
-     "analyserRms": 0.1431,
+     "analyserRms": 0.1711,
      "peakDb": -6,
      "referencePeakDb": -6
     },
     "timings": {
-     "openToPlayingMs": 103.42500001192093,
-     "openToFirstFrameMs": 844.910000026226,
-     "playedMs": 4137.080000042915
+     "openToPlayingMs": 103.49000000953674,
+     "openToFirstFrameMs": 838.8149999976158,
+     "playedMs": 4197.754999995232
     },
     "stats": {
-     "lostPictures": 20,
-     "latePictures": 1,
+     "lostPictures": 19,
+     "latePictures": 0,
      "audioDropped": 0,
      "audioUnderruns": 1
     }
    },
    "shot": "shots/realvideo-3-cook.jpg",
-   "wallMs": 4341
+   "wallMs": 4439
   },
   {
    "id": "realvideo-g2-svt",
@@ -113,7 +113,7 @@
      }
     ],
     "video": {
-     "framesDrawn": 59,
+     "framesDrawn": 55,
      "distinctFrames": 40,
      "maxVariance": 10609
     },
@@ -126,19 +126,19 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.48499995470047,
-     "openToFirstFrameMs": 101.48499995470047,
-     "playedMs": 4498.645000040531
+     "openToPlayingMs": 101.62000000476837,
+     "openToFirstFrameMs": 101.62000000476837,
+     "playedMs": 4484.495000004768
     },
     "stats": {
      "lostPictures": 0,
-     "latePictures": 48,
+     "latePictures": 43,
      "audioDropped": 0,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/realvideo-g2-svt.jpg",
-   "wallMs": 4755
+   "wallMs": 5811
   },
   {
    "id": "realvideo-4-cook-rmvb",
@@ -192,22 +192,22 @@
      }
     ],
     "video": {
-     "framesDrawn": 101,
+     "framesDrawn": 102,
      "distinctFrames": 22,
-     "maxVariance": 729
+     "maxVariance": 751
     },
     "audio": {
      "peak": 0.0501,
      "framesPlayed": 189696,
      "audibleFraction": 0.44,
-     "analyserRms": 0.0283,
+     "analyserRms": 0.0277,
      "peakDb": -26,
      "referencePeakDb": -25.2
     },
     "timings": {
-     "openToPlayingMs": 102.68999999761581,
-     "openToFirstFrameMs": 102.68999999761581,
-     "playedMs": 4441.375
+     "openToPlayingMs": 101.58499997854233,
+     "openToFirstFrameMs": 101.58499997854233,
+     "playedMs": 4475.170000016689
     },
     "stats": {
      "lostPictures": 0,
@@ -217,7 +217,7 @@
     }
    },
    "shot": "shots/realvideo-4-cook-rmvb.jpg",
-   "wallMs": 5580
+   "wallMs": 6662
   },
   {
    "id": "realaudio-cook",
@@ -267,27 +267,27 @@
      "maxVariance": 0
     },
     "audio": {
-     "peak": 0.6584,
+     "peak": 0.6838,
      "framesPlayed": 214016,
      "audibleFraction": 0.98,
-     "analyserRms": 0.2096,
-     "peakDb": -3.6,
+     "analyserRms": 0.2092,
+     "peakDb": -3.3,
      "referencePeakDb": -2.9
     },
     "timings": {
-     "openToPlayingMs": 101.72500002384186,
+     "openToPlayingMs": 102.09999996423721,
      "openToFirstFrameMs": null,
-     "playedMs": 4449.729999959469
+     "playedMs": 4444.900000035763
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 32913,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4969
+   "wallMs": 4561
   },
   {
    "id": "realaudio-sipr-8-5k",
@@ -346,27 +346,27 @@
      "maxVariance": 5525
     },
     "audio": {
-     "peak": 0.5131,
-     "framesPlayed": 218112,
+     "peak": 0.618,
+     "framesPlayed": 218368,
      "audibleFraction": 0.89,
-     "analyserRms": 0.1494,
-     "peakDb": -5.8,
+     "analyserRms": 0.1568,
+     "peakDb": -4.2,
      "referencePeakDb": -4.2
     },
     "timings": {
-     "openToPlayingMs": 101.38999998569489,
-     "openToFirstFrameMs": 707.0049999952316,
-     "playedMs": 4469.129999995232
+     "openToPlayingMs": 100.89499998092651,
+     "openToFirstFrameMs": 707.8249999880791,
+     "playedMs": 4471.365000009537
     },
     "stats": {
      "lostPictures": 5,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 33768,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/realaudio-sipr-8-5k.jpg",
-   "wallMs": 5515
+   "wallMs": 6589
   },
   {
    "id": "realaudio-28-8",
@@ -410,16 +410,16 @@
     },
     "audio": {
      "peak": 0.8505,
-     "framesPlayed": 72446,
+     "framesPlayed": 72453,
      "audibleFraction": 1,
-     "analyserRms": 0.2228,
+     "analyserRms": 0.2214,
      "peakDb": -1.4,
      "referencePeakDb": -1.3
     },
     "timings": {
-     "openToPlayingMs": 101.61500000953674,
+     "openToPlayingMs": 101.625,
      "openToFirstFrameMs": null,
-     "playedMs": 1921.375
+     "playedMs": 1917.949999988079
     },
     "stats": {
      "lostPictures": 0,
@@ -429,7 +429,7 @@
     }
    },
    "shot": null,
-   "wallMs": 2037
+   "wallMs": 2038
   },
   {
    "id": "realvideo-2-in-matroska",
@@ -474,7 +474,7 @@
      }
     ],
     "video": {
-     "framesDrawn": 93,
+     "framesDrawn": 94,
      "distinctFrames": 8,
      "maxVariance": 9160
     },
@@ -487,9 +487,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.74500000476837,
-     "openToFirstFrameMs": 101.74500000476837,
-     "playedMs": 4405.350000023842
+     "openToPlayingMs": 102.57499998807907,
+     "openToFirstFrameMs": 102.57499998807907,
+     "playedMs": 4467.819999992847
     },
     "stats": {
      "lostPictures": 0,
@@ -499,7 +499,7 @@
     }
    },
    "shot": "shots/realvideo-2-in-matroska.jpg",
-   "wallMs": 4719
+   "wallMs": 5837
   },
   {
    "id": "realvideo-2-sipr-a-v-sync-bug",
@@ -553,32 +553,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 52,
-     "distinctFrames": 33,
+     "framesDrawn": 51,
+     "distinctFrames": 32,
      "maxVariance": 4227
     },
     "audio": {
      "peak": 0.8593,
-     "framesPlayed": 212736,
+     "framesPlayed": 212480,
      "audibleFraction": 0.91,
-     "analyserRms": 0.2654,
+     "analyserRms": 0.2327,
      "peakDb": -1.3,
      "referencePeakDb": -1.4
     },
     "timings": {
-     "openToPlayingMs": 101.95500004291534,
-     "openToFirstFrameMs": 664.5250000357628,
-     "playedMs": 4451.7699999809265
+     "openToPlayingMs": 101.14999997615814,
+     "openToFirstFrameMs": 708.0099999904633,
+     "playedMs": 4464.865000009537
     },
     "stats": {
-     "lostPictures": 12,
-     "latePictures": 3,
-     "audioDropped": 33773,
+     "lostPictures": 18,
+     "latePictures": 2,
+     "audioDropped": 33776,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/realvideo-2-sipr-a-v-sync-bug.jpg",
-   "wallMs": 5106
+   "wallMs": 4583
   },
   {
    "id": "wmv8-x8-intra",
@@ -632,32 +632,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 63,
-     "distinctFrames": 22,
-     "maxVariance": 2568
+     "framesDrawn": 62,
+     "distinctFrames": 23,
+     "maxVariance": 2573
     },
     "audio": {
-     "peak": 0.1267,
-     "framesPlayed": 213760,
-     "audibleFraction": 0.43,
-     "analyserRms": 0.04,
-     "peakDb": -17.9,
+     "peak": 0.1396,
+     "framesPlayed": 214016,
+     "audibleFraction": 0.61,
+     "analyserRms": 0.0409,
+     "peakDb": -17.1,
      "referencePeakDb": -17.8
     },
     "timings": {
-     "openToPlayingMs": 101.85500001907349,
-     "openToFirstFrameMs": 101.85500001907349,
-     "playedMs": 4430.534999966621
+     "openToPlayingMs": 101.42500001192093,
+     "openToFirstFrameMs": 101.42500001192093,
+     "playedMs": 4467.995000004768
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 37727,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/wmv8-x8-intra.jpg",
-   "wallMs": 5013
+   "wallMs": 6115
   },
   {
    "id": "wmv7",
@@ -711,32 +711,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 67,
-     "distinctFrames": 37,
-     "maxVariance": 6784
+     "framesDrawn": 68,
+     "distinctFrames": 38,
+     "maxVariance": 6795
     },
     "audio": {
      "peak": 0.403,
-     "framesPlayed": 213760,
+     "framesPlayed": 214016,
      "audibleFraction": 0.91,
-     "analyserRms": 0.0696,
+     "analyserRms": 0.0311,
      "peakDb": -7.9,
      "referencePeakDb": -8.1
     },
     "timings": {
-     "openToPlayingMs": 101.42500001192093,
-     "openToFirstFrameMs": 101.42500001192093,
-     "playedMs": 4424.435000002384
+     "openToPlayingMs": 101.8400000333786,
+     "openToFirstFrameMs": 101.8400000333786,
+     "playedMs": 4470.089999973774
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 5492,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/wmv7.jpg",
-   "wallMs": 4820
+   "wallMs": 6188
   },
   {
    "id": "wmv9-vc-1-simple-main-raw-rcv",
@@ -776,7 +776,7 @@
     "video": {
      "framesDrawn": 27,
      "distinctFrames": 11,
-     "maxVariance": 1339
+     "maxVariance": 1362
     },
     "audio": {
      "peak": 0,
@@ -787,9 +787,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.83999997377396,
-     "openToFirstFrameMs": 101.84499996900558,
-     "playedMs": 1529.6650000214577
+     "openToPlayingMs": 152.21999996900558,
+     "openToFirstFrameMs": 152.21999996900558,
+     "playedMs": 1520.8600000143051
     },
     "stats": {
      "lostPictures": 0,
@@ -799,7 +799,7 @@
     }
    },
    "shot": "shots/wmv9-vc-1-simple-main-raw-rcv.jpg",
-   "wallMs": 1647
+   "wallMs": 1697
   },
   {
    "id": "ms-mpeg4-v3-divx-in-asf",
@@ -837,7 +837,7 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 26,
+     "framesDrawn": 25,
      "distinctFrames": 11,
      "maxVariance": 7489
     },
@@ -850,9 +850,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.10499995946884,
-     "openToFirstFrameMs": 102.10499995946884,
-     "playedMs": 1940.4200000166893
+     "openToPlayingMs": 102.12000000476837,
+     "openToFirstFrameMs": 102.12000000476837,
+     "playedMs": 1928.4700000286102
     },
     "stats": {
      "lostPictures": 0,
@@ -862,7 +862,7 @@
     }
    },
    "shot": "shots/ms-mpeg4-v3-divx-in-asf.jpg",
-   "wallMs": 2067
+   "wallMs": 2038
   },
   {
    "id": "wma-voice-11k",
@@ -912,27 +912,27 @@
      "maxVariance": 0
     },
     "audio": {
-     "peak": 1.3853,
+     "peak": 1.3996,
      "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.4363,
-     "peakDb": 2.8,
+     "analyserRms": 0.434,
+     "peakDb": 2.9,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.76999998092651,
+     "openToPlayingMs": 100.96499997377396,
      "openToFirstFrameMs": null,
-     "playedMs": 4452.805000007153
+     "playedMs": 4449.439999997616
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 42691,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4918
+   "wallMs": 4559
   },
   {
    "id": "wma-lossless-24-bit",
@@ -976,16 +976,16 @@
     },
     "audio": {
      "peak": 1.5564,
-     "framesPlayed": 15045,
+     "framesPlayed": 15046,
      "audibleFraction": 1,
-     "analyserRms": 0.8693,
+     "analyserRms": 0.8721,
      "peakDb": 3.8,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.91000002622604,
+     "openToPlayingMs": 101.86000001430511,
      "openToFirstFrameMs": null,
-     "playedMs": 805.9200000166893
+     "playedMs": 805.8349999785423
     },
     "stats": {
      "lostPictures": 0,
@@ -995,7 +995,7 @@
     }
    },
    "shot": null,
-   "wallMs": 921
+   "wallMs": 934
   },
   {
    "id": "ms-screen-codec-2-wmv9-screen",
@@ -1035,7 +1035,7 @@
     "video": {
      "framesDrawn": 1,
      "distinctFrames": 1,
-     "maxVariance": 3372
+     "maxVariance": 3371
     },
     "audio": {
      "peak": 0,
@@ -1047,7 +1047,7 @@
     },
     "timings": {
      "openToPlayingMs": null,
-     "openToFirstFrameMs": 101.83999997377396,
+     "openToFirstFrameMs": 101.31000000238419,
      "playedMs": 0
     },
     "stats": {
@@ -1058,7 +1058,7 @@
     }
    },
    "shot": "shots/ms-screen-codec-2-wmv9-screen.jpg",
-   "wallMs": 514
+   "wallMs": 518
   },
   {
    "id": "ms-mpeg4-v1",
@@ -1098,7 +1098,7 @@
     "video": {
      "framesDrawn": 50,
      "distinctFrames": 18,
-     "maxVariance": 3747
+     "maxVariance": 3745
     },
     "audio": {
      "peak": 0,
@@ -1109,9 +1109,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.7399999499321,
-     "openToFirstFrameMs": 101.7399999499321,
-     "playedMs": 2139.8150000572205
+     "openToPlayingMs": 101.43000000715256,
+     "openToFirstFrameMs": 101.43000000715256,
+     "playedMs": 2130.5499999523163
     },
     "stats": {
      "lostPictures": 0,
@@ -1121,7 +1121,7 @@
     }
    },
    "shot": "shots/ms-mpeg4-v1.jpg",
-   "wallMs": 2252
+   "wallMs": 2241
   },
   {
    "id": "xvid-mp3",
@@ -1145,7 +1145,7 @@
    "vlc": {
     "passed": false,
     "expectedFailure": null,
-    "knownIssue": "known issue: VLC 4 mpegaudio packetizer never syncs on this truncated AVI (VLC 3 does); a clean XviD+MP3 AVI plays",
+    "knownIssue": "known issue: VLC 4's AVI demuxer hands the MP3 packetizer this truncated, index-less file's audio out of order (its MP3 frames play when extracted, and through FFmpeg's demuxer); a clean XviD+MP3 AVI plays",
     "checks": {
      "video": true,
      "audio": false
@@ -1175,7 +1175,7 @@
      }
     ],
     "video": {
-     "framesDrawn": 113,
+     "framesDrawn": 112,
      "distinctFrames": 39,
      "maxVariance": 4531
     },
@@ -1188,9 +1188,9 @@
      "referencePeakDb": -16.9
     },
     "timings": {
-     "openToPlayingMs": 101.00999999046326,
-     "openToFirstFrameMs": 101.00999999046326,
-     "playedMs": 4493.879999995232
+     "openToPlayingMs": 101.4549999833107,
+     "openToFirstFrameMs": 101.4549999833107,
+     "playedMs": 4461.300000011921
     },
     "stats": {
      "lostPictures": 0,
@@ -1199,50 +1199,50 @@
      "audioUnderruns": 0
     },
     "logs": [
-     "warn: [mpeg4 @ 0x1102f30] 2. marker bit missing in 3. esc",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 372",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 29 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 29",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 19 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 19",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 2 3",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 122",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 5 2",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 85",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 18 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 18",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 19 3",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 139",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 7 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 7",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 32 3",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 152",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 28 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 28",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 15 1",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 55",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 37 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 37",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 25 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 25",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 26 2",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 106",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 37 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 37",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 35 2",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 115",
-     "warn: [mpeg4 @ 0x1102f30] I cbpy damaged at 34 20",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 834",
-     "warn: [mpeg4 @ 0x1102f30] ac-tex damaged at 22 2",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 102",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 38 0",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 38",
-     "warn: [mpeg4 @ 0x1102f30] P cbpy damaged at 11 3",
-     "warn: [mpeg4 @ 0x1102f30] Error at MB: 131"
+     "warn: [mpeg4 @ 0x1ef1420] 2. marker bit missing in 3. esc",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 372",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 29 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 29",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 19 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 19",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 2 3",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 122",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 5 2",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 85",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 18 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 18",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 19 3",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 139",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 7 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 7",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 32 3",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 152",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 28 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 28",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 15 1",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 55",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 37 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 37",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 25 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 25",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 26 2",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 106",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 37 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 37",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 35 2",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 115",
+     "warn: [mpeg4 @ 0x1ef1420] I cbpy damaged at 34 20",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 834",
+     "warn: [mpeg4 @ 0x1ef1420] ac-tex damaged at 22 2",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 102",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 38 0",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 38",
+     "warn: [mpeg4 @ 0x1ef1420] P cbpy damaged at 11 3",
+     "warn: [mpeg4 @ 0x1ef1420] Error at MB: 131"
     ]
    },
    "shot": "shots/xvid-mp3.jpg",
-   "wallMs": 4773
+   "wallMs": 5802
   },
   {
    "id": "divx-5-mp3",
@@ -1265,7 +1265,7 @@
    },
    "vlc": {
     "passed": false,
-    "expectedFailure": "native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either",
+    "expectedFailure": "native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either (same AVI demuxer issue as the XviD file)",
     "knownIssue": null,
     "checks": {
      "video": true,
@@ -1296,9 +1296,9 @@
      }
     ],
     "video": {
-     "framesDrawn": 112,
+     "framesDrawn": 111,
      "distinctFrames": 20,
-     "maxVariance": 2170
+     "maxVariance": 2168
     },
     "audio": {
      "peak": 0,
@@ -1309,9 +1309,9 @@
      "referencePeakDb": -91
     },
     "timings": {
-     "openToPlayingMs": 102.42500001192093,
-     "openToFirstFrameMs": 102.43000000715256,
-     "playedMs": 4489.495000004768
+     "openToPlayingMs": 101.28500002622604,
+     "openToFirstFrameMs": 101.28500002622604,
+     "playedMs": 4477.664999961853
     },
     "stats": {
      "lostPictures": 0,
@@ -1328,7 +1328,7 @@
     ]
    },
    "shot": "shots/divx-5-mp3.jpg",
-   "wallMs": 4774
+   "wallMs": 5845
   },
   {
    "id": "cinepak",
@@ -1384,20 +1384,20 @@
     "video": {
      "framesDrawn": 67,
      "distinctFrames": 21,
-     "maxVariance": 4368
+     "maxVariance": 4369
     },
     "audio": {
      "peak": 1.0386,
-     "framesPlayed": 213760,
+     "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.4733,
+     "analyserRms": 0.4779,
      "peakDb": 0.3,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.11500000953674,
-     "openToFirstFrameMs": 101.11500000953674,
-     "playedMs": 4412.0199999809265
+     "openToPlayingMs": 105.72500002384186,
+     "openToFirstFrameMs": 105.72500002384186,
+     "playedMs": 4470.804999947548
     },
     "stats": {
      "lostPictures": 0,
@@ -1407,7 +1407,7 @@
     }
    },
    "shot": "shots/cinepak.jpg",
-   "wallMs": 5151
+   "wallMs": 6238
   },
   {
    "id": "indeo-3",
@@ -1446,7 +1446,7 @@
     "tracks": [],
     "video": {
      "framesDrawn": 79,
-     "distinctFrames": 38,
+     "distinctFrames": 39,
      "maxVariance": 1118
     },
     "audio": {
@@ -1458,9 +1458,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.88999998569489,
-     "openToFirstFrameMs": 101.88999998569489,
-     "playedMs": 4404.959999978542
+     "openToPlayingMs": 102.55500000715256,
+     "openToFirstFrameMs": 102.56000000238419,
+     "playedMs": 4360.560000002384
     },
     "stats": {
      "lostPictures": 0,
@@ -1470,7 +1470,7 @@
     }
    },
    "shot": "shots/indeo-3.jpg",
-   "wallMs": 4537
+   "wallMs": 4492
   },
   {
    "id": "indeo-4-partial",
@@ -1524,22 +1524,22 @@
      }
     ],
     "video": {
-     "framesDrawn": 57,
+     "framesDrawn": 59,
      "distinctFrames": 11,
      "maxVariance": 3765
     },
     "audio": {
      "peak": 0.9294,
-     "framesPlayed": 30263,
+     "framesPlayed": 30277,
      "audibleFraction": 0.07,
-     "analyserRms": 0.189,
+     "analyserRms": 0.1876,
      "peakDb": -0.6,
      "referencePeakDb": -91
     },
     "timings": {
-     "openToPlayingMs": 101.50999999046326,
-     "openToFirstFrameMs": 101.51499998569489,
-     "playedMs": 4414.435000002384
+     "openToPlayingMs": 103.63999998569489,
+     "openToFirstFrameMs": 103.63999998569489,
+     "playedMs": 4468.920000016689
     },
     "stats": {
      "lostPictures": 0,
@@ -1549,7 +1549,7 @@
     }
    },
    "shot": "shots/indeo-4-partial.jpg",
-   "wallMs": 4674
+   "wallMs": 5846
   },
   {
    "id": "indeo-5",
@@ -1603,32 +1603,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 69,
+     "framesDrawn": 67,
      "distinctFrames": 40,
      "maxVariance": 3672
     },
     "audio": {
      "peak": 1.5752,
-     "framesPlayed": 218624,
-     "audibleFraction": 0.84,
-     "analyserRms": 0.5834,
+     "framesPlayed": 214016,
+     "audibleFraction": 0.82,
+     "analyserRms": 0.6532,
      "peakDb": 3.9,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.68999999761581,
-     "openToFirstFrameMs": 101.68999999761581,
-     "playedMs": 4496.969999969006
+     "openToPlayingMs": 102.12999999523163,
+     "openToFirstFrameMs": 102.12999999523163,
+     "playedMs": 4469.060000002384
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 33382,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/indeo-5.jpg",
-   "wallMs": 5223
+   "wallMs": 5805
   },
   {
    "id": "motion-jpeg-mu-law-10-mb",
@@ -1682,32 +1682,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 131,
+     "framesDrawn": 130,
      "distinctFrames": 39,
-     "maxVariance": 5015
+     "maxVariance": 4952
     },
     "audio": {
      "peak": 1.3179,
-     "framesPlayed": 218624,
+     "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.3996,
+     "analyserRms": 0.4007,
      "peakDb": 2.4,
      "referencePeakDb": -0.2
     },
     "timings": {
-     "openToPlayingMs": 102.14499998092651,
-     "openToFirstFrameMs": 102.14499998092651,
-     "playedMs": 4472.055000007153
+     "openToPlayingMs": 102.13499999046326,
+     "openToFirstFrameMs": 102.13499999046326,
+     "playedMs": 4467.535000026226
     },
     "stats": {
-     "lostPictures": 0,
-     "latePictures": 0,
-     "audioDropped": 0,
+     "lostPictures": 1,
+     "latePictures": 1,
+     "audioDropped": 34414,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/motion-jpeg-mu-law-10-mb.jpg",
-   "wallMs": 5412
+   "wallMs": 5867
   },
   {
    "id": "dvcpro-hd-720p50",
@@ -1758,9 +1758,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.11999994516373,
-     "openToFirstFrameMs": 102.11999994516373,
-     "playedMs": 504.2450000047684
+     "openToPlayingMs": 102.43500000238419,
+     "openToFirstFrameMs": 102.43999999761581,
+     "playedMs": 503.94499999284744
     },
     "stats": {
      "lostPictures": 0,
@@ -1770,7 +1770,7 @@
     }
    },
    "shot": "shots/dvcpro-hd-720p50.jpg",
-   "wallMs": 625
+   "wallMs": 641
   },
   {
    "id": "on2-vp5-speex",
@@ -1824,22 +1824,22 @@
      }
     ],
     "video": {
-     "framesDrawn": 102,
+     "framesDrawn": 100,
      "distinctFrames": 3,
      "maxVariance": 754
     },
     "audio": {
      "peak": 10.0495,
-     "framesPlayed": 177760,
+     "framesPlayed": 174431,
      "audibleFraction": 0.73,
-     "analyserRms": 0.6785,
+     "analyserRms": 1.2033,
      "peakDb": 20,
      "referencePeakDb": -72.2
     },
     "timings": {
-     "openToPlayingMs": 102.43999999761581,
-     "openToFirstFrameMs": 102.43999999761581,
-     "playedMs": 4501.870000004768
+     "openToPlayingMs": 101.76499998569489,
+     "openToFirstFrameMs": 101.76499998569489,
+     "playedMs": 4461.47000002861
     },
     "stats": {
      "lostPictures": 0,
@@ -1849,7 +1849,7 @@
     }
    },
    "shot": "shots/on2-vp5-speex.jpg",
-   "wallMs": 4815
+   "wallMs": 5817
   },
   {
    "id": "dvd-vob-single-frame-dvd-subs",
@@ -1900,9 +1900,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 100.85000002384186,
-     "openToFirstFrameMs": 100.85000002384186,
-     "playedMs": 504.48499995470047
+     "openToPlayingMs": 102.27499997615814,
+     "openToFirstFrameMs": 102.27499997615814,
+     "playedMs": 504.72000002861023
     },
     "stats": {
      "lostPictures": 0,
@@ -1912,7 +1912,7 @@
     }
    },
    "shot": "shots/dvd-vob-single-frame-dvd-subs.jpg",
-   "wallMs": 618
+   "wallMs": 614
   },
   {
    "id": "mpeg-1-system-stream",
@@ -1950,9 +1950,9 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 31,
+     "framesDrawn": 32,
      "distinctFrames": 12,
-     "maxVariance": 1065
+     "maxVariance": 1067
     },
     "audio": {
      "peak": 0,
@@ -1963,9 +1963,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.78500002622604,
-     "openToFirstFrameMs": 101.78500002622604,
-     "playedMs": 1944.7400000095367
+     "openToPlayingMs": 101.86000001430511,
+     "openToFirstFrameMs": 101.86000001430511,
+     "playedMs": 1925.6449999809265
     },
     "stats": {
      "lostPictures": 0,
@@ -1975,7 +1975,7 @@
     }
    },
    "shot": "shots/mpeg-1-system-stream.jpg",
-   "wallMs": 2061
+   "wallMs": 2035
   },
   {
    "id": "dvd-vob-mpeg-2-ac-3-5-mb",
@@ -2029,7 +2029,7 @@
      }
     ],
     "video": {
-     "framesDrawn": 105,
+     "framesDrawn": 107,
      "distinctFrames": 20,
      "maxVariance": 4554
     },
@@ -2037,24 +2037,24 @@
      "peak": 0.1839,
      "framesPlayed": 214016,
      "audibleFraction": 0.7,
-     "analyserRms": 0.0479,
+     "analyserRms": 0.0506,
      "peakDb": -14.7,
      "referencePeakDb": -15.3
     },
     "timings": {
-     "openToPlayingMs": 101.99500000476837,
-     "openToFirstFrameMs": 101.99500000476837,
-     "playedMs": 4416.3949999809265
+     "openToPlayingMs": 101.51999998092651,
+     "openToFirstFrameMs": 101.52499997615814,
+     "playedMs": 4466.949999988079
     },
     "stats": {
      "lostPictures": 0,
-     "latePictures": 2,
-     "audioDropped": 36842,
+     "latePictures": 0,
+     "audioDropped": 36837,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/dvd-vob-mpeg-2-ac-3-5-mb.jpg",
-   "wallMs": 4696
+   "wallMs": 5814
   },
   {
    "id": "mpeg-2-field-encoded-ts",
@@ -2105,9 +2105,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.25499999523163,
-     "openToFirstFrameMs": 101.25499999523163,
-     "playedMs": 2354.7349999547005
+     "openToPlayingMs": 101.52499997615814,
+     "openToFirstFrameMs": 101.52499997615814,
+     "playedMs": 2332.185000002384
     },
     "stats": {
      "lostPictures": 0,
@@ -2117,7 +2117,7 @@
     }
    },
    "shot": "shots/mpeg-2-field-encoded-ts.jpg",
-   "wallMs": 2479
+   "wallMs": 2444
   },
   {
    "id": "dts-in-mpeg-ts",
@@ -2139,14 +2139,18 @@
     }
    },
    "vlc": {
-    "passed": false,
-    "expectedFailure": "native VLC 3.0.24 also produces no audio from this sample",
+    "passed": true,
+    "expectedFailure": null,
     "knownIssue": null,
     "checks": {
-     "audio": false
+     "audio": true
     },
     "error": null,
     "events": [
+     "opening",
+     "playing",
+     "stopping",
+     "stopped",
      "opening",
      "playing",
      "ended",
@@ -2160,28 +2164,27 @@
      "maxVariance": 0
     },
     "audio": {
-     "peak": 0,
-     "framesPlayed": 0,
-     "audibleFraction": 0,
-     "analyserRms": 0,
-     "peakDb": null,
+     "peak": 0.4187,
+     "framesPlayed": 132962,
+     "audibleFraction": 0.75,
+     "analyserRms": 0.0685,
+     "peakDb": -7.6,
      "referencePeakDb": -10.4
     },
     "timings": {
-     "openToPlayingMs": null,
+     "openToPlayingMs": 101.47500002384186,
      "openToFirstFrameMs": null,
-     "playedMs": 0
+     "playedMs": 3236.75
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
      "audioDropped": 0,
-     "audioUnderruns": 0
-    },
-    "logs": []
+     "audioUnderruns": 1
+    }
    },
    "shot": null,
-   "wallMs": 519
+   "wallMs": 3346
   },
   {
    "id": "flash-vp6-sorenson-on2",
@@ -2227,7 +2230,7 @@
     ],
     "video": {
      "framesDrawn": 89,
-     "distinctFrames": 40,
+     "distinctFrames": 41,
      "maxVariance": 3445
     },
     "audio": {
@@ -2239,9 +2242,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.88499999046326,
-     "openToFirstFrameMs": 101.88499999046326,
-     "playedMs": 4417.349999964237
+     "openToPlayingMs": 100.44499999284744,
+     "openToFirstFrameMs": 100.44499999284744,
+     "playedMs": 4467.3949999809265
     },
     "stats": {
      "lostPictures": 0,
@@ -2251,7 +2254,7 @@
     }
    },
    "shot": "shots/flash-vp6-sorenson-on2.jpg",
-   "wallMs": 4714
+   "wallMs": 5796
   },
   {
    "id": "flv-with-h-264-aac",
@@ -2306,21 +2309,21 @@
     ],
     "video": {
      "framesDrawn": 114,
-     "distinctFrames": 15,
-     "maxVariance": 1624
+     "distinctFrames": 16,
+     "maxVariance": 1633
     },
     "audio": {
      "peak": 0.125,
      "framesPlayed": 214016,
      "audibleFraction": 0.5,
-     "analyserRms": 0.0376,
+     "analyserRms": 0.0259,
      "peakDb": -18.1,
      "referencePeakDb": -18.7
     },
     "timings": {
-     "openToPlayingMs": 100.85999995470047,
-     "openToFirstFrameMs": 100.85999995470047,
-     "playedMs": 4412.715000033379
+     "openToPlayingMs": 101.68500000238419,
+     "openToFirstFrameMs": 101.68500000238419,
+     "playedMs": 4470.295000016689
     },
     "stats": {
      "lostPictures": 19,
@@ -2330,7 +2333,7 @@
     }
    },
    "shot": "shots/flv-with-h-264-aac.jpg",
-   "wallMs": 5301
+   "wallMs": 5824
   },
   {
    "id": "vp6f-nellymoser",
@@ -2384,32 +2387,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 65,
-     "distinctFrames": 21,
+     "framesDrawn": 62,
+     "distinctFrames": 23,
      "maxVariance": 6667
     },
     "audio": {
      "peak": 1.204,
-     "framesPlayed": 159003,
-     "audibleFraction": 0.89,
-     "analyserRms": 0.4011,
+     "framesPlayed": 158113,
+     "audibleFraction": 0.93,
+     "analyserRms": 0.3236,
      "peakDb": 1.6,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.64499998092651,
-     "openToFirstFrameMs": 101.64499998092651,
-     "playedMs": 4500.384999990463
+     "openToPlayingMs": 101.81499999761581,
+     "openToFirstFrameMs": 101.81499999761581,
+     "playedMs": 4461.7300000190735
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 2407,
      "audioUnderruns": 12
     }
    },
    "shot": "shots/vp6f-nellymoser.jpg",
-   "wallMs": 4827
+   "wallMs": 5863
   },
   {
    "id": "3gpp-h-263-amr-nb",
@@ -2463,32 +2466,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 85,
+     "framesDrawn": 81,
      "distinctFrames": 41,
      "maxVariance": 3684
     },
     "audio": {
      "peak": 0.9475,
-     "framesPlayed": 218624,
+     "framesPlayed": 214016,
      "audibleFraction": 0.98,
-     "analyserRms": 0.2412,
+     "analyserRms": 0.2371,
      "peakDb": -0.5,
      "referencePeakDb": -0.8
     },
     "timings": {
-     "openToPlayingMs": 101.77500003576279,
-     "openToFirstFrameMs": 101.77500003576279,
-     "playedMs": 4496.969999969006
+     "openToPlayingMs": 101.39499998092651,
+     "openToFirstFrameMs": 101.39499998092651,
+     "playedMs": 4465.504999995232
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 39815,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/3gpp-h-263-amr-nb.jpg",
-   "wallMs": 5045
+   "wallMs": 5815
   },
   {
    "id": "3gp-h-263-phone-clip",
@@ -2526,8 +2529,8 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 57,
-     "distinctFrames": 28,
+     "framesDrawn": 53,
+     "distinctFrames": 29,
      "maxVariance": 5056
     },
     "audio": {
@@ -2539,9 +2542,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.41000002622604,
-     "openToFirstFrameMs": 102.41000002622604,
-     "playedMs": 3283.7400000095367
+     "openToPlayingMs": 101.83999997377396,
+     "openToFirstFrameMs": 101.83999997377396,
+     "playedMs": 3243.024999976158
     },
     "stats": {
      "lostPictures": 0,
@@ -2551,7 +2554,7 @@
     }
    },
    "shot": "shots/3gp-h-263-phone-clip.jpg",
-   "wallMs": 3407
+   "wallMs": 3352
   },
   {
    "id": "sorenson-video-1",
@@ -2612,26 +2615,26 @@
     },
     "audio": {
      "peak": 1.0022,
-     "framesPlayed": 218880,
+     "framesPlayed": 214016,
      "audibleFraction": 0.98,
-     "analyserRms": 0.4005,
+     "analyserRms": 0.4576,
      "peakDb": 0,
      "referencePeakDb": -0.3
     },
     "timings": {
-     "openToPlayingMs": 102.68500000238419,
-     "openToFirstFrameMs": 102.68500000238419,
-     "playedMs": 4490.989999949932
+     "openToPlayingMs": 101.27000004053116,
+     "openToFirstFrameMs": 101.27000004053116,
+     "playedMs": 4462.954999983311
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 24992,
+     "audioDropped": 40595,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/sorenson-video-1.jpg",
-   "wallMs": 5163
+   "wallMs": 5820
   },
   {
    "id": "sorenson-video-3",
@@ -2682,9 +2685,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.31499999761581,
-     "openToFirstFrameMs": 102.31499999761581,
-     "playedMs": 914.6550000309944
+     "openToPlayingMs": 101.94499999284744,
+     "openToFirstFrameMs": 101.94499999284744,
+     "playedMs": 910.2699999809265
     },
     "stats": {
      "lostPictures": 0,
@@ -2694,7 +2697,7 @@
     }
    },
    "shot": "shots/sorenson-video-3.jpg",
-   "wallMs": 1034
+   "wallMs": 1021
   },
   {
    "id": "qdesign-music-2",
@@ -2752,19 +2755,19 @@
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 102.28999996185303,
+     "openToPlayingMs": 102.07499998807907,
      "openToFirstFrameMs": null,
-     "playedMs": 4451.525000035763
+     "playedMs": 4444.680000007153
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 41827,
+     "audioDropped": 41840,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4569
+   "wallMs": 4553
   },
   {
    "id": "ima4-adpcm",
@@ -2816,26 +2819,26 @@
     },
     "audio": {
      "peak": 1.083,
-     "framesPlayed": 213760,
+     "framesPlayed": 214016,
      "audibleFraction": 0.98,
-     "analyserRms": 0.3697,
+     "analyserRms": 0.3833,
      "peakDb": 0.7,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.80500000715256,
+     "openToPlayingMs": 100.56499999761581,
      "openToFirstFrameMs": null,
-     "playedMs": 4446.875
+     "playedMs": 4448.590000033379
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 34059,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4573
+   "wallMs": 4971
   },
   {
    "id": "mace-3-1",
@@ -2886,16 +2889,16 @@
     },
     "audio": {
      "peak": 1.0546,
-     "framesPlayed": 213504,
+     "framesPlayed": 213760,
      "audibleFraction": 0.98,
-     "analyserRms": 0.381,
+     "analyserRms": 0.3808,
      "peakDb": 0.5,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.62999999523163,
+     "openToPlayingMs": 101.53000003099442,
      "openToFirstFrameMs": null,
-     "playedMs": 4447.664999961853
+     "playedMs": 4447.754999995232
     },
     "stats": {
      "lostPictures": 0,
@@ -2905,7 +2908,7 @@
     }
    },
    "shot": null,
-   "wallMs": 4565
+   "wallMs": 4568
   },
   {
    "id": "smacker",
@@ -2959,32 +2962,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 64,
-     "distinctFrames": 29,
-     "maxVariance": 195
+     "framesDrawn": 61,
+     "distinctFrames": 25,
+     "maxVariance": 211
     },
     "audio": {
-     "peak": 1.0503,
-     "framesPlayed": 212736,
+     "peak": 1.0129,
+     "framesPlayed": 213097,
      "audibleFraction": 0.8,
-     "analyserRms": 0.5273,
-     "peakDb": 0.4,
+     "analyserRms": 0.4726,
+     "peakDb": 0.1,
      "referencePeakDb": -1.6
     },
     "timings": {
-     "openToPlayingMs": 101.11500000953674,
-     "openToFirstFrameMs": 101.11500000953674,
-     "playedMs": 4479.054999947548
+     "openToPlayingMs": 101.375,
+     "openToFirstFrameMs": 101.375,
+     "playedMs": 4462.165000021458
     },
     "stats": {
-     "lostPictures": 11,
-     "latePictures": 3,
-     "audioDropped": 12213,
-     "audioUnderruns": 0
+     "lostPictures": 9,
+     "latePictures": 2,
+     "audioDropped": 11339,
+     "audioUnderruns": 1
     }
    },
    "shot": "shots/smacker.jpg",
-   "wallMs": 5376
+   "wallMs": 6196
   },
   {
    "id": "bink-video",
@@ -3022,7 +3025,7 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 21,
+     "framesDrawn": 20,
      "distinctFrames": 14,
      "maxVariance": 415
     },
@@ -3035,9 +3038,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.23000001907349,
-     "openToFirstFrameMs": 102.23000001907349,
-     "playedMs": 1730
+     "openToPlayingMs": 102.22000002861023,
+     "openToFirstFrameMs": 102.22000002861023,
+     "playedMs": 1826.6349999904633
     },
     "stats": {
      "lostPictures": 0,
@@ -3047,7 +3050,7 @@
     }
    },
    "shot": "shots/bink-video.jpg",
-   "wallMs": 1857
+   "wallMs": 1939
   },
   {
    "id": "id-roq-quake-3-logo",
@@ -3101,32 +3104,32 @@
      }
     ],
     "video": {
-     "framesDrawn": 136,
+     "framesDrawn": 133,
      "distinctFrames": 37,
-     "maxVariance": 4705
+     "maxVariance": 4687
     },
     "audio": {
      "peak": 0.9766,
-     "framesPlayed": 218880,
-     "audibleFraction": 0.78,
-     "analyserRms": 0.3227,
+     "framesPlayed": 214016,
+     "audibleFraction": 0.91,
+     "analyserRms": 0.3481,
      "peakDb": -0.2,
      "referencePeakDb": -0.1
     },
     "timings": {
-     "openToPlayingMs": 101.2849999666214,
-     "openToFirstFrameMs": 101.2849999666214,
-     "playedMs": 4500.4800000190735
+     "openToPlayingMs": 101.30500000715256,
+     "openToFirstFrameMs": 101.30500000715256,
+     "playedMs": 4468.475000023842
     },
     "stats": {
-     "lostPictures": 0,
-     "latePictures": 0,
-     "audioDropped": 0,
+     "lostPictures": 1,
+     "latePictures": 1,
+     "audioDropped": 50085,
      "audioUnderruns": 0
     }
    },
    "shot": "shots/id-roq-quake-3-logo.jpg",
-   "wallMs": 5214
+   "wallMs": 5820
   },
   {
    "id": "autodesk-flic-640x480",
@@ -3166,7 +3169,7 @@
     "video": {
      "framesDrawn": 28,
      "distinctFrames": 19,
-     "maxVariance": 1852
+     "maxVariance": 1981
     },
     "audio": {
      "peak": 0,
@@ -3177,9 +3180,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.59499996900558,
-     "openToFirstFrameMs": 102.59499996900558,
-     "playedMs": 2347.1349999904633
+     "openToPlayingMs": 101.53000003099442,
+     "openToFirstFrameMs": 101.53000003099442,
+     "playedMs": 2431.4099999666214
     },
     "stats": {
      "lostPictures": 0,
@@ -3189,7 +3192,7 @@
     }
    },
    "shot": "shots/autodesk-flic-640x480.jpg",
-   "wallMs": 2472
+   "wallMs": 2549
   },
   {
    "id": "autodesk-flc-320x200",
@@ -3234,9 +3237,9 @@
      }
     ],
     "video": {
-     "framesDrawn": 57,
+     "framesDrawn": 61,
      "distinctFrames": 19,
-     "maxVariance": 7225
+     "maxVariance": 7224
     },
     "audio": {
      "peak": 0,
@@ -3247,9 +3250,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.45999997854233,
-     "openToFirstFrameMs": 101.45999997854233,
-     "playedMs": 4424.850000023842
+     "openToPlayingMs": 101.14999997615814,
+     "openToFirstFrameMs": 101.14999997615814,
+     "playedMs": 4465.435000002384
     },
     "stats": {
      "lostPictures": 0,
@@ -3259,7 +3262,7 @@
     }
    },
    "shot": "shots/autodesk-flc-320x200.jpg",
-   "wallMs": 4758
+   "wallMs": 5843
   },
   {
    "id": "nuppelvideo-mythtv",
@@ -3298,22 +3301,22 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 11,
+     "framesDrawn": 10,
      "distinctFrames": 4,
      "maxVariance": 3111
     },
     "audio": {
      "peak": 1.1198,
-     "framesPlayed": 23491,
-     "audibleFraction": 0.8,
-     "analyserRms": 0.4124,
+     "framesPlayed": 19456,
+     "audibleFraction": 0.75,
+     "analyserRms": 0.4176,
      "peakDb": 1,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.51500004529953,
-     "openToFirstFrameMs": 101.51500004529953,
-     "playedMs": 911.7549999952316
+     "openToPlayingMs": 101.8400000333786,
+     "openToFirstFrameMs": 101.8400000333786,
+     "playedMs": 910.4549999833107
     },
     "stats": {
      "lostPictures": 0,
@@ -3323,7 +3326,7 @@
     }
    },
    "shot": "shots/nuppelvideo-mythtv.jpg",
-   "wallMs": 1029
+   "wallMs": 1022
   },
   {
    "id": "vivo-2-vivoactive",
@@ -3346,7 +3349,7 @@
    },
    "vlc": {
     "passed": false,
-    "expectedFailure": "video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010)",
+    "expectedFailure": "video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010-0011)",
     "knownIssue": null,
     "checks": {
      "video": false,
@@ -3383,21 +3386,21 @@
     },
     "audio": {
      "peak": 0.0084,
-     "framesPlayed": 209912,
-     "audibleFraction": 0.73,
+     "framesPlayed": 211947,
+     "audibleFraction": 0.7,
      "analyserRms": 0.0032,
      "peakDb": -41.5,
      "referencePeakDb": -41.5
     },
     "timings": {
-     "openToPlayingMs": 101.875,
+     "openToPlayingMs": 102.02500003576279,
      "openToFirstFrameMs": null,
-     "playedMs": 4451.295000016689
+     "playedMs": 4443.110000014305
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 514,
+     "audioDropped": 20674,
      "audioUnderruns": 2
     },
     "logs": [
@@ -3433,7 +3436,7 @@
     ]
    },
    "shot": null,
-   "wallMs": 5385
+   "wallMs": 5370
   },
   {
    "id": "playstation-str-mdec-xa",
@@ -3487,22 +3490,22 @@
      }
     ],
     "video": {
-     "framesDrawn": 66,
-     "distinctFrames": 39,
-     "maxVariance": 11717
+     "framesDrawn": 67,
+     "distinctFrames": 41,
+     "maxVariance": 11572
     },
     "audio": {
      "peak": 0.4916,
      "framesPlayed": 214016,
      "audibleFraction": 0.98,
-     "analyserRms": 0.1156,
+     "analyserRms": 0.1186,
      "peakDb": -6.2,
      "referencePeakDb": -6.3
     },
     "timings": {
-     "openToPlayingMs": 100.50499999523163,
-     "openToFirstFrameMs": 100.50499999523163,
-     "playedMs": 4428.245000004768
+     "openToPlayingMs": 101.35500001907349,
+     "openToFirstFrameMs": 101.35500001907349,
+     "playedMs": 4470.534999966621
     },
     "stats": {
      "lostPictures": 0,
@@ -3512,7 +3515,7 @@
     }
    },
    "shot": "shots/playstation-str-mdec-xa.jpg",
-   "wallMs": 5364
+   "wallMs": 6269
   },
   {
    "id": "ac-3-5-1-448k",
@@ -3556,16 +3559,16 @@
     },
     "audio": {
      "peak": 0.0003,
-     "framesPlayed": 87908,
+     "framesPlayed": 87296,
      "audibleFraction": 0,
      "analyserRms": 0.0001,
      "peakDb": -70.5,
      "referencePeakDb": -74.7
     },
     "timings": {
-     "openToPlayingMs": 101.51499998569489,
+     "openToPlayingMs": 101.25,
      "openToFirstFrameMs": null,
-     "playedMs": 2323.1050000190735
+     "playedMs": 2223.310000002384
     },
     "stats": {
      "lostPictures": 0,
@@ -3575,7 +3578,7 @@
     }
    },
    "shot": null,
-   "wallMs": 2435
+   "wallMs": 2337
   },
   {
    "id": "e-ac-3-5-1-with-spx",
@@ -3619,26 +3622,26 @@
     },
     "audio": {
      "peak": 0.2032,
-     "framesPlayed": 48576,
+     "framesPlayed": 38912,
      "audibleFraction": 1,
-     "analyserRms": 0.0776,
+     "analyserRms": 0.0821,
      "peakDb": -13.8,
      "referencePeakDb": -10.3
     },
     "timings": {
-     "openToPlayingMs": 101.30500000715256,
+     "openToPlayingMs": 101.39499998092651,
      "openToFirstFrameMs": null,
-     "playedMs": 1415.5349999666214
+     "playedMs": 1208.3100000023842
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 27048,
+     "audioDropped": 34728,
      "audioUnderruns": 1
     }
    },
    "shot": null,
-   "wallMs": 1530
+   "wallMs": 1318
   },
   {
    "id": "dts-es",
@@ -3682,26 +3685,26 @@
     },
     "audio": {
      "peak": 1.482,
-     "framesPlayed": 94144,
+     "framesPlayed": 97280,
      "audibleFraction": 1,
-     "analyserRms": 0.3671,
+     "analyserRms": 0.3674,
      "peakDb": 3.4,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 101.55500000715256,
+     "openToPlayingMs": 101.81999999284744,
      "openToFirstFrameMs": null,
-     "playedMs": 2422.6050000190735
+     "playedMs": 2426.9900000095367
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 37290,
+     "audioDropped": 33192,
      "audioUnderruns": 1
     }
    },
    "shot": null,
-   "wallMs": 2544
+   "wallMs": 2542
   },
   {
    "id": "dolby-truehd-atmos-8ch",
@@ -3747,14 +3750,14 @@
      "peak": 0.2644,
      "framesPlayed": 4864,
      "audibleFraction": 1,
-     "analyserRms": 0.1347,
+     "analyserRms": 0.1308,
      "peakDb": -11.6,
      "referencePeakDb": -8
     },
     "timings": {
-     "openToPlayingMs": 101.17500001192093,
+     "openToPlayingMs": 100.85000002384186,
      "openToFirstFrameMs": null,
-     "playedMs": 603.3600000143051
+     "playedMs": 602.5449999570847
     },
     "stats": {
      "lostPictures": 0,
@@ -3764,7 +3767,7 @@
     }
    },
    "shot": null,
-   "wallMs": 718
+   "wallMs": 721
   },
   {
    "id": "mlp-440-hz",
@@ -3822,19 +3825,19 @@
      "referencePeakDb": -12
     },
     "timings": {
-     "openToPlayingMs": 101.93500000238419,
+     "openToPlayingMs": 100.50499999523163,
      "openToFirstFrameMs": null,
-     "playedMs": 4451.025000035763
+     "playedMs": 4445.399999976158
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 34684,
+     "audioDropped": 34683,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4571
+   "wallMs": 4556
   },
   {
    "id": "musepack-sv8",
@@ -3886,25 +3889,25 @@
     "audio": {
      "peak": 0.8332,
      "framesPlayed": 214016,
-     "audibleFraction": 0.93,
-     "analyserRms": 0.2087,
+     "audibleFraction": 0.95,
+     "analyserRms": 0.2982,
      "peakDb": -1.6,
      "referencePeakDb": -2
     },
     "timings": {
-     "openToPlayingMs": 102.01999998092651,
+     "openToPlayingMs": 101.91000002622604,
      "openToFirstFrameMs": null,
-     "playedMs": 4448.589999973774
+     "playedMs": 4447.300000011921
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 10776,
+     "audioDropped": 27078,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4980
+   "wallMs": 4960
   },
   {
    "id": "musepack-sv7",
@@ -3962,19 +3965,19 @@
      "referencePeakDb": -2
     },
     "timings": {
-     "openToPlayingMs": 101.20500004291534,
+     "openToPlayingMs": 101.11000001430511,
      "openToFirstFrameMs": null,
-     "playedMs": 4447.829999983311
+     "playedMs": 4450.7300000190735
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 34599,
+     "audioDropped": 34602,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4576
+   "wallMs": 4568
   },
   {
    "id": "monkey-s-audio",
@@ -4018,16 +4021,16 @@
     },
     "audio": {
      "peak": 1.4344,
-     "framesPlayed": 18467,
+     "framesPlayed": 18469,
      "audibleFraction": 1,
-     "analyserRms": 0.375,
+     "analyserRms": 0.3779,
      "peakDb": 3.1,
      "referencePeakDb": 0
     },
     "timings": {
-     "openToPlayingMs": 100.90000003576279,
+     "openToPlayingMs": 100.66000002622604,
      "openToFirstFrameMs": null,
-     "playedMs": 904.5999999642372
+     "playedMs": 804.6150000095367
     },
     "stats": {
      "lostPictures": 0,
@@ -4037,7 +4040,7 @@
     }
    },
    "shot": null,
-   "wallMs": 1023
+   "wallMs": 933
   },
   {
    "id": "true-audio-6-6-mb",
@@ -4088,26 +4091,26 @@
     },
     "audio": {
      "peak": 0.9728,
-     "framesPlayed": 200576,
-     "audibleFraction": 0.98,
-     "analyserRms": 0.2892,
+     "framesPlayed": 194368,
+     "audibleFraction": 0.95,
+     "analyserRms": 0.2855,
      "peakDb": -0.2,
      "referencePeakDb": -0.2
     },
     "timings": {
-     "openToPlayingMs": 101.11000001430511,
+     "openToPlayingMs": 102.31999999284744,
      "openToFirstFrameMs": null,
-     "playedMs": 4446.620000004768
+     "playedMs": 4452.610000014305
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 119443,
-     "audioUnderruns": 2
+     "audioDropped": 131893,
+     "audioUnderruns": 3
     }
    },
    "shot": null,
-   "wallMs": 4584
+   "wallMs": 4574
   },
   {
    "id": "amr-nb-12-2k",
@@ -4160,24 +4163,24 @@
      "peak": 0.7175,
      "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.2193,
+     "analyserRms": 0.2183,
      "peakDb": -2.9,
      "referencePeakDb": -2.9
     },
     "timings": {
-     "openToPlayingMs": 101.94499999284744,
+     "openToPlayingMs": 101.37999999523163,
      "openToFirstFrameMs": null,
-     "playedMs": 4444.514999985695
+     "playedMs": 4448.714999973774
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 34052,
+     "audioDropped": 34055,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4570
+   "wallMs": 4587
   },
   {
    "id": "shorten",
@@ -4200,13 +4203,17 @@
    },
    "vlc": {
     "passed": false,
-    "expectedFailure": "native VLC 3.0.24 also cannot play Shorten (no demuxer claims it)",
+    "expectedFailure": "native VLC 3.0.24 also cannot play it: VLC's FFmpeg demuxer reaches end of file without a packet from this raw Shorten stream",
     "knownIssue": null,
     "checks": {
      "audio": false
     },
     "error": null,
     "events": [
+     "opening",
+     "playing",
+     "stopping",
+     "stopped",
      "opening",
      "playing",
      "ended",
@@ -4228,9 +4235,9 @@
      "referencePeakDb": -2.7
     },
     "timings": {
-     "openToPlayingMs": null,
+     "openToPlayingMs": 101.60500001907349,
      "openToFirstFrameMs": null,
-     "playedMs": 0
+     "playedMs": 501.8449999690056
     },
     "stats": {
      "lostPictures": 0,
@@ -4263,7 +4270,7 @@
     ]
    },
    "shot": null,
-   "wallMs": 513
+   "wallMs": 623
   },
   {
    "id": "hevc-main10-dolby-vision-p7-in-mkv",
@@ -4314,9 +4321,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.05499994754791,
-     "openToFirstFrameMs": 203.6449999809265,
-     "playedMs": 504.5450000166893
+     "openToPlayingMs": 101.87999999523163,
+     "openToFirstFrameMs": 253.02499997615814,
+     "playedMs": 554.7450000047684
     },
     "stats": {
      "lostPictures": 0,
@@ -4326,7 +4333,7 @@
     }
    },
    "shot": "shots/hevc-main10-dolby-vision-p7-in-mkv.jpg",
-   "wallMs": 631
+   "wallMs": 672
   },
   {
    "id": "dvb-subtitles-in-ts",
@@ -4399,9 +4406,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.06499999761581,
+     "openToPlayingMs": 101.2150000333786,
      "openToFirstFrameMs": null,
-     "playedMs": 4453.329999983311
+     "playedMs": 4453.599999964237
     },
     "stats": {
      "lostPictures": 0,
@@ -4416,7 +4423,7 @@
     ]
    },
    "shot": null,
-   "wallMs": 4587
+   "wallMs": 4562
   },
   {
    "id": "vobsub-idx-sub",
@@ -4462,22 +4469,22 @@
      }
     ],
     "video": {
-     "framesDrawn": 104,
-     "distinctFrames": 35,
-     "maxVariance": 4735
+     "framesDrawn": 106,
+     "distinctFrames": 36,
+     "maxVariance": 4739
     },
     "audio": {
      "peak": 0.125,
-     "framesPlayed": 214016,
+     "framesPlayed": 213760,
      "audibleFraction": 0.89,
      "analyserRms": 0.0887,
      "peakDb": -18.1,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 106.24000000953674,
-     "openToFirstFrameMs": 106.24000000953674,
-     "playedMs": 4410
+     "openToPlayingMs": 104.7950000166893,
+     "openToFirstFrameMs": 104.7950000166893,
+     "playedMs": 4470.6099999547005
     },
     "stats": {
      "lostPictures": 0,
@@ -4487,7 +4494,7 @@
     }
    },
    "shot": "shots/vobsub-idx-sub.jpg",
-   "wallMs": 4930
+   "wallMs": 5817
   },
   {
    "id": "mpeg-2-es-with-eia-608-closed-captions",
@@ -4556,9 +4563,9 @@
      }
     ],
     "video": {
-     "framesDrawn": 133,
-     "distinctFrames": 40,
-     "maxVariance": 6349
+     "framesDrawn": 135,
+     "distinctFrames": 41,
+     "maxVariance": 6430
     },
     "audio": {
      "peak": 0,
@@ -4569,9 +4576,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.41000002622604,
-     "openToFirstFrameMs": 102.41000002622604,
-     "playedMs": 4406.254999995232
+     "openToPlayingMs": 102.3299999833107,
+     "openToFirstFrameMs": 102.3299999833107,
+     "playedMs": 4479.865000009537
     },
     "stats": {
      "lostPictures": 0,
@@ -4581,7 +4588,7 @@
     }
    },
    "shot": "shots/mpeg-2-es-with-eia-608-closed-captions.jpg",
-   "wallMs": 4712
+   "wallMs": 5858
   },
   {
    "id": "mpeg-4-asp-vorbis-16-ass-ssa-tracks",
@@ -4735,20 +4742,20 @@
     "video": {
      "framesDrawn": 107,
      "distinctFrames": 41,
-     "maxVariance": 6042
+     "maxVariance": 6048
     },
     "audio": {
      "peak": 0.503,
-     "framesPlayed": 218880,
+     "framesPlayed": 214016,
      "audibleFraction": 0.93,
-     "analyserRms": 0.1864,
+     "analyserRms": 0.184,
      "peakDb": -6,
      "referencePeakDb": -5.8
     },
     "timings": {
-     "openToPlayingMs": 102.54000002145767,
-     "openToFirstFrameMs": 102.5450000166893,
-     "playedMs": 4490.5199999809265
+     "openToPlayingMs": 102.83000004291534,
+     "openToFirstFrameMs": 102.83500003814697,
+     "playedMs": 4468.449999988079
     },
     "stats": {
      "lostPictures": 0,
@@ -4758,7 +4765,7 @@
     }
    },
    "shot": "shots/mpeg-4-asp-vorbis-16-ass-ssa-tracks.jpg",
-   "wallMs": 5029
+   "wallMs": 6253
   },
   {
    "id": "h-264-2x-mp3-vobsub-in-mkv",
@@ -4826,22 +4833,22 @@
      }
     ],
     "video": {
-     "framesDrawn": 111,
-     "distinctFrames": 40,
+     "framesDrawn": 114,
+     "distinctFrames": 41,
      "maxVariance": 1960
     },
     "audio": {
      "peak": 0.2444,
      "framesPlayed": 213760,
      "audibleFraction": 0.98,
-     "analyserRms": 0.0801,
+     "analyserRms": 0.0755,
      "peakDb": -12.2,
      "referencePeakDb": -11.9
     },
     "timings": {
-     "openToPlayingMs": 101.97500002384186,
-     "openToFirstFrameMs": 101.97500002384186,
-     "playedMs": 4405.814999997616
+     "openToPlayingMs": 101.86000001430511,
+     "openToFirstFrameMs": 101.86000001430511,
+     "playedMs": 4471.305000007153
     },
     "stats": {
      "lostPictures": 0,
@@ -4851,7 +4858,7 @@
     }
    },
    "shot": "shots/h-264-2x-mp3-vobsub-in-mkv.jpg",
-   "wallMs": 4948
+   "wallMs": 6298
   },
   {
    "id": "snes-spc",
@@ -4902,26 +4909,26 @@
     },
     "audio": {
      "peak": 0.4023,
-     "framesPlayed": 214016,
+     "framesPlayed": 213760,
      "audibleFraction": 0.98,
-     "analyserRms": 0.1085,
+     "analyserRms": 0.1058,
      "peakDb": -7.9,
      "referencePeakDb": -7.9
     },
     "timings": {
-     "openToPlayingMs": 102.63499999046326,
+     "openToPlayingMs": 104.46999996900558,
      "openToFirstFrameMs": null,
-     "playedMs": 4445.805000007153
+     "playedMs": 4452.050000011921
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 41821,
+     "audioDropped": 0,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4571
+   "wallMs": 5324
   },
   {
    "id": "nes-nsf-tetris-gb-rip",
@@ -4971,27 +4978,27 @@
      "maxVariance": 0
     },
     "audio": {
-     "peak": 0.5538,
+     "peak": 0.5829,
      "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.1912,
-     "peakDb": -5.1,
+     "analyserRms": 0.1717,
+     "peakDb": -4.7,
      "referencePeakDb": -5.1
     },
     "timings": {
-     "openToPlayingMs": 101.75999999046326,
+     "openToPlayingMs": 101.375,
      "openToFirstFrameMs": null,
-     "playedMs": 4449.540000021458
+     "playedMs": 4449.754999995232
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 41825,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 4910
+   "wallMs": 4561
   },
   {
    "id": "sega-genesis-vgz-gzip-vgm",
@@ -5013,67 +5020,55 @@
     }
    },
    "vlc": {
-    "passed": false,
-    "expectedFailure": "native VLC 3.0.24 also fails: after gunzip, the AIFF probe claims the stream before gme",
+    "passed": true,
+    "expectedFailure": null,
     "knownIssue": null,
     "checks": {
-     "audio": false
+     "audio": true
     },
-    "error": "VLC could not play this media (see the log)",
+    "error": null,
     "events": [
      "opening",
-     "error",
-     "stopping",
-     "stopped"
+     "playing",
+     "stopping"
     ],
-    "tracks": [],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
     "video": {
      "framesDrawn": 0,
      "distinctFrames": 0,
      "maxVariance": 0
     },
     "audio": {
-     "peak": 0,
-     "framesPlayed": 0,
-     "audibleFraction": 0,
-     "analyserRms": 0,
-     "peakDb": null,
+     "peak": 0.3568,
+     "framesPlayed": 212992,
+     "audibleFraction": 1,
+     "analyserRms": 0.1432,
+     "peakDb": -9,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": null,
+     "openToPlayingMs": 101.40000003576279,
      "openToFirstFrameMs": null,
-     "playedMs": 0
+     "playedMs": 4441.169999957085
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
      "audioDropped": 0,
      "audioUnderruns": 0
-    },
-    "logs": [
-     "error: libvlc demux: AIFF parsing requires seeking",
-     "warn: libvlc demux: Encrypted DVD support unavailable.",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.IFO failed",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.BUP failed",
-     "error: libvlc demux: DVDISOVolumeInfo, failed to read ISO9660 Primary Volume Descriptor",
-     "warn: libvlc demux: cannot open VMG info",
-     "warn: libvlc demux: Encrypted DVD support unavailable.",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.IFO failed",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.BUP failed",
-     "error: libvlc demux: DVDISOVolumeInfo, failed to read ISO9660 Primary Volume Descriptor",
-     "warn: libvlc demux: cannot open RTAV_VMGI info",
-     "warn: libvlc demux: Encrypted DVD support unavailable.",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /AUDIO_TS/AUDIO_TS.IFO failed",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /AUDIO_TS/AUDIO_TS.BUP failed",
-     "error: libvlc demux: DVDISOVolumeInfo, failed to read ISO9660 Primary Volume Descriptor",
-     "warn: libvlc demux: cannot open AMG info",
-     "error: libvlc input: Your media can't be opened",
-     "error: libvlc input: VLC is unable to open the MRL 'file:///mnt/69/sega-genesis-vgz-gzip-vgm.vgz'. Check the log for details."
-    ]
+    }
    },
    "shot": null,
-   "wallMs": 522
+   "wallMs": 5356
   },
   {
    "id": "c64-sid-rob-hubbard-commando",
@@ -5095,66 +5090,55 @@
     }
    },
    "vlc": {
-    "passed": false,
-    "expectedFailure": "sidplay2 is disabled in VLC's upstream emscripten contrib set",
+    "passed": true,
+    "expectedFailure": null,
     "knownIssue": null,
     "checks": {
-     "audio": false
+     "audio": true
     },
-    "error": "VLC could not play this media (see the log)",
+    "error": null,
     "events": [
      "opening",
-     "error",
-     "stopping",
-     "stopped"
+     "playing",
+     "stopping"
     ],
-    "tracks": [],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 44100,
+      "channels": 1,
+      "selected": true
+     }
+    ],
     "video": {
      "framesDrawn": 0,
      "distinctFrames": 0,
      "maxVariance": 0
     },
     "audio": {
-     "peak": 0,
-     "framesPlayed": 0,
-     "audibleFraction": 0,
-     "analyserRms": 0,
-     "peakDb": null,
+     "peak": 0.7172,
+     "framesPlayed": 213760,
+     "audibleFraction": 1,
+     "analyserRms": 0.2569,
+     "peakDb": -2.9,
      "referencePeakDb": -3.3
     },
     "timings": {
-     "openToPlayingMs": null,
+     "openToPlayingMs": 101.25,
      "openToFirstFrameMs": null,
-     "playedMs": 0
+     "playedMs": 4444.8949999809265
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
      "audioDropped": 0,
      "audioUnderruns": 0
-    },
-    "logs": [
-     "warn: libvlc demux: Encrypted DVD support unavailable.",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.IFO failed",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.BUP failed",
-     "error: libvlc demux: DVDISOVolumeInfo, failed to read ISO9660 Primary Volume Descriptor",
-     "warn: libvlc demux: cannot open VMG info",
-     "warn: libvlc demux: Encrypted DVD support unavailable.",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.IFO failed",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /VIDEO_TS/VIDEO_TS.BUP failed",
-     "error: libvlc demux: DVDISOVolumeInfo, failed to read ISO9660 Primary Volume Descriptor",
-     "warn: libvlc demux: cannot open RTAV_VMGI info",
-     "warn: libvlc demux: Encrypted DVD support unavailable.",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /AUDIO_TS/AUDIO_TS.IFO failed",
-     "error: libvlc demux: DVDOpenFileUDF:UDFFindFile /AUDIO_TS/AUDIO_TS.BUP failed",
-     "error: libvlc demux: DVDISOVolumeInfo, failed to read ISO9660 Primary Volume Descriptor",
-     "warn: libvlc demux: cannot open AMG info",
-     "error: libvlc input: Your media can't be opened",
-     "error: libvlc input: VLC is unable to open the MRL 'file:///mnt/70/c64-sid-rob-hubbard-commando.sid'. Check the log for details."
-    ]
+    }
    },
    "shot": null,
-   "wallMs": 521
+   "wallMs": 5330
   },
   {
    "id": "standard-midi-file",
@@ -5205,16 +5189,16 @@
     },
     "audio": {
      "peak": 0.4775,
-     "framesPlayed": 213760,
+     "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.1137,
+     "analyserRms": 0.1089,
      "peakDb": -6.4,
      "referencePeakDb": -4.9
     },
     "timings": {
-     "openToPlayingMs": 101.31499999761581,
+     "openToPlayingMs": 102.37999999523163,
      "openToFirstFrameMs": null,
-     "playedMs": 4449.469999969006
+     "playedMs": 4448.599999964237
     },
     "stats": {
      "lostPictures": 0,
@@ -5224,7 +5208,7 @@
     }
    },
    "shot": null,
-   "wallMs": 4566
+   "wallMs": 4573
   },
   {
    "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
@@ -5277,24 +5261,24 @@
      "peak": 0.5395,
      "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.1689,
+     "analyserRms": 0.1705,
      "peakDb": -5.4,
      "referencePeakDb": -5.3
     },
     "timings": {
-     "openToPlayingMs": 100.84499996900558,
+     "openToPlayingMs": 101.5799999833107,
      "openToFirstFrameMs": null,
-     "playedMs": 4444.2650000452995
+     "playedMs": 4449.3550000190735
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 22617,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 5330
+   "wallMs": 4944
   },
   {
    "id": "external-xm",
@@ -5345,26 +5329,26 @@
     },
     "audio": {
      "peak": 0.2024,
-     "framesPlayed": 213760,
+     "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.0624,
+     "analyserRms": 0.0629,
      "peakDb": -13.9,
      "referencePeakDb": -14
     },
     "timings": {
-     "openToPlayingMs": 101.99500000476837,
+     "openToPlayingMs": 102.07000005245209,
      "openToFirstFrameMs": null,
-     "playedMs": 4451.555000007153
+     "playedMs": 4447.349999964237
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 41812,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 5323
+   "wallMs": 4563
   },
   {
    "id": "sandman-s3m",
@@ -5417,24 +5401,24 @@
      "peak": 0.2532,
      "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.0851,
+     "analyserRms": 0.0801,
      "peakDb": -11.9,
      "referencePeakDb": -10.3
     },
     "timings": {
-     "openToPlayingMs": 101.96999996900558,
+     "openToPlayingMs": 100.88499999046326,
      "openToFirstFrameMs": null,
-     "playedMs": 4449.560000002384
+     "playedMs": 4448.985000014305
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 13023,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 5329
+   "wallMs": 5361
   },
   {
    "id": "for-a-change-it",
@@ -5487,24 +5471,24 @@
      "peak": 0.287,
      "framesPlayed": 214016,
      "audibleFraction": 1,
-     "analyserRms": 0.1142,
+     "analyserRms": 0.1228,
      "peakDb": -10.8,
      "referencePeakDb": -10.9
     },
     "timings": {
-     "openToPlayingMs": 101.00999999046326,
+     "openToPlayingMs": 101.94999998807907,
      "openToFirstFrameMs": null,
-     "playedMs": 4451.639999985695
+     "playedMs": 4440.110000014305
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 41824,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 5359
+   "wallMs": 4581
   },
   {
    "id": "openmpt-test-xm",
@@ -5554,27 +5538,27 @@
      "maxVariance": 0
     },
     "audio": {
-     "peak": 0.0402,
+     "peak": 0.0166,
      "framesPlayed": 214016,
      "audibleFraction": 0.02,
-     "analyserRms": 0,
-     "peakDb": -27.9,
+     "analyserRms": 0.0004,
+     "peakDb": -35.6,
      "referencePeakDb": -91
     },
     "timings": {
-     "openToPlayingMs": 101.84999996423721,
+     "openToPlayingMs": 100.93500000238419,
      "openToFirstFrameMs": null,
-     "playedMs": 4445.915000021458
+     "playedMs": 4453.824999988079
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 41822,
      "audioUnderruns": 0
     }
    },
    "shot": null,
-   "wallMs": 5308
+   "wallMs": 4576
   },
   {
    "id": "everyday-mp4-h264-aac",
@@ -5596,11 +5580,11 @@
     }
    },
    "vlc": {
-    "passed": false,
+    "passed": true,
     "expectedFailure": null,
     "knownIssue": null,
     "checks": {
-     "video": false,
+     "video": true,
      "audio": true
     },
     "error": null,
@@ -5613,40 +5597,32 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 0,
-     "distinctFrames": 0,
-     "maxVariance": 0
+     "framesDrawn": 92,
+     "distinctFrames": 30,
+     "maxVariance": 3313
     },
     "audio": {
      "peak": 0.157,
-     "framesPlayed": 148836,
-     "audibleFraction": 0.97,
-     "analyserRms": 0.0898,
+     "framesPlayed": 148838,
+     "audibleFraction": 1,
+     "analyserRms": 0.0897,
      "peakDb": -16.1,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.12000000476837,
-     "openToFirstFrameMs": null,
-     "playedMs": 3539.810000002384
+     "openToPlayingMs": 101.22000002861023,
+     "openToFirstFrameMs": 101.22000002861023,
+     "playedMs": 3575.7599999904633
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
      "audioDropped": 0,
      "audioUnderruns": 1
-    },
-    "logs": [
-     "warn: libvlc demux: elst box found",
-     "warn: libvlc demux: STTS table of 1 entries",
-     "warn: libvlc demux: CTTS table of 77 entries",
-     "warn: libvlc demux: elst box found",
-     "warn: libvlc demux: STTS table of 2 entries",
-     "error: libvlc decoder: buffer deadlock prevented"
-    ]
+    }
    },
-   "shot": null,
-   "wallMs": 3663
+   "shot": "shots/everyday-mp4-h264-aac.jpg",
+   "wallMs": 3710
   },
   {
    "id": "everyday-mp4-hevc-aac",
@@ -5688,20 +5664,20 @@
     "video": {
      "framesDrawn": 92,
      "distinctFrames": 31,
-     "maxVariance": 4736
+     "maxVariance": 4740
     },
     "audio": {
      "peak": 0.157,
-     "framesPlayed": 148838,
-     "audibleFraction": 0.97,
-     "analyserRms": 0.0894,
+     "framesPlayed": 148841,
+     "audibleFraction": 1,
+     "analyserRms": 0.0898,
      "peakDb": -16.1,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.05000001192093,
-     "openToFirstFrameMs": 102.09499996900558,
-     "playedMs": 3572.1200000047684
+     "openToPlayingMs": 102.15000003576279,
+     "openToFirstFrameMs": 102.15000003576279,
+     "playedMs": 3555.9249999523163
     },
     "stats": {
      "lostPictures": 0,
@@ -5711,7 +5687,7 @@
     }
    },
    "shot": "shots/everyday-mp4-hevc-aac.jpg",
-   "wallMs": 3703
+   "wallMs": 3677
   },
   {
    "id": "everyday-mp4-av1-aac",
@@ -5750,32 +5726,32 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 91,
+     "framesDrawn": 92,
      "distinctFrames": 31,
      "maxVariance": 3317
     },
     "audio": {
      "peak": 0.157,
-     "framesPlayed": 148850,
-     "audibleFraction": 1,
-     "analyserRms": 0.0894,
+     "framesPlayed": 108992,
+     "audibleFraction": 0.74,
+     "analyserRms": 0.0897,
      "peakDb": -16.1,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.93500000238419,
-     "openToFirstFrameMs": 101.93500000238419,
-     "playedMs": 3575.1099999547005
+     "openToPlayingMs": 101.31499999761581,
+     "openToFirstFrameMs": 101.31499999761581,
+     "playedMs": 3569.114999949932
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 39856,
      "audioUnderruns": 1
     }
    },
    "shot": "shots/everyday-mp4-av1-aac.jpg",
-   "wallMs": 3697
+   "wallMs": 3686
   },
   {
    "id": "everyday-webm-vp9-opus",
@@ -5820,26 +5796,26 @@
     },
     "audio": {
      "peak": 0.1277,
-     "framesPlayed": 148389,
+     "framesPlayed": 145664,
      "audibleFraction": 1,
-     "analyserRms": 0.0887,
+     "analyserRms": 0.0888,
      "peakDb": -17.9,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.10500001907349,
-     "openToFirstFrameMs": 101.10500001907349,
-     "playedMs": 3480.5450000166893
+     "openToPlayingMs": 100.90000003576279,
+     "openToFirstFrameMs": 100.90000003576279,
+     "playedMs": 3455.104999959469
     },
     "stats": {
-     "lostPictures": 1,
-     "latePictures": 1,
+     "lostPictures": 0,
+     "latePictures": 0,
      "audioDropped": 0,
      "audioUnderruns": 1
     }
    },
    "shot": "shots/everyday-webm-vp9-opus.jpg",
-   "wallMs": 3600
+   "wallMs": 3575
   },
   {
    "id": "everyday-webm-av1-opus",
@@ -5884,16 +5860,16 @@
     },
     "audio": {
      "peak": 0.1277,
-     "framesPlayed": 148390,
+     "framesPlayed": 148391,
      "audibleFraction": 1,
      "analyserRms": 0.0888,
      "peakDb": -17.9,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.06499999761581,
-     "openToFirstFrameMs": 101.06999999284744,
-     "playedMs": 3466.6699999570847
+     "openToPlayingMs": 102.00999999046326,
+     "openToFirstFrameMs": 102.00999999046326,
+     "playedMs": 3555.2599999904633
     },
     "stats": {
      "lostPictures": 1,
@@ -5903,7 +5879,7 @@
     }
    },
    "shot": "shots/everyday-webm-av1-opus.jpg",
-   "wallMs": 3589
+   "wallMs": 3671
   },
   {
    "id": "everyday-webm-vp8-vorbis",
@@ -5942,32 +5918,32 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 91,
+     "framesDrawn": 92,
      "distinctFrames": 31,
      "maxVariance": 4746
     },
     "audio": {
-     "peak": 0.0892,
-     "framesPlayed": 145664,
-     "audibleFraction": 1,
+     "peak": 0.0893,
+     "framesPlayed": 114112,
+     "audibleFraction": 0.8,
      "analyserRms": 0.0628,
      "peakDb": -21,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 100.86500000953674,
-     "openToFirstFrameMs": 100.86500000953674,
-     "playedMs": 3472.889999985695
+     "openToPlayingMs": 101.75999999046326,
+     "openToFirstFrameMs": 101.75999999046326,
+     "playedMs": 3450.2049999833107
     },
     "stats": {
-     "lostPictures": 1,
-     "latePictures": 1,
-     "audioDropped": 0,
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 34671,
      "audioUnderruns": 1
     }
    },
    "shot": "shots/everyday-webm-vp8-vorbis.jpg",
-   "wallMs": 3583
+   "wallMs": 3562
   },
   {
    "id": "everyday-mkv-h264-aac",
@@ -6006,32 +5982,32 @@
     ],
     "tracks": [],
     "video": {
-     "framesDrawn": 90,
+     "framesDrawn": 92,
      "distinctFrames": 31,
-     "maxVariance": 3319
+     "maxVariance": 3317
     },
     "audio": {
      "peak": 0.157,
-     "framesPlayed": 147819,
-     "audibleFraction": 1,
-     "analyserRms": 0.0896,
+     "framesPlayed": 117184,
+     "audibleFraction": 0.81,
+     "analyserRms": 0.0894,
      "peakDb": -16.1,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.65500003099442,
-     "openToFirstFrameMs": 101.65500003099442,
-     "playedMs": 3499.6099999547005
+     "openToPlayingMs": 101.23500001430511,
+     "openToFirstFrameMs": 101.23500001430511,
+     "playedMs": 3551.475000023842
     },
     "stats": {
-     "lostPictures": 0,
+     "lostPictures": 1,
      "latePictures": 1,
-     "audioDropped": 0,
+     "audioDropped": 31657,
      "audioUnderruns": 1
     }
    },
    "shot": "shots/everyday-mkv-h264-aac.jpg",
-   "wallMs": 3619
+   "wallMs": 3676
   },
   {
    "id": "everyday-mov-prores-pcm",
@@ -6077,16 +6053,16 @@
     },
     "audio": {
      "peak": 0.125,
-     "framesPlayed": 145408,
+     "framesPlayed": 144640,
      "audibleFraction": 1,
      "analyserRms": 0.0887,
      "peakDb": -18.1,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.28500002622604,
-     "openToFirstFrameMs": 101.28500002622604,
-     "playedMs": 3468.8949999809265
+     "openToPlayingMs": 102.23000001907349,
+     "openToFirstFrameMs": 102.23000001907349,
+     "playedMs": 3450.625
     },
     "stats": {
      "lostPictures": 0,
@@ -6096,7 +6072,7 @@
     }
    },
    "shot": "shots/everyday-mov-prores-pcm.jpg",
-   "wallMs": 3594
+   "wallMs": 3586
   },
   {
    "id": "everyday-avi-mpeg4-mp3",
@@ -6137,30 +6113,30 @@
     "video": {
      "framesDrawn": 91,
      "distinctFrames": 31,
-     "maxVariance": 4747
+     "maxVariance": 4734
     },
     "audio": {
      "peak": 0.1196,
-     "framesPlayed": 148584,
-     "audibleFraction": 1,
+     "framesPlayed": 116160,
+     "audibleFraction": 0.77,
      "analyserRms": 0.0843,
      "peakDb": -18.4,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.83499997854233,
-     "openToFirstFrameMs": 101.83499997854233,
-     "playedMs": 3576.600000023842
+     "openToPlayingMs": 101.58999997377396,
+     "openToFirstFrameMs": 101.59499996900558,
+     "playedMs": 3553.5450000166893
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 0,
+     "audioDropped": 32425,
      "audioUnderruns": 1
     }
    },
    "shot": "shots/everyday-avi-mpeg4-mp3.jpg",
-   "wallMs": 3700
+   "wallMs": 3669
   },
   {
    "id": "everyday-audio-mp3",
@@ -6204,16 +6180,16 @@
     },
     "audio": {
      "peak": 0.1213,
-     "framesPlayed": 150528,
+     "framesPlayed": 150891,
      "audibleFraction": 0.97,
      "analyserRms": 0.0861,
      "peakDb": -18.3,
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.86000001430511,
+     "openToPlayingMs": 101.875,
      "openToFirstFrameMs": null,
-     "playedMs": 3538.324999988079
+     "playedMs": 3635.3050000071526
     },
     "stats": {
      "lostPictures": 0,
@@ -6223,7 +6199,7 @@
     }
    },
    "shot": null,
-   "wallMs": 3671
+   "wallMs": 3760
   },
   {
    "id": "everyday-audio-m4a",
@@ -6274,19 +6250,19 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 102.05000001192093,
+     "openToPlayingMs": 102.34999996423721,
      "openToFirstFrameMs": null,
-     "playedMs": 2727.7699999809265
+     "playedMs": 2723.9300000071526
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 39850,
+     "audioDropped": 39849,
      "audioUnderruns": 1
     }
    },
    "shot": null,
-   "wallMs": 2846
+   "wallMs": 2838
   },
   {
    "id": "everyday-audio-flac",
@@ -6337,19 +6313,19 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.43500000238419,
+     "openToPlayingMs": 101.6149999499321,
      "openToFirstFrameMs": null,
-     "playedMs": 2728.2449999451637
+     "playedMs": 2729.9900000095367
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 32681,
+     "audioDropped": 32680,
      "audioUnderruns": 1
     }
    },
    "shot": null,
-   "wallMs": 2858
+   "wallMs": 2841
   },
   {
    "id": "everyday-audio-wav",
@@ -6400,9 +6376,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.92500001192093,
+     "openToPlayingMs": 101.27999997138977,
      "openToFirstFrameMs": null,
-     "playedMs": 2725.479999959469
+     "playedMs": 2725.4449999928474
     },
     "stats": {
      "lostPictures": 0,
@@ -6412,7 +6388,7 @@
     }
    },
    "shot": null,
-   "wallMs": 2846
+   "wallMs": 2843
   },
   {
    "id": "everyday-audio-ogg",
@@ -6463,9 +6439,9 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.30500000715256,
+     "openToPlayingMs": 101.38499999046326,
      "openToFirstFrameMs": null,
-     "playedMs": 2327.6949999928474
+     "playedMs": 2324.104999959469
     },
     "stats": {
      "lostPictures": 0,
@@ -6475,7 +6451,7 @@
     }
    },
    "shot": null,
-   "wallMs": 2438
+   "wallMs": 2437
   },
   {
    "id": "everyday-audio-opus",
@@ -6526,19 +6502,246 @@
      "referencePeakDb": null
     },
     "timings": {
-     "openToPlayingMs": 101.41000002622604,
+     "openToPlayingMs": 101.89499998092651,
      "openToFirstFrameMs": null,
-     "playedMs": 2220.6650000214577
+     "playedMs": 2224.6150000095367
     },
     "stats": {
      "lostPictures": 0,
      "latePictures": 0,
-     "audioDropped": 75121,
+     "audioDropped": 75124,
      "audioUnderruns": 2
     }
    },
    "shot": null,
-   "wallMs": 2337
+   "wallMs": 2353
+  },
+  {
+   "id": "dvd-video-iso",
+   "name": "DVD-Video disc image",
+   "category": "discs-and-drm",
+   "file": "gen/t_dvd.iso",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mpgv",
+      "codecName": "MPEG-1/2 Video",
+      "width": 720,
+      "height": 480,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "a52 ",
+      "codecName": "Audio Coding 3 (AC-3)",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     },
+     {
+      "type": "text",
+      "codec": "spu ",
+      "codecName": "DVD Subtitles",
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 72,
+     "distinctFrames": 2,
+     "maxVariance": 805
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 74089,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 111.51999998092651,
+     "openToFirstFrameMs": 111.52499997615814,
+     "playedMs": 4492.129999995232
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": "shots/dvd-video-iso.jpg",
+   "wallMs": 4676
+  },
+  {
+   "id": "bluray-bdmv-iso",
+   "name": "Blu-ray disc image",
+   "category": "discs-and-drm",
+   "file": "gen/t_bluray.iso",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "h264",
+      "codecName": "H264 - MPEG-4 AVC (part 10)",
+      "width": 1280,
+      "height": 720,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "a52 ",
+      "codecName": "Audio Coding 3 (AC-3)",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 83,
+     "distinctFrames": 27,
+     "maxVariance": 3251
+    },
+    "audio": {
+     "peak": 0.0884,
+     "framesPlayed": 218880,
+     "audibleFraction": 0.91,
+     "analyserRms": 0.0627,
+     "peakDb": -21.1,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.53999996185303,
+     "openToFirstFrameMs": 919.6999999880791,
+     "playedMs": 4489.040000021458
+    },
+    "stats": {
+     "lostPictures": 1,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/bluray-bdmv-iso.jpg",
+   "wallMs": 6632
+  },
+  {
+   "id": "cenc-clearkey-mp4",
+   "name": "MP4 with Common Encryption (ClearKey)",
+   "category": "discs-and-drm",
+   "file": "gen/t_cenc.mp4",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 3: PipelineStatus::PIPELINE_ERROR_DECODE: Failed to send video packet for decoding: {timestamp=80000 duration=40000 size=4579 is_key_frame=0 encrypted=0}"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 3: Media failed to decode"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 3: Encrypted content not supported outside of MSE"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 77,
+     "distinctFrames": 31,
+     "maxVariance": 4745
+    },
+    "audio": {
+     "peak": 0.1304,
+     "framesPlayed": 148315,
+     "audibleFraction": 1,
+     "analyserRms": 0.0894,
+     "peakDb": -17.7,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 110.40499997138977,
+     "openToFirstFrameMs": 110.40499997138977,
+     "playedMs": 3502.564999997616
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": "shots/cenc-clearkey-mp4.jpg",
+   "wallMs": 3658
   }
  ]
 }

@@ -55,7 +55,7 @@ cd "$SRC"
 UP=extras/package/wasm-emscripten/build.sh
 git checkout -q -- "$UP"
 OPT_FLAGS=
-if [ "${PROFILE:-release}" = release ]; then
+if [ "${PROFILE:-release}" != debug ]; then
   # Upstream always configures --enable-debug, which means -Og and assertions
   # on every hot path: fine for CI, several times too slow to benchmark.
   sed -i 's/--enable-debug/--disable-debug/' "$UP"

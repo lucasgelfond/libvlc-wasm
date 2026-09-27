@@ -358,5 +358,17 @@
   "everyday-audio-opus": [
     "Opus",
     "Opus_(audio_format)"
+  ],
+  "dvd-video-iso": [
+    "DVD-Video (.iso)",
+    "DVD-Video"
+  ],
+  "bluray-bdmv-iso": [
+    "Blu-ray (.iso)",
+    "Blu-ray"
+  ],
+  "cenc-clearkey-mp4": [
+    "ClearKey DRM (MP4 cenc)",
+    "Encrypted_Media_Extensions"
   ]
 }

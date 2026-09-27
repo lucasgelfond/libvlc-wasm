@@ -22,9 +22,11 @@ player.on('timeupdate', (t) => console.log(t));
 console.log(await vlc.probe(file));           // ffprobe-style, no playback
 ```
 
-**Status**: working SDK. 62 of 75 obscure test files play (Chromium plays 3 of them natively),
-every failure is classified, and it runs in Chromium, Chrome, Firefox and Safari (WebKit), in dev
-and production builds. See [what works](#what-it-does), [numbers](#performance) and
+**Status**: working SDK. 88 of 93 files in the curated corpus of formats browsers can't play
+(DVD and Blu-ray images and ClearKey MP4 included) play, against 82 for desktop VLC 3 and 30 for
+the browsers themselves; over FFmpeg's whole FATE sample suite it plays 2,041 of the 2,183 files
+native FFmpeg or VLC can (FFmpeg 2,172, VLC 3 1,535). Every failure is classified, and it runs in
+Chromium, Chrome, Firefox and Safari (WebKit), in dev and production builds. See [what works](#what-it-does), [numbers](#performance) and
 [how it compares](#compared-with-other-browser-media-projects).
 
 ## Why not the existing "VLC in the browser" projects?
@@ -39,9 +41,10 @@ and production builds. See [what works](#what-it-does), [numbers](#performance) 
 Upstream VLC has the emscripten *plumbing* (a build script, threads, a JS file access module, a
 logger) but no audio output, video output or WebCodecs decoder; the only implementation of those
 was a 77-patch stack in `code.videolan.org/jbk/vlc.js` last touched in 2022. This project does
-not use it: it drives libvlc 4 through its public API plus three small out-of-tree VLC modules
-of its own — an audio output (`webaudio`), a video output (`webframe`) and a WebCodecs decoder —
-so it builds against current VLC master with only three small patches.
+not use it: it drives libvlc 4 through its public API plus four small out-of-tree VLC modules
+of its own — an audio output (`webaudio`), a video output (`webframe`), a WebCodecs decoder
+and a window for pointer input (`webwindow`) — and builds against current VLC master with a
+short series of upstreamable patches.
 
 ## What it does
 
@@ -150,14 +153,26 @@ pnpm install && node tests/node-smoke.mjs && node tests/features.mjs
 sh tests/make-fixtures.sh && node corpus/fetch.mjs && node tests/verify-corpus.mjs
 ```
 
-The six VLC patches (`build/patches/`) are small and upstreamable: a `jpeg` option declared only
-under `ENABLE_SOUT` (asserts in no-sout builds), native wasm exceptions for contribs (libmatroska
-throws during ordinary parsing), a libass fallback font on emscripten, a fix for an
-out-of-bounds index and use-after-free in the transcoder's PCR sync (`pcr_sync.c`), hidden by
-asserts in debug builds and a crash in about 1 transcode in 3 of RealMedia without it,
-dvdread built without libdvdcss (plus musl's missing `off64_t`), and the A-B loop deadline
-computed in integer ticks: `now + float` has a 134 s step when the clock counts from the Unix
-epoch, as emscripten's does, so loops fired tens of seconds early or late.
+**It is VLC throughout.** Every file goes through libvlc's player: VLC's input thread,
+demuxers, decoders, clock, and audio and video outputs. FFmpeg is present the way it is in
+desktop VLC, as the libraries behind VLC's own `avcodec` and `avformat` modules, so VLC
+still decides which module handles what. The JavaScript never demuxes or decodes: when
+VLC's native demuxer finds nothing playable in a file, `open()` asks VLC once more with its
+`:demux=avformat` option, the same thing `vlc --demux=avformat` does on the desktop.
+
+The VLC patches (`build/patches/`, a `git format-patch` series) are small and upstreamable;
+each commit message says what it fixes. In short:
+
+- **Build**: a `jpeg` option declared without sout, native wasm exceptions for contribs
+  (libmatroska throws during ordinary parsing), dvdread without libdvdcss, x264 for
+  emscripten, a libass fallback font.
+- **Bugs VLC has everywhere, hidden elsewhere**: an out-of-bounds index and use-after-free in
+  the transcoder's PCR sync; the A-B loop deadline computed in float (a 134 s step on an
+  epoch-based clock); EOF declared before the last picture was shown; the DVD title-menu
+  fallback; Blu-ray time counted in raw clip timestamps.
+- **Formats**: PSX STR probing, Siren audio, gzipped VGM, raw H.264 that starts with an access
+  unit delimiter, codecs libavcodec decodes but VLC has no fourcc for, and decoder output VLC
+  has no chroma for (converted with swscale).
 
 ## Serving
 

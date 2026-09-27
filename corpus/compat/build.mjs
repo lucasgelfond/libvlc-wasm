@@ -50,8 +50,9 @@ const todo = manifest.samples.filter((s) => !onlyIds || onlyIds.has(s.id));
 // ---------------------------------------------------------------------------
 // Shared FFmpeg command lines and log parsing (native and wasm run the same).
 // `-map 0:V` (capital) skips attached cover pictures.
-function ffmpegArgs(input, kind) {
-  const base = ['-hide_banner', '-nostdin', '-i', input];
+// test.ffmpegInput: options a sample needs before -i (a ClearKey's key).
+function ffmpegArgs(input, kind, pre = []) {
+  const base = ['-hide_banner', '-nostdin', ...pre, '-i', input];
   if (kind === 'video') return [...base, '-map', '0:V:0?', '-an', '-sn', '-dn', '-t', String(SECONDS), '-f', 'null', '-'];
   if (kind === 'audio') return [...base, '-map', '0:a:0?', '-vn', '-sn', '-dn', '-t', String(SECONDS), '-af', 'volumedetect', '-f', 'null', '-'];
   // Subtitles: decode, re-encode as DVD subtitles, discard. Bytes out > 0 means packets decoded.
@@ -78,12 +79,19 @@ function parseFfmpeg(log, kind) {
 function run(cmd, argv, { timeoutMs = 60000 } = {}) {
   return new Promise((res) => {
     const p = spawn(cmd, argv, { stdio: ['ignore', 'pipe', 'pipe'] });
-    let out = '';
-    p.stdout.on('data', (d) => { out += d; });
-    p.stderr.on('data', (d) => { out += d; });
+    // VLC -vv on a looping DVD menu logs without end: keep the first and last
+    // 4 MB (decoder names come early, statistics late).
+    const CAP = 4e6;
+    let head = '', tail = '';
+    const take = (d) => {
+      if (head.length < CAP) head += d;
+      else tail = (tail + d).slice(-CAP);
+    };
+    p.stdout.on('data', take);
+    p.stderr.on('data', take);
     let timedOut = false;
     const t = setTimeout(() => { timedOut = true; p.kill('SIGKILL'); }, timeoutMs);
-    p.on('close', (code) => { clearTimeout(t); res({ code, out, timedOut }); });
+    p.on('close', (code) => { clearTimeout(t); res({ code, out: head + tail, timedOut }); });
   });
 }
 async function pool(items, n, fn) {
@@ -100,8 +108,8 @@ if (measure.has('ffmpeg')) {
     const r = {};
     if (j.subs) r.subs = parseFfmpeg((await run(FFMPEG, ffmpegArgs(j.file, 'subs'))).out, 'subs');
     else {
-      r.video = parseFfmpeg((await run(FFMPEG, ffmpegArgs(j.file, 'video'))).out, 'video');
-      r.audio = parseFfmpeg((await run(FFMPEG, ffmpegArgs(j.file, 'audio'))).out, 'audio');
+      r.video = parseFfmpeg((await run(FFMPEG, ffmpegArgs(j.file, 'video', s.test?.ffmpegInput))).out, 'video');
+      r.audio = parseFfmpeg((await run(FFMPEG, ffmpegArgs(j.file, 'audio', s.test?.ffmpegInput))).out, 'audio');
     }
     meas.ffmpeg[s.id] = r;
     console.log(`ffmpeg  ${s.id.padEnd(44)} v=${r.video?.frames ?? '-'} a=${r.audio?.samples ?? '-'} s=${r.subs?.subtitleKiB ?? '-'}`);
@@ -136,6 +144,9 @@ async function vlcRun(s, j, extra = []) {
   const argv = ['-I', 'dummy', '-vv', '--no-media-library', '--no-video-title-show', '--no-osd', '--no-metadata-network-access',
     '--no-sub-autodetect-file', '--no-loop', '--no-repeat', '--no-drop-late-frames', '--no-skip-frames',
     '--vout=stats', '--dummy-chroma=I420', '--aout=afile', `--audiofile-file=${wav}`, `--run-time=${SECONDS}`, '--play-and-exit', ...extra];
+  // test.options are VLC media options (":demux=avformat"): the same ones as
+  // command-line options for VLC.app.
+  for (const o of s.test?.options ?? []) argv.push(o.replace(/^:/, '--'));
   if (j.subs) argv.push(j.overVideo, `--sub-file=${j.file}`);
   else argv.push(j.file);
   const { out, timedOut } = await run(VLC, argv, { timeoutMs: 45000 });
@@ -225,7 +236,7 @@ if (measure.has('wasm')) {
     const names = [j.file, ...j.companions].map((f) => basename(f));
     const exec = async (kind) => {
       const input = basename(j.file);
-      const argv = ffmpegArgs(input, kind);
+      const argv = ffmpegArgs(input, kind, s.test?.ffmpegInput);
       try {
         return await Promise.race([
           h.page.evaluate(async ([files, argv]) => {
@@ -321,7 +332,7 @@ const samples = manifest.samples.map((s) => {
   const lv = r?.vlc;
   return {
     id: s.id, name: s.name, category: s.category, container: s.container, video: s.video, audio: s.audio,
-    file: s.file, url: s.url, bytes: existsSync(j.file) ? statSync(j.file).size : s.bytes, whyBrowserCant: s.whyBrowserCant,
+    file: s.file, url: s.download ?? s.url, bytes: existsSync(j.file) ? statSync(j.file).size : s.bytes, whyBrowserCant: s.whyBrowserCant,
     nativeVlc: vlcVerdict(meas.vlc[s.id], j, s),
     ffmpeg: ffVerdict(meas.ffmpeg[s.id], j),
     ffmpegWasm: ffVerdict(meas.wasm[s.id], j),

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1220" viewBox="0 0 1200 1220" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
-<rect width="1200" height="1220" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1426" viewBox="0 0 1200 1426" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1200" height="1426" fill="#ffffff"/>
 <text x="48" y="56" font-size="24" font-weight="650" fill="#171717" text-anchor="start">libvlc-wasm: VLC 4 in the browser, benchmarked</text>
 <text x="48" y="82" font-size="13" font-weight="400" fill="#737373" text-anchor="start">Apple M5 · Chrome 153.0.8010.53 · 2026-09-27 · every number measured, none estimated</text>
 <text x="48" y="122" font-size="16" font-weight="600" fill="#171717" text-anchor="start">Decode speed, 1080p, one thread (frames per second, higher is better)</text>
@@ -32,126 +32,157 @@
 <line x1="916.1428571428571" x2="916.1428571428571" y1="158" y2="810" stroke="#737373" stroke-dasharray="4 4"/>
 <text x="920.1428571428571" y="168" font-size="10" font-weight="400" fill="#737373" text-anchor="start">player pacing ceiling</text>
 <text x="48" y="198.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">H.264</text>
-<rect x="198" y="162" width="163.76015289058768" height="11" rx="2" fill="#a3a3a3"/>
-<text x="366.7601528905877" y="171.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">125</text>
-<rect x="198" y="175" width="153.51367201455352" height="11" rx="2" fill="#7c2d12"/>
-<text x="356.51367201455355" y="184.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">118</text>
-<rect x="198" y="188" width="97.3490306684231" height="11" rx="2" fill="#f97316"/>
-<text x="300.3490306684231" y="197.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">75</text>
-<rect x="198" y="201" width="665.8247781221418" height="11" rx="2" fill="#16a34a"/>
-<text x="868.8247781221418" y="210.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">510</text>
-<rect x="198" y="214" width="87.39954789389776" height="11" rx="2" fill="#2563eb"/>
-<text x="290.39954789389776" y="223.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">67</text>
+<rect x="198" y="162" width="115.89180050718514" height="11" rx="2" fill="#a3a3a3"/>
+<text x="318.89180050718517" y="171.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">89</text>
+<rect x="198" y="175" width="129.153820455512" height="11" rx="2" fill="#7c2d12"/>
+<text x="332.153820455512" y="184.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">99</text>
+<rect x="198" y="188" width="84.4476548870409" height="11" rx="2" fill="#f97316"/>
+<text x="287.4476548870409" y="197.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">65</text>
+<rect x="198" y="201" width="713.8417482569998" height="11" rx="2" fill="#16a34a"/>
+<text x="916.8417482569998" y="210.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">547</text>
+<rect x="198" y="214" width="73.90138396647215" height="11" rx="2" fill="#2563eb"/>
+<text x="276.90138396647217" y="223.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">57</text>
 <text x="48" y="279.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">HEVC</text>
-<rect x="198" y="243" width="378.1025923883067" height="11" rx="2" fill="#a3a3a3"/>
-<text x="581.1025923883067" y="252.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">290</text>
-<rect x="198" y="256" width="326.3079915434565" height="11" rx="2" fill="#7c2d12"/>
-<text x="529.3079915434565" y="265.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">250</text>
-<rect x="198" y="269" width="257.21477471756975" height="11" rx="2" fill="#f97316"/>
-<text x="460.21477471756975" y="278.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">197</text>
-<rect x="198" y="282" width="675.4590415602703" height="11" rx="2" fill="#16a34a"/>
-<text x="878.4590415602703" y="291.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">517</text>
-<rect x="198" y="295" width="163.7813787424116" height="11" rx="2" fill="#2563eb"/>
-<text x="366.78137874241156" y="304.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">125</text>
+<rect x="198" y="243" width="249.81778425655972" height="11" rx="2" fill="#a3a3a3"/>
+<text x="452.8177842565597" y="252.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">191</text>
+<rect x="198" y="256" width="231.667424571376" height="11" rx="2" fill="#7c2d12"/>
+<text x="434.667424571376" y="265.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">177</text>
+<rect x="198" y="269" width="143.51433021453286" height="11" rx="2" fill="#f97316"/>
+<text x="346.51433021453283" y="278.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">110</text>
+<rect x="198" y="282" width="718.8595773132522" height="11" rx="2" fill="#16a34a"/>
+<text x="921.8595773132522" y="291.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">551</text>
+<rect x="198" y="295" width="116.6475940893674" height="11" rx="2" fill="#2563eb"/>
+<text x="319.64759408936743" y="304.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">89</text>
 <text x="48" y="360.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">VP9</text>
-<rect x="198" y="324" width="438.1591562799616" height="11" rx="2" fill="#a3a3a3"/>
-<text x="641.1591562799616" y="333.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">336</text>
-<rect x="198" y="337" width="386.1355727206259" height="11" rx="2" fill="#7c2d12"/>
-<text x="589.1355727206259" y="346.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">296</text>
-<rect x="198" y="350" width="209.94930854028547" height="11" rx="2" fill="#f97316"/>
-<text x="412.9493085402855" y="359.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">161</text>
-<rect x="198" y="363" width="761.8901377183379" height="11" rx="2" fill="#16a34a"/>
-<text x="964.8901377183379" y="372.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">584</text>
-<rect x="198" y="376" width="195.18764921892586" height="11" rx="2" fill="#2563eb"/>
-<text x="398.18764921892586" y="385.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">149</text>
+<rect x="198" y="324" width="332.5248605384429" height="11" rx="2" fill="#a3a3a3"/>
+<text x="535.5248605384429" y="333.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">255</text>
+<rect x="198" y="337" width="316.3737437217145" height="11" rx="2" fill="#7c2d12"/>
+<text x="519.3737437217145" y="346.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">242</text>
+<rect x="198" y="350" width="177.52586785211201" height="11" rx="2" fill="#f97316"/>
+<text x="380.525867852112" y="359.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">136</text>
+<rect x="198" y="363" width="534.02733485648" height="11" rx="2" fill="#16a34a"/>
+<text x="737.02733485648" y="372.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">409</text>
+<rect x="198" y="376" width="167.5102250320798" height="11" rx="2" fill="#2563eb"/>
+<text x="370.5102250320798" y="385.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">128</text>
 <text x="48" y="441.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">AV1</text>
-<rect x="198" y="405" width="356.7525370804059" height="11" rx="2" fill="#a3a3a3"/>
-<text x="559.7525370804059" y="414.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">273</text>
-<rect x="198" y="418" width="313.5433799248353" height="11" rx="2" fill="#7c2d12"/>
-<text x="516.5433799248353" y="427.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">240</text>
-<rect x="198" y="431" width="116.67269919086594" height="11" rx="2" fill="#f97316"/>
-<text x="319.67269919086596" y="440.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">89</text>
-<rect x="198" y="444" width="629.502985641452" height="11" rx="2" fill="#16a34a"/>
-<text x="832.502985641452" y="453.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">482</text>
+<rect x="198" y="405" width="259.7574838954149" height="11" rx="2" fill="#a3a3a3"/>
+<text x="462.7574838954149" y="414.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">199</text>
+<rect x="198" y="418" width="190.9754056655936" height="11" rx="2" fill="#7c2d12"/>
+<text x="393.9754056655936" y="427.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">146</text>
+<rect x="198" y="431" width="91.30086104453851" height="11" rx="2" fill="#f97316"/>
+<text x="294.3008610445385" y="440.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">70</text>
+<rect x="198" y="444" width="650.1585679968651" height="11" rx="2" fill="#16a34a"/>
+<text x="853.1585679968651" y="453.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">498</text>
 <text x="202" y="466.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">no AV1 decoder</text>
 <text x="48" y="522.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">MPEG-4 ASP</text>
-<rect x="198" y="486" width="914" height="11" rx="2" fill="#a3a3a3"/>
-<text x="1117" y="495.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">877+</text>
-<rect x="198" y="499" width="744.3282164660029" height="11" rx="2" fill="#7c2d12"/>
-<text x="947.3282164660029" y="508.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">570</text>
-<rect x="198" y="512" width="445.2389973374652" height="11" rx="2" fill="#f97316"/>
-<text x="648.2389973374652" y="521.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">341</text>
+<rect x="198" y="486" width="910.9634551495017" height="11" rx="2" fill="#a3a3a3"/>
+<text x="1113.9634551495017" y="495.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">698</text>
+<rect x="198" y="499" width="723.0795116934612" height="11" rx="2" fill="#7c2d12"/>
+<text x="926.0795116934612" y="508.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">554</text>
+<rect x="198" y="512" width="367.95249102269787" height="11" rx="2" fill="#f97316"/>
+<text x="570.9524910226978" y="521.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">282</text>
 <text x="202" y="534.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">no browser decoder</text>
-<rect x="198" y="538" width="587.9212417270768" height="11" rx="2" fill="#2563eb"/>
-<text x="790.9212417270768" y="547.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">450</text>
+<rect x="198" y="538" width="517.0053661689183" height="11" rx="2" fill="#2563eb"/>
+<text x="720.0053661689183" y="547.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">396</text>
 <text x="48" y="603.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">MS-MPEG4 (DivX 3)</text>
-<rect x="198" y="567" width="914" height="11" rx="2" fill="#a3a3a3"/>
-<text x="1117" y="576.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">820+</text>
-<rect x="198" y="580" width="751.4757477857395" height="11" rx="2" fill="#7c2d12"/>
-<text x="954.4757477857395" y="589.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">576</text>
-<rect x="198" y="593" width="365.8851543749292" height="11" rx="2" fill="#f97316"/>
-<text x="568.8851543749292" y="602.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">280</text>
+<rect x="198" y="567" width="866.6245259165612" height="11" rx="2" fill="#a3a3a3"/>
+<text x="1069.6245259165612" y="576.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">664</text>
+<rect x="198" y="580" width="757.0844673539683" height="11" rx="2" fill="#7c2d12"/>
+<text x="960.0844673539683" y="589.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">580</text>
+<rect x="198" y="593" width="356.5880475412337" height="11" rx="2" fill="#f97316"/>
+<text x="559.5880475412337" y="602.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">273</text>
 <text x="202" y="615.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">no browser decoder</text>
-<rect x="198" y="619" width="539.7967199104982" height="11" rx="2" fill="#2563eb"/>
-<text x="742.7967199104982" y="628.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">413</text>
+<rect x="198" y="619" width="477.75278473275415" height="11" rx="2" fill="#2563eb"/>
+<text x="680.7527847327542" y="628.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">366</text>
 <text x="48" y="684.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">Motion-JPEG</text>
-<rect x="198" y="648" width="914" height="11" rx="2" fill="#a3a3a3"/>
-<text x="1117" y="657.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">704+</text>
-<rect x="198" y="661" width="762.433441743287" height="11" rx="2" fill="#7c2d12"/>
-<text x="965.433441743287" y="670.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">584</text>
-<rect x="198" y="674" width="259.6636121708493" height="11" rx="2" fill="#f97316"/>
-<text x="462.6636121708493" y="683.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">199</text>
+<rect x="198" y="648" width="717.425431711146" height="11" rx="2" fill="#a3a3a3"/>
+<text x="920.425431711146" y="657.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">549</text>
+<rect x="198" y="661" width="539.9008245306566" height="11" rx="2" fill="#7c2d12"/>
+<text x="742.9008245306566" y="670.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">413</text>
+<rect x="198" y="674" width="224.55115920613338" height="11" rx="2" fill="#f97316"/>
+<text x="427.5511592061334" y="683.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">172</text>
 <text x="202" y="696.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">no browser decoder</text>
-<rect x="198" y="700" width="370.7624970116909" height="11" rx="2" fill="#2563eb"/>
-<text x="573.7624970116909" y="709.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">284</text>
+<rect x="198" y="700" width="317.7152311904486" height="11" rx="2" fill="#2563eb"/>
+<text x="520.7152311904485" y="709.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">243</text>
 <text x="48" y="765.5" font-size="13" font-weight="550" fill="#171717" text-anchor="start">MPEG-2</text>
 <rect x="198" y="729" width="914" height="11" rx="2" fill="#a3a3a3"/>
-<text x="1117" y="738.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">1250+</text>
-<rect x="198" y="742" width="733.7498200318648" height="11" rx="2" fill="#7c2d12"/>
-<text x="936.7498200318648" y="751.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">562</text>
-<rect x="198" y="755" width="612.8421551602089" height="11" rx="2" fill="#f97316"/>
-<text x="815.8421551602089" y="764.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">469</text>
+<text x="1117" y="738.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">1034+</text>
+<rect x="198" y="742" width="740.5072062487454" height="11" rx="2" fill="#7c2d12"/>
+<text x="943.5072062487454" y="751.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">567</text>
+<rect x="198" y="755" width="467.0847851335656" height="11" rx="2" fill="#f97316"/>
+<text x="670.0847851335657" y="764.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">358</text>
 <text x="202" y="777.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">no browser decoder</text>
-<rect x="198" y="781" width="774.1695041296485" height="11" rx="2" fill="#2563eb"/>
-<text x="977.1695041296485" y="790.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">593</text>
+<rect x="198" y="781" width="702.0346715669309" height="11" rx="2" fill="#2563eb"/>
+<text x="905.0346715669309" y="790.5" font-size="10" font-weight="400" fill="#737373" text-anchor="start">538</text>
 <text x="48" y="854" font-size="16" font-weight="600" fill="#171717" text-anchor="start">Time to first frame of a RealVideo file no browser plays (ms, lower is better)</text>
 <text x="48" y="887" font-size="13" font-weight="400" fill="#171717" text-anchor="start">libvlc-wasm: open() and play</text>
-<rect x="378" y="876" width="10.949699984192847" height="16" rx="2" fill="#f97316"/>
-<text x="394.9496999841929" y="889" font-size="12" font-weight="600" fill="#171717" text-anchor="start">21 ms</text>
+<rect x="378" y="876" width="21.524550021886828" height="16" rx="2" fill="#f97316"/>
+<text x="405.52455002188685" y="889" font-size="12" font-weight="600" fill="#171717" text-anchor="start">42 ms</text>
 <text x="48" y="913" font-size="13" font-weight="400" fill="#171717" text-anchor="start">ffmpeg.wasm: convert the first 10 s, then &lt;video></text>
-<rect x="378" y="902" width="104.38425000607968" height="16" rx="2" fill="#93c5fd"/>
-<rect x="482.3842500060797" y="902" width="340.0348500072956" height="16" rx="2" fill="#2563eb"/>
-<text x="828.4191000133753" y="915" font-size="12" font-weight="600" fill="#171717" text-anchor="start">871 ms</text>
+<rect x="378" y="902" width="141.37709998905657" height="16" rx="2" fill="#93c5fd"/>
+<rect x="519.3770999890565" y="902" width="463.6486500048637" height="16" rx="2" fill="#2563eb"/>
+<text x="989.0257499939203" y="915" font-size="12" font-weight="600" fill="#171717" text-anchor="start">1186 ms</text>
 <text x="48" y="939" font-size="13" font-weight="400" fill="#171717" text-anchor="start">ffmpeg.wasm: convert the whole file, then &lt;video></text>
-<rect x="378" y="928" width="104.38425000607968" height="16" rx="2" fill="#93c5fd"/>
-<rect x="482.3842500060797" y="928" width="495.1131000012159" height="16" rx="2" fill="#2563eb"/>
-<text x="983.4973500072956" y="941" font-size="12" font-weight="600" fill="#171717" text-anchor="start">1175 ms</text>
-<text x="48" y="986" font-size="16" font-weight="600" fill="#171717" text-anchor="start">Formats played from a 90-file corpus of formats browsers can't play</text>
+<rect x="378" y="928" width="141.37709998905657" height="16" rx="2" fill="#93c5fd"/>
+<rect x="519.3770999890565" y="928" width="572.2812000024319" height="16" rx="2" fill="#2563eb"/>
+<text x="1097.6582999914885" y="941" font-size="12" font-weight="600" fill="#171717" text-anchor="start">1399 ms</text>
+<text x="48" y="986" font-size="16" font-weight="600" fill="#171717" text-anchor="start">Formats played from a 93-file corpus of formats browsers can't play</text>
 <text x="48" y="1019" font-size="13" font-weight="550" fill="#171717" text-anchor="start">libvlc-wasm</text>
 <rect x="228" y="1008" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1008" width="534.6" height="16" rx="2" fill="#f97316"/>
-<text x="830" y="1021" font-size="12" font-weight="600" fill="#171717" text-anchor="start">81 / 90</text>
-<text x="886" y="1021" font-size="11" font-weight="400" fill="#737373" text-anchor="start">plays in the page</text>
+<rect x="228" y="1008" width="562.0645161290323" height="16" rx="2" fill="#f97316"/>
+<text x="830" y="1021" font-size="12" font-weight="600" fill="#171717" text-anchor="start">88 / 93</text>
+<text x="932" y="1021" font-size="11" font-weight="400" fill="#737373" text-anchor="start">plays in the page</text>
 <text x="48" y="1045" font-size="13" font-weight="550" fill="#171717" text-anchor="start">VLC desktop 3.0.24</text>
 <rect x="228" y="1034" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1034" width="528" height="16" rx="2" fill="#7c2d12"/>
-<text x="830" y="1047" font-size="12" font-weight="600" fill="#171717" text-anchor="start">80 / 90</text>
-<text x="886" y="1047" font-size="11" font-weight="400" fill="#737373" text-anchor="start">native app</text>
+<rect x="228" y="1034" width="523.741935483871" height="16" rx="2" fill="#7c2d12"/>
+<text x="830" y="1047" font-size="12" font-weight="600" fill="#171717" text-anchor="start">82 / 93</text>
+<text x="932" y="1047" font-size="11" font-weight="400" fill="#737373" text-anchor="start">native app</text>
 <text x="48" y="1071" font-size="13" font-weight="550" fill="#171717" text-anchor="start">ffmpeg.wasm</text>
 <rect x="228" y="1060" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1060" width="481.8" height="16" rx="2" fill="#2563eb"/>
-<text x="830" y="1073" font-size="12" font-weight="600" fill="#171717" text-anchor="start">73 / 90</text>
-<text x="886" y="1073" font-size="11" font-weight="400" fill="#737373" text-anchor="start">decodes; converts before showing</text>
+<rect x="228" y="1060" width="485.4193548387097" height="16" rx="2" fill="#2563eb"/>
+<text x="830" y="1073" font-size="12" font-weight="600" fill="#171717" text-anchor="start">76 / 93</text>
+<text x="932" y="1073" font-size="11" font-weight="400" fill="#737373" text-anchor="start">decodes; converts before showing</text>
 <text x="48" y="1097" font-size="13" font-weight="550" fill="#171717" text-anchor="start">vlc.js (addyosmani)</text>
 <rect x="228" y="1086" width="594" height="16" rx="2" fill="#e5e5e5"/>
 <rect x="228" y="1086" width="506" height="16" rx="2" fill="#a855f7"/>
 <text x="830" y="1099" font-size="12" font-weight="600" fill="#171717" text-anchor="start">46 / 54</text>
-<text x="886" y="1099" font-size="11" font-weight="400" fill="#737373" text-anchor="start">video samples only</text>
+<text x="932" y="1099" font-size="11" font-weight="400" fill="#737373" text-anchor="start">video samples only</text>
 <text x="48" y="1123" font-size="13" font-weight="550" fill="#171717" text-anchor="start">The browser alone</text>
 <rect x="228" y="1112" width="594" height="16" rx="2" fill="#e5e5e5"/>
-<rect x="228" y="1112" width="198" height="16" rx="2" fill="#a3a3a3"/>
-<text x="830" y="1125" font-size="12" font-weight="600" fill="#171717" text-anchor="start">30 / 90</text>
-<text x="886" y="1125" font-size="11" font-weight="400" fill="#737373" text-anchor="start">Chrome, Safari or Firefox</text>
-<text x="48" y="1166" font-size="11" font-weight="400" fill="#737373" text-anchor="start">VLC columns run the whole player (demux, decode, copy, WebGL upload) at 32x; FFmpeg columns decode only. Native VLC is forced to software decoding.</text>
-<text x="48" y="1182" font-size="11" font-weight="400" fill="#737373" text-anchor="start">Sources: bench/run.mjs, bench/results/RESULTS.md, corpus/compat/build.mjs, tests/verify-corpus.mjs.</text>
+<rect x="228" y="1112" width="191.61290322580643" height="16" rx="2" fill="#a3a3a3"/>
+<text x="830" y="1125" font-size="12" font-weight="600" fill="#171717" text-anchor="start">30 / 93</text>
+<text x="932" y="1125" font-size="11" font-weight="400" fill="#737373" text-anchor="start">Chrome, Safari or Firefox</text>
+<text x="48" y="1166" font-size="16" font-weight="600" fill="#171717" text-anchor="start">FFmpeg's test suite: the 2,183 files native FFmpeg or VLC can play</text>
+<text x="48" y="1199" font-size="13" font-weight="550" fill="#171717" text-anchor="start">FFmpeg (native)</text>
+<rect x="228" y="1188" width="594" height="16" rx="2" fill="#e5e5e5"/>
+<rect x="228" y="1188" width="591.0068712780577" height="16" rx="2" fill="#a3a3a3"/>
+<text x="830" y="1201" font-size="12" font-weight="600" fill="#171717" text-anchor="start">2,172 / 2,183</text>
+<text x="932" y="1201" font-size="11" font-weight="400" fill="#737373" text-anchor="start">decodes only</text>
+<text x="48" y="1225" font-size="13" font-weight="550" fill="#171717" text-anchor="start">libvlc-wasm</text>
+<rect x="228" y="1214" width="594" height="16" rx="2" fill="#e5e5e5"/>
+<rect x="228" y="1214" width="555.361429225836" height="16" rx="2" fill="#f97316"/>
+<text x="830" y="1227" font-size="12" font-weight="600" fill="#171717" text-anchor="start">2,041 / 2,183</text>
+<text x="932" y="1227" font-size="11" font-weight="400" fill="#737373" text-anchor="start">plays in the page</text>
+<text x="48" y="1251" font-size="13" font-weight="550" fill="#171717" text-anchor="start">VLC desktop 3.0.24</text>
+<rect x="228" y="1240" width="594" height="16" rx="2" fill="#e5e5e5"/>
+<rect x="228" y="1240" width="417.67750801649106" height="16" rx="2" fill="#7c2d12"/>
+<text x="830" y="1253" font-size="12" font-weight="600" fill="#171717" text-anchor="start">1,535 / 2,183</text>
+<text x="932" y="1253" font-size="11" font-weight="400" fill="#737373" text-anchor="start">native app</text>
+<text x="48" y="1277" font-size="13" font-weight="550" fill="#171717" text-anchor="start">Safari</text>
+<rect x="228" y="1266" width="594" height="16" rx="2" fill="#e5e5e5"/>
+<rect x="228" y="1266" width="148.5680256527714" height="16" rx="2" fill="#d4d4d4"/>
+<text x="830" y="1279" font-size="12" font-weight="600" fill="#171717" text-anchor="start">546 / 2,183</text>
+<text x="932" y="1279" font-size="11" font-weight="400" fill="#737373" text-anchor="start">on its own</text>
+<text x="48" y="1303" font-size="13" font-weight="550" fill="#171717" text-anchor="start">Chrome</text>
+<rect x="228" y="1292" width="594" height="16" rx="2" fill="#e5e5e5"/>
+<rect x="228" y="1292" width="140.94915254237287" height="16" rx="2" fill="#d4d4d4"/>
+<text x="830" y="1305" font-size="12" font-weight="600" fill="#171717" text-anchor="start">518 / 2,183</text>
+<text x="932" y="1305" font-size="11" font-weight="400" fill="#737373" text-anchor="start">on its own</text>
+<text x="48" y="1329" font-size="13" font-weight="550" fill="#171717" text-anchor="start">Firefox</text>
+<rect x="228" y="1318" width="594" height="16" rx="2" fill="#e5e5e5"/>
+<rect x="228" y="1318" width="114.82730187814933" height="16" rx="2" fill="#d4d4d4"/>
+<text x="830" y="1331" font-size="12" font-weight="600" fill="#171717" text-anchor="start">422 / 2,183</text>
+<text x="932" y="1331" font-size="11" font-weight="400" fill="#737373" text-anchor="start">on its own</text>
+<text x="48" y="1372" font-size="11" font-weight="400" fill="#737373" text-anchor="start">VLC columns run the whole player (demux, decode, copy, WebGL upload) at 32x; FFmpeg columns decode only. Native VLC is forced to software decoding.</text>
+<text x="48" y="1388" font-size="11" font-weight="400" fill="#737373" text-anchor="start">Sources: bench/run.mjs, bench/results/RESULTS.md, corpus/compat/build.mjs, tests/verify-corpus.mjs, corpus/compat/fate.mjs.</text>
 </svg>

@@ -1379,6 +1379,63 @@
       "whyBrowserCant": null,
       "notes": null,
       "test": {}
+    },
+    {
+      "id": "dvd-video-iso",
+      "name": "DVD-Video disc image",
+      "category": "discs-and-drm",
+      "url": null,
+      "generated": "tests/make-dvd.sh",
+      "download": "/samples/showcase.iso",
+      "file": "gen/t_dvd.iso",
+      "bytes": 0,
+      "container": "ISO 9660 (DVD-Video)",
+      "video": "MPEG-2",
+      "audio": null,
+      "whyBrowserCant": "no browser reads disc images or DVD navigation",
+      "notes": "Opens on the disc's menu, which is silent: sound comes once a title plays (tests/features.mjs clicks into one).",
+      "test": {}
+    },
+    {
+      "id": "bluray-bdmv-iso",
+      "name": "Blu-ray disc image",
+      "category": "discs-and-drm",
+      "url": null,
+      "generated": "tests/make-bluray.sh",
+      "download": "/samples/bluray.iso",
+      "file": "gen/t_bluray.iso",
+      "bytes": 0,
+      "container": "UDF (BDMV)",
+      "video": "H.264",
+      "audio": "AC-3",
+      "whyBrowserCant": "no browser reads disc images or Blu-ray playlists",
+      "notes": null,
+      "test": {}
+    },
+    {
+      "id": "cenc-clearkey-mp4",
+      "name": "MP4 with Common Encryption (ClearKey)",
+      "category": "discs-and-drm",
+      "url": null,
+      "generated": "tests/make-fixtures.sh",
+      "download": "/samples/cenc-clearkey.mp4",
+      "file": "gen/t_cenc.mp4",
+      "bytes": 0,
+      "container": "MP4 (cenc)",
+      "video": "H.264",
+      "audio": "AAC",
+      "whyBrowserCant": "a plain <video> cannot decrypt; EME ClearKey needs page code and a license exchange",
+      "notes": "key 76a6c65c5ea762046bd749a2e632ccbb",
+      "test": {
+        "options": [
+          ":demux=avformat",
+          ":avformat-options={decryption_key=76a6c65c5ea762046bd749a2e632ccbb}"
+        ],
+        "ffmpegInput": [
+          "-decryption_key",
+          "76a6c65c5ea762046bd749a2e632ccbb"
+        ]
+      }
     }
   ],
   "assets": [

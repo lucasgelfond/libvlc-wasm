@@ -20,9 +20,13 @@ STAGE="$OBJ/stage"
 mkdir -p "$OBJ" "$OUT" "$STAGE"
 
 case "$PROFILE" in
-  release) OPT="-O3"; LINK_OPT="-O3 --profiling-funcs -sASSERTIONS=0" ;;
-  debug)   OPT="-O1 -g"; LINK_OPT="-O1 -g -sASSERTIONS=2" ;;
-  *) echo "PROFILE must be release or debug" >&2; exit 2 ;;
+  # Release drops function names (0.9 MiB): the core wasm must stay under the
+  # 25 MiB per-file limit of static hosts like Cloudflare. PROFILE=debug (or
+  # names) keeps them for readable crash traces.
+  release) OPT="-O3"; LINK_OPT="-O3 -sASSERTIONS=0"; KEEP_NAMES= ;;
+  names)   OPT="-O3"; LINK_OPT="-O3 --profiling-funcs -sASSERTIONS=0"; KEEP_NAMES=-g ;;
+  debug)   OPT="-O1 -g"; LINK_OPT="-O1 -g -sASSERTIONS=2"; KEEP_NAMES=-g ;;
+  *) echo "PROFILE must be release, names or debug" >&2; exit 2 ;;
 esac
 
 # Modules left out of the binary. The GL ones need a WebGL context on a VLC
@@ -101,7 +105,7 @@ echo "==> translating exception handling to exnref (try_table)"
 # The feature flags must be explicit: with --detect-features the pass finds no
 # EH feature in the (stripped) target_features section and silently does nothing.
 # -g keeps the function names that --profiling-funcs put there.
-wasm-opt "$STAGE/$NAME.wasm" -g --translate-to-exnref \
+wasm-opt "$STAGE/$NAME.wasm" $KEEP_NAMES --translate-to-exnref \
   --enable-threads --enable-bulk-memory --enable-bulk-memory-opt --enable-exception-handling \
   --enable-simd --enable-nontrapping-float-to-int --enable-sign-ext --enable-mutable-globals \
   --enable-reference-types --enable-multivalue \

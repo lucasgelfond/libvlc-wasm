@@ -13,7 +13,8 @@ import { ffmpegNative, vlcNative } from './native.mjs';
 const args = Object.fromEntries(process.argv.slice(2).map((a) => a.replace(/^--/, '').split('=')));
 const threadsList = (args.threads ?? '1,4').split(',').map(Number);
 const skip = new Set((args.skip ?? '').split(',').filter(Boolean));
-const clips = readdirSync(`${root}/bench/media`).filter((f) => !f.startsWith('.') && (!args.only || f.includes(args.only))).sort();
+const clips = readdirSync(`${root}/bench/media`)
+  .filter((f) => !f.startsWith('.') && statSync(`${root}/bench/media/${f}`).isFile() && (!args.only || f.includes(args.only))).sort();
 const out = `${root}/bench/results`;
 mkdirSync(out, { recursive: true });
 

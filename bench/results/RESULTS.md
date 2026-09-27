@@ -1,17 +1,17 @@
 # Benchmarks
 
-2026-09-27T05:27:26.542Z · Apple M5 (10 cores, 16 GB) · macOS 26.6.2 · Chrome 153.0.8010.53 (headless)
+2026-09-27T18:17:13.668Z · Apple M5 (10 cores, 16 GB) · macOS 26.6.2 · Chrome 153.0.8010.53 (headless)
 
 ## Download size
 
 | binary | raw | gzip -9 | brotli -11 |
 |---|---|---|---|
-| libvlc-wasm (libvlc.wasm) | 24.7 MB | 9.9 MB | 7.6 MB |
+| libvlc-wasm (libvlc.wasm) | 25.4 MB | 10.1 MB | 7.8 MB |
 | ffmpeg.wasm core-mt 0.12.10 | 31.2 MB | 9.8 MB | 7.0 MB |
 
 ## Startup (createVLC() to ready, median of 3)
 
-cold (empty cache): **108 ms** · warm: **102 ms**
+cold (empty cache): **232 ms** · warm: **211 ms**
 
 ## Decode throughput, 1080p30, 5 s (frames per second, higher is better)
 
@@ -24,26 +24,30 @@ native vs wasm, both in software; † marks results at the pacing ceiling, where
 
 | clip | threads | native FFmpeg | native VLC 3 | libvlc-wasm (software) | libvlc-wasm + WebCodecs | ffmpeg.wasm | native VLC ÷ libvlc-wasm |
 |---|---|---|---|---|---|---|---|
-| av1_1080p.mkv | 1 | 273.2 | 240.1 | 89.4 | 482.1 | — | 2.69× |
-| av1_1080p.mkv | 4 | 638.3 | 558.5 | 248.6 | 495.3 | — | 2.25× |
-| h264_1080p.mkv | 1 | 125.4 | 117.6 | 74.6 | 509.9 | 66.9 | 1.58× |
-| h264_1080p.mkv | 4 | 340.9 | 310.8 | 214.1 | 614.0 | 200.0 | 1.45× |
-| hevc_1080p.mkv | 1 | 289.6 | 249.9 | 197.0 | 517.3 | 125.4 | 1.27× |
-| hevc_1080p.mkv | 4 | 669.6 | 570.6 | 423.4 | 511.0 | 297.8 | 1.35× |
-| mjpeg_1080p.avi | 1 | 704.2 | 583.9 | 198.9 | — | 284.0 | 2.94× |
-| mjpeg_1080p.avi | 4 | 714.3 | 578.0 | 202.3 | — | 286.4 | 2.86× |
-| mpeg2_1080p.mpg | 1 | 1250.0 | 562.0 | 469.4 | — | 592.9 | 1.20× † |
-| mpeg2_1080p.mpg | 4 | 3061.2 | 571.4 | 497.0 | — | 1363.1 | 1.15× † |
-| mpeg2_1280x720.mpg | 1 | 2343.8 | 538.9 | 508.1 | — | 1049.4 | 1.06× † |
-| mpeg2_1280x720.mpg | 4 | 5555.6 | 536.8 | 459.4 | — | 2143.3 | 1.17× † |
-| mpeg2_640x360.mpg | 1 | 2631.6 | 552.8 | 584.0 | — | 1102.7 | 0.95× † |
-| mpeg2_640x360.mpg | 4 | 7142.9 | 557.4 | 538.7 | — | 2485.1 | 1.03× † |
-| mpeg4asp_1080p.avi | 1 | 877.2 | 570.1 | 341.0 | — | 450.3 | 1.67× |
-| mpeg4asp_1080p.avi | 4 | 2459.0 | 572.1 | 342.6 | — | 1185.8 | 1.67× |
-| msmpeg4_1080p.avi | 1 | 819.7 | 575.5 | 280.2 | — | 413.4 | 2.05× |
-| msmpeg4_1080p.avi | 4 | 819.7 | 577.0 | 343.0 | — | 418.4 | 1.68× |
-| vp9_1080p.webm | 1 | 335.6 | 295.7 | 160.8 | 583.5 | 149.5 | 1.84× |
-| vp9_1080p.webm | 4 | 547.4 | 370.3 | 294.5 | 585.6 | 321.9 | 1.26× |
+| av1_1080p.mkv | 1 | 198.9 | 146.3 | 69.9 | 497.9 | — | 2.09× |
+| av1_1080p.mkv | 4 | 297.6 | 313.8 | 156.6 | 499.3 | — | 2.00× |
+| h264_1080p.mkv | 1 | 88.8 | 98.9 | 64.7 | 546.7 | 56.6 | 1.53× |
+| h264_1080p.mkv | 4 | 272.7 | 246.0 | 164.5 | 583.3 | 153.3 | 1.50× |
+| hevc10_1080p.mkv | 1 | 138.7 | 142.7 | 112.5 | 147.4 | 102.2 | 1.27× |
+| hevc10_1080p.mkv | 4 | 234.4 | 269.7 | 210.0 | 384.6 | 265.9 | 1.28× |
+| hevc_1080p.mkv | 1 | 191.3 | 177.4 | 109.9 | 550.5 | 89.3 | 1.61× |
+| hevc_1080p.mkv | 4 | 297.6 | 322.5 | 283.0 | 621.3 | 238.3 | 1.14× |
+| mjpeg_1080p.avi | 1 | 549.5 | 413.5 | 172.0 | — | 243.3 | 2.40× |
+| mjpeg_1080p.avi | 4 | 590.6 | 415.6 | 191.3 | — | 252.2 | 2.17× |
+| mpeg2_1080p.mpg | 1 | 1034.5 | 567.1 | 357.7 | — | 537.7 | 1.59× |
+| mpeg2_1080p.mpg | 4 | 2027.0 | 579.6 | 416.3 | — | 1114.7 | 1.39× |
+| mpeg2_1280x720.mpg | 1 | 2054.8 | 553.8 | 455.0 | — | 1080.5 | 1.22× † |
+| mpeg2_1280x720.mpg | 4 | 3947.4 | 554.6 | 464.7 | — | 2038.7 | 1.19× † |
+| mpeg2_640x360.mpg | 1 | 2381.0 | 567.5 | 519.5 | — | 1154.2 | 1.09× † |
+| mpeg2_640x360.mpg | 4 | 4838.7 | 559.7 | 519.8 | — | 2353.7 | 1.08× † |
+| mpeg4asp_1080p.avi | 1 | 697.7 | 553.8 | 281.8 | — | 396.0 | 1.97× |
+| mpeg4asp_1080p.avi | 4 | 1973.7 | 535.4 | 231.1 | — | 957.0 | 2.32× |
+| msmpeg4_1080p.avi | 1 | 663.7 | 579.8 | 273.1 | — | 365.9 | 2.12× |
+| msmpeg4_1080p.avi | 4 | 655.0 | 452.8 | 197.1 | — | 291.7 | 2.30× |
+| vp9_1080p.webm | 1 | 254.7 | 242.3 | 136.0 | 409.0 | 128.3 | 1.78× |
+| vp9_1080p.webm | 4 | 438.6 | 369.3 | 294.3 | 360.3 | 274.7 | 1.25× |
+| yuv444_1080p.mkv | 1 | 172.4 | 151.9 | 121.2 | — | 112.3 | 1.25× |
+| yuv444_1080p.mkv | 4 | 517.2 | 442.5 | 313.3 | — | 335.9 | 1.41× |
 
 ## Time to first frame for a file the browser can't play
 
@@ -52,22 +56,24 @@ transcoded to H.264/AAC MP4 (`-preset ultrafast`, 4 threads) and handed to `<vid
 
 | path | time to first frame |
 |---|---|
-| libvlc-wasm `player.open(file)` | **21 ms** |
-| ffmpeg.wasm load (once per page) | 205 ms |
-| ffmpeg.wasm transcode first 10 s → `<video>` | 667 ms |
-| ffmpeg.wasm transcode whole file → `<video>` | 971 ms |
+| libvlc-wasm `player.open(file)` | **42 ms** |
+| ffmpeg.wasm load (once per page) | 277 ms |
+| ffmpeg.wasm transcode first 10 s → `<video>` | 909 ms |
+| ffmpeg.wasm transcode whole file → `<video>` | 1.1 s |
 
 ## Probe and thumbnail (libvlc-wasm)
 
 | clip | probe | thumbnail |
 |---|---|---|
-| av1_1080p.mkv | 5 ms | 24 ms |
-| h264_1080p.mkv | 7 ms | 54 ms |
-| hevc_1080p.mkv | 3 ms | 41 ms |
-| mjpeg_1080p.avi | 3 ms | 14 ms |
-| mpeg2_1080p.mpg | 2 ms | 43 ms |
-| mpeg2_1280x720.mpg | 3 ms | 29 ms |
-| mpeg2_640x360.mpg | 2 ms | 16 ms |
-| mpeg4asp_1080p.avi | 2 ms | 16 ms |
-| msmpeg4_1080p.avi | 3 ms | 15 ms |
-| vp9_1080p.webm | 5 ms | 45 ms |
+| av1_1080p.mkv | 10 ms | 36 ms |
+| h264_1080p.mkv | 12 ms | 116 ms |
+| hevc10_1080p.mkv | 3 ms | 40 ms |
+| hevc_1080p.mkv | 6 ms | 47 ms |
+| mjpeg_1080p.avi | 4 ms | 21 ms |
+| mpeg2_1080p.mpg | 2 ms | 49 ms |
+| mpeg2_1280x720.mpg | 2 ms | 32 ms |
+| mpeg2_640x360.mpg | 10 ms | 26 ms |
+| mpeg4asp_1080p.avi | 3 ms | 20 ms |
+| msmpeg4_1080p.avi | 5 ms | 22 ms |
+| vp9_1080p.webm | 9 ms | 53 ms |
+| yuv444_1080p.mkv | 5 ms | 39 ms |

@@ -26,5 +26,6 @@ vite.config.ts.timestamp-*
 static/samples/*
 !static/samples/showcase.iso
 !static/samples/bluray.iso
+!static/samples/cenc-clearkey.mp4
 !static/samples/thumbs/
 !static/samples/everyday/

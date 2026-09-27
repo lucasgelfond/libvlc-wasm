@@ -19,3 +19,25 @@ require-corp`); `vite.config.ts` sets them for dev and preview. Append
 - `src/lib/session.svelte.ts` — a reactive wrapper over one libvlc-wasm Player
 - `src/routes/+page.svelte` — the page: drop zone, stage, control bar
 - `src/lib/components/SettingsMenu.svelte` — the settings popover
+
+## Deploying (libvlc.lucasgelfond.online)
+
+The site is a static build (`adapter-static`) served by Cloudflare as Worker static
+assets; `wrangler.jsonc` is the whole configuration.
+
+```sh
+pnpm --filter player build          # also copies the samples (scripts/samples.mjs)
+cd apps/player && npx wrangler deploy
+```
+
+Then attach the custom domain `libvlc.lucasgelfond.online` to the `libvlc-wasm-site`
+Worker (Settings > Domains & Routes); the zone is already on Cloudflare.
+
+- `static/_headers` sets COOP/COEP on every response. Without them there is no
+  `SharedArrayBuffer`, and VLC cannot start.
+- Cloudflare serves at most 25 MiB per file. The core `libvlc.wasm` is linked without
+  function names to fit (about 24.5 MiB); the transcoding engine (35 MB) is not part of
+  the site. If the wasm outgrows the limit, serve it from R2 or a CDN and pass
+  `createVLC({ wasmUrl })`, with `Cross-Origin-Resource-Policy: cross-origin` on it.
+- To deploy from CI, add a `CLOUDFLARE_API_TOKEN` secret (Workers Scripts: Edit) and run
+  the two commands above after the build job.

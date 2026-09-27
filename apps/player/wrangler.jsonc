@@ -1,0 +1,14 @@
+// The site on Cloudflare: static assets only, no Worker code.
+//   pnpm --filter player build && npx wrangler deploy
+// Custom domain: libvlc.lucasgelfond.online (add it under the Worker's
+// Settings > Domains & Routes; the zone is already on Cloudflare).
+// Per-file limit is 25 MiB: the core libvlc.wasm is linked without function
+// names to stay under it (build/link.sh).
+{
+  "name": "libvlc-wasm-site",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./build",
+    "not_found_handling": "single-page-application"
+  }
+}

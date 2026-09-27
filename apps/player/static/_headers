@@ -1,0 +1,10 @@
+# Cloudflare (Workers static assets or Pages) applies these to every response.
+# VLC's threads need SharedArrayBuffer, which needs cross-origin isolation.
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin
+  X-Content-Type-Options: nosniff
+
+/_app/immutable/*
+  Cache-Control: public, max-age=31536000, immutable

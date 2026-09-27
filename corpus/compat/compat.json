@@ -4,7 +4,7 @@
   "nativeVlc": "3.0.24",
   "ffmpeg": "ffmpeg version 9.0.2",
   "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
-  "libvlcWasm": "corpus/results/results.json (2026-09-27T15:54:37.753Z)",
+  "libvlcWasm": "corpus/results/results.json (2026-09-27T18:42:11.412Z)",
   "browsers": [
    "chromium",
    "webkit",
@@ -691,7 +691,7 @@
      "video": true,
      "audio": false
     },
-    "note": "known issue: VLC 4 mpegaudio packetizer never syncs on this truncated AVI (VLC 3 does); a clean XviD+MP3 AVI plays"
+    "note": "known issue: VLC 4's AVI demuxer hands the MP3 packetizer this truncated, index-less file's audio out of order (its MP3 frames play when extracted, and through FFmpeg's demuxer); a clean XviD+MP3 AVI plays"
    },
    "browsers": {
     "chromium": false,
@@ -732,7 +732,7 @@
      "video": true,
      "audio": false
     },
-    "note": "expected failure: native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either"
+    "note": "expected failure: native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either (same AVI demuxer issue as the XviD file)"
    },
    "browsers": {
     "chromium": false,
@@ -1214,11 +1214,11 @@
     "note": "777216 audio samples, peak -10.4 dB"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "audio": false
+     "audio": true
     },
-    "note": "expected failure: native VLC 3.0.24 also produces no audio from this sample"
+    "note": null
    },
    "browsers": {
     "chromium": false,
@@ -1906,7 +1906,7 @@
      "video": false,
      "audio": true
     },
-    "note": "expected failure: video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010)"
+    "note": "expected failure: video is a proprietary H.263 variant that FFmpeg cannot decode either; the Siren audio plays (patches/0010-0011)"
    },
    "browsers": {
     "chromium": false,
@@ -2387,7 +2387,7 @@
     "checks": {
      "audio": false
     },
-    "note": "expected failure: native VLC 3.0.24 also cannot play Shorten (no demuxer claims it)"
+    "note": "expected failure: native VLC 3.0.24 also cannot play it: VLC's FFmpeg demuxer reaches end of file without a packet from this raw Shorten stream"
    },
    "browsers": {
     "chromium": false,
@@ -2749,11 +2749,11 @@
     "note": "no audio decoded; error: sega-genesis-vgz-gzip-vgm.vgz: Invalid data found when processing input"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "audio": false
+     "audio": true
     },
-    "note": "expected failure: native VLC 3.0.24 also fails: after gunzip, the AIFF probe claims the stream before gme"
+    "note": null
    },
    "browsers": {
     "chromium": false,
@@ -2789,11 +2789,11 @@
     "note": "no audio decoded; error: c64-sid-rob-hubbard-commando.sid: Invalid data found when processing input"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "audio": false
+     "audio": true
     },
-    "note": "expected failure: sidplay2 is disabled in VLC's upstream emscripten contrib set"
+    "note": null
    },
    "browsers": {
     "chromium": false,
@@ -3069,9 +3069,9 @@
     "note": "90 video frames; 144384 audio samples, peak -16.1 dB; 3 warning/error lines logged"
    },
    "libvlcWasm": {
-    "passed": false,
+    "passed": true,
     "checks": {
-     "video": false,
+     "video": true,
      "audio": true
     },
     "note": null
@@ -3648,6 +3648,128 @@
     "chromium": true,
     "webkit": true,
     "firefox": true
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "dvd-video-iso",
+   "name": "DVD-Video disc image",
+   "category": "discs-and-drm",
+   "container": "ISO 9660 (DVD-Video)",
+   "video": "MPEG-2",
+   "audio": null,
+   "file": "gen/t_dvd.iso",
+   "url": "/samples/showcase.iso",
+   "bytes": 6287360,
+   "whyBrowserCant": "no browser reads disc images or DVD navigation",
+   "nativeVlc": {
+    "video": true,
+    "audio": null,
+    "note": "588 pictures displayed; decoders spu:spudec, video:avcodec, audio:avcodec; no demuxer claimed the file; killed after 45 s"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": null,
+    "note": "300 video frames; 1 warning/error lines logged"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": null,
+    "note": "300 video frames; 2 warning/error lines logged"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "bluray-bdmv-iso",
+   "name": "Blu-ray disc image",
+   "category": "discs-and-drm",
+   "container": "UDF (BDMV)",
+   "video": "H.264",
+   "audio": "AC-3",
+   "file": "gen/t_bluray.iso",
+   "url": "/samples/bluray.iso",
+   "bytes": 3080192,
+   "whyBrowserCant": "no browser reads disc images or Blu-ray playlists",
+   "nativeVlc": {
+    "video": true,
+    "audio": true,
+    "note": "181 pictures displayed; 8.992 s audio, peak -21.1 dB; decoders video:videotoolbox, audio:avcodec; killed after 45 s"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "216 video frames; 866304 audio samples, peak 0 dB; 790 warning/error lines logged"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "216 video frames; 866304 audio samples, peak 0 dB; 598 warning/error lines logged"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
+   },
+   "vlcjs": null
+  },
+  {
+   "id": "cenc-clearkey-mp4",
+   "name": "MP4 with Common Encryption (ClearKey)",
+   "category": "discs-and-drm",
+   "container": "MP4 (cenc)",
+   "video": "H.264",
+   "audio": "AAC",
+   "file": "gen/t_cenc.mp4",
+   "url": "/samples/cenc-clearkey.mp4",
+   "bytes": 320257,
+   "whyBrowserCant": "a plain <video> cannot decrypt; EME ClearKey needs page code and a license exchange",
+   "nativeVlc": {
+    "video": true,
+    "audio": false,
+    "note": "11 pictures displayed; no audio decoded; decoders video:videotoolbox, audio:faad, video:avcodec"
+   },
+   "ffmpeg": {
+    "video": true,
+    "audio": true,
+    "note": "75 video frames; 132300 audio samples, peak -17.7 dB"
+   },
+   "ffmpegWasm": {
+    "video": true,
+    "audio": true,
+    "note": "75 video frames; 133120 audio samples, peak -17.7 dB"
+   },
+   "libvlcWasm": {
+    "passed": true,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "note": null
+   },
+   "browsers": {
+    "chromium": false,
+    "webkit": false,
+    "firefox": false
    },
    "vlcjs": null
   }

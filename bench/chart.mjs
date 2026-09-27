@@ -113,21 +113,38 @@ const bars = [
   ['vlc.js (addyosmani)', vjTested.filter((s) => s.vlcjs).length, vjTested.length, '#a855f7', 'video samples only'],
   ['The browser alone', plays((s) => s.browsers?.chromium || s.browsers?.webkit || s.browsers?.firefox), n, '#a3a3a3', 'Chrome, Safari or Firefox'],
 ];
-out.push(text(PAD, y, `Formats played from a ${n}-file corpus of formats browsers can't play`, { size: 16, weight: 600 }));
-y += 20;
 const fW = W - PAD * 2 - 180 - 330;
-for (const [label, v, of, c, note] of bars) {
-  out.push(text(PAD, y + 13, label, { size: 13, weight: 550 }));
-  out.push(`<rect x="${PAD + 180}" y="${y + 2}" width="${fW}" height="16" rx="2" fill="${GRID}"/>`);
-  out.push(`<rect x="${PAD + 180}" y="${y + 2}" width="${(v / of) * fW}" height="16" rx="2" fill="${c}"/>`);
-  out.push(text(PAD + 180 + fW + 8, y + 15, `${v} / ${of}`, { size: 12, weight: 600 }));
-  out.push(text(PAD + 180 + fW + 64, y + 15, note, { size: 11, fill: MUTED }));
-  y += 26;
+function drawBars(title, rows) {
+  out.push(text(PAD, y, title, { size: 16, weight: 600 }));
+  y += 20;
+  for (const [label, v, of, c, note] of rows) {
+    out.push(text(PAD, y + 13, label, { size: 13, weight: 550 }));
+    out.push(`<rect x="${PAD + 180}" y="${y + 2}" width="${fW}" height="16" rx="2" fill="${GRID}"/>`);
+    out.push(`<rect x="${PAD + 180}" y="${y + 2}" width="${(v / of) * fW}" height="16" rx="2" fill="${c}"/>`);
+    out.push(text(PAD + 180 + fW + 8, y + 15, `${v.toLocaleString('en')} / ${of.toLocaleString('en')}`, { size: 12, weight: 600 }));
+    out.push(text(PAD + 180 + fW + 110, y + 15, note, { size: 11, fill: MUTED }));
+    y += 26;
+  }
+  y += 30;
 }
-y += 30;
+drawBars(`Formats played from a ${n}-file corpus of formats browsers can't play`, bars);
+
+// Panel 4: FFmpeg's whole FATE sample suite (corpus/compat/fate.mjs).
+const fatePath = `${root}/corpus/compat/fate-summary.json`;
+if (existsSync(fatePath)) {
+  const f = JSON.parse(readFileSync(fatePath, 'utf8')).overall;
+  drawBars(`FFmpeg's test suite: the ${f.union.toLocaleString('en')} files native FFmpeg or VLC can play`, [
+    ['FFmpeg (native)', f.ffmpeg, f.union, '#a3a3a3', 'decodes only'],
+    ['libvlc-wasm', f.wasm, f.union, '#f97316', 'plays in the page'],
+    ['VLC desktop 3.0.24', f.vlc, f.union, '#7c2d12', 'native app'],
+    ['Safari', f.webkit, f.union, '#d4d4d4', 'on its own'],
+    ['Chrome', f.chromium, f.union, '#d4d4d4', 'on its own'],
+    ['Firefox', f.firefox, f.union, '#d4d4d4', 'on its own'],
+  ]);
+}
 out.push(text(PAD, y, 'VLC columns run the whole player (demux, decode, copy, WebGL upload) at 32x; FFmpeg columns decode only. Native VLC is forced to software decoding.', { size: 11, fill: MUTED }));
 y += 16;
-out.push(text(PAD, y, 'Sources: bench/run.mjs, bench/results/RESULTS.md, corpus/compat/build.mjs, tests/verify-corpus.mjs.', { size: 11, fill: MUTED }));
+out.push(text(PAD, y, 'Sources: bench/run.mjs, bench/results/RESULTS.md, corpus/compat/build.mjs, tests/verify-corpus.mjs, corpus/compat/fate.mjs.', { size: 11, fill: MUTED }));
 y += PAD - 10;
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${y}" viewBox="0 0 ${W} ${y}" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
