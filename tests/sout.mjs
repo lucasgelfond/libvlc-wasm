@@ -79,8 +79,8 @@ const results = await page.evaluate(async () => {
   }
 
   await test('an encoder VLC lacks is an error, not a missing stream', async () => {
-    const err = await vlc.transcode(await file('gen/t_wmv2.wmv'), { to: 'mkv', video: 'theo' }).then(() => null, (e) => e);
-    assert(err && /could not encode video as "theo"/.test(err.message), `got ${err?.message ?? 'a file'}`);
+    const err = await vlc.transcode(await file('gen/t_wmv2.wmv'), { to: 'mkv', video: 'WMV3' }).then(() => null, (e) => e);
+    assert(err && /could not encode video as "WMV3"/.test(err.message), `got ${err?.message ?? 'a file'}`);
     return err.message;
   });
 

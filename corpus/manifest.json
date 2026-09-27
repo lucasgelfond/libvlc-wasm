@@ -900,6 +900,9 @@
       "audio": "Shorten",
       "whyBrowserCant": "No browser Shorten decoder",
       "notes": null,
+      "test": {
+        "knownIssue": "plays since patches/0020, but its peak in the first 4 s (-18 dB) stays well under FFmpeg's (-2.7 dB) while the RMS level matches"
+      },
       "sha256": "bc75e9dfdb21409569b5245b3ca8b97db84e3a869dcfece5a1cee4dadb4ec79d"
     },
     {
