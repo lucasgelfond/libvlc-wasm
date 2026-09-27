@@ -94,3 +94,50 @@ libvlc-wasm is bounded by per-frame player work, still 10–15x real time at 108
 **21 ms** after `open()`; ffmpeg.wasm 0.2 s to load, then transcoding before `<video>` can show
 anything (0.7 s for 10 s of video at ~20x real time, i.e. about 6 minutes for a two-hour film).
 
+
+## Every "VLC in the browser" port, measured the same way
+
+Measured 2026-09-27 on the same machine and Chrome, headless and muted. Each harness opens the
+sample through the port's own player page, then for 6 s screenshots its canvas (or `<video>`)
+every 250 ms and counts a picture when the luma variance goes above 20 (the method
+`vlcjs.mjs` uses). The sample set is the one `vlcjs.mjs` uses: 55 video samples, meaning
+45 corpus files, 9 everyday files and the generated H.264/Opus/ASS control. The new
+harnesses also run the 35 audio-only files. Audio counts as "audible" when the port's Web Audio
+graph carries a signal above 1e-3 RMS. The harness hooks an `AnalyserNode` onto whatever
+connects to the destination, so nothing reaches the speakers. For webvlc it reads the
+`<video>`/`<audio>` element through `captureStream()`, and falls back to Chrome's
+decoded-audio-bytes counter. Audio is counted over the 71 samples that have an audio track.
+Harnesses: `bench/compare/{vlcjs,krowemoh,jbk,webvlc}.mjs`. Results sit in the matching
+`*-results.json`.
+
+| Port | What it is | Runnable today? | Video shown (all / excl. everyday) | Audible | Median first picture | Notable failures |
+|---|---|---|---|---|---|---|
+| [addyosmani/vlc.js](https://github.com/addyosmani/vlc.js) | Videolabs' prebuilt VLC 4.0.0-dev wasm (2024-03-07), WebCodecs + GL/OffscreenCanvas, custom UI | yes (prebuilt in repo) | 47/55 / 38/46 | not measured | 394 ms | MS Screen 2, Smacker, FLIC ×2, Vivo, PSX STR, DVB fragment, HEVC DV 1-frame |
+| [Krowemoh/vlc.js](https://github.com/Krowemoh/vlc.js) (2024) | the **same** wasm/JS files as addyosmani (identical SHA-1s), plus a ~100-line `VLCPlayer()` wrapper | yes, but its `index.html` example is a SyntaxError (missing comma after `source:`). Measured with that one comma added | 48/55 / 39/46 | 57/71 | 455 ms | same list as addyosmani, except the HEVC DV frame, which showed here (borderline sample) |
+| [jbk/vlc.js](https://code.videolan.org/jbk/vlc.js), published demo | jbk's `incoming` `vlc.html` UI, served at videolabs.io/communication/vlcjs-demo with the same 2024 wasm | yes (the demo is still online and was mirrored locally) | 48/55 / 39/46 | 56/71 | 438 ms | same as Krowemoh |
+| jbk/vlc.js, built from source | `incoming` (2022-10): VLC 4.0.0-dev `06e361b1` (2022-04-15) + 82 patches, emsdk 3.1.18, ASYNCIFY + pthreads, 26.9 MB wasm | **yes, with 2 fixes**: emsdk tag pin (the image's python is 3.9) and glslang `master`→`main`. ~40 min in its 2022 CI image under amd64 emulation | 48/55 / 39/46 | 57/71 | 447 ms | identical to the 2024 binary, sample for sample |
+| jbk/vlc.js 2017 `asm.js` branch | the original asm.js PoC (fastcomp emscripten + patched OpenAL, VLC of 2017) | **not attempted**: no artifacts exist, and it needs a 2017 fastcomp toolchain plus 23 emscripten patches | — | — | — | — |
+| [addyosmani/webvlc](https://github.com/addyosmani/webvlc) | React UI over the browser's `<video>`/`<audio>`. **Confirmed: no wasm, no libvlc** (the only "WASM" in the source is a comment about butterchurn) | yes (production build, as on webvlc.addy.ie) | 10/55 / 3/46 | 17/71 | 351 ms | its extension allow-list refuses 51/90 files (.rm, .wmv, .flv, .ts, .vob, trackers…). It never loads the **first** video opened in a page (measured after re-opening). `.opus` is refused by its `audio/opus` MIME hint, although a bare `<audio>` plays it |
+
+What this shows:
+
+- **There is effectively one VLC-in-the-browser binary.** Three of the four "ports" ship the
+  same Videolabs 2024 `experimental.wasm`. The only other one is jbk's `incoming` branch
+  rebuilt today, and it plays exactly the same samples. jbk/vlc.js *can* still be rebuilt:
+  two bitrot fixes, recipe in the header of `jbk.mjs`.
+- **Failures shared by every VLC build here:** MS Screen 2, Smacker, both FLIC files, Vivo, PSX
+  STR and the DVB fragment show no picture. On audio, DTS-in-TS, 5.1 AC-3 ("Max number of
+  channels of the browser is 2", a downmix bug in the 2022 aout patch), Shorten, VGM, SID, MIDI
+  and every tracker file (MOD/XM/S3M/IT) are silent. The audio track of DivX 5+MP3 and VP5+Speex
+  is silent too, although their video shows. The tracker, SID, VGM and MIDI failures happen with
+  and without a file extension (the Krowemoh wrapper names every file `Video`), so they are
+  missing modules, not probing.
+- **webvlc is Chrome's native support behind a UI.** Every file it failed on was also tried in a
+  bare `<video>`/`<audio>`. None showed a picture Chrome could not otherwise show. The only
+  file it lost to its own UI is `.opus` (plus the first-video bug above). A bare element also
+  played audio from Sorenson 1, MPEG-4 ASP+Vorbis and ProRes+PCM, without video.
+- **First-picture times** are all bounded by the 250 ms screenshot polling (±250 ms). The VLC
+  ports land at 400–450 ms, and native `<video>` at ~350 ms by the same method.
+- addyosmani's numbers come from the current `vlcjs-results.json` (run 2026-09-27 16:01 UTC,
+  38/46 excluding everyday). That run is newer than the 37/45 quoted above. The HEVC Dolby
+  Vision sample is a single frame and flips between runs of the identical binary.
