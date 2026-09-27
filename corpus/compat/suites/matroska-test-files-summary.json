@@ -1,0 +1,63 @@
+{
+ "suite": "matroska-test-files",
+ "title": "Matroska test suite (IETF CELLAR)",
+ "source": "https://github.com/ietf-wg-cellar/matroska-test-files/tree/e6965e5ca666322ed93e2748a10a4f132309e005",
+ "date": "2026-09-27",
+ "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
+ "tools": {
+  "ffmpeg": "ffmpeg version 9.0.2",
+  "vlc": "VLC 3.0.24",
+  "wasm": "libvlc-wasm 4.0.0-dev Otto Chriek in Chromium, 2 s per file",
+  "browsers": [
+   "chromium",
+   "webkit",
+   "firefox"
+  ],
+  "experiments": [
+   "each libvlc-wasm failure retried once with the media option :demux=avformat",
+   "raw elementary streams (h264, hevc, vc1, m4v, mpegvideo, cavsvideo, dirac) also retried with the matching :demux=<es module>"
+  ]
+ },
+ "overall": {
+  "files": 8,
+  "media": 8,
+  "union": 8,
+  "unplayable": 0,
+  "ffmpeg": 8,
+  "ffmpegMeasured": 8,
+  "vlc": 8,
+  "vlcMeasured": 8,
+  "wasm": 8,
+  "wasmMeasured": 8,
+  "chromium": 8,
+  "chromiumMeasured": 8,
+  "webkit": 0,
+  "webkitMeasured": 8,
+  "firefox": 4,
+  "firefoxMeasured": 8
+ },
+ "folders": {
+  "test_files": {
+   "files": 8,
+   "media": 8,
+   "union": 8,
+   "unplayable": 0,
+   "ffmpeg": 8,
+   "ffmpegMeasured": 8,
+   "vlc": 8,
+   "vlcMeasured": 8,
+   "wasm": 8,
+   "wasmMeasured": 8,
+   "chromium": 8,
+   "chromiumMeasured": 8,
+   "webkit": 0,
+   "webkitMeasured": 8,
+   "firefox": 4,
+   "firefoxMeasured": 8
+  }
+ },
+ "actionableByCause": {},
+ "actionable": [],
+ "unionNotRecognisedByFfprobe": 0,
+ "unplayableByAll": []
+}

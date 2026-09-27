@@ -1,0 +1,104 @@
+{
+ "suite": "wpt",
+ "title": "Web Platform Tests media files",
+ "source": "https://github.com/web-platform-tests/wpt/tree/f085a1efc1f58fbe263d384b1e335d656fe58e66",
+ "date": "2026-09-27",
+ "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
+ "tools": {
+  "ffmpeg": "ffmpeg version 9.0.2",
+  "vlc": "VLC 3.0.24",
+  "wasm": "libvlc-wasm 4.0.0-dev Otto Chriek in Chromium, 2 s per file",
+  "browsers": [
+   "chromium",
+   "webkit",
+   "firefox"
+  ],
+  "experiments": [
+   "each libvlc-wasm failure retried once with the media option :demux=avformat",
+   "raw elementary streams (h264, hevc, vc1, m4v, mpegvideo, cavsvideo, dirac) also retried with the matching :demux=<es module>"
+  ]
+ },
+ "overall": {
+  "files": 88,
+  "media": 87,
+  "union": 83,
+  "unplayable": 4,
+  "ffmpeg": 83,
+  "ffmpegMeasured": 83,
+  "vlc": 81,
+  "vlcMeasured": 83,
+  "wasm": 83,
+  "wasmMeasured": 83,
+  "chromium": 80,
+  "chromiumMeasured": 83,
+  "webkit": 81,
+  "webkitMeasured": 83,
+  "firefox": 79,
+  "firefoxMeasured": 83
+ },
+ "folders": {
+  "media-source": {
+   "files": 33,
+   "media": 32,
+   "union": 28,
+   "unplayable": 4,
+   "ffmpeg": 28,
+   "ffmpegMeasured": 28,
+   "vlc": 28,
+   "vlcMeasured": 28,
+   "wasm": 28,
+   "wasmMeasured": 28,
+   "chromium": 28,
+   "chromiumMeasured": 28,
+   "webkit": 28,
+   "webkitMeasured": 28,
+   "firefox": 28,
+   "firefoxMeasured": 28
+  },
+  "media": {
+   "files": 33,
+   "media": 33,
+   "union": 33,
+   "unplayable": 0,
+   "ffmpeg": 33,
+   "ffmpegMeasured": 33,
+   "vlc": 32,
+   "vlcMeasured": 33,
+   "wasm": 33,
+   "wasmMeasured": 33,
+   "chromium": 31,
+   "chromiumMeasured": 33,
+   "webkit": 31,
+   "webkitMeasured": 33,
+   "firefox": 30,
+   "firefoxMeasured": 33
+  },
+  "webcodecs": {
+   "files": 22,
+   "media": 22,
+   "union": 22,
+   "unplayable": 0,
+   "ffmpeg": 22,
+   "ffmpegMeasured": 22,
+   "vlc": 21,
+   "vlcMeasured": 22,
+   "wasm": 22,
+   "wasmMeasured": 22,
+   "chromium": 21,
+   "chromiumMeasured": 22,
+   "webkit": 22,
+   "webkitMeasured": 22,
+   "firefox": 21,
+   "firefoxMeasured": 22
+  }
+ },
+ "actionableByCause": {},
+ "actionable": [],
+ "unionNotRecognisedByFfprobe": 0,
+ "unplayableByAll": [
+  "suites/wpt/media-source/mp4/h264-starvation-init.mp4",
+  "suites/wpt/media-source/mp4/invalid-codec.mp4",
+  "suites/wpt/media-source/mp4/test-two-audiotracks-opus.mp4",
+  "suites/wpt/media-source/webm/invalid-codec.webm"
+ ]
+}

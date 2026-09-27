@@ -1,0 +1,68 @@
+{
+ "suite": "h264-conformance",
+ "title": "H.264/AVC conformance bitstreams (JVT)",
+ "source": "https://fate-suite.ffmpeg.org/h264-conformance/",
+ "derivedFrom": "fate",
+ "folders": {
+  "h264-conformance": {
+   "files": 197,
+   "media": 195,
+   "union": 192,
+   "unplayable": 3,
+   "ffmpeg": 192,
+   "ffmpegMeasured": 192,
+   "vlc": 116,
+   "vlcMeasured": 192,
+   "wasm": 192,
+   "wasmMeasured": 192,
+   "chromium": 0,
+   "chromiumMeasured": 192,
+   "webkit": 0,
+   "webkitMeasured": 192,
+   "firefox": 0,
+   "firefoxMeasured": 192
+  }
+ },
+ "date": "2026-09-27",
+ "denominator": "media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays",
+ "tools": {
+  "ffmpeg": "ffmpeg version 9.0.2",
+  "vlc": "VLC 3.0.24",
+  "wasm": "libvlc-wasm 4.0.0-dev Otto Chriek in Chromium, 2 s per file",
+  "browsers": [
+   "chromium",
+   "webkit",
+   "firefox"
+  ],
+  "experiments": [
+   "each libvlc-wasm failure retried once with the media option :demux=avformat",
+   "raw elementary streams (h264, hevc, vc1, m4v, mpegvideo, cavsvideo, dirac) also retried with the matching :demux=<es module>"
+  ]
+ },
+ "overall": {
+  "files": 197,
+  "media": 195,
+  "union": 192,
+  "unplayable": 3,
+  "ffmpeg": 192,
+  "ffmpegMeasured": 192,
+  "vlc": 116,
+  "vlcMeasured": 192,
+  "wasm": 192,
+  "wasmMeasured": 192,
+  "chromium": 0,
+  "chromiumMeasured": 192,
+  "webkit": 0,
+  "webkitMeasured": 192,
+  "firefox": 0,
+  "firefoxMeasured": 192
+ },
+ "actionableByCause": {},
+ "actionable": [],
+ "unionNotRecognisedByFfprobe": 0,
+ "unplayableByAll": [
+  "fate/h264-conformance/FM1_BT_B.h264",
+  "fate/h264-conformance/FM2_SVA_B.264",
+  "fate/h264-conformance/FM2_SVA_C.264"
+ ]
+}

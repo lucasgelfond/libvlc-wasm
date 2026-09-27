@@ -1,0 +1,21 @@
+{
+ "name": "matroska-test-files",
+ "title": "Matroska test suite (IETF CELLAR)",
+ "description": "The eight official Matroska test files: basic, non-default timecodes, header stripping, live (no cues), multiple audio/subtitle tracks, EBML void/junk, lacing variants, and an audio-less/damaged file.",
+ "homepage": "https://github.com/ietf-wg-cellar/matroska-test-files",
+ "source": "https://github.com/ietf-wg-cellar/matroska-test-files/tree/e6965e5ca666322ed93e2748a10a4f132309e005",
+ "license": "see the repo (test clips from Elephants Dream / Big Buck Bunny, CC-BY)",
+ "fetched": "GitHub tree listing at e6965e5ca666322ed93e2748a10a4f132309e005; raw.githubusercontent.com per file.",
+ "subset": "all 8 files (about 185 MB).",
+ "bytes": 185037405,
+ "files": [
+  {"path":"test_files/test1.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test1.mkv","bytes":23339337,"folder":"test_files"},
+  {"path":"test_files/test2.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test2.mkv","bytes":21142764,"folder":"test_files"},
+  {"path":"test_files/test3.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test3.mkv","bytes":21061472,"folder":"test_files"},
+  {"path":"test_files/test4.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test4.mkv","bytes":21313902,"folder":"test_files"},
+  {"path":"test_files/test5.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test5.mkv","bytes":31762747,"folder":"test_files"},
+  {"path":"test_files/test6.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test6.mkv","bytes":23343928,"folder":"test_files"},
+  {"path":"test_files/test7.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test7.mkv","bytes":21848518,"folder":"test_files"},
+  {"path":"test_files/test8.mkv","url":"https://raw.githubusercontent.com/ietf-wg-cellar/matroska-test-files/e6965e5ca666322ed93e2748a10a4f132309e005/test_files/test8.mkv","bytes":21224737,"folder":"test_files"}
+ ]
+}
