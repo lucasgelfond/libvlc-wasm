@@ -1,13 +1,14 @@
 // Compatibility matrix for a public media test suite: which of its files native
-// FFmpeg, native VLC 3, libvlc-wasm and the browsers' own <video>/<audio> can play.
-// The denominator is the union of files native FFmpeg or native VLC plays;
+// FFmpeg, native VLC 3, native VLC 4, libvlc-wasm and the browsers' own <video>/<audio>
+// can play. The denominator is the union of files native FFmpeg or native VLC 3 plays
+// (VLC 4 is measured over the same files but does not widen it);
 // libvlc-wasm failures are retried once with :demux=avformat (and raw ES files
 // with their ES demuxer).
 //
 //   node corpus/compat/suite.mjs --suite=libvpx     inventory + every tool + summary
 //   node corpus/compat/suite.mjs --suite=fate       the FFmpeg FATE suite + curated corpus (= fate.mjs)
 //   node corpus/compat/suite.mjs --index            only rewrite suites/index.json from the summaries on disk
-//   --tool=ffmpeg       one tool (inventory,ffmpeg,vlc,wasm,native,summary; comma list)
+//   --tool=ffmpeg       one tool (inventory,ffmpeg,vlc,vlc4,wasm,native,summary; comma list)
 //   --only=h264         limit measuring to one folder (comma list)
 //   --resume            skip files that already have a result for that tool
 //   --retry=timeout     with --resume, re-measure results whose status matches
@@ -28,6 +29,7 @@
 //   <name>-inventory.json   ffprobe: container, streams, duration (non-media files recorded as such)
 //   <name>-ffmpeg.json      native FFmpeg: video frames / audio samples decoded from the first 5 s
 //   <name>-vlc.json         native VLC 3: pictures reaching the stats vout / seconds written by afile
+//   <name>-vlc4.json        native VLC 4 (a macOS nightly in .research/VLC4.app): the same measurement
 //   <name>-wasm.json        libvlc-wasm in Chromium through tests/browser/harness.js
 //   <name>-native.json      browser-native <video>/<audio> (harness nativeCheck) per engine
 // and the summary step writes <name>-matrix.json (one row per union file),
@@ -51,6 +53,7 @@ const METHOD = {
   plays: 'the file has video and a picture came out, or it has audio and sound came out',
   ffmpeg: 'ffmpeg -i f -map 0:V:0? -map 0:a:0? -t 5 -af volumedetect -f null -: frames > 0 or samples > 0',
   vlc: 'VLC.app headless, --vout=stats --aout=afile, --run-time=4: a picture reached the vout or audio was written; retried with --codec=avcodec,none when a video file shows nothing',
+  vlc4: 'VLC 4 macOS nightly (videolan.org nightly-macos-arm64) headless, the same flags as VLC 3 (--no-skip-frames is gone in VLC 4, --no-auto-preparse added); retried with --codec=avcodec,none --dec-dev=none when a video file shows nothing. Measured over the same files but not part of the denominator',
   wasm: 'tests/browser/harness.js playCase in muted headless Chromium: a frame drawn with content, or audible output (same criteria as tests/verify-corpus.mjs); failures retried with :demux=avformat, raw elementary streams with their ES demuxer; retries are reported, not counted',
   browsers: "the harness nativeCheck: the browser's own <video>/<audio> reaches loadeddata within 4 s (muted)",
   denominator: 'N = media files native FFmpeg or native VLC 3 plays; files neither plays are listed as unplayableByAll and not counted',
@@ -63,6 +66,8 @@ const fate = `${root}/corpus/fate`;
 const suitesDir = `${root}/corpus/suites`;
 
 const VLC = '/Applications/VLC.app/Contents/MacOS/VLC';
+// VLC 4 is not released: a nightly .app unpacked into .research/ (gitignored). VLC4=<path> overrides.
+const VLC4 = process.env.VLC4 ?? `${root}/.research/VLC4.app/Contents/MacOS/VLC`;
 const FFMPEG = 'ffmpeg';
 const FFPROBE = 'ffprobe';
 
@@ -74,7 +79,7 @@ const def = isFate ? null : JSON.parse(readFileSync(`${suitesDir}/${SUITE}.json`
 const derived = def?.derivedFrom ?? null;
 const scratch = `${root}/.scratch/${SUITE}`;
 mkdirSync(scratch, { recursive: true });
-const ALL = ['inventory', 'ffmpeg', 'vlc', 'wasm', 'native', 'summary'];
+const ALL = ['inventory', 'ffmpeg', 'vlc', 'vlc4', 'wasm', 'native', 'summary'];
 // A derived suite only re-summarises another suite's measurements.
 const defTools = derived ? ['summary'] : def?.tools ? ['inventory', ...def.tools, 'summary'] : ALL;
 const tools = new Set(derived ? ['summary'] : args.tool ? ['inventory', ...String(args.tool).split(','), 'summary'] : defTools);
@@ -220,7 +225,7 @@ if (tools.has('inventory')) {
   for (const k of Object.keys(inventory)) if (!allSet.has(k)) delete inventory[k];
   save('inventory', inventory);
   if (!only) {
-    for (const name of ['ffmpeg', 'vlc', 'wasm', 'native']) {
+    for (const name of ['ffmpeg', 'vlc', 'vlc4', 'wasm', 'native']) {
       const c = load(name);
       const stale = Object.keys(c).filter((k) => k !== '_tool' && (!inventory[k] || inventory[k].skip));
       if (stale.length) { for (const k of stale) delete c[k]; save(name, c); }
@@ -309,14 +314,21 @@ function wavSeconds(path) {
   return data / (rate * channels * (bits / 8) || 1);
 }
 let wavSeq = 0;
-async function vlcRun(rel, extra = []) {
-  const wav = `${scratch}/vlc-${process.pid}-${wavSeq++}.wav`;
+// The two native VLCs differ only in a few flags. VLC 4 dropped --skip-frames
+// and --avcodec-hw (hardware decoding is --dec-dev), and starts an out-of-process
+// preparser (vlc-preparser) unless told not to, which a timeout kill would orphan.
+const VLCS = {
+  vlc: { bin: VLC, flags: ['--no-skip-frames'], software: ['--codec=avcodec,none', '--avcodec-hw=none'] },
+  vlc4: { bin: VLC4, flags: ['--no-auto-preparse'], software: ['--codec=avcodec,none', '--dec-dev=none'] },
+};
+async function vlcRun(rel, extra = [], tool = 'vlc') {
+  const wav = `${scratch}/${tool}-${process.pid}-${wavSeq++}.wav`;
   rmSync(wav, { force: true });
   const argv = ['-I', 'dummy', '-vv', '--no-media-library', '--no-video-title-show', '--no-osd', '--no-metadata-network-access',
-    '--no-sub-autodetect-file', '--no-loop', '--no-repeat', '--no-drop-late-frames', '--no-skip-frames', '--no-playlist-autostart=0',
+    '--no-sub-autodetect-file', '--no-loop', '--no-repeat', '--no-drop-late-frames', ...VLCS[tool].flags,
     '--vout=stats', '--dummy-chroma=I420', '--aout=afile', `--audiofile-file=${wav}`, '--run-time=4', '--image-duration=1',
-    '--play-and-exit', ...extra, abs(rel)].filter((a) => a !== '--no-playlist-autostart=0');
-  const { out, timedOut, signal } = await run(VLC, argv, { timeoutMs: 30000, maxBytes: 16 << 20 });
+    '--play-and-exit', ...extra, abs(rel)];
+  const { out, timedOut, signal } = await run(VLCS[tool].bin, argv, { timeoutMs: 30000, maxBytes: 16 << 20 });
   const a = wavSeconds(wav);
   rmSync(wav, { force: true });
   const errs = out.split('\n').filter((l) => / error: /.test(l) && !/cannot (load|open) module|keystore|lua|macosx window/.test(l)).map((l) => l.replace(/^\[[0-9a-f]+\] /, ''));
@@ -332,25 +344,27 @@ async function vlcRun(rel, extra = []) {
   if (signal && !timedOut) r.crash = signal;
   return r;
 }
-if (tools.has('vlc')) {
-  const cache = load('vlc');
+for (const tool of ['vlc', 'vlc4']) if (tools.has(tool)) {
+  if (!existsSync(VLCS[tool].bin)) { console.log(`${tool}: ${VLCS[tool].bin} not found, skipped`); continue; }
+  const cache = load(tool);
   const todo = pending(cache);
-  console.log(`vlc: ${todo.length} files`);
-  const flush = saver('vlc', cache);
-  const version = /VLC (?:media player|version) ([\d.]+)/.exec((await run(VLC, ['--version'])).out)?.[1] ?? 'unknown';
+  console.log(`${tool}: ${todo.length} files`);
+  const flush = saver(tool, cache);
+  // "VLC version 3.0.24 Vetinari (3.0.24-rc1-0-g6de05adcba)" / "VLC version 4.0.0-dev Otto Chriek (4.0.0-dev-39188-gb11917943e)"
+  const vm = /VLC (?:media player|version) ([\d.]+(?:-dev)?)[^(\n]*(?:\(([^)]+)\))?/.exec((await run(VLCS[tool].bin, ['--version'])).out);
   // VLC paces playback in real time, so run several at once.
   await pool(todo, JOBS, async (rel) => {
-    const r = await vlcRun(rel);
+    const r = await vlcRun(rel, [], tool);
     if (kinds(rel).video && r.v === 0 && !r.to) {
-      const sw = await vlcRun(rel, ['--codec=avcodec,none', '--avcodec-hw=none']);
+      const sw = await vlcRun(rel, VLCS[tool].software, tool);
       r.sw = sw.v;
     }
-    r.status = status(rel, 'vlc', r);
+    r.status = status(rel, tool, r);
     cache[rel] = r;
     flush();
   });
-  cache._tool = { version };
-  save('vlc', cache);
+  cache._tool = tool === 'vlc4' ? { version: vm?.[1] ?? 'unknown', build: vm?.[2] ?? null } : { version: vm?.[1] ?? 'unknown' };
+  save(tool, cache);
 }
 
 // ---------------------------------------------------------------------------
@@ -545,7 +559,7 @@ function status(rel, tool, m) {
   let video = false, audio = false;
   if (tool === 'ffmpeg') {
     video = m.v > 0; audio = m.a > 0;
-  } else if (tool === 'vlc') {
+  } else if (tool === 'vlc' || tool === 'vlc4') {
     video = m.v > 0; audio = m.a > 0;
   } else if (tool === 'wasm') {
     const [fd, df, mv] = m.v;
@@ -571,19 +585,20 @@ function status(rel, tool, m) {
 // union file, for the site) and <suite>-summary.json.
 if (tools.has('summary')) {
   load.cacheFfmpeg = null;
-  const ff = load('ffmpeg'), vl = load('vlc'), wa = load('wasm'), na = load('native');
+  const ff = load('ffmpeg'), vl = load('vlc'), v4 = load('vlc4'), wa = load('wasm'), na = load('native');
   // Recompute statuses so a criteria change needs no re-measurement.
-  for (const [cache, tool] of [[ff, 'ffmpeg'], [vl, 'vlc'], [wa, 'wasm']]) {
+  for (const [cache, tool] of [[ff, 'ffmpeg'], [vl, 'vlc'], [v4, 'vlc4'], [wa, 'wasm']]) {
     for (const [rel, m] of Object.entries(cache)) if (rel !== '_tool' && inventory[rel] && m.v !== undefined) m.status = status(rel, tool, m);
   }
   for (const [rel, m] of Object.entries(wa)) {
     if (rel === '_tool') continue;
     for (const x of [m.alt, m.es]) if (x?.v !== undefined) x.status = status(rel, 'wasm', x);
   }
-  const COLS = ['ffmpeg', 'vlc', 'wasm', 'chromium', 'webkit', 'firefox'];
+  const COLS = ['ffmpeg', 'vlc', 'vlc4', 'wasm', 'chromium', 'webkit', 'firefox'];
   const plays = (rel, col) => {
     if (col === 'ffmpeg') return ff[rel] ? ff[rel].status === 'plays' : null;
     if (col === 'vlc') return vl[rel] ? vl[rel].status === 'plays' : null;
+    if (col === 'vlc4') return v4[rel] ? v4[rel].status === 'plays' : null;
     if (col === 'wasm') return wa[rel] ? wa[rel].status === 'plays' : null;
     const n = na[rel]?.[col];
     return n == null ? null : n.startsWith('ok');
@@ -592,6 +607,9 @@ if (tools.has('summary')) {
   const union = mediaFiles.filter(inUnion);
   const unionNotProbed = union.filter((rel) => !isMedia(rel)).length;
   const unplayable = mediaFiles.filter((rel) => isMedia(rel) && plays(rel, 'ffmpeg') === false && plays(rel, 'vlc') === false);
+  // VLC 4 does not widen the denominator (it would move every other column's
+  // totals); files only it plays are listed on their own.
+  const vlc4Only = mediaFiles.filter((rel) => !inUnion(rel) && plays(rel, 'vlc4')).map((rel) => ({ path: rel, folder: folderOf(rel), wasm: plays(rel, 'wasm') }));
 
   const codec = (rel, type) => (inventory[rel].s ?? []).find((x) => x.startsWith(`${type}:`) && !x.endsWith('(cover)'))?.slice(type.length + 1) ?? null;
   const matrix = union.map((rel) => {
@@ -647,10 +665,11 @@ if (tools.has('summary')) {
       }),
     method: METHOD,
     date: new Date().toISOString().slice(0, 10),
-    denominator: isFate ? 'media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays; fate/ = FFmpeg FATE suite, media/ = curated corpus'
-      : 'media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays',
+    denominator: isFate ? 'media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays; fate/ = FFmpeg FATE suite, media/ = curated corpus; native VLC 4 is measured over the same files but does not widen it'
+      : 'media files (ffprobe finds video or audio) that native FFmpeg or native VLC 3 plays; native VLC 4 is measured over the same files but does not widen it',
     tools: {
       ffmpeg: ff._tool?.version ?? null, vlc: vl._tool?.version ? `VLC ${vl._tool.version}` : null,
+      vlc4: v4._tool?.version ? `VLC ${v4._tool.version}${v4._tool.build ? ` (${v4._tool.build})` : ''}` : null,
       wasm: wa._tool ? `libvlc-wasm ${wa._tool.version ?? ''} in Chromium, ${wa._tool.seconds} s per file` : null, browsers: ENGINES,
       experiments: [`each libvlc-wasm failure retried once with the media option ${ALT_OPTION}`,
         `raw elementary streams (${Object.keys(ES_DEMUX).join(', ')}) also retried with the matching :demux=<es module>`],
@@ -660,12 +679,15 @@ if (tools.has('summary')) {
     actionable: act,
     unionNotRecognisedByFfprobe: unionNotProbed,
     unplayableByAll: unplayable,
+    // Parity with VLC 4: union files native VLC 4 plays and libvlc-wasm does not.
+    vlc4NotWasmByCause: Object.fromEntries(Object.entries(groupBy(act.filter((a) => a.vlc4), (a) => a.cause)).map(([k, v]) => [k, v.length]).sort((a, b) => b[1] - a[1])),
+    vlc4Only,
   };
   writeFileSync(outPath('summary'), `${JSON.stringify(summary, null, 1)}\n`);
   writeIndex();
   writeIndex();
   const o = overall;
-  console.log(`${SUITE}: union ${o.union} (of ${o.media} media files): ffmpeg ${o.ffmpeg}, vlc ${o.vlc}, wasm ${o.wasm}/${o.wasmMeasured}, chromium ${o.chromium}, webkit ${o.webkit}, firefox ${o.firefox}; actionable ${act.length}; unplayable by all ${unplayable.length}`);
+  console.log(`${SUITE}: union ${o.union} (of ${o.media} media files): ffmpeg ${o.ffmpeg}, vlc ${o.vlc}, vlc4 ${o.vlc4}/${o.vlc4Measured}, wasm ${o.wasm}/${o.wasmMeasured}, chromium ${o.chromium}, webkit ${o.webkit}, firefox ${o.firefox}; actionable ${act.length}; unplayable by all ${unplayable.length}`);
 }
 
 function groupBy(list, key) {
@@ -712,6 +734,7 @@ function writeIndex() {
     overall: s?.overall ?? null,
     wasmFails: s?.actionable?.length ?? null,
     fixedByAvformat: s?.actionable?.filter((a) => a.wasmAvformat).length ?? null,
+    vlc4NotWasm: s?.actionable && s.overall?.vlc4Measured ? s.actionable.filter((a) => a.vlc4).length : null,
     topCauses: s ? Object.entries(s.actionableByCause).slice(0, 5) : [],
     ...extra,
   });

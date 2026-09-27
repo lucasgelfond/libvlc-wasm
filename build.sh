@@ -11,6 +11,10 @@ cd "$(dirname "$0")"
 # The VLC master commit this SDK is built and tested against. Override with
 # VLC_COMMIT=<sha> to try a newer one (CI does, from its workflow inputs).
 VLC_COMMIT=${VLC_COMMIT:-b11917943e3a32578d65edd54f3d12023da29d46}   # VLC master, 2026-09-26
+# The native VLC 4 the compatibility matrix compares against (corpus/compat, column
+# vlc4) is the macOS arm64 nightly 20260927-0414, 4.0.0-dev-39188-gb11917943e:
+# built from this same commit, so differences come from build/patches, the modules
+# and contribs each build enables, and the platform (wasm vs macOS).
 IMAGE=libvlc-wasm-build:latest
 # The build tree lives in a Docker volume by default (fast on macOS); CI points
 # CACHE_DIR at a host directory it can save between runs.

@@ -1,9 +1,10 @@
 // Per-file compatibility matrix for the test corpus: does each tool decode
-// each sample? Measures native VLC.app, native FFmpeg and ffmpeg.wasm, and
+// each sample? Measures native VLC.app (VLC 3), a native VLC 4 nightly, native
+// FFmpeg and ffmpeg.wasm, and
 // copies through the libvlc-wasm, browser and vlc.js results already on disk.
 //
 //   node corpus/compat/build.mjs                    measure everything, write compat.json
-//   node corpus/compat/build.mjs --measure=vlc      re-measure one tool (vlc,ffmpeg,wasm; comma list)
+//   node corpus/compat/build.mjs --measure=vlc      re-measure one tool (vlc,vlc4,ffmpeg,wasm; comma list)
 //   node corpus/compat/build.mjs --measure=none     only re-merge measurements.json + inputs
 //   node corpus/compat/build.mjs --ids=a,b          limit measuring to these sample ids
 //
@@ -23,16 +24,19 @@ const scratch = `${root}/.scratch/compat`;
 mkdirSync(scratch, { recursive: true });
 
 const VLC = '/Applications/VLC.app/Contents/MacOS/VLC';
+// VLC 4 is not released: a nightly .app unpacked into .research/ (gitignored). VLC4=<path> overrides.
+const VLC4 = process.env.VLC4 ?? `${root}/.research/VLC4.app/Contents/MacOS/VLC`;
 const FFMPEG = '/opt/homebrew/bin/ffmpeg';
 const SECONDS = 10; // every tool decodes at most the first 10 s
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
-const measure = new Set(String(args.measure ?? 'vlc,ffmpeg,wasm').split(',').filter((x) => x && x !== 'none'));
+const measure = new Set(String(args.measure ?? 'vlc,vlc4,ffmpeg,wasm').split(',').filter((x) => x && x !== 'none'));
 const onlyIds = args.ids ? new Set(String(args.ids).split(',')) : null;
 
 const manifest = JSON.parse(readFileSync(`${root}/corpus/manifest.json`, 'utf8'));
 const measPath = `${here}/measurements.json`;
 const meas = existsSync(measPath) ? JSON.parse(readFileSync(measPath, 'utf8')) : { tools: {}, vlc: {}, ffmpeg: {}, wasm: {} };
+meas.vlc4 ??= {};
 const saveMeas = () => writeFileSync(measPath, `${JSON.stringify(meas, null, 1)}\n`);
 
 // What to decode for each sample: the file itself, except the VobSub pair,
@@ -136,20 +140,27 @@ function wavInfo(path) {
   }
   return { bytes: data, seconds: data / (rate * channels * (bits / 8) || 1) };
 }
+// The two native VLCs differ only in a few flags: VLC 4 dropped --skip-frames and
+// --avcodec-hw (hardware decoding is --dec-dev), and starts an out-of-process
+// preparser unless told not to (a timeout kill would orphan it).
+const VLCS = {
+  vlc: { bin: VLC, flags: ['--no-skip-frames'], software: ['--codec=avcodec,none', '--avcodec-hw=none'] },
+  vlc4: { bin: VLC4, flags: ['--no-auto-preparse'], software: ['--codec=avcodec,none', '--dec-dev=none'] },
+};
 // The statistics vout needs a fixed chroma, or VLC fails to build a converter
 // for palettized (Smacker, FLIC) and VideoToolbox (CVPX) pictures.
-async function vlcRun(s, j, extra = []) {
-  const wav = `${scratch}/vlc-${s.id}.wav`;
+async function vlcRun(s, j, extra = [], tool = 'vlc') {
+  const wav = `${scratch}/${tool}-${s.id}.wav`;
   rmSync(wav, { force: true });
   const argv = ['-I', 'dummy', '-vv', '--no-media-library', '--no-video-title-show', '--no-osd', '--no-metadata-network-access',
-    '--no-sub-autodetect-file', '--no-loop', '--no-repeat', '--no-drop-late-frames', '--no-skip-frames',
+    '--no-sub-autodetect-file', '--no-loop', '--no-repeat', '--no-drop-late-frames', ...VLCS[tool].flags,
     '--vout=stats', '--dummy-chroma=I420', '--aout=afile', `--audiofile-file=${wav}`, `--run-time=${SECONDS}`, '--play-and-exit', ...extra];
   // test.options are VLC media options (":demux=avformat"): the same ones as
   // command-line options for VLC.app.
   for (const o of s.test?.options ?? []) argv.push(o.replace(/^:/, '--'));
   if (j.subs) argv.push(j.overVideo, `--sub-file=${j.file}`);
   else argv.push(j.file);
-  const { out, timedOut } = await run(VLC, argv, { timeoutMs: 45000 });
+  const { out, timedOut } = await run(VLCS[tool].bin, argv, { timeoutMs: 45000 });
   const w = wavInfo(wav);
   let peakDb = null;
   if (w.bytes > 0) {
@@ -173,17 +184,17 @@ async function vlcRun(s, j, extra = []) {
   }
   return r;
 }
-async function vlcOne(s) {
+async function vlcOne(s, tool = 'vlc') {
   const j = job(s);
-  const r = await vlcRun(s, j);
+  const r = await vlcRun(s, j, [], tool);
   // VLC.app prefers VideoToolbox for H.264/HEVC. When the default path shows
   // nothing, say whether VLC's software decoder would have.
   if (j.hasVideo && !j.subs && r.frames === 0) {
-    const sw = await vlcRun(s, j, ['--codec=avcodec,none', '--avcodec-hw=none']);
+    const sw = await vlcRun(s, j, VLCS[tool].software, tool);
     r.software = { frames: sw.frames, decoders: sw.decoders };
   }
-  meas.vlc[s.id] = r;
-  console.log(`vlc     ${s.id.padEnd(44)} frames=${r.frames}${r.software ? ` (sw ${r.software.frames})` : ''} audio=${r.audioSeconds}s dec=${r.decoders.join(',')}${r.noDecoder.length ? ` NO:${r.noDecoder}` : ''}`);
+  meas[tool][s.id] = r;
+  console.log(`${tool.padEnd(7)} ${s.id.padEnd(44)} frames=${r.frames}${r.software ? ` (sw ${r.software.frames})` : ''} audio=${r.audioSeconds}s dec=${r.decoders.join(',')}${r.noDecoder.length ? ` NO:${r.noDecoder}` : ''}`);
 }
 if (measure.has('vlc') || !meas.tools.nativeVlc || meas.tools.nativeVlc === 'unknown') {
   meas.tools.nativeVlc = /VLC (?:media player|version) ([\d.]+)/.exec((await run(VLC, ['--version'])).out)?.[1] ?? 'unknown';
@@ -193,6 +204,13 @@ if (measure.has('vlc')) {
   await pool(todo, 4, vlcOne);
   saveMeas();
 }
+// Native VLC 4: the same measurement with the nightly (see VLCS for the flags that differ).
+if (measure.has('vlc4') && existsSync(VLC4)) {
+  const vm = /VLC version ([\d.]+(?:-dev)?)[^(\n]*(?:\(([^)]+)\))?/.exec((await run(VLC4, ['--version'])).out);
+  meas.tools.nativeVlc4 = vm ? `${vm[1]}${vm[2] ? ` (${vm[2]})` : ''}` : 'unknown';
+  await pool(todo, 4, (s) => vlcOne(s, 'vlc4'));
+  saveMeas();
+} else if (measure.has('vlc4')) console.log(`vlc4: ${VLC4} not found, skipped`);
 
 // ---------------------------------------------------------------------------
 // ffmpeg.wasm 0.12 (single-threaded core, UMD build through blob URLs) in
@@ -321,6 +339,7 @@ function vlcVerdict(m, j, s) {
 
 const tools = {
   nativeVlc: meas.tools.nativeVlc ?? '3.0.24',
+  nativeVlc4: meas.tools.nativeVlc4 ?? null,
   ffmpeg: meas.tools.ffmpeg ?? null,
   ffmpegWasm: meas.tools.ffmpegWasm ?? null,
   libvlcWasm: `corpus/results/results.json (${results.date})`,
@@ -334,6 +353,7 @@ const samples = manifest.samples.map((s) => {
     id: s.id, name: s.name, category: s.category, container: s.container, video: s.video, audio: s.audio,
     file: s.file, url: s.download ?? s.url, bytes: existsSync(j.file) ? statSync(j.file).size : s.bytes, whyBrowserCant: s.whyBrowserCant,
     nativeVlc: vlcVerdict(meas.vlc[s.id], j, s),
+    nativeVlc4: vlcVerdict(meas.vlc4[s.id], j, s),
     ffmpeg: ffVerdict(meas.ffmpeg[s.id], j),
     ffmpegWasm: ffVerdict(meas.wasm[s.id], j),
     libvlcWasm: lv ? {
