@@ -107,8 +107,13 @@ for (const s of samples) {
 await browser.close();
 await server.close();
 
-writeFileSync(`${outDir}/results.json`, JSON.stringify({ date: new Date().toISOString(), nativeEngines, results }, null, 1));
-writeFileSync(`${outDir}/RESULTS.md`, report(results));
+// A partial run (--only) must not replace the full report.
+if (only) {
+  writeFileSync(`${outDir}/partial-${only}.json`, JSON.stringify({ date: new Date().toISOString(), nativeEngines, results }, null, 1));
+} else {
+  writeFileSync(`${outDir}/results.json`, JSON.stringify({ date: new Date().toISOString(), nativeEngines, results }, null, 1));
+  writeFileSync(`${outDir}/RESULTS.md`, report(results));
+}
 const pass = results.filter((r) => r.vlc.passed).length;
 const nativeNo = results.filter((r) => r.native && !r.native.chromium?.ok).length;
 console.log(`\n${pass}/${results.length} play in libvlc-wasm; ${nativeNo} of them Chromium cannot play natively`);

@@ -16,13 +16,29 @@ OffscreenCanvas GL output inside a pthread, and exposes a thin `MediaPlayer`/`Me
 browser's own `<video>` element (plus a butterchurn visualiser). It contains no wasm and no VLC:
 it plays exactly what the browser plays natively.
 
-<!-- MEASURED-VLCJS -->
+### Measured on the same corpus
+
+`node bench/compare/vlcjs.mjs` drives addyosmani/vlc.js's own UI in headless Chrome (muted),
+feeds each video sample through its file input and checks its canvas for a real picture.
+
+| | libvlc-wasm | addyosmani/vlc.js |
+|---|---|---|
+| Video samples showing a picture (of 45) | **40** | 37 |
+| Plays that the other does not | Smacker, Autodesk FLIC ×2 | none |
+| Plays in neither | MS Screen 2, Vivo, PSX STR, 1-frame 4K HEVC DV, DVB fragment (native VLC fails the first four too) | same five |
+| Time to first picture (median) | ~100 ms | ~400 ms (screenshot polling, ±250 ms) |
+
+So the vendored VideoLabs binary *does* play legacy formats well — it is real libvlc. What it
+lacks is everything around it: it cannot be rebuilt or updated (VLC master has moved two years
+since), has no libass (so no styled ASS/SSA), no probe/thumbnail API, no documented JS API,
+and its A/V and color handling come from 2022-era patches that were never upstreamed.
+
 
 | | libvlc-wasm | addyosmani/vlc.js | addyosmani/webvlc |
 |---|---|---|---|
 | Engine | VLC 4 master, rebuilt from source (pinned) | VLC 4.0.0-dev binary from 2024 | the browser's `<video>` |
 | Reproducible build | yes (Docker, CI, patches in repo) | no | n/a |
-| Formats beyond the browser | see corpus: 62/75 obscure samples | see measurement above | none |
+| Formats beyond the browser | 61/75 corpus samples; 40/45 video samples | 37/45 video samples (measured above) | none |
 | Hardware decoding | WebCodecs H.264/HEVC/VP9/AV1, verified first frame, lossless fallback | `--codec=webcodec` forced; no software fallback in its configuration | browser |
 | A/V sync | VLC clock driven by the worklet's real play position | VideoLabs' emworklet aout | browser |
 | Subtitles | libass + bundled font, SRT/VTT/VobSub/DVB/608, external files | no libass in the binary | WebVTT via `<track>` |

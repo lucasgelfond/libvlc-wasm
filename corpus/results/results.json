@@ -1,9 +1,3686 @@
 {
- "date": "2026-09-27T06:25:43.429Z",
+ "date": "2026-09-27T06:37:31.283Z",
  "nativeEngines": [
-  "chromium"
+  "chromium",
+  "webkit",
+  "firefox"
  ],
  "results": [
+  {
+   "id": "realvideo-3-cook",
+   "name": "RealVideo 3 + Cook",
+   "category": "realmedia",
+   "file": "realmedia/realvideo-3-cook.rm",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 92,
+     "distinctFrames": 29,
+     "maxVariance": 5984
+    },
+    "audio": {
+     "peak": 0.5027,
+     "framesPlayed": 164904,
+     "audibleFraction": 0.89,
+     "analyserRms": 0.1605,
+     "peakDb": -6,
+     "referencePeakDb": -6
+    },
+    "timings": {
+     "openToPlayingMs": 103.08499997854233,
+     "openToFirstFrameMs": 818.6150000095367,
+     "playedMs": 4343.900000035763
+    },
+    "stats": {
+     "lostPictures": 19,
+     "latePictures": 1,
+     "audioDropped": 0,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": "shots/realvideo-3-cook.jpg",
+   "wallMs": 4552
+  },
+  {
+   "id": "realvideo-g2-svt",
+   "name": "RealVideo G2 (SVT)",
+   "category": "realmedia",
+   "file": "realmedia/realvideo-g2-svt.rm",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "RV20",
+      "codecName": "RealVideo G2 (2.0)",
+      "width": 320,
+      "height": 240,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 57,
+     "distinctFrames": 39,
+     "maxVariance": 10609
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.28500002622604,
+     "openToFirstFrameMs": 102.28500002622604,
+     "playedMs": 4445.539999961853
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 48,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/realvideo-g2-svt.jpg",
+   "wallMs": 4625
+  },
+  {
+   "id": "realvideo-4-cook-rmvb",
+   "name": "RealVideo 4 + Cook (rmvb)",
+   "category": "realmedia",
+   "file": "realmedia/realvideo-4-cook-rmvb.rmvb",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "RV40",
+      "codecName": "RealVideo 9/10 (4.0)",
+      "width": 576,
+      "height": 320,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "cook",
+      "codecName": "Cook Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 99,
+     "distinctFrames": 19,
+     "maxVariance": 686
+    },
+    "audio": {
+     "peak": 0.0501,
+     "framesPlayed": 174720,
+     "audibleFraction": 0.44,
+     "analyserRms": 0.0284,
+     "peakDb": -26,
+     "referencePeakDb": -25.2
+    },
+    "timings": {
+     "openToPlayingMs": 100.87000000476837,
+     "openToFirstFrameMs": 100.87000000476837,
+     "playedMs": 4458.9800000190735
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/realvideo-4-cook-rmvb.jpg",
+   "wallMs": 4655
+  },
+  {
+   "id": "realaudio-cook",
+   "name": "RealAudio Cook",
+   "category": "realmedia",
+   "file": "realmedia/realaudio-cook.rm",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "cook",
+      "codecName": "Cook Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.6837,
+     "framesPlayed": 197120,
+     "audibleFraction": 0.98,
+     "analyserRms": 0.207,
+     "peakDb": -3.3,
+     "referencePeakDb": -2.9
+    },
+    "timings": {
+     "openToPlayingMs": 102.16999995708466,
+     "openToFirstFrameMs": null,
+     "playedMs": 4467.25
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 32243,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4582
+  },
+  {
+   "id": "realaudio-sipr-8-5k",
+   "name": "RealAudio SIPR 8.5k",
+   "category": "realmedia",
+   "file": "realmedia/realaudio-sipr-8-5k.rm",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "RV20",
+      "codecName": "RealVideo G2 (2.0)",
+      "width": 192,
+      "height": 144,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "sipr",
+      "codecName": "RealAudio Sipr",
+      "rate": 8000,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 51,
+     "distinctFrames": 24,
+     "maxVariance": 5520
+    },
+    "audio": {
+     "peak": 0.6178,
+     "framesPlayed": 189056,
+     "audibleFraction": 0.88,
+     "analyserRms": 0.1393,
+     "peakDb": -4.2,
+     "referencePeakDb": -4.2
+    },
+    "timings": {
+     "openToPlayingMs": 103.63999998569489,
+     "openToFirstFrameMs": 711.5799999833107,
+     "playedMs": 4443.40499997139
+    },
+    "stats": {
+     "lostPictures": 4,
+     "latePictures": 1,
+     "audioDropped": 32572,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/realaudio-sipr-8-5k.jpg",
+   "wallMs": 5397
+  },
+  {
+   "id": "realaudio-28-8",
+   "name": "RealAudio 28.8",
+   "category": "realmedia",
+   "file": "realmedia/realaudio-28-8.ra",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.8504,
+     "framesPlayed": 34398,
+     "audibleFraction": 1,
+     "analyserRms": 0.1801,
+     "peakDb": -1.4,
+     "referencePeakDb": -1.3
+    },
+    "timings": {
+     "openToPlayingMs": 102.33500003814697,
+     "openToFirstFrameMs": null,
+     "playedMs": 1315.1749999523163
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 32136,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": null,
+   "wallMs": 1448
+  },
+  {
+   "id": "realvideo-2-in-matroska",
+   "name": "RealVideo 2 in Matroska",
+   "category": "realmedia",
+   "file": "realmedia/realvideo-2-in-matroska.mkv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006)"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "RV20",
+      "codecName": "RealVideo G2 (2.0)",
+      "width": 320,
+      "height": 240,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 92,
+     "distinctFrames": 8,
+     "maxVariance": 9160
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.53999996185303,
+     "openToFirstFrameMs": 102.53999996185303,
+     "playedMs": 4470.385000050068
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/realvideo-2-in-matroska.jpg",
+   "wallMs": 4643
+  },
+  {
+   "id": "realvideo-2-sipr-a-v-sync-bug",
+   "name": "RealVideo 2 + SIPR (A/V sync bug)",
+   "category": "realmedia",
+   "file": "realmedia/realvideo-2-sipr-a-v-sync-bug.rm",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "RV20",
+      "codecName": "RealVideo G2 (2.0)",
+      "width": 208,
+      "height": 128,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "sipr",
+      "codecName": "RealAudio Sipr",
+      "rate": 8000,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 51,
+     "distinctFrames": 31,
+     "maxVariance": 4227
+    },
+    "audio": {
+     "peak": 0.8591,
+     "framesPlayed": 191104,
+     "audibleFraction": 0.88,
+     "analyserRms": 0.2279,
+     "peakDb": -1.3,
+     "referencePeakDb": -1.4
+    },
+    "timings": {
+     "openToPlayingMs": 103.53999996185303,
+     "openToFirstFrameMs": 710.0699999928474,
+     "playedMs": 4438.925000011921
+    },
+    "stats": {
+     "lostPictures": 6,
+     "latePictures": 3,
+     "audioDropped": 33369,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/realvideo-2-sipr-a-v-sync-bug.jpg",
+   "wallMs": 5466
+  },
+  {
+   "id": "wmv8-x8-intra",
+   "name": "WMV8 X8 intra",
+   "category": "windows-media",
+   "file": "windows-media/wmv8-x8-intra.wmv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "WMV2",
+      "codecName": "Windows Media Video 8",
+      "width": 320,
+      "height": 240,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "WMA2",
+      "codecName": "Windows Media Audio 2",
+      "rate": 16000,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 61,
+     "distinctFrames": 19,
+     "maxVariance": 2568
+    },
+    "audio": {
+     "peak": 0.1394,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.6,
+     "analyserRms": 0.0379,
+     "peakDb": -17.1,
+     "referencePeakDb": -17.8
+    },
+    "timings": {
+     "openToPlayingMs": 102.97499996423721,
+     "openToFirstFrameMs": 102.97499996423721,
+     "playedMs": 4462.900000035763
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 34810,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/wmv8-x8-intra.jpg",
+   "wallMs": 4981
+  },
+  {
+   "id": "wmv7",
+   "name": "WMV7",
+   "category": "windows-media",
+   "file": "windows-media/wmv7.wmv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "WMV1",
+      "codecName": "Windows Media Video 7",
+      "width": 320,
+      "height": 240,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "WMA2",
+      "codecName": "Windows Media Audio 2",
+      "rate": 16000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 66,
+     "distinctFrames": 35,
+     "maxVariance": 6787
+    },
+    "audio": {
+     "peak": 0.4011,
+     "framesPlayed": 197120,
+     "audibleFraction": 0.91,
+     "analyserRms": 0.0665,
+     "peakDb": -7.9,
+     "referencePeakDb": -8.1
+    },
+    "timings": {
+     "openToPlayingMs": 103.26499998569489,
+     "openToFirstFrameMs": 103.26499998569489,
+     "playedMs": 4457.209999978542
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/wmv7.jpg",
+   "wallMs": 4733
+  },
+  {
+   "id": "wmv9-vc-1-simple-main-raw-rcv",
+   "name": "WMV9 / VC-1 simple/main raw (.rcv)",
+   "category": "windows-media",
+   "file": "windows-media/wmv9-vc-1-simple-main-raw-rcv.rcv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 26,
+     "distinctFrames": 11,
+     "maxVariance": 1339
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.80500000715256,
+     "openToFirstFrameMs": 102.80500000715256,
+     "playedMs": 1437.714999973774
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/wmv9-vc-1-simple-main-raw-rcv.jpg",
+   "wallMs": 1574
+  },
+  {
+   "id": "ms-mpeg4-v3-divx-in-asf",
+   "name": "MS-MPEG4 v3 (DivX ;-) ) in ASF",
+   "category": "windows-media",
+   "file": "windows-media/ms-mpeg4-v3-divx-in-asf.asf",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 24,
+     "distinctFrames": 11,
+     "maxVariance": 7489
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.81999999284744,
+     "openToFirstFrameMs": 102.81999999284744,
+     "playedMs": 1860.0450000166893
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/ms-mpeg4-v3-divx-in-asf.jpg",
+   "wallMs": 1974
+  },
+  {
+   "id": "wma-voice-11k",
+   "name": "WMA Voice 11k",
+   "category": "windows-media",
+   "file": "windows-media/wma-voice-11k.wma",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "WMAS",
+      "codecName": "Windows Media Audio Voice (Speech)",
+      "rate": 8000,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 1.4004,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.4853,
+     "peakDb": 2.9,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 100.36000001430511,
+     "openToFirstFrameMs": null,
+     "playedMs": 4471.165000021458
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 39190,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4582
+  },
+  {
+   "id": "wma-lossless-24-bit",
+   "name": "WMA Lossless 24-bit",
+   "category": "windows-media",
+   "file": "windows-media/wma-lossless-24-bit.wma",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": null,
+    "knownIssue": "this 0.2 s clip only leaves the decoder at end-of-stream drain, already late, so VLC's audio core drops it (native VLC's file output ignores timing)",
+    "checks": {
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 102.01500004529953,
+     "openToFirstFrameMs": null,
+     "playedMs": 504.4749999642372
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "warn: libvlc stream filter: unknown asf object (not loaded): 0xd6e229df-0x35da-0x11d1-0x903400a0c90349be",
+     "warn: libvlc stream filter: unknown asf object (not loaded): 0xd6e229d3-0x35da-0x11d1-0x903400a0c90349be",
+     "warn: libvlc stream filter: unknown top-level object found: 0xd6e229d3-0x35da-0x11d1-0x903400a0c90349be"
+    ]
+   },
+   "shot": null,
+   "wallMs": 642
+  },
+  {
+   "id": "ms-screen-codec-2-wmv9-screen",
+   "name": "MS Screen Codec 2 (WMV9 Screen)",
+   "category": "windows-media",
+   "file": "windows-media/ms-screen-codec-2-wmv9-screen.wmv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": null,
+    "knownIssue": "known issue: frame decodes (RV24) but EOS stops playback before it is shown",
+    "checks": {
+     "video": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": null,
+     "openToFirstFrameMs": null,
+     "playedMs": 0
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "warn: libvlc stream filter: unknown asf object (not loaded): 0xd9aade20-0x7c17-0x4f9c-0xbc288555dd98e2a2",
+     "warn: libvlc stream filter: cannot read one asf object at 29914",
+     "error: libvlc decoder: buffer deadlock prevented"
+    ]
+   },
+   "shot": null,
+   "wallMs": 517
+  },
+  {
+   "id": "ms-mpeg4-v1",
+   "name": "MS-MPEG4 v1",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/ms-mpeg4-v1.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 51,
+     "distinctFrames": 18,
+     "maxVariance": 3796
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 101.22500002384186,
+     "openToFirstFrameMs": 101.23000001907349,
+     "playedMs": 2168.464999973774
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/ms-mpeg4-v1.jpg",
+   "wallMs": 2282
+  },
+  {
+   "id": "xvid-mp3",
+   "name": "XviD + MP3",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/xvid-mp3.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": null,
+    "knownIssue": "known issue: VLC 4 mpegaudio packetizer never syncs on this truncated AVI (VLC 3 does); a clean XviD+MP3 AVI plays",
+    "checks": {
+     "video": true,
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mp4v",
+      "codecName": "MPEG-4 Video",
+      "width": 624,
+      "height": 336,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "mp3 ",
+      "codecName": "MPEG Audio layer 3",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 112,
+     "distinctFrames": 36,
+     "maxVariance": 4531
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": -16.9
+    },
+    "timings": {
+     "openToPlayingMs": 101.00999999046326,
+     "openToFirstFrameMs": 101.00999999046326,
+     "playedMs": 4427.074999988079
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 23 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 23",
+     "warn: [mpeg4 @ 0x1e919c0] 2. marker bit missing in 3. esc",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 372",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 29 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 29",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 19 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 19",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 2 3",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 122",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 5 2",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 85",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 18 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 18",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 19 3",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 139",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 7 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 7",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 32 3",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 152",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 28 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 28",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 15 1",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 55",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 37 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 37",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 25 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 25",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 26 2",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 106",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 37 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 37",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 35 2",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 115",
+     "warn: [mpeg4 @ 0x1e919c0] I cbpy damaged at 34 20",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 834",
+     "warn: [mpeg4 @ 0x1e919c0] ac-tex damaged at 22 2",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 102",
+     "warn: [mpeg4 @ 0x1e919c0] P cbpy damaged at 38 0",
+     "warn: [mpeg4 @ 0x1e919c0] Error at MB: 38"
+    ]
+   },
+   "shot": "shots/xvid-mp3.jpg",
+   "wallMs": 4562
+  },
+  {
+   "id": "divx-5-mp3",
+   "name": "DivX 5 + MP3",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/divx-5-mp3.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "native VLC 3.0.24 decodes no audio from this truncated, index-less AVI either",
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mp4v",
+      "codecName": "MPEG-4 Video",
+      "width": 592,
+      "height": 320,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "mp3 ",
+      "codecName": "MPEG Audio layer 3",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 111,
+     "distinctFrames": 19,
+     "maxVariance": 2168
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": -91
+    },
+    "timings": {
+     "openToPlayingMs": 103.41500002145767,
+     "openToFirstFrameMs": 103.41500002145767,
+     "playedMs": 4464.535000026226
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "warn: libvlc demux: cannot find idx1 chunk, no index defined",
+     "warn: libvlc demux: no key frame set for track 0",
+     "warn: libvlc demux: no key frame set for track 1",
+     "warn: libvlc demux: broken or missing index, 'seek' will be approximative or will exhibit strange behavior",
+     "error: libvlc decoder: buffer deadlock prevented"
+    ]
+   },
+   "shot": "shots/divx-5-mp3.jpg",
+   "wallMs": 4610
+  },
+  {
+   "id": "cinepak",
+   "name": "Cinepak",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/cinepak.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "CVID",
+      "codecName": "Cinepak Video",
+      "width": 100,
+      "height": 75,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "u8  ",
+      "codecName": "PCM U8",
+      "rate": 11025,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 66,
+     "distinctFrames": 21,
+     "maxVariance": 4368
+    },
+    "audio": {
+     "peak": 1.0237,
+     "framesPlayed": 192640,
+     "audibleFraction": 1,
+     "analyserRms": 0.4149,
+     "peakDb": 0.2,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 102.9200000166893,
+     "openToFirstFrameMs": 102.9200000166893,
+     "playedMs": 4448.610000014305
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 12977,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/cinepak.jpg",
+   "wallMs": 5381
+  },
+  {
+   "id": "indeo-3",
+   "name": "Indeo 3",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/indeo-3.mov",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 60,
+     "distinctFrames": 37,
+     "maxVariance": 1118
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 101.93500000238419,
+     "openToFirstFrameMs": 101.93500000238419,
+     "playedMs": 4326.810000002384
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/indeo-3.jpg",
+   "wallMs": 4463
+  },
+  {
+   "id": "indeo-4-partial",
+   "name": "Indeo 4 (partial)",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/indeo-4-partial.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "IV41",
+      "codecName": "Indeo Video v4",
+      "width": 320,
+      "height": 240,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "u8  ",
+      "codecName": "PCM U8",
+      "rate": 22050,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 57,
+     "distinctFrames": 9,
+     "maxVariance": 3739
+    },
+    "audio": {
+     "peak": 0.9286,
+     "framesPlayed": 27787,
+     "audibleFraction": 0.07,
+     "analyserRms": 0.2197,
+     "peakDb": -0.6,
+     "referencePeakDb": -91
+    },
+    "timings": {
+     "openToPlayingMs": 100.87000000476837,
+     "openToFirstFrameMs": 100.87000000476837,
+     "playedMs": 4475.489999949932
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 12
+    }
+   },
+   "shot": "shots/indeo-4-partial.jpg",
+   "wallMs": 4667
+  },
+  {
+   "id": "indeo-5",
+   "name": "Indeo 5",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/indeo-5.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "IV50",
+      "codecName": "Indeo Video v5",
+      "width": 240,
+      "height": 180,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 22050,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 67,
+     "distinctFrames": 36,
+     "maxVariance": 3672
+    },
+    "audio": {
+     "peak": 1.5494,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.79,
+     "analyserRms": 0.6408,
+     "peakDb": 3.8,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 102.0799999833107,
+     "openToFirstFrameMs": 102.0799999833107,
+     "playedMs": 4430.025000035763
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 32839,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/indeo-5.jpg",
+   "wallMs": 4607
+  },
+  {
+   "id": "motion-jpeg-mu-law-10-mb",
+   "name": "Motion-JPEG + mu-law (10 MB)",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/motion-jpeg-mu-law-10-mb.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "MJPG",
+      "codecName": "Motion JPEG Video",
+      "width": 640,
+      "height": 480,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "mlaw",
+      "codecName": "PCM MU-LAW",
+      "rate": 22050,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 126,
+     "distinctFrames": 36,
+     "maxVariance": 4548
+    },
+    "audio": {
+     "peak": 1.3045,
+     "framesPlayed": 196864,
+     "audibleFraction": 1,
+     "analyserRms": 0.3827,
+     "peakDb": 2.3,
+     "referencePeakDb": -0.2
+    },
+    "timings": {
+     "openToPlayingMs": 102.51499998569489,
+     "openToFirstFrameMs": 102.51499998569489,
+     "playedMs": 4425.485000014305
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/motion-jpeg-mu-law-10-mb.jpg",
+   "wallMs": 5022
+  },
+  {
+   "id": "dvcpro-hd-720p50",
+   "name": "DVCPRO HD 720p50",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/dvcpro-hd-720p50.mov",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c) - virtual RefPtr<MP4Demuxer::InitPromise> mozilla::MP4Demuxer::Init(): No MP4 audio () or video () tracks"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 2,
+     "distinctFrames": 2,
+     "maxVariance": 1842
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.71000003814697,
+     "openToFirstFrameMs": 102.71000003814697,
+     "playedMs": 503.29499995708466
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/dvcpro-hd-720p50.jpg",
+   "wallMs": 641
+  },
+  {
+   "id": "on2-vp5-speex",
+   "name": "On2 VP5 + Speex",
+   "category": "avi-era-codecs",
+   "file": "avi-era-codecs/on2-vp5-speex.avi",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "VP5 ",
+      "codecName": "On2's VP5 Video",
+      "width": 512,
+      "height": 304,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "spx ",
+      "codecName": "Speex Audio",
+      "rate": 32000,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 97,
+     "distinctFrames": 2,
+     "maxVariance": 754
+    },
+    "audio": {
+     "peak": 10.1117,
+     "framesPlayed": 152170,
+     "audibleFraction": 0.74,
+     "analyserRms": 0.4379,
+     "peakDb": 20.1,
+     "referencePeakDb": -72.2
+    },
+    "timings": {
+     "openToPlayingMs": 101.71499997377396,
+     "openToFirstFrameMs": 101.71499997377396,
+     "playedMs": 4438.790000021458
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 57
+    }
+   },
+   "shot": "shots/on2-vp5-speex.jpg",
+   "wallMs": 4584
+  },
+  {
+   "id": "dvd-vob-single-frame-dvd-subs",
+   "name": "DVD VOB single frame + DVD subs",
+   "category": "subtitles-and-captions",
+   "file": "subtitles-and-captions/dvd-vob-single-frame-dvd-subs.vob",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 2,
+     "distinctFrames": 2,
+     "maxVariance": 2068
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.69999998807907,
+     "openToFirstFrameMs": 102.69999998807907,
+     "playedMs": 507.0199999809265
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/dvd-vob-single-frame-dvd-subs.jpg",
+   "wallMs": 644
+  },
+  {
+   "id": "mpeg-1-system-stream",
+   "name": "MPEG-1 system stream",
+   "category": "mpeg-ps-ts",
+   "file": "mpeg-ps-ts/mpeg-1-system-stream.mpg",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 29,
+     "distinctFrames": 10,
+     "maxVariance": 1065
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.75,
+     "openToFirstFrameMs": 102.75,
+     "playedMs": 1860.8400000333786
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 1,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/mpeg-1-system-stream.jpg",
+   "wallMs": 1980
+  },
+  {
+   "id": "dvd-vob-mpeg-2-ac-3-5-mb",
+   "name": "DVD VOB MPEG-2 + AC-3 (5 MB)",
+   "category": "mpeg-ps-ts",
+   "file": "mpeg-ps-ts/dvd-vob-mpeg-2-ac-3-5-mb.vob",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mpgv",
+      "codecName": "MPEG-1/2 Video",
+      "width": 720,
+      "height": 480,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "a52 ",
+      "codecName": "Audio Coding 3 (AC-3)",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 102,
+     "distinctFrames": 18,
+     "maxVariance": 4554
+    },
+    "audio": {
+     "peak": 0.1836,
+     "framesPlayed": 197120,
+     "audibleFraction": 0.52,
+     "analyserRms": 0.0516,
+     "peakDb": -14.7,
+     "referencePeakDb": -15.3
+    },
+    "timings": {
+     "openToPlayingMs": 100.9200000166893,
+     "openToFirstFrameMs": 100.9200000166893,
+     "playedMs": 4449.069999992847
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 2,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/dvd-vob-mpeg-2-ac-3-5-mb.jpg",
+   "wallMs": 5031
+  },
+  {
+   "id": "mpeg-2-field-encoded-ts",
+   "name": "MPEG-2 field-encoded TS",
+   "category": "mpeg-ps-ts",
+   "file": "mpeg-ps-ts/mpeg-2-field-encoded-ts.ts",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 39,
+     "distinctFrames": 13,
+     "maxVariance": 1974
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 103.11000001430511,
+     "openToFirstFrameMs": 103.11000001430511,
+     "playedMs": 2276.7450000047684
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/mpeg-2-field-encoded-ts.jpg",
+   "wallMs": 2417
+  },
+  {
+   "id": "dts-in-mpeg-ts",
+   "name": "DTS in MPEG-TS",
+   "category": "mpeg-ps-ts",
+   "file": "mpeg-ps-ts/dts-in-mpeg-ts.ts",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "native VLC 3.0.24 also produces no audio from this sample",
+    "knownIssue": null,
+    "checks": {
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": -10.4
+    },
+    "timings": {
+     "openToPlayingMs": null,
+     "openToFirstFrameMs": null,
+     "playedMs": 0
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": []
+   },
+   "shot": null,
+   "wallMs": 515
+  },
+  {
+   "id": "flash-vp6-sorenson-on2",
+   "name": "Flash VP6 (Sorenson/On2)",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/flash-vp6-sorenson-on2.flv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "VP6F",
+      "codecName": "On2's VP6.2 Video (Flash)",
+      "width": 112,
+      "height": 80,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 75,
+     "distinctFrames": 39,
+     "maxVariance": 3448
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 103.20999997854233,
+     "openToFirstFrameMs": 103.20999997854233,
+     "playedMs": 4454.699999988079
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/flash-vp6-sorenson-on2.jpg",
+   "wallMs": 4597
+  },
+  {
+   "id": "flv-with-h-264-aac",
+   "name": "FLV with H.264/AAC",
+   "category": "flash",
+   "file": "flash/flv-with-h-264-aac.flv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "h264",
+      "codecName": "H264 - MPEG-4 AVC (part 10)",
+      "width": 426,
+      "height": 240,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "mp4a",
+      "codecName": "MPEG AAC Audio",
+      "rate": 22050,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 109,
+     "distinctFrames": 12,
+     "maxVariance": 1541
+    },
+    "audio": {
+     "peak": 0.1245,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.63,
+     "analyserRms": 0.0354,
+     "peakDb": -18.1,
+     "referencePeakDb": -18.7
+    },
+    "timings": {
+     "openToPlayingMs": 102.8649999499321,
+     "openToFirstFrameMs": 102.87000000476837,
+     "playedMs": 4461.310000002384
+    },
+    "stats": {
+     "lostPictures": 19,
+     "latePictures": 0,
+     "audioDropped": 34294,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/flv-with-h-264-aac.jpg",
+   "wallMs": 5388
+  },
+  {
+   "id": "vp6f-nellymoser",
+   "name": "VP6F + Nellymoser",
+   "category": "flash",
+   "file": "flash/vp6f-nellymoser.flv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "VP6F",
+      "codecName": "On2's VP6.2 Video (Flash)",
+      "width": 320,
+      "height": 240,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "NELL",
+      "codecName": "NellyMoser ASAO",
+      "rate": 22050,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 60,
+     "distinctFrames": 22,
+     "maxVariance": 6667
+    },
+    "audio": {
+     "peak": 1.2142,
+     "framesPlayed": 150785,
+     "audibleFraction": 0.93,
+     "analyserRms": 0.4133,
+     "peakDb": 1.7,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 102.64500004053116,
+     "openToFirstFrameMs": 102.64500004053116,
+     "playedMs": 4441.414999961853
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 2190,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": "shots/vp6f-nellymoser.jpg",
+   "wallMs": 4636
+  },
+  {
+   "id": "3gpp-h-263-amr-nb",
+   "name": "3GPP H.263 + AMR-NB",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/3gpp-h-263-amr-nb.mov",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "h263",
+      "codecName": "H263",
+      "width": 176,
+      "height": 144,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "samr",
+      "codecName": "AMR narrow band",
+      "rate": 8000,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 73,
+     "distinctFrames": 37,
+     "maxVariance": 3684
+    },
+    "audio": {
+     "peak": 0.9476,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.2574,
+     "peakDb": -0.5,
+     "referencePeakDb": -0.8
+    },
+    "timings": {
+     "openToPlayingMs": 103.25,
+     "openToFirstFrameMs": 103.25,
+     "playedMs": 4438.540000021458
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 36546,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/3gpp-h-263-amr-nb.jpg",
+   "wallMs": 4635
+  },
+  {
+   "id": "3gp-h-263-phone-clip",
+   "name": "3GP H.263 phone clip",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/3gp-h-263-phone-clip.3gp",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: NS_ERROR_DOM_MEDIA_METADATA_ERR (0x806e0006)"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 55,
+     "distinctFrames": 28,
+     "maxVariance": 5052
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 101.71999996900558,
+     "openToFirstFrameMs": 101.71999996900558,
+     "playedMs": 3200.6200000047684
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/3gp-h-263-phone-clip.jpg",
+   "wallMs": 3337
+  },
+  {
+   "id": "sorenson-video-1",
+   "name": "Sorenson Video 1",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/sorenson-video-1.mov",
+   "native": {
+    "chromium": {
+     "ok": true,
+     "reason": "loadeddata",
+     "audioOnly": true
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "SVQ1",
+      "codecName": "SVQ-1 (Sorenson Video v1)",
+      "width": 160,
+      "height": 120,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "u8  ",
+      "codecName": "PCM U8",
+      "rate": 22050,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 66,
+     "distinctFrames": 38,
+     "maxVariance": 12401
+    },
+    "audio": {
+     "peak": 1.0017,
+     "framesPlayed": 197120,
+     "audibleFraction": 0.98,
+     "analyserRms": 0.3805,
+     "peakDb": 0,
+     "referencePeakDb": -0.3
+    },
+    "timings": {
+     "openToPlayingMs": 101.98500001430511,
+     "openToFirstFrameMs": 101.98500001430511,
+     "playedMs": 4438.839999973774
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 28452,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/sorenson-video-1.jpg",
+   "wallMs": 5004
+  },
+  {
+   "id": "sorenson-video-3",
+   "name": "Sorenson Video 3",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/sorenson-video-3.mov",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c) - virtual RefPtr<MP4Demuxer::InitPromise> mozilla::MP4Demuxer::Init(): No MP4 audio () or video () tracks"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 9,
+     "distinctFrames": 6,
+     "maxVariance": 716
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.90500003099442,
+     "openToFirstFrameMs": 102.90500003099442,
+     "playedMs": 926.4449999928474
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/sorenson-video-3.jpg",
+   "wallMs": 1063
+  },
+  {
+   "id": "qdesign-music-2",
+   "name": "QDesign Music 2",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/qdesign-music-2.mov",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "QDM2",
+      "codecName": "QDM2 Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 1.0073,
+     "framesPlayed": 197120,
+     "audibleFraction": 0.98,
+     "analyserRms": 0.3965,
+     "peakDb": 0.1,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 103.0900000333786,
+     "openToFirstFrameMs": null,
+     "playedMs": 4476.789999961853
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 26108,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4939
+  },
+  {
+   "id": "ima4-adpcm",
+   "name": "IMA4 ADPCM",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/ima4-adpcm.mov",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata",
+     "audioOnly": true
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "ima4",
+      "codecName": "IMA QT ADPCM Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 1.0116,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.98,
+     "analyserRms": 0.3706,
+     "peakDb": 0.1,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 101.36000001430511,
+     "openToFirstFrameMs": null,
+     "playedMs": 4465.199999988079
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 36237,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4613
+  },
+  {
+   "id": "mace-3-1",
+   "name": "MACE 3:1",
+   "category": "quicktime-and-3gp",
+   "file": "quicktime-and-3gp/mace-3-1.mov",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "MAC3",
+      "codecName": "MACE-3 Audio",
+      "rate": 44100,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 1.0099,
+     "framesPlayed": 196864,
+     "audibleFraction": 0.98,
+     "analyserRms": 0.3734,
+     "peakDb": 0.1,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 103.11500000953674,
+     "openToFirstFrameMs": null,
+     "playedMs": 4466.805000007153
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4586
+  },
+  {
+   "id": "smacker",
+   "name": "Smacker",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/smacker.smk",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "SMK2",
+      "codecName": "Smacker Video",
+      "width": 320,
+      "height": 200,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "SMKA",
+      "codecName": "Smacker audio",
+      "rate": 22050,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 63,
+     "distinctFrames": 33,
+     "maxVariance": 213
+    },
+    "audio": {
+     "peak": 1.0511,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.5899,
+     "peakDb": 0.4,
+     "referencePeakDb": -1.6
+    },
+    "timings": {
+     "openToPlayingMs": 101.5,
+     "openToFirstFrameMs": 101.5,
+     "playedMs": 4448.805000007153
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 78197,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/smacker.jpg",
+   "wallMs": 4993
+  },
+  {
+   "id": "bink-video",
+   "name": "Bink video",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/bink-video.bik",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 20,
+     "distinctFrames": 13,
+     "maxVariance": 397
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 103.00499999523163,
+     "openToFirstFrameMs": 103.00499999523163,
+     "playedMs": 1661.5950000286102
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/bink-video.jpg",
+   "wallMs": 1781
+  },
+  {
+   "id": "id-roq-quake-3-logo",
+   "name": "id RoQ (Quake 3 logo)",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/id-roq-quake-3-logo.roq",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "RoQv",
+      "codecName": "Id RoQ Video",
+      "width": 512,
+      "height": 256,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "RoQa",
+      "codecName": "Id RoQ DPCM Audio",
+      "rate": 22050,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 128,
+     "distinctFrames": 34,
+     "maxVariance": 4705
+    },
+    "audio": {
+     "peak": 0.9797,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.91,
+     "analyserRms": 0.3673,
+     "peakDb": -0.2,
+     "referencePeakDb": -0.1
+    },
+    "timings": {
+     "openToPlayingMs": 101.67499995231628,
+     "openToFirstFrameMs": 101.67499995231628,
+     "playedMs": 4449.340000033379
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 47442,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/id-roq-quake-3-logo.jpg",
+   "wallMs": 4620
+  },
+  {
+   "id": "autodesk-flic-640x480",
+   "name": "Autodesk FLIC 640x480",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/autodesk-flic-640x480.fli",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 26,
+     "distinctFrames": 20,
+     "maxVariance": 1852
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 101.69499999284744,
+     "openToFirstFrameMs": 101.69499999284744,
+     "playedMs": 2362.145000040531
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/autodesk-flic-640x480.jpg",
+   "wallMs": 2478
+  },
+  {
+   "id": "autodesk-flc-320x200",
+   "name": "Autodesk FLC 320x200",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/autodesk-flc-320x200.flc",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "FLIC",
+      "codecName": "Flic Video",
+      "width": 320,
+      "height": 200,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 54,
+     "distinctFrames": 19,
+     "maxVariance": 7225
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 101.09500002861023,
+     "openToFirstFrameMs": 101.09500002861023,
+     "playedMs": 4480.389999985695
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/autodesk-flc-320x200.jpg",
+   "wallMs": 4655
+  },
+  {
+   "id": "nuppelvideo-mythtv",
+   "name": "NuppelVideo (MythTV)",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/nuppelvideo-mythtv.nuv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 10,
+     "distinctFrames": 5,
+     "maxVariance": 3111
+    },
+    "audio": {
+     "peak": 1.0203,
+     "framesPlayed": 17920,
+     "audibleFraction": 0.75,
+     "analyserRms": 0.4122,
+     "peakDb": 0.2,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 100.875,
+     "openToFirstFrameMs": 100.875,
+     "playedMs": 921.9749999642372
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": "shots/nuppelvideo-mythtv.jpg",
+   "wallMs": 1033
+  },
+  {
+   "id": "vivo-2-vivoactive",
+   "name": "Vivo 2 (VivoActive)",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/vivo-2-vivoactive.viv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "FFmpeg (and so VLC) cannot decode Vivo 2 video either",
+    "knownIssue": null,
+    "checks": {
+     "video": false,
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "undf",
+      "codecName": "",
+      "width": 320,
+      "height": 240,
+      "selected": false
+     },
+     {
+      "type": "audio",
+      "codec": "undf",
+      "codecName": "",
+      "rate": 16000,
+      "channels": 1,
+      "selected": false
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": -41.5
+    },
+    "timings": {
+     "openToPlayingMs": 102.65000003576279,
+     "openToFirstFrameMs": null,
+     "playedMs": 4462.944999992847
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "error: libvlc demux: Unknown option \"threads\"",
+     "error: libvlc demux: Unknown option \"lowres\"",
+     "error: libvlc decoder: could not identify codec",
+     "error: libvlc decoder: Unidentified codec",
+     "error: libvlc decoder: VLC could not identify the audio or video codec",
+     "error: libvlc decoder: could not identify codec",
+     "error: libvlc decoder: Unidentified codec",
+     "error: libvlc decoder: VLC could not identify the audio or video codec"
+    ]
+   },
+   "shot": null,
+   "wallMs": 4599
+  },
+  {
+   "id": "playstation-str-mdec-xa",
+   "name": "PlayStation STR (MDEC + XA)",
+   "category": "game-and-oddball-video",
+   "file": "game-and-oddball-video/playstation-str-mdec-xa.str",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "native VLC 3.0.24 also shows no picture; VLC has no PSX STR demuxer",
+    "knownIssue": null,
+    "checks": {
+     "video": false,
+     "audio": false
+    },
+    "error": "VLC could not play this media (see the log)",
+    "events": [
+     "opening",
+     "error",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": -6.3
+    },
+    "timings": {
+     "openToPlayingMs": null,
+     "openToFirstFrameMs": null,
+     "playedMs": 0
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "error: libvlc input: Your media can't be opened",
+     "error: libvlc input: VLC is unable to open the MRL 'file:///mnt/48/playstation-str-mdec-xa.str'. Check the log for details."
+    ]
+   },
+   "shot": null,
+   "wallMs": 515
+  },
+  {
+   "id": "ac-3-5-1-448k",
+   "name": "AC-3 5.1 448k",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/ac-3-5-1-448k.ac3",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.0003,
+     "framesPlayed": 47451,
+     "audibleFraction": 0,
+     "analyserRms": 0.0001,
+     "peakDb": -70.5,
+     "referencePeakDb": -74.7
+    },
+    "timings": {
+     "openToPlayingMs": 102.80500000715256,
+     "openToFirstFrameMs": null,
+     "playedMs": 1620.4399999976158
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 33281,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": null,
+   "wallMs": 1764
+  },
+  {
+   "id": "e-ac-3-5-1-with-spx",
+   "name": "E-AC-3 5.1 with SPX",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/e-ac-3-5-1-with-spx.eac3",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.2027,
+     "framesPlayed": 69446,
+     "audibleFraction": 1,
+     "analyserRms": 0.0799,
+     "peakDb": -13.9,
+     "referencePeakDb": -10.3
+    },
+    "timings": {
+     "openToPlayingMs": 111.33500003814697,
+     "openToFirstFrameMs": null,
+     "playedMs": 2028.2349999547005
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": null,
+   "wallMs": 2151
+  },
+  {
+   "id": "dts-es",
+   "name": "DTS-ES",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/dts-es.dts",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 1.4712,
+     "framesPlayed": 90258,
+     "audibleFraction": 1,
+     "analyserRms": 0.2614,
+     "peakDb": 3.4,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 101.30500000715256,
+     "openToFirstFrameMs": null,
+     "playedMs": 2538.1800000071526
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 30464,
+     "audioUnderruns": 1
+    }
+   },
+   "shot": null,
+   "wallMs": 2650
+  },
   {
    "id": "dolby-truehd-atmos-8ch",
    "name": "Dolby TrueHD Atmos (8ch)",
@@ -13,12 +3690,20 @@
     "chromium": {
      "ok": false,
      "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
     }
    },
    "vlc": {
     "passed": false,
     "expectedFailure": null,
-    "knownIssue": null,
+    "knownIssue": "plays about half the time: its 0.1 s of audio only leaves the decoder at end-of-stream drain, right at the lateness limit of VLC's audio core (same as the WMA Lossless clip)",
     "checks": {
      "audio": false
     },
@@ -45,9 +3730,9 @@
      "referencePeakDb": -8
     },
     "timings": {
-     "openToPlayingMs": 103.95000004768372,
+     "openToPlayingMs": 101.875,
      "openToFirstFrameMs": null,
-     "playedMs": 503.9699999690056
+     "playedMs": 506.24000000953674
     },
     "stats": {
      "lostPictures": 0,
@@ -60,7 +3745,1774 @@
     ]
    },
    "shot": null,
-   "wallMs": 731
+   "wallMs": 643
+  },
+  {
+   "id": "mlp-440-hz",
+   "name": "MLP 440 Hz",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/mlp-440-hz.mlp",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "mlp ",
+      "codecName": "MLP/TrueHD Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.25,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.1771,
+     "peakDb": -12,
+     "referencePeakDb": -12
+    },
+    "timings": {
+     "openToPlayingMs": 101.69499999284744,
+     "openToFirstFrameMs": null,
+     "playedMs": 4467.335000038147
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4997
+  },
+  {
+   "id": "musepack-sv8",
+   "name": "Musepack SV8",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/musepack-sv8.mpc",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "MPCK",
+      "codecName": "MUSEPACK8 Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.8251,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.95,
+     "analyserRms": 0.2879,
+     "peakDb": -1.7,
+     "referencePeakDb": -2
+    },
+    "timings": {
+     "openToPlayingMs": 101.14000004529953,
+     "openToFirstFrameMs": null,
+     "playedMs": 4467.3949999809265
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 128524,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4997
+  },
+  {
+   "id": "musepack-sv7",
+   "name": "Musepack SV7",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/musepack-sv7.mpc",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "MPC ",
+      "codecName": "MUSEPACK7 Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.8251,
+     "framesPlayed": 197120,
+     "audibleFraction": 0.93,
+     "analyserRms": 0.2921,
+     "peakDb": -1.7,
+     "referencePeakDb": -2
+    },
+    "timings": {
+     "openToPlayingMs": 102.52000004053116,
+     "openToFirstFrameMs": null,
+     "playedMs": 4465.489999949932
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 31757,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4986
+  },
+  {
+   "id": "monkey-s-audio",
+   "name": "Monkey's Audio",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/monkey-s-audio.ape",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": null,
+    "knownIssue": "truncated test file: native FFmpeg reports \"Error decoding frame\" too, and how much decodes varies from run to run",
+    "checks": {
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": 0
+    },
+    "timings": {
+     "openToPlayingMs": 101.52500003576279,
+     "openToFirstFrameMs": null,
+     "playedMs": 504.39999997615814
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "warn: [ape @ 0x1107a90] Error decoding frame"
+    ]
+   },
+   "shot": null,
+   "wallMs": 639
+  },
+  {
+   "id": "true-audio-6-6-mb",
+   "name": "True Audio (6.6 MB)",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/true-audio-6-6-mb.tta",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "TTA1",
+      "codecName": "The Lossless True Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.9794,
+     "framesPlayed": 185156,
+     "audibleFraction": 0.95,
+     "analyserRms": 0.2598,
+     "peakDb": -0.2,
+     "referencePeakDb": -0.2
+    },
+    "timings": {
+     "openToPlayingMs": 102.2849999666214,
+     "openToFirstFrameMs": null,
+     "playedMs": 4467.689999997616
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 116277,
+     "audioUnderruns": 2
+    }
+   },
+   "shot": null,
+   "wallMs": 4593
+  },
+  {
+   "id": "amr-nb-12-2k",
+   "name": "AMR-NB 12.2k",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/amr-nb-12-2k.amr",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "samr",
+      "codecName": "AMR narrow band",
+      "rate": 8000,
+      "channels": 1,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.7165,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.2132,
+     "peakDb": -2.9,
+     "referencePeakDb": -2.9
+    },
+    "timings": {
+     "openToPlayingMs": 102.01500004529953,
+     "openToFirstFrameMs": null,
+     "playedMs": 4469.15499997139
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 32138,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 5416
+  },
+  {
+   "id": "shorten",
+   "name": "Shorten",
+   "category": "rare-and-surround-audio",
+   "file": "rare-and-surround-audio/shorten.shn",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "native VLC 3.0.24 also cannot play Shorten (no demuxer claims it)",
+    "knownIssue": null,
+    "checks": {
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": -2.7
+    },
+    "timings": {
+     "openToPlayingMs": null,
+     "openToFirstFrameMs": null,
+     "playedMs": 0
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": []
+   },
+   "shot": null,
+   "wallMs": 532
+  },
+  {
+   "id": "hevc-main10-dolby-vision-p7-in-mkv",
+   "name": "HEVC Main10 Dolby Vision P7 in MKV",
+   "category": "modern-codecs",
+   "file": "modern-codecs/hevc-main10-dolby-vision-p7-in-mkv.mkv",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": true,
+     "reason": "loadeddata"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": null,
+    "knownIssue": "known issue: the single 4K Main10 frame decodes but misses its display deadline",
+    "checks": {
+     "video": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "ended",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 1,
+     "distinctFrames": 1,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 100.91500002145767,
+     "openToFirstFrameMs": 201.86500000953674,
+     "playedMs": 503.97500002384186
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "warn: libvlc demux: find KaxCues FIXME",
+     "warn: libvlc demux: EOF",
+     "warn: libvlc demux: cannot get block EOF?",
+     "error: libvlc decoder: buffer deadlock prevented"
+    ]
+   },
+   "shot": "shots/hevc-main10-dolby-vision-p7-in-mkv.jpg",
+   "wallMs": 624
+  },
+  {
+   "id": "dvb-subtitles-in-ts",
+   "name": "DVB subtitles in TS",
+   "category": "subtitles-and-captions",
+   "file": "subtitles-and-captions/dvb-subtitles-in-ts.ts",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "native VLC 3.0.24 also shows no picture for this 77 KB fragment",
+    "knownIssue": null,
+    "checks": {
+     "video": false,
+     "audio": false
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mpgv",
+      "codecName": "MPEG-1/2 Video",
+      "width": 0,
+      "height": 0,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "mpga",
+      "codecName": "MPEG Audio layer 1/2",
+      "rate": 0,
+      "channels": 0,
+      "selected": true
+     },
+     {
+      "type": "text",
+      "codec": "dvbs",
+      "codecName": "DVB Subtitles",
+      "selected": false
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.31999999284744,
+     "openToFirstFrameMs": null,
+     "playedMs": 4473.2650000452995
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "warn: libvlc demux: No PCR received for program 1, set up workaround using pid 8191",
+     "error: libvlc decoder: buffer deadlock prevented",
+     "error: libvlc decoder: buffer deadlock prevented"
+    ]
+   },
+   "shot": null,
+   "wallMs": 4592
+  },
+  {
+   "id": "vobsub-idx-sub",
+   "name": "VobSub (.idx + .sub) over a video",
+   "category": "subtitles-and-captions",
+   "file": "subtitles-and-captions/vobsub.idx",
+   "native": null,
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "subtitle track": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mpgv",
+      "codecName": "MPEG-1/2 Video",
+      "width": 640,
+      "height": 360,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "a52 ",
+      "codecName": "Audio Coding 3 (AC-3)",
+      "rate": 48000,
+      "channels": 1,
+      "selected": true
+     },
+     {
+      "type": "text",
+      "codec": "spu ",
+      "codecName": "DVD Subtitles",
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 102,
+     "distinctFrames": 34,
+     "maxVariance": 4739
+    },
+    "audio": {
+     "peak": 0.125,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.91,
+     "analyserRms": 0.0885,
+     "peakDb": -18.1,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 106.84500002861023,
+     "openToFirstFrameMs": 106.84500002861023,
+     "playedMs": 4441.7349999547005
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 1,
+     "audioDropped": 47961,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/vobsub-idx-sub.jpg",
+   "wallMs": 4617
+  },
+  {
+   "id": "mpeg-2-es-with-eia-608-closed-captions",
+   "name": "MPEG-2 ES with EIA-608 closed captions",
+   "category": "subtitles-and-captions",
+   "file": "subtitles-and-captions/mpeg-2-es-with-eia-608-closed-captions.m2v",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mpgv",
+      "codecName": "MPEG-1/2 Video",
+      "width": 704,
+      "height": 480,
+      "selected": true
+     },
+     {
+      "type": "text",
+      "codec": "c608",
+      "codecName": "EIA-608 subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "c608",
+      "codecName": "EIA-608 subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "c608",
+      "codecName": "EIA-608 subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "c608",
+      "codecName": "EIA-608 subtitles",
+      "selected": false
+     }
+    ],
+    "video": {
+     "framesDrawn": 135,
+     "distinctFrames": 40,
+     "maxVariance": 6349
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": 102.16999995708466,
+     "openToFirstFrameMs": 102.16999995708466,
+     "playedMs": 4451.630000054836
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/mpeg-2-es-with-eia-608-closed-captions.jpg",
+   "wallMs": 4631
+  },
+  {
+   "id": "mpeg-4-asp-vorbis-16-ass-ssa-tracks",
+   "name": "MPEG-4 ASP + Vorbis + 16 ASS/SSA tracks",
+   "category": "subtitles-and-captions",
+   "file": "subtitles-and-captions/mpeg-4-asp-vorbis-16-ass-ssa-tracks.mkv",
+   "native": {
+    "chromium": {
+     "ok": true,
+     "reason": "loadeddata",
+     "audioOnly": true
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": true,
+     "reason": "loadeddata",
+     "audioOnly": true
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "mp4v",
+      "codecName": "MPEG-4 Video",
+      "width": 640,
+      "height": 480,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "vorb",
+      "codecName": "Vorbis Audio",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": true
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "ssa ",
+      "codecName": "SubStation Alpha subtitles",
+      "selected": false
+     }
+    ],
+    "video": {
+     "framesDrawn": 103,
+     "distinctFrames": 39,
+     "maxVariance": 6048
+    },
+    "audio": {
+     "peak": 0.5019,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.93,
+     "analyserRms": 0.0843,
+     "peakDb": -6,
+     "referencePeakDb": -5.8
+    },
+    "timings": {
+     "openToPlayingMs": 101.56999999284744,
+     "openToFirstFrameMs": 101.56999999284744,
+     "playedMs": 4438.860000014305
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 33698,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/mpeg-4-asp-vorbis-16-ass-ssa-tracks.jpg",
+   "wallMs": 4999
+  },
+  {
+   "id": "h-264-2x-mp3-vobsub-in-mkv",
+   "name": "H.264 + 2x MP3 + VobSub in MKV",
+   "category": "subtitles-and-captions",
+   "file": "subtitles-and-captions/h-264-2x-mp3-vobsub-in-mkv.mkv",
+   "native": {
+    "chromium": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": true,
+     "reason": "loadeddata"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "video": true,
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "video",
+      "codec": "h264",
+      "codecName": "H264 - MPEG-4 AVC (part 10)",
+      "width": 640,
+      "height": 480,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "mpga",
+      "codecName": "MPEG Audio layer 1/2",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     },
+     {
+      "type": "audio",
+      "codec": "mpga",
+      "codecName": "MPEG Audio layer 1/2",
+      "rate": 48000,
+      "channels": 2,
+      "selected": false
+     },
+     {
+      "type": "text",
+      "codec": "spu ",
+      "codecName": "DVD Subtitles",
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 108,
+     "distinctFrames": 38,
+     "maxVariance": 1950
+    },
+    "audio": {
+     "peak": 0.2327,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.98,
+     "analyserRms": 0.0777,
+     "peakDb": -12.7,
+     "referencePeakDb": -11.9
+    },
+    "timings": {
+     "openToPlayingMs": 101.73500001430511,
+     "openToFirstFrameMs": 101.73500001430511,
+     "playedMs": 4457.2300000190735
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 1,
+     "audioDropped": 47749,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": "shots/h-264-2x-mp3-vobsub-in-mkv.jpg",
+   "wallMs": 4597
+  },
+  {
+   "id": "snes-spc",
+   "name": "SNES SPC",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/snes-spc.spc",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.3983,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.98,
+     "analyserRms": 0.1073,
+     "peakDb": -8,
+     "referencePeakDb": -7.9
+    },
+    "timings": {
+     "openToPlayingMs": 103.22000002861023,
+     "openToFirstFrameMs": null,
+     "playedMs": 4466.139999985695
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 38384,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4961
+  },
+  {
+   "id": "nes-nsf-tetris-gb-rip",
+   "name": "NES NSF (Tetris GB rip)",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/nes-nsf-tetris-gb-rip.nsf",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 48000,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.5894,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.1875,
+     "peakDb": -4.6,
+     "referencePeakDb": -5.1
+    },
+    "timings": {
+     "openToPlayingMs": 102.6700000166893,
+     "openToFirstFrameMs": null,
+     "playedMs": 4462.915000021458
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 38381,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4587
+  },
+  {
+   "id": "sega-genesis-vgz-gzip-vgm",
+   "name": "Sega Genesis VGZ (gzip VGM)",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/sega-genesis-vgz-gzip-vgm.vgz",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "native VLC 3.0.24 also fails: after gunzip, the AIFF probe claims the stream before gme",
+    "knownIssue": null,
+    "checks": {
+     "audio": false
+    },
+    "error": "VLC could not play this media (see the log)",
+    "events": [
+     "opening",
+     "error",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": null
+    },
+    "timings": {
+     "openToPlayingMs": null,
+     "openToFirstFrameMs": null,
+     "playedMs": 0
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "error: libvlc demux: AIFF parsing requires seeking",
+     "error: libvlc input: Your media can't be opened",
+     "error: libvlc input: VLC is unable to open the MRL 'file:///mnt/69/sega-genesis-vgz-gzip-vgm.vgz'. Check the log for details."
+    ]
+   },
+   "shot": null,
+   "wallMs": 541
+  },
+  {
+   "id": "c64-sid-rob-hubbard-commando",
+   "name": "C64 SID (Rob Hubbard - Commando)",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/c64-sid-rob-hubbard-commando.sid",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": false,
+    "expectedFailure": "sidplay2 is disabled in VLC's upstream emscripten contrib set",
+    "knownIssue": null,
+    "checks": {
+     "audio": false
+    },
+    "error": "VLC could not play this media (see the log)",
+    "events": [
+     "opening",
+     "error",
+     "stopping",
+     "stopped"
+    ],
+    "tracks": [],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0,
+     "framesPlayed": 0,
+     "audibleFraction": 0,
+     "analyserRms": 0,
+     "peakDb": null,
+     "referencePeakDb": -3.3
+    },
+    "timings": {
+     "openToPlayingMs": null,
+     "openToFirstFrameMs": null,
+     "playedMs": 0
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    },
+    "logs": [
+     "error: libvlc input: Your media can't be opened",
+     "error: libvlc input: VLC is unable to open the MRL 'file:///mnt/70/c64-sid-rob-hubbard-commando.sid'. Check the log for details."
+    ]
+   },
+   "shot": null,
+   "wallMs": 522
+  },
+  {
+   "id": "standard-midi-file",
+   "name": "Standard MIDI file",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/standard-midi-file.mid",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "MIDI",
+      "codecName": "MIDI Audio",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.4919,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.1241,
+     "peakDb": -6.2,
+     "referencePeakDb": -4.9
+    },
+    "timings": {
+     "openToPlayingMs": 102.35000002384186,
+     "openToFirstFrameMs": null,
+     "playedMs": 4469.399999976158
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 0,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4993
+  },
+  {
+   "id": "axelf-mod-15-sample-soundtracker-no-m-k-",
+   "name": "AXELF.MOD (15-sample Soundtracker, no M.K. tag)",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/axelf-mod-15-sample-soundtracker-no-m-k-.mod",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": true,
+     "reason": "loadeddata"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.5399,
+     "framesPlayed": 192640,
+     "audibleFraction": 1,
+     "analyserRms": 0.1699,
+     "peakDb": -5.4,
+     "referencePeakDb": -5.3
+    },
+    "timings": {
+     "openToPlayingMs": 101.85999995470047,
+     "openToFirstFrameMs": null,
+     "playedMs": 4464.280000030994
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 38387,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4967
+  },
+  {
+   "id": "external-xm",
+   "name": "external.xm",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/external-xm.xm",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.2023,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.0623,
+     "peakDb": -13.9,
+     "referencePeakDb": -14
+    },
+    "timings": {
+     "openToPlayingMs": 102.93999999761581,
+     "openToFirstFrameMs": null,
+     "playedMs": 4469.354999959469
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 38385,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4590
+  },
+  {
+   "id": "sandman-s3m",
+   "name": "Sandman.s3m",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/sandman-s3m.s3m",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.2498,
+     "framesPlayed": 192640,
+     "audibleFraction": 1,
+     "analyserRms": 0.0891,
+     "peakDb": -12,
+     "referencePeakDb": -10.3
+    },
+    "timings": {
+     "openToPlayingMs": 103.27999997138977,
+     "openToFirstFrameMs": null,
+     "playedMs": 4454.530000030994
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 38381,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4957
+  },
+  {
+   "id": "for-a-change-it",
+   "name": "For A Change.it",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/for-a-change-it.it",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.2871,
+     "framesPlayed": 197120,
+     "audibleFraction": 1,
+     "analyserRms": 0.1247,
+     "peakDb": -10.8,
+     "referencePeakDb": -10.9
+    },
+    "timings": {
+     "openToPlayingMs": 103.09500002861023,
+     "openToFirstFrameMs": null,
+     "playedMs": 4464.464999973774
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 38385,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4579
+  },
+  {
+   "id": "openmpt-test-xm",
+   "name": "OpenMPT test.xm",
+   "category": "chiptune-tracker-midi",
+   "file": "chiptune-tracker-midi/openmpt-test-xm.xm",
+   "native": {
+    "chromium": {
+     "ok": false,
+     "reason": "error 4: PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+    },
+    "webkit": {
+     "ok": false,
+     "reason": "error 4:"
+    },
+    "firefox": {
+     "ok": false,
+     "reason": "error 4: Failed to init decoder"
+    }
+   },
+   "vlc": {
+    "passed": true,
+    "expectedFailure": null,
+    "knownIssue": null,
+    "checks": {
+     "audio": true
+    },
+    "error": null,
+    "events": [
+     "opening",
+     "playing",
+     "stopping"
+    ],
+    "tracks": [
+     {
+      "type": "audio",
+      "codec": "s16l",
+      "codecName": "PCM S16 LE",
+      "rate": 44100,
+      "channels": 2,
+      "selected": true
+     }
+    ],
+    "video": {
+     "framesDrawn": 0,
+     "distinctFrames": 0,
+     "maxVariance": 0
+    },
+    "audio": {
+     "peak": 0.0166,
+     "framesPlayed": 192640,
+     "audibleFraction": 0.02,
+     "analyserRms": 0.0004,
+     "peakDb": -35.6,
+     "referencePeakDb": -91
+    },
+    "timings": {
+     "openToPlayingMs": 101.32499998807907,
+     "openToFirstFrameMs": null,
+     "playedMs": 4451.819999992847
+    },
+    "stats": {
+     "lostPictures": 0,
+     "latePictures": 0,
+     "audioDropped": 38393,
+     "audioUnderruns": 0
+    }
+   },
+   "shot": null,
+   "wallMs": 4962
   }
  ]
 }

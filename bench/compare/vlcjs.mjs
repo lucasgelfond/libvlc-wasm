@@ -57,6 +57,7 @@ for (const s of samples) {
       const v = await variance(shot);
       maxVar = Math.max(maxVar, v);
       if (v > 20 && firstFrameMs == null) firstFrameMs = Date.now() - tOpen;
+      if (v >= maxVar && args.shots) (await import('node:fs')).writeFileSync(`${root}/bench/compare/vlcjs-${s.id}.png`, shot);
     }
   } catch (e) {
     errors.push(String(e.message ?? e));
