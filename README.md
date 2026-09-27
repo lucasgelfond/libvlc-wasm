@@ -258,7 +258,7 @@ All media directories are gitignored; the manifests, hashes and results are comm
 ```sh
 node tests/verify-corpus.mjs --engines=chromium,webkit,firefox   # libvlc-wasm + browsers on the corpus
 node corpus/compat/build.mjs                  # native VLC, native FFmpeg, ffmpeg.wasm -> compat.json
-node corpus/compat/fate.mjs                   # the FATE suite with every tool -> fate-*.json, FATE.md
+node corpus/compat/fate.mjs                   # the FATE suite with every tool -> fate-*.json
 node corpus/compat/suite.mjs --suite=libvpx   # any other suite -> corpus/compat/suites/
 ```
 

@@ -97,7 +97,7 @@ node corpus/compat/fate.mjs --tool=wasm,summary --resume --retry=.   # re-measur
 ```
 
 Compare `corpus/compat/fate-summary.json` with the copy: the overall `wasm` count must not
-drop, and no folder may lose files. `corpus/compat/FATE.md` lists every failing file with
+drop, and no folder may lose files. `corpus/compat/fate-summary.json` (`actionable`) lists every failing file with
 its cause and log. Native FFmpeg/VLC columns only need re-measuring when those tools change
 (`--tool=ffmpeg,vlc`).
 
