@@ -23,6 +23,11 @@ export class Session {
 	rate = $state(1);
 	tracks = $state<Track[]>([]);
 	chapters = $state<{ name: string | null; time: number }[]>([]);
+	/** DVD titles (and the menu), or MKV editions. */
+	titles = $state<{ name: string | null; duration: number; menu: boolean }[]>([]);
+	title = $state(-1);
+	chapter = $state(-1);
+	ended = $state(false);
 	presets = $state<string[]>([]);
 	equalizer = $state<number | null>(null);
 	aspect = $state<string | null>(null);
@@ -37,6 +42,8 @@ export class Session {
 	get video() { return this.tracks.filter((t) => t.type === 'video'); }
 	get audio() { return this.tracks.filter((t) => t.type === 'audio'); }
 	get subtitles() { return this.tracks.filter((t) => t.type === 'text'); }
+	get inMenu() { return !!this.titles[this.title]?.menu; }
+	get hasMenu() { return this.titles.some((t) => t.menu); }
 
 	async start(canvas: HTMLCanvasElement) {
 		try {
@@ -49,7 +56,15 @@ export class Session {
 			p.on('statechange', (s) => { this.state = s; });
 			p.on('durationchange', (d) => { this.duration = d; });
 			p.on('tracks', (t) => { this.tracks = t; });
-			p.on('chapters', (c) => { this.chapters = c.chapters; });
+			p.on('chapters', (c) => {
+				this.chapters = c.chapters;
+				this.titles = c.titles;
+				this.title = c.title;
+				this.chapter = c.chapter;
+			});
+			p.on('chapterchange', ({ title, chapter }) => { this.title = title; this.chapter = chapter; });
+			p.on('ended', () => { this.ended = true; });
+			p.on('playing', () => { this.ended = false; });
 			p.on('volumechange', ({ volume, muted }) => { this.volume = volume; this.muted = muted; });
 			p.on('ratechange', (r) => { this.rate = r; });
 			p.on('audiolevel', (l) => { this.level = l.peak; });
@@ -70,18 +85,39 @@ export class Session {
 	async open(files: File[]) {
 		const p = this.player;
 		if (!p || !files.length) return;
+		this.unlockAudio();
+		// A DVD folder (VIDEO_TS): its files go in together and play as a disc.
+		const disc = files.filter((f) => /\.(ifo|bup|vob)$/i.test(f.name));
+		if (disc.some((f) => /^video_ts\.ifo$/i.test(f.name))) {
+			this.#reset(files[0].webkitRelativePath?.split('/')[0] || 'DVD');
+			await p.open(disc);
+			return;
+		}
 		const media = files.filter((f) => !isSubtitle(f));
 		const subs = files.filter(isSubtitle);
 		if (!media.length) return this.addSubtitles(subs);
-		this.error = null;
-		this.name = media[0].name;
-		this.tracks = [];
-		this.chapters = [];
-		this.duration = 0;
+		this.#reset(media[0].name);
 		const idx = subs.find((s) => /\.idx$/i.test(s.name));
 		await p.open(media[0], {
 			subtitles: idx ? [idx, ...subs.filter((s) => s !== idx)] : subs[0],
 		});
+	}
+
+	#reset(name: string) {
+		this.error = null;
+		this.ended = false;
+		this.name = name;
+		this.tracks = [];
+		this.chapters = [];
+		this.titles = [];
+		this.title = this.chapter = -1;
+		this.duration = 0;
+	}
+
+	/** Browsers start audio only after a click or key; any one will do. */
+	unlockAudio() {
+		const ctx = this.player?.audioContext;
+		if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
 	}
 
 	async addSubtitles(files: File[]) {
@@ -90,7 +126,14 @@ export class Session {
 		await this.player.addSubtitles(idx ? [idx, ...files.filter((s) => s !== idx)] : files[0]);
 	}
 
-	toggle() { return this.player?.togglePause(); }
+	toggle() {
+		if (this.ended && this.player) { this.ended = false; return this.player.play(); }
+		return this.player?.togglePause();
+	}
+	setTitle(i: number) { return this.player?.setTitle(i); }
+	setChapter(i: number) { return this.player?.setChapter(i); }
+	menu() { return this.player?.menu(); }
+	navigate(a: 'activate' | 'up' | 'down' | 'left' | 'right') { return this.player?.navigate(a); }
 	seek(t: number) { return this.player?.seek(Math.max(0, Math.min(t, this.duration || t))); }
 	skip(dt: number) { return this.seek(this.time + dt); }
 	setVolume(v: number) { if (this.player) { this.player.volume = v; this.volume = v; } }

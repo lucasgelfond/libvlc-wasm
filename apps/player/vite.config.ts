@@ -2,6 +2,9 @@ import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, type Plugin, type PreviewServer, type ViteDevServer } from 'vite';
+import { createReadStream, existsSync, statSync } from 'node:fs';
+import { join, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // libvlc-wasm needs SharedArrayBuffer, so every response must carry these.
 // A middleware rather than server.headers: the latter misses some responses
@@ -18,9 +21,25 @@ const stamp = (server: ViteDevServer | PreviewServer) => {
 };
 const isolate: Plugin = { name: 'isolate', configureServer: stamp, configurePreviewServer: stamp };
 
+// The test corpus (corpus/media, fetched by corpus/fetch.mjs) at /media/, for
+// the sample gallery and the formats page: try a file here or download it.
+const mediaRoot = resolve(fileURLToPath(new URL('../../corpus/media', import.meta.url)));
+const serveMedia = (server: ViteDevServer | PreviewServer) => {
+	server.middlewares.use('/media', (req, res, next) => {
+		const path = resolve(join(mediaRoot, decodeURIComponent(((req as { url?: string }).url ?? '/').split('?')[0])));
+		if (!path.startsWith(mediaRoot + sep) || !existsSync(path) || !statSync(path).isFile()) return next();
+		res.setHeader('Content-Type', 'application/octet-stream');
+		res.setHeader('Content-Length', statSync(path).size);
+		res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+		createReadStream(path).pipe(res);
+	});
+};
+const media: Plugin = { name: 'corpus-media', configureServer: serveMedia, configurePreviewServer: serveMedia };
+
 export default defineConfig({
 	plugins: [
 		isolate,
+		media,
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {

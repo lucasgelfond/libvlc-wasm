@@ -60,7 +60,7 @@ function ffmpegArgs(input, kind) {
 function parseFfmpeg(log, kind) {
   const input = log.split(/Stream mapping:|Output #0/)[0];
   const streams = [...input.matchAll(/Stream #0:\d+[^:]*: (Video|Audio|Subtitle): ([\w-]+)/g)].map((m) => `${m[1].toLowerCase()}:${m[2]}`);
-  const errors = log.split('\n').filter((l) => /error|invalid|not supported|unsupported|could not|failed|no decoder|unknown/i.test(l) && !/^\s*(Stream|Metadata)|muxing overhead|^\[out#/.test(l));
+  const errors = log.split('\n').filter((l) => /error|invalid|not supported|unsupported|could not|failed|no decoder|unknown/i.test(l) && !/^\s*(Stream|Metadata)|muxing overhead|harmless|^\[out#/.test(l));
   const r = { streams: [...new Set(streams)], firstError: errors[0]?.trim().slice(0, 200) ?? null, errorLines: errors.length };
   if (kind === 'video') r.frames = +([...log.matchAll(/frame=\s*(\d+)/g)].pop()?.[1] ?? 0);
   if (kind === 'audio') {
@@ -128,13 +128,14 @@ function wavInfo(path) {
   }
   return { bytes: data, seconds: data / (rate * channels * (bits / 8) || 1) };
 }
-async function vlcOne(s) {
-  const j = job(s);
+// The statistics vout needs a fixed chroma, or VLC fails to build a converter
+// for palettized (Smacker, FLIC) and VideoToolbox (CVPX) pictures.
+async function vlcRun(s, j, extra = []) {
   const wav = `${scratch}/vlc-${s.id}.wav`;
   rmSync(wav, { force: true });
   const argv = ['-I', 'dummy', '-vv', '--no-media-library', '--no-video-title-show', '--no-osd', '--no-metadata-network-access',
     '--no-sub-autodetect-file', '--no-loop', '--no-repeat', '--no-drop-late-frames', '--no-skip-frames',
-    '--vout=stats', '--aout=afile', `--audiofile-file=${wav}`, `--run-time=${SECONDS}`, '--play-and-exit'];
+    '--vout=stats', '--dummy-chroma=I420', '--aout=afile', `--audiofile-file=${wav}`, `--run-time=${SECONDS}`, '--play-and-exit', ...extra];
   if (j.subs) argv.push(j.overVideo, `--sub-file=${j.file}`);
   else argv.push(j.file);
   const { out, timedOut } = await run(VLC, argv, { timeoutMs: 45000 });
@@ -149,21 +150,34 @@ async function vlcOne(s) {
     frames: (out.match(/VOUT got/g) ?? []).length,
     audioSeconds: +w.seconds.toFixed(3),
     peakDb,
-    demux: [...out.matchAll(/using demux module "([^"]+)"/g)].map((m) => m[1]).filter((m) => m !== 'es' || true),
+    demux: [...new Set([...out.matchAll(/using demux module "([^"]+)"/g)].map((m) => m[1]))],
     decoders: [...new Set([...out.matchAll(/using (video|audio|spu) decoder module "([^"]+)"/g)].map((m) => `${m[1]}:${m[2]}`))],
     noDecoder: [...new Set([...out.matchAll(/(?:no suitable decoder module for fourcc `(.{4})'|Codec `(.{4})' \(([^)]*)\) is not supported)/g)].map((m) => (m[1] ?? `${m[2]} (${m[3]})`).trim()))],
     late: (out.match(/picture is too late|late frames, dropping/g) ?? []).length,
     timedOut,
   };
   if (j.subs) {
-    r.subpictures = (out.match(/can't get output subpicture|subpicture (heap|channel)|spu.*render/g) ?? []).length;
+    r.subpictureDrops = (out.match(/can't get output subpicture/g) ?? []).length;
     r.vobsubTracks = (out.match(/New vobsub track detected/g) ?? []).length;
   }
+  return r;
+}
+async function vlcOne(s) {
+  const j = job(s);
+  const r = await vlcRun(s, j);
+  // VLC.app prefers VideoToolbox for H.264/HEVC. When the default path shows
+  // nothing, say whether VLC's software decoder would have.
+  if (j.hasVideo && !j.subs && r.frames === 0) {
+    const sw = await vlcRun(s, j, ['--codec=avcodec,none', '--avcodec-hw=none']);
+    r.software = { frames: sw.frames, decoders: sw.decoders };
+  }
   meas.vlc[s.id] = r;
-  console.log(`vlc     ${s.id.padEnd(44)} frames=${r.frames} audio=${r.audioSeconds}s dec=${r.decoders.join(',')}${r.noDecoder.length ? ` NO:${r.noDecoder}` : ''}`);
+  console.log(`vlc     ${s.id.padEnd(44)} frames=${r.frames}${r.software ? ` (sw ${r.software.frames})` : ''} audio=${r.audioSeconds}s dec=${r.decoders.join(',')}${r.noDecoder.length ? ` NO:${r.noDecoder}` : ''}`);
+}
+if (measure.has('vlc') || !meas.tools.nativeVlc || meas.tools.nativeVlc === 'unknown') {
+  meas.tools.nativeVlc = /VLC (?:media player|version) ([\d.]+)/.exec((await run(VLC, ['--version'])).out)?.[1] ?? 'unknown';
 }
 if (measure.has('vlc')) {
-  meas.tools.nativeVlc = /VLC media player ([\d.]+)/.exec((await run(VLC, ['--version'])).out)?.[1] ?? 'unknown';
   // VLC paces playback in real time, so run a few at once.
   await pool(todo, 4, vlcOne);
   saveMeas();
@@ -265,7 +279,10 @@ function ffVerdict(m, j) {
   if (j.hasAudio) bits.push(m.audio.samples > 0 ? `${m.audio.samples} audio samples, ${db(m.audio.peakDb)}` : 'no audio decoded');
   const err = (j.hasVideo && !video ? m.video.firstError : null) ?? (j.hasAudio && !audio ? m.audio.firstError : null);
   if (err) bits.push(`error: ${err}`);
-  else if ((m.video?.errorLines ?? 0) + (m.audio?.errorLines ?? 0) > 0) bits.push(`${(m.video?.errorLines ?? 0) + (m.audio?.errorLines ?? 0)} decode warnings/errors logged`);
+  else {
+    const n = (j.hasVideo ? m.video.errorLines : 0) + (j.hasAudio ? m.audio.errorLines : 0);
+    if (n > 0) bits.push(`${n} warning/error lines logged`);
+  }
   return { video, audio, note: bits.join('; ') };
 }
 function vlcVerdict(m, j, s) {
@@ -275,7 +292,7 @@ function vlcVerdict(m, j, s) {
     const ok = m.decoders.includes('spu:spudec') && m.vobsubTracks > 0;
     return {
       video: null, audio: null, subtitles: ok,
-      note: `${ok ? 'vobsub demuxed and spudec decoder opened' : 'VobSub not decoded'} over ${s.test.video}; ${m.subpictures} subpictures decoded but dropped (no vout at their timestamps in the 10 s window), so rendering is not verified`,
+      note: `${ok ? 'vobsub track demuxed and spudec decoder opened' : 'VobSub not decoded'} as --sub-file over ${s.test.video} (${m.frames} pictures)${m.subpictureDrops ? `; ${m.subpictureDrops} subpictures could not be output` : ''}; blending onto the picture is not verified`,
     };
   }
   const video = j.hasVideo ? m.frames > 0 : null;
@@ -283,6 +300,7 @@ function vlcVerdict(m, j, s) {
   if (j.hasVideo) bits.push(`${m.frames} pictures displayed`);
   if (j.hasAudio) bits.push(m.audioSeconds > 0 ? `${m.audioSeconds} s audio, ${db(m.peakDb)}` : 'no audio decoded');
   if (m.decoders.length) bits.push(`decoders ${m.decoders.join(', ')}`);
+  if (m.software) bits.push(`with software decoding forced (--codec=avcodec,none): ${m.software.frames} pictures`);
   if (m.noDecoder.length) bits.push(`no decoder for ${m.noDecoder.join(', ')}`);
   if (!m.demux.length) bits.push('no demuxer claimed the file');
   if (s.test?.needs === 'soundfont') bits.push('VLC.app renders MIDI with its AudioToolbox synth (built-in GM bank), no soundfont needed');

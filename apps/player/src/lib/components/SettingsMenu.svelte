@@ -9,7 +9,9 @@
 	import RiEqualizerLine from 'remixicon-svelte/icons/equalizer-line';
 	import RiFilmLine from 'remixicon-svelte/icons/film-line';
 	import RiTimeLine from 'remixicon-svelte/icons/time-line';
-	import { trackLabel, type Session } from '$lib/session.svelte';
+	import RiDiscLine from 'remixicon-svelte/icons/disc-line';
+	import RiListUnordered from 'remixicon-svelte/icons/list-unordered';
+	import { trackLabel, formatTime, type Session } from '$lib/session.svelte';
 
 	let {
 		session,
@@ -33,6 +35,47 @@
 		{/snippet}
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content align="end" side="top" sideOffset={10} class="w-64">
+		{#if session.titles.length > 1}
+			<DropdownMenu.Sub>
+				<DropdownMenu.SubTrigger>
+					<RiDiscLine /> Title
+					<span class="text-muted-foreground ml-auto max-w-28 truncate text-xs">
+						{session.titles[session.title]?.name ?? '—'}
+					</span>
+				</DropdownMenu.SubTrigger>
+				<DropdownMenu.SubContent class="max-h-80 w-64 overflow-y-auto">
+					<DropdownMenu.RadioGroup value={String(session.title)} onValueChange={(v) => session.setTitle(+v)}>
+						{#each session.titles as t, i (i)}
+							<DropdownMenu.RadioItem value={String(i)}>
+								<span class="truncate">{t.name ?? `Title ${i}`}</span>
+								{#if !t.menu && t.duration}<span class="text-muted-foreground ml-auto pl-2 text-xs tabular-nums">{formatTime(t.duration)}</span>{/if}
+							</DropdownMenu.RadioItem>
+						{/each}
+					</DropdownMenu.RadioGroup>
+				</DropdownMenu.SubContent>
+			</DropdownMenu.Sub>
+		{/if}
+		{#if session.chapters.length > 1}
+			<DropdownMenu.Sub>
+				<DropdownMenu.SubTrigger>
+					<RiListUnordered /> Chapter
+					<span class="text-muted-foreground ml-auto max-w-28 truncate text-xs">
+						{session.chapters[session.chapter]?.name ?? (session.chapter >= 0 ? `Chapter ${session.chapter + 1}` : '—')}
+					</span>
+				</DropdownMenu.SubTrigger>
+				<DropdownMenu.SubContent class="max-h-80 w-64 overflow-y-auto">
+					<DropdownMenu.RadioGroup value={String(session.chapter)} onValueChange={(v) => session.setChapter(+v)}>
+						{#each session.chapters as c, i (i)}
+							<DropdownMenu.RadioItem value={String(i)}>
+								<span class="truncate">{c.name ?? `Chapter ${i + 1}`}</span>
+								<span class="text-muted-foreground ml-auto pl-2 text-xs tabular-nums">{formatTime(c.time)}</span>
+							</DropdownMenu.RadioItem>
+						{/each}
+					</DropdownMenu.RadioGroup>
+				</DropdownMenu.SubContent>
+			</DropdownMenu.Sub>
+		{/if}
+		{#if session.titles.length > 1 || session.chapters.length > 1}<DropdownMenu.Separator />{/if}
 		<DropdownMenu.Sub>
 			<DropdownMenu.SubTrigger>
 				<RiSpeedUpLine /> Speed

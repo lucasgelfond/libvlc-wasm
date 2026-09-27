@@ -2,10 +2,10 @@
 # An unencrypted DVD-Video image for the DVD tests (corpus/media/gen/t_dvd.iso,
 # and the same disc as corpus/media/gen/VIDEO_TS/): a still menu with two
 # buttons -- left plays title 1 (6 s, three chapters), right plays title 2
-# (3 s) -- NTSC, 16:9, MPEG-2 + AC-3. Needs ffmpeg, dvdauthor (with spumux)
-# and genisoimage; or run it in Docker:
+# (3 s) -- NTSC, 16:9, MPEG-2 + AC-3. Needs ffmpeg, dvdauthor (with spumux),
+# genisoimage and ImageMagick; or run it in Docker:
 #   docker run --rm -v "$PWD":/w -w /w debian:trixie sh -c \
-#     'apt-get update -qq && apt-get install -y -qq ffmpeg dvdauthor genisoimage >/dev/null && sh tests/make-dvd.sh'
+#     'apt-get update -qq && apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick >/dev/null && sh tests/make-dvd.sh'
 set -eu
 cd "$(dirname "$0")/../corpus/media" && mkdir -p gen && cd gen
 tmp=$(mktemp -d)
@@ -25,15 +25,18 @@ ffmpeg $q -f lavfi -i smptebars=size=720x480:rate=30000/1001 -f lavfi -i sine=fr
 BOXES="drawbox=x=80:y=300:w=240:h=80:t=fill:c=0x3050a0,drawbox=x=400:y=300:w=240:h=80:t=fill:c=0x3050a0"
 ffmpeg $q -f lavfi -i "color=c=0x101828:s=720x480:r=30000/1001,$BOXES" -f lavfi -i anullsrc=r=48000:cl=stereo \
   -t 1 -target ntsc-dvd -aspect 16:9 "$tmp/menu_bg.mpg"
-for kind in highlight:yellow select:red; do
+# spumux needs palette-indexed PNGs: it silently drops RGBA ones (empty
+# subpicture, invisible highlight), so draw them with ImageMagick as PNG8.
+# The normal layer is a faint outline; highlight (hover) yellow; select red.
+for kind in normal:'#ffffff40' highlight:yellow select:red; do
   name=${kind%%:*}; colour=${kind#*:}
-  ffmpeg $q -f lavfi -i "color=c=black@0.0:s=720x480,format=rgba,drawbox=x=80:y=300:w=240:h=80:t=6:c=$colour,drawbox=x=400:y=300:w=240:h=80:t=6:c=$colour" \
-    -frames:v 1 "$tmp/$name.png"
+  convert -size 720x480 xc:none -fill none -stroke "$colour" -strokewidth 6 \
+    -draw "rectangle 83,303 317,377" -draw "rectangle 403,303 637,377" PNG8:"$tmp/$name.png"
 done
 cat > "$tmp/menu.xml" <<'XML'
 <subpictures format="NTSC">
   <stream>
-    <spu start="00:00:00.00" force="yes" highlight="highlight.png" select="select.png">
+    <spu start="00:00:00.00" force="yes" image="normal.png" highlight="highlight.png" select="select.png">
       <button name="left" x0="80" y0="300" x1="320" y1="380" right="right"/>
       <button name="right" x0="400" y0="300" x1="640" y1="380" left="left"/>
     </spu>

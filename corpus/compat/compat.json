@@ -3,7 +3,7 @@
  "tools": {
   "nativeVlc": "3.0.24",
   "ffmpeg": "ffmpeg version 9.0.2",
-  "ffmpegWasm": null,
+  "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)",
   "libvlcWasm": "corpus/results/results.json (2026-09-27T06:37:31.283Z)",
   "browsers": [
    "chromium",
@@ -25,9 +25,9 @@
    "bytes": 201000,
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "87 pictures displayed; 3.669 s audio, peak -6 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -35,9 +35,9 @@
     "note": "109 video frames; 161792 audio samples, peak -6 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "109 video frames; 161792 audio samples, peak -6 dB; 1 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -66,19 +66,19 @@
    "bytes": 726206,
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "149 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "144 video frames; 74 decode warnings/errors logged"
+    "note": "144 video frames; 71 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "144 video frames; 71 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -106,9 +106,9 @@
    "bytes": 2097152,
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "264 pictures displayed; 9.52 s audio, peak -24.5 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -116,9 +116,9 @@
     "note": "240 video frames; 884736 audio samples, peak -24.3 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "240 video frames; 880640 audio samples, peak -24.5 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -148,18 +148,18 @@
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "5.526 s audio, peak -2.5 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "487424 audio samples, peak -2.5 dB; 3 decode warnings/errors logged"
+    "note": "487424 audio samples, peak -2.5 dB; 1 warning/error lines logged"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "487424 audio samples, peak -2.5 dB; 1 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -187,9 +187,9 @@
    "bytes": 100000,
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "149 pictures displayed; 10.35 s audio, peak -4.2 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -197,9 +197,9 @@
     "note": "88 video frames; 80352 audio samples, peak -4.2 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "88 video frames; 80352 audio samples, peak -4.2 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -229,18 +229,18 @@
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "1.44 s audio, peak -1.3 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "11520 audio samples, peak -1.3 dB; 3 decode warnings/errors logged"
+    "note": "11520 audio samples, peak -1.3 dB; 1 warning/error lines logged"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "11520 audio samples, peak -1.3 dB; 1 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -268,19 +268,19 @@
    "bytes": 5993060,
    "whyBrowserCant": "RV20 has no browser decoder",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "219 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "196 video frames; 9 decode warnings/errors logged"
+    "note": "196 video frames; 7 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "196 video frames; 7 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -308,9 +308,9 @@
    "bytes": 1048576,
    "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "122 pictures displayed; 10.35 s audio, peak 0 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -318,9 +318,9 @@
     "note": "124 video frames; 80352 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "124 video frames; 80352 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -349,9 +349,9 @@
    "bytes": 449508,
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "151 pictures displayed; 10.24 s audio, peak -14.9 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -359,9 +359,9 @@
     "note": "124 video frames; 167424 audio samples, peak -14.9 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "124 video frames; 167936 audio samples, peak -14.9 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -390,19 +390,19 @@
    "bytes": 2236865,
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "150 pictures displayed; 10.176 s audio, peak -5.1 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "149 video frames; 334848 audio samples, peak -5.1 dB; 2 decode warnings/errors logged"
+    "note": "149 video frames; 334848 audio samples, peak -5.1 dB; 2 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "149 video frames; 335872 audio samples, peak -5.1 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -431,19 +431,19 @@
    "bytes": 437157,
    "whyBrowserCant": "Raw VC-1 RCV stream; no browser VC-1 decoder",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "25 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "25 video frames; 2 decode warnings/errors logged"
+    "note": "25 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "25 video frames; 1 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -471,19 +471,19 @@
    "bytes": 115867,
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "23 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "14 video frames; 2 decode warnings/errors logged"
+    "note": "14 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "14 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -512,18 +512,18 @@
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.2 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "80160 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+    "note": "80160 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "81600 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -552,18 +552,18 @@
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "0.23 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "20286 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+    "note": "20286 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "20286 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": false,
@@ -591,19 +591,19 @@
    "bytes": 29914,
    "whyBrowserCant": "ASF/WMV/WMA not supported by any browser (no Windows Media in MSE/<video>)",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "1 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "2 video frames; 2 decode warnings/errors logged"
+    "note": "2 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": false,
     "audio": null,
-    "note": "not measured"
+    "note": "0 video frames; error: [mss2 @ 0xdef1e0] header error"
    },
    "libvlcWasm": {
     "passed": false,
@@ -631,19 +631,19 @@
    "bytes": 317440,
    "whyBrowserCant": "AVI container unsupported by browsers",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "50 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "50 video frames; 2 decode warnings/errors logged"
+    "note": "50 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "50 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -671,19 +671,19 @@
    "bytes": 2097152,
    "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "234 pictures displayed; 0.072 s audio, peak -21.5 dB; decoders video:avcodec, audio:mpg123"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "234 video frames; 940032 audio samples, peak -15.4 dB; 425 decode warnings/errors logged"
+    "note": "234 video frames; 940032 audio samples, peak -15.4 dB; 425 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "234 video frames; 940032 audio samples, peak -15.4 dB; 425 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": false,
@@ -712,19 +712,19 @@
    "bytes": 5242880,
    "whyBrowserCant": "AVI container unsupported by browsers; MPEG-4 Part 2 ASP not decoded by Chrome",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": false,
+    "note": "249 pictures displayed; no audio decoded; decoders video:avcodec, audio:mpg123"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "248 video frames; 4608 audio samples, peak -59.2 dB; 2 decode warnings/errors logged"
+    "note": "248 video frames; 4608 audio samples, peak -59.2 dB; 2 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "248 video frames; 4608 audio samples, peak -59.4 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": false,
@@ -753,9 +753,9 @@
    "bytes": 509584,
    "whyBrowserCant": "AVI container unsupported by browsers",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "143 pictures displayed; 9.975 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -763,9 +763,9 @@
     "note": "50 video frames; 115763 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "50 video frames; 115763 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -794,19 +794,19 @@
    "bytes": 121458,
    "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "76 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "40 video frames; 2 decode warnings/errors logged"
+    "note": "40 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "40 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -834,19 +834,19 @@
    "bytes": 1048576,
    "whyBrowserCant": "AVI container unsupported by browsers",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "100 pictures displayed; 1.155 s audio, peak -1 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "100 video frames; 163170 audio samples, peak -1 dB; 2 decode warnings/errors logged"
+    "note": "100 video frames; 163170 audio samples, peak -1 dB; 2 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "100 video frames; 163170 audio samples, peak -1 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -875,9 +875,9 @@
    "bytes": 939260,
    "whyBrowserCant": "AVI container unsupported by browsers",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "132 pictures displayed; 8.925 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -885,9 +885,9 @@
     "note": "133 video frames; 196972 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "133 video frames; 196972 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -916,9 +916,9 @@
    "bytes": 10240000,
    "whyBrowserCant": "AVI container unsupported by browsers",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "257 pictures displayed; 8.725 s audio, peak -0.2 dB; decoders video:avcodec, audio:g711"
    },
    "ffmpeg": {
     "video": true,
@@ -926,9 +926,9 @@
     "note": "257 video frames; 192828 audio samples, peak -0.2 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "257 video frames; 192828 audio samples, peak -0.2 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -957,19 +957,19 @@
    "bytes": 294364,
    "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "1 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "1 video frames; 2 decode warnings/errors logged"
+    "note": "1 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "1 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -997,9 +997,9 @@
    "bytes": 409600,
    "whyBrowserCant": "AVI container unsupported by browsers",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": false,
+    "note": "240 pictures displayed; no audio decoded; decoders video:avcodec, audio:speex"
    },
    "ffmpeg": {
     "video": true,
@@ -1007,9 +1007,9 @@
     "note": "240 video frames; 320640 audio samples, peak -16.3 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": false,
+    "note": "240 video frames; no audio decoded; error: [avi @ 0xdeea50] Failed to open codec in avformat_find_stream_info"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1038,19 +1038,19 @@
    "bytes": 122880,
    "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "1 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "1 video frames; 2 decode warnings/errors logged"
+    "note": "1 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "1 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1078,19 +1078,19 @@
    "bytes": 210944,
    "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "25 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "25 video frames; 2 decode warnings/errors logged"
+    "note": "25 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "25 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1118,19 +1118,19 @@
    "bytes": 5242880,
    "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4)",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "180 pictures displayed; 7.552 s audio, peak -14.2 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "181 video frames; 728064 audio samples, peak -14.2 dB; 1 decode warnings/errors logged"
+    "note": "181 video frames; 728064 audio samples, peak -14.2 dB; 1 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "181 video frames; 728064 audio samples, peak -14.2 dB; 1 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1159,19 +1159,19 @@
    "bytes": 800000,
    "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4); also interlaced",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "31 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "31 video frames; 4 decode warnings/errors logged"
+    "note": "31 video frames; 1 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "31 video frames; 1 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1200,18 +1200,18 @@
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "777216 audio samples, peak -10.4 dB; 2 decode warnings/errors logged"
+    "note": "777216 audio samples, peak -10.4 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "777216 audio samples, peak -10.4 dB"
    },
    "libvlcWasm": {
     "passed": false,
@@ -1239,19 +1239,19 @@
    "bytes": 111648,
    "whyBrowserCant": "FLV container and VP6 unsupported (Flash is gone)",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "198 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "100 video frames; 2 decode warnings/errors logged"
+    "note": "100 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "100 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1279,19 +1279,19 @@
    "bytes": 512000,
    "whyBrowserCant": "Codecs are fine but browsers cannot demux FLV (needs flv.js-style remux)",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "295 pictures displayed; 10.031 s audio, peak -14.1 dB; decoders video:videotoolbox, audio:faad"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "299 video frames; 444416 audio samples, peak -14.1 dB; 2 decode warnings/errors logged"
+    "note": "299 video frames; 444416 audio samples, peak -14.1 dB; 2 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "299 video frames; 444416 audio samples, peak -14.1 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1320,19 +1320,19 @@
    "bytes": 1935067,
    "whyBrowserCant": "FLV/VP6/Nellymoser unsupported",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "165 pictures displayed; 13.003 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "63 video frames; 280832 audio samples, peak 0 dB; 46 decode warnings/errors logged"
+    "note": "63 video frames; 280832 audio samples, peak 0 dB; 46 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "63 video frames; 280320 audio samples, peak 0 dB; 46 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1361,9 +1361,9 @@
    "bytes": 766902,
    "whyBrowserCant": "H.263 and AMR-NB are not decoded by desktop Chrome",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "198 pictures displayed; 10.32 s audio, peak -0.4 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1371,9 +1371,9 @@
     "note": "101 video frames; 80160 audio samples, peak -0.4 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "101 video frames; 80160 audio samples, peak -0.4 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1402,19 +1402,19 @@
    "bytes": 22214,
    "whyBrowserCant": "H.263 not decoded by Chrome",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "54 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "29 video frames; 2 decode warnings/errors logged"
+    "note": "29 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "29 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1442,9 +1442,9 @@
    "bytes": 1878652,
    "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "150 pictures displayed; 10.5 s audio, peak -0.1 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
@@ -1452,9 +1452,9 @@
     "note": "150 video frames; 221524 audio samples, peak -0.1 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "150 video frames; 221524 audio samples, peak -0.1 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1483,19 +1483,19 @@
    "bytes": 77201,
    "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "10 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "10 video frames; 3 decode warnings/errors logged"
+    "note": "10 video frames; 1 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "10 video frames; 1 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1524,18 +1524,18 @@
    "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.124 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "892928 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+    "note": "892928 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "892928 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1564,18 +1564,18 @@
    "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.249 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "882176 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+    "note": "882176 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "883968 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1604,18 +1604,18 @@
    "whyBrowserCant": "QuickTime legacy codec; browsers only decode H.264/HEVC/AAC-class codecs in MOV",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.25 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "442020 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+    "note": "442020 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "442020 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1643,9 +1643,9 @@
    "bytes": 724092,
    "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "99 pictures displayed; 7.1 s audio, peak 0 dB; decoders video:avcodec, audio:avcodec"
    },
    "ffmpeg": {
     "video": true,
@@ -1653,9 +1653,9 @@
     "note": "100 video frames; 156552 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "100 video frames; 156552 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1684,19 +1684,19 @@
    "bytes": 466944,
    "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "19 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "20 video frames; 2 decode warnings/errors logged"
+    "note": "20 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "20 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1724,19 +1724,19 @@
    "bytes": 2895296,
    "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "210 pictures displayed; 5.857 s audio, peak -0.1 dB; decoders audio:avcodec, video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "210 video frames; 258300 audio samples, peak -0.1 dB; 2 decode warnings/errors logged"
+    "note": "210 video frames; 258300 audio samples, peak -0.1 dB; 2 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "210 video frames; 258300 audio samples, peak -0.1 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1765,19 +1765,19 @@
    "bytes": 901390,
    "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "26 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "27 video frames; 2 decode warnings/errors logged"
+    "note": "27 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "27 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1805,19 +1805,19 @@
    "bytes": 14572,
    "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "77 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "28 video frames; 2 decode warnings/errors logged"
+    "note": "28 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "28 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1845,19 +1845,19 @@
    "bytes": 355076,
    "whyBrowserCant": "NuppelVideo container/codec unsupported",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "9 pictures displayed; 0.418 s audio, peak 0 dB; decoders video:avcodec, audio:araw"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 decode warnings/errors logged"
+    "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "8 video frames; 36864 audio samples, peak 0 dB; 6 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -1886,19 +1886,19 @@
    "bytes": 5675040,
    "whyBrowserCant": "Vivo unsupported; note ffmpeg cannot decode this video layer either - good negative test",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": false,
+    "audio": false,
+    "note": "0 pictures displayed; no audio decoded; with software decoding forced (--codec=avcodec,none): 0 pictures"
    },
    "ffmpeg": {
     "video": false,
     "audio": true,
-    "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [in#0/vivo @ 0x7aec24000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
+    "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [in#0/vivo @ 0xc9b004000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": false,
+    "audio": true,
+    "note": "0 video frames; 159360 audio samples, peak -39.6 dB; error: [vivo @ 0xdeea40] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec"
    },
    "libvlcWasm": {
     "passed": false,
@@ -1927,19 +1927,19 @@
    "bytes": 2097152,
    "whyBrowserCant": "Game/legacy format; no browser demuxer or decoder",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": false,
+    "audio": false,
+    "note": "0 pictures displayed; no audio decoded; decoders audio:mpg123, video:avcodec; with software decoding forced (--codec=avcodec,none): 0 pictures"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 decode warnings/errors logged"
+    "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "89 video frames; 447552 audio samples, peak -6.3 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": false,
@@ -1969,18 +1969,18 @@
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "1.76 s audio, peak -74.7 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "516096 audio samples, peak -74.7 dB; 2 decode warnings/errors logged"
+    "note": "516096 audio samples, peak -74.7 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "516096 audio samples, peak -74.7 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2009,18 +2009,18 @@
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "1.504 s audio, peak -10.3 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "433152 audio samples, peak -10.3 dB; 2 decode warnings/errors logged"
+    "note": "433152 audio samples, peak -10.3 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "433152 audio samples, peak -10.3 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2049,18 +2049,18 @@
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "2.667 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "896000 audio samples, peak 0 dB; 2 decode warnings/errors logged"
+    "note": "896000 audio samples, peak 0 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "896000 audio samples, peak 0 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2089,18 +2089,18 @@
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere); ffprobe needs -f truehd",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "0.107 s audio, peak -7.9 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "40960 audio samples, peak -8 dB; 2 decode warnings/errors logged"
+    "note": "40960 audio samples, peak -8 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "40960 audio samples, peak -8 dB"
    },
    "libvlcWasm": {
     "passed": false,
@@ -2129,18 +2129,18 @@
    "whyBrowserCant": "Dolby/DTS codec; not decodable in Chrome (AC-3/E-AC-3 only in Safari/Edge on some OSes; DTS/TrueHD nowhere)",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "9.997 s audio, peak -12 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "882000 audio samples, peak -12 dB; 2 decode warnings/errors logged"
+    "note": "882000 audio samples, peak -12 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "882000 audio samples, peak -12 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2169,18 +2169,18 @@
    "whyBrowserCant": "No browser Musepack decoder",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.02 s audio, peak -1.5 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "884736 audio samples, peak -1.5 dB; 2 decode warnings/errors logged"
+    "note": "884736 audio samples, peak -1.5 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "884736 audio samples, peak -1.5 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2209,18 +2209,18 @@
    "whyBrowserCant": "No browser Musepack decoder",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.02 s audio, peak -1.5 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "884736 audio samples, peak -1.5 dB; 2 decode warnings/errors logged"
+    "note": "884736 audio samples, peak -1.5 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "884736 audio samples, peak -1.5 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2249,18 +2249,18 @@
    "whyBrowserCant": "No browser APE decoder",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "0.313 s audio, peak 0 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "27648 audio samples, peak 0 dB; 4 decode warnings/errors logged"
+    "note": "27648 audio samples, peak 0 dB; 2 warning/error lines logged"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "27648 audio samples, peak 0 dB; 2 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": false,
@@ -2289,18 +2289,18 @@
    "whyBrowserCant": "No browser TTA decoder",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.449 s audio, peak -0.2 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "1013760 audio samples, peak -0.2 dB; 2 decode warnings/errors logged"
+    "note": "1013760 audio samples, peak -0.2 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "1013760 audio samples, peak -0.2 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2329,18 +2329,18 @@
    "whyBrowserCant": "AMR not supported by desktop Chrome",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "5.68 s audio, peak -2.9 dB; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "45440 audio samples, peak -2.9 dB; 2 decode warnings/errors logged"
+    "note": "45440 audio samples, peak -2.9 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "45440 audio samples, peak -2.9 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2369,18 +2369,18 @@
    "whyBrowserCant": "No browser Shorten decoder",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; decoders audio:avcodec"
    },
    "ffmpeg": {
     "video": null,
     "audio": true,
-    "note": "882688 audio samples, peak -2.7 dB; 2 decode warnings/errors logged"
+    "note": "882688 audio samples, peak -2.7 dB"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "883200 audio samples, peak -2.7 dB"
    },
    "libvlcWasm": {
     "passed": false,
@@ -2408,19 +2408,19 @@
    "bytes": 673212,
    "whyBrowserCant": "Chrome decodes HEVC only with platform HW support (Win/macOS/Android/ChromeOS, Chrome 107+), MKV via <video> is unofficial, and DV P7 dual-layer is unsupported everywhere",
    "nativeVlc": {
-    "video": null,
+    "video": false,
     "audio": null,
-    "note": "not measured"
+    "note": "0 pictures displayed; decoders video:videotoolbox; with software decoding forced (--codec=avcodec,none): 1 pictures"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "1 video frames; 2 decode warnings/errors logged"
+    "note": "1 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "1 video frames"
    },
    "libvlcWasm": {
     "passed": false,
@@ -2448,19 +2448,19 @@
    "bytes": 78960,
    "whyBrowserCant": "MPEG-PS/TS with MPEG-2 video; browsers have no MPEG-2 video decoder and no PS/TS demuxer (MSE needs fMP4); DVB bitmap subtitles never rendered by browsers",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": false,
+    "audio": false,
+    "note": "0 pictures displayed; no audio decoded; decoders video:avcodec, audio:mpg123; with software decoding forced (--codec=avcodec,none): 0 pictures"
    },
    "ffmpeg": {
     "video": false,
     "audio": false,
-    "note": "0 video frames; no audio decoded; error: [in#0/mpegts @ 0xc79004000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
+    "note": "0 video frames; no audio decoded; error: [in#0/mpegts @ 0x7d4c28000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": false,
+    "audio": false,
+    "note": "0 video frames; no audio decoded; error: [mpegts @ 0xdeea40] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size"
    },
    "libvlcWasm": {
     "passed": false,
@@ -2491,7 +2491,8 @@
    "nativeVlc": {
     "video": null,
     "audio": null,
-    "note": "not measured"
+    "subtitles": true,
+    "note": "vobsub track demuxed and spudec decoder opened as --sub-file over gen/t_mpeg2_ac3.ts (0 pictures); 2 subpictures could not be output; blending onto the picture is not verified"
    },
    "ffmpeg": {
     "video": null,
@@ -2502,7 +2503,8 @@
    "ffmpegWasm": {
     "video": null,
     "audio": null,
-    "note": "not measured"
+    "subtitles": true,
+    "note": "73 KiB of subpictures decoded"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2530,19 +2532,19 @@
    "bytes": 1580076,
    "whyBrowserCant": "Raw MPEG-2 ES + embedded CEA-608 unsupported",
    "nativeVlc": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "134 pictures displayed; decoders video:avcodec"
    },
    "ffmpeg": {
     "video": true,
     "audio": null,
-    "note": "135 video frames; 2 decode warnings/errors logged"
+    "note": "135 video frames"
    },
    "ffmpegWasm": {
-    "video": null,
+    "video": true,
     "audio": null,
-    "note": "not measured"
+    "note": "135 video frames"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2570,19 +2572,19 @@
    "bytes": 8136447,
    "whyBrowserCant": "ASS/SSA styling needs libass; MPEG-4 ASP not decoded by Chrome",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "242 pictures displayed; 10.039 s audio, peak 0 dB; decoders video:avcodec, audio:vorbis, spu:libass"
    },
    "ffmpeg": {
     "video": true,
     "audio": true,
-    "note": "240 video frames; 961664 audio samples, peak 0 dB; 46 decode warnings/errors logged"
+    "note": "240 video frames; 961664 audio samples, peak 0 dB; 46 warning/error lines logged"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "240 video frames; 961664 audio samples, peak 0 dB; 46 warning/error lines logged"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2611,9 +2613,9 @@
    "bytes": 5763403,
    "whyBrowserCant": "Bitmap VobSub in MKV unsupported; multiple audio tracks not switchable in <video>",
    "nativeVlc": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "248 pictures displayed; 10.272 s audio, peak -11.5 dB; decoders video:videotoolbox, audio:mpg123, spu:spudec"
    },
    "ffmpeg": {
     "video": true,
@@ -2621,9 +2623,9 @@
     "note": "250 video frames; 963072 audio samples, peak -11.5 dB"
    },
    "ffmpegWasm": {
-    "video": null,
-    "audio": null,
-    "note": "not measured"
+    "video": true,
+    "audio": true,
+    "note": "250 video frames; 963072 audio samples, peak -11.5 dB"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2653,18 +2655,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10 s audio, peak -4.6 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x8fd00c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x8db00c000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: snes-spc.spc: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2693,18 +2695,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10 s audio, peak -4.7 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0xb8d00c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x98900c000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: nes-nsf-tetris-gb-rip.nsf: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2733,18 +2735,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x8fcc28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x9d7004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: sega-genesis-vgz-gzip-vgm.vgz: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": false,
@@ -2773,18 +2775,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec; NOTE upstream wasm build.sh passes --disable-sidplay2",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10.1 s audio, peak -3 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0xbc6c28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0xa8f004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: c64-sid-rob-hubbard-commando.sid: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": false,
@@ -2813,18 +2815,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec; VLC needs a SoundFont (.sf2) supplied",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "9.99 s audio, peak -3.8 dB; decoders audio:audiotoolbox_midi; VLC.app renders MIDI with its AudioToolbox synth (built-in GM bank), no soundfont needed"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x8a0c28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x80ec28000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: standard-midi-file.mid: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2853,18 +2855,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10 s audio, peak -5.3 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x77ac28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0xbcf00c000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: axelf-mod-15-sample-soundtracker-no-m-k-.mod: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2893,18 +2895,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10 s audio, peak -10.2 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x98cc28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x881004000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: external-xm.xm: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2933,18 +2935,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10 s audio, peak -9.2 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0xa2700c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x80ec28000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: sandman-s3m.s3m: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,
@@ -2973,18 +2975,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "10 s audio, peak -9.2 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0x93ac28000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x730c28000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: for-a-change-it.it: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,
@@ -3013,18 +3015,18 @@
    "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
    "nativeVlc": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": true,
+    "note": "8.8 s audio, peak -91 dB; decoders audio:araw"
    },
    "ffmpeg": {
     "video": null,
     "audio": false,
-    "note": "no audio decoded; error: [in#0 @ 0xc5300c000] Error opening input: Invalid data found when processing input"
+    "note": "no audio decoded; error: [in#0 @ 0x77300c000] Error opening input: Invalid data found when processing input"
    },
    "ffmpegWasm": {
     "video": null,
-    "audio": null,
-    "note": "not measured"
+    "audio": false,
+    "note": "no audio decoded; error: openmpt-test-xm.xm: Invalid data found when processing input"
    },
    "libvlcWasm": {
     "passed": true,

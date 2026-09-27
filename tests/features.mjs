@@ -264,7 +264,16 @@ const results = await page.evaluate(async () => {
     // Click the right-hand button (x 400-640, y 300-380 of 720x480): title 2.
     // pointer() is false until the menu's video window exists.
     await waitFor(() => p.pointer('move', 520 / 720, 340 / 480), 4000, 'a video window to point at');
-    await sleep(100);
+    // Hover highlights the button: its outline (x 400-406) turns yellow once
+    // the still menu is redrawn with the new highlight.
+    const outline = () => {
+      p.renderer.draw();
+      const shot = new OffscreenCanvas(canvas.width, canvas.height);
+      shot.getContext('2d').drawImage(canvas, 0, 0);
+      return shot.getContext('2d').getImageData(Math.round(403 / 720 * canvas.width), Math.round(340 / 480 * canvas.height), 1, 1).data;
+    };
+    await waitFor(() => { const [r, g, b] = outline(); return r > 200 && g > 200 && b < 80; }, 2000,
+      `the yellow hover highlight (outline is rgb(${[...outline()].slice(0, 3)}))`);
     await p.pointer('down', 520 / 720, 340 / 480);
     await p.pointer('up', 520 / 720, 340 / 480);
     await waitFor(() => p.title === 2 && !p.inMenu, 4000, `title 2 after the click (title ${p.title})`);

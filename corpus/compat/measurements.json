@@ -1,8 +1,1109 @@
 {
  "tools": {
-  "ffmpeg": "ffmpeg version 9.0.2"
+  "ffmpeg": "ffmpeg version 9.0.2",
+  "nativeVlc": "unknown",
+  "ffmpegWasm": "@ffmpeg/core 0.12.10 (5.1.4)"
  },
- "vlc": {},
+ "vlc": {
+  "realvideo-3-cook": {
+   "frames": 87,
+   "audioSeconds": 3.669,
+   "peakDb": -6,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 2,
+   "timedOut": false
+  },
+  "realaudio-cook": {
+   "frames": 0,
+   "audioSeconds": 5.526,
+   "peakDb": -2.5,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "realaudio-28-8": {
+   "frames": 0,
+   "audioSeconds": 1.44,
+   "peakDb": -1.3,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "realvideo-g2-svt": {
+   "frames": 149,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "realvideo-4-cook-rmvb": {
+   "frames": 264,
+   "audioSeconds": 9.52,
+   "peakDb": -24.5,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "realaudio-sipr-8-5k": {
+   "frames": 149,
+   "audioSeconds": 10.35,
+   "peakDb": -4.2,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "realvideo-2-in-matroska": {
+   "frames": 219,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "realvideo-2-sipr-a-v-sync-bug": {
+   "frames": 122,
+   "audioSeconds": 10.35,
+   "peakDb": 0,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "wmv9-vc-1-simple-main-raw-rcv": {
+   "frames": 25,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "ms-mpeg4-v3-divx-in-asf": {
+   "frames": 23,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "asf"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "wma-lossless-24-bit": {
+   "frames": 0,
+   "audioSeconds": 0.23,
+   "peakDb": 0,
+   "demux": [
+    "asf"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "ms-screen-codec-2-wmv9-screen": {
+   "frames": 1,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "asf"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "ms-mpeg4-v1": {
+   "frames": 50,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "wmv8-x8-intra": {
+   "frames": 151,
+   "audioSeconds": 10.24,
+   "peakDb": -14.9,
+   "demux": [
+    "asf"
+   ],
+   "decoders": [
+    "audio:avcodec",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "wmv7": {
+   "frames": 150,
+   "audioSeconds": 10.176,
+   "peakDb": -5.1,
+   "demux": [
+    "asf"
+   ],
+   "decoders": [
+    "audio:avcodec",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "wma-voice-11k": {
+   "frames": 0,
+   "audioSeconds": 10.2,
+   "peakDb": 0,
+   "demux": [
+    "asf"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "xvid-mp3": {
+   "frames": 234,
+   "audioSeconds": 0.072,
+   "peakDb": -21.5,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:mpg123"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "indeo-3": {
+   "frames": 76,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "divx-5-mp3": {
+   "frames": 249,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:mpg123"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "cinepak": {
+   "frames": 143,
+   "audioSeconds": 9.975,
+   "peakDb": 0,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dvcpro-hd-720p50": {
+   "frames": 1,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "indeo-4-partial": {
+   "frames": 100,
+   "audioSeconds": 1.155,
+   "peakDb": -1,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dvd-vob-single-frame-dvd-subs": {
+   "frames": 1,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ps"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "mpeg-1-system-stream": {
+   "frames": 25,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ps"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "indeo-5": {
+   "frames": 132,
+   "audioSeconds": 8.925,
+   "peakDb": 0,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "motion-jpeg-mu-law-10-mb": {
+   "frames": 257,
+   "audioSeconds": 8.725,
+   "peakDb": -0.2,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:g711"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dts-in-mpeg-ts": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ts"
+   ],
+   "decoders": [],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "mpeg-2-field-encoded-ts": {
+   "frames": 31,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ts"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "on2-vp5-speex": {
+   "frames": 240,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avi"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:speex"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dvd-vob-mpeg-2-ac-3-5-mb": {
+   "frames": 180,
+   "audioSeconds": 7.552,
+   "peakDb": -14.2,
+   "demux": [
+    "ps"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "flash-vp6-sorenson-on2": {
+   "frames": 198,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "flv-with-h-264-aac": {
+   "frames": 295,
+   "audioSeconds": 10.031,
+   "peakDb": -14.1,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:faad"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "3gp-h-263-phone-clip": {
+   "frames": 54,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "sorenson-video-3": {
+   "frames": 10,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "vp6f-nellymoser": {
+   "frames": 165,
+   "audioSeconds": 13.003,
+   "peakDb": 0,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "3gpp-h-263-amr-nb": {
+   "frames": 198,
+   "audioSeconds": 10.32,
+   "peakDb": -0.4,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "sorenson-video-1": {
+   "frames": 150,
+   "audioSeconds": 10.5,
+   "peakDb": -0.1,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "qdesign-music-2": {
+   "frames": 0,
+   "audioSeconds": 10.124,
+   "peakDb": 0,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "bink-video": {
+   "frames": 19,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "ima4-adpcm": {
+   "frames": 0,
+   "audioSeconds": 10.249,
+   "peakDb": 0,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "mace-3-1": {
+   "frames": 0,
+   "audioSeconds": 10.25,
+   "peakDb": 0,
+   "demux": [
+    "mp4"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "autodesk-flic-640x480": {
+   "frames": 26,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "nuppelvideo-mythtv": {
+   "frames": 9,
+   "audioSeconds": 0.418,
+   "peakDb": 0,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "smacker": {
+   "frames": 99,
+   "audioSeconds": 7.1,
+   "peakDb": 0,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "playstation-str-mdec-xa": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ps"
+   ],
+   "decoders": [
+    "audio:mpg123",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false,
+   "software": {
+    "frames": 0,
+    "decoders": [
+     "audio:avcodec",
+     "video:avcodec"
+    ]
+   }
+  },
+  "ac-3-5-1-448k": {
+   "frames": 0,
+   "audioSeconds": 1.76,
+   "peakDb": -74.7,
+   "demux": [
+    "es"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "autodesk-flc-320x200": {
+   "frames": 77,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "e-ac-3-5-1-with-spx": {
+   "frames": 0,
+   "audioSeconds": 1.504,
+   "peakDb": -10.3,
+   "demux": [
+    "es"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dolby-truehd-atmos-8ch": {
+   "frames": 0,
+   "audioSeconds": 0.107,
+   "peakDb": -7.9,
+   "demux": [
+    "es"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dts-es": {
+   "frames": 0,
+   "audioSeconds": 2.667,
+   "peakDb": 0,
+   "demux": [
+    "es"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "id-roq-quake-3-logo": {
+   "frames": 210,
+   "audioSeconds": 5.857,
+   "peakDb": -0.1,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec",
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "vivo-2-vivoactive": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false,
+   "software": {
+    "frames": 0,
+    "decoders": []
+   }
+  },
+  "monkey-s-audio": {
+   "frames": 0,
+   "audioSeconds": 0.313,
+   "peakDb": 0,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "mlp-440-hz": {
+   "frames": 0,
+   "audioSeconds": 9.997,
+   "peakDb": -12,
+   "demux": [
+    "es"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "musepack-sv8": {
+   "frames": 0,
+   "audioSeconds": 10.02,
+   "peakDb": -1.5,
+   "demux": [
+    "mpc"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "shorten": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "hevc-main10-dolby-vision-p7-in-mkv": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:videotoolbox"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false,
+   "software": {
+    "frames": 1,
+    "decoders": [
+     "video:avcodec"
+    ]
+   }
+  },
+  "musepack-sv7": {
+   "frames": 0,
+   "audioSeconds": 10.02,
+   "peakDb": -1.5,
+   "demux": [
+    "mpc"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "amr-nb-12-2k": {
+   "frames": 0,
+   "audioSeconds": 5.68,
+   "peakDb": -2.9,
+   "demux": [
+    "avcodec"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "true-audio-6-6-mb": {
+   "frames": 0,
+   "audioSeconds": 10.449,
+   "peakDb": -0.2,
+   "demux": [
+    "tta"
+   ],
+   "decoders": [
+    "audio:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "mpeg-2-es-with-eia-608-closed-captions": {
+   "frames": 134,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "mpgv"
+   ],
+   "decoders": [
+    "video:avcodec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "dvb-subtitles-in-ts": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ts"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:mpg123"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false,
+   "software": {
+    "frames": 0,
+    "decoders": [
+     "video:avcodec",
+     "audio:avcodec"
+    ]
+   }
+  },
+  "vobsub-idx-sub": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ts",
+    "vobsub"
+   ],
+   "decoders": [
+    "spu:spudec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false,
+   "subpictureDrops": 2,
+   "vobsubTracks": 1
+  },
+  "mpeg-4-asp-vorbis-16-ass-ssa-tracks": {
+   "frames": 242,
+   "audioSeconds": 10.039,
+   "peakDb": 0,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:avcodec",
+    "audio:vorbis",
+    "spu:libass"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "sega-genesis-vgz-gzip-vgm": {
+   "frames": 0,
+   "audioSeconds": 0,
+   "peakDb": null,
+   "demux": [
+    "ps"
+   ],
+   "decoders": [],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "h-264-2x-mp3-vobsub-in-mkv": {
+   "frames": 248,
+   "audioSeconds": 10.272,
+   "peakDb": -11.5,
+   "demux": [
+    "mkv"
+   ],
+   "decoders": [
+    "video:videotoolbox",
+    "audio:mpg123",
+    "spu:spudec"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "snes-spc": {
+   "frames": 0,
+   "audioSeconds": 10,
+   "peakDb": -4.6,
+   "demux": [
+    "gme"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "nes-nsf-tetris-gb-rip": {
+   "frames": 0,
+   "audioSeconds": 10,
+   "peakDb": -4.7,
+   "demux": [
+    "gme"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "c64-sid-rob-hubbard-commando": {
+   "frames": 0,
+   "audioSeconds": 10.1,
+   "peakDb": -3,
+   "demux": [
+    "sid"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "standard-midi-file": {
+   "frames": 0,
+   "audioSeconds": 9.99,
+   "peakDb": -3.8,
+   "demux": [
+    "smf"
+   ],
+   "decoders": [
+    "audio:audiotoolbox_midi"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "axelf-mod-15-sample-soundtracker-no-m-k-": {
+   "frames": 0,
+   "audioSeconds": 10,
+   "peakDb": -5.3,
+   "demux": [
+    "mod"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "external-xm": {
+   "frames": 0,
+   "audioSeconds": 10,
+   "peakDb": -10.2,
+   "demux": [
+    "mod"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "sandman-s3m": {
+   "frames": 0,
+   "audioSeconds": 10,
+   "peakDb": -9.2,
+   "demux": [
+    "mod"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "openmpt-test-xm": {
+   "frames": 0,
+   "audioSeconds": 8.8,
+   "peakDb": -91,
+   "demux": [
+    "mod"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  },
+  "for-a-change-it": {
+   "frames": 0,
+   "audioSeconds": 10,
+   "peakDb": -9.2,
+   "demux": [
+    "mod"
+   ],
+   "decoders": [
+    "audio:araw"
+   ],
+   "noDecoder": [],
+   "late": 0,
+   "timedOut": false
+  }
+ },
  "ffmpeg": {
   "realvideo-3-cook": {
    "video": {
@@ -30,7 +1131,7 @@
     "streams": [
      "video:rv20"
     ],
-    "firstError": "[in#0 @ 0x957004000] Invalid stream index 1 for index at pos 726206",
+    "firstError": "[in#0 @ 0x874c24000] Invalid stream index 1 for index at pos 726206",
     "errorLines": 71,
     "frames": 144
    },
@@ -38,7 +1139,7 @@
     "streams": [
      "video:rv20"
     ],
-    "firstError": "[in#0 @ 0x839004000] Invalid stream index 1 for index at pos 726206",
+    "firstError": "[in#0 @ 0x9b2c24000] Invalid stream index 1 for index at pos 726206",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -78,7 +1179,7 @@
     "streams": [
      "audio:cook"
     ],
-    "firstError": "[in#0/rm @ 0x8bd004000] Failed to fully read block",
+    "firstError": "[in#0/rm @ 0x94b004000] Failed to fully read block",
     "errorLines": 1,
     "samples": 487424,
     "peakDb": -2.5
@@ -118,7 +1219,7 @@
     "streams": [
      "audio:ra_288"
     ],
-    "firstError": "[in#0/rm @ 0xa31004000] Failed to fully read block",
+    "firstError": "[in#0/rm @ 0x88ec28000] Failed to fully read block",
     "errorLines": 1,
     "samples": 11520,
     "peakDb": -1.3
@@ -129,7 +1230,7 @@
     "streams": [
      "video:rv20"
     ],
-    "firstError": "[null @ 0x844c24280] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 114 >= 114",
+    "firstError": "[null @ 0x757004280] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 114 >= 114",
     "errorLines": 7,
     "frames": 196
    },
@@ -191,7 +1292,7 @@
      "audio:wmav2",
      "video:wmv1"
     ],
-    "firstError": "[in#0/asf @ 0x856c28000] packet fragment position invalid 0,0 not in 0",
+    "firstError": "[in#0/asf @ 0x7db004000] packet fragment position invalid 0,0 not in 0",
     "errorLines": 1,
     "frames": 149
    },
@@ -200,7 +1301,7 @@
      "audio:wmav2",
      "video:wmv1"
     ],
-    "firstError": "[in#0/asf @ 0x756c24000] packet fragment position invalid 0,0 not in 0",
+    "firstError": "[in#0/asf @ 0xa15004000] packet fragment position invalid 0,0 not in 0",
     "errorLines": 1,
     "samples": 334848,
     "peakDb": -5.1
@@ -326,7 +1427,7 @@
      "video:mpeg4",
      "audio:mp3"
     ],
-    "firstError": "[mpeg4 @ 0x708c70e00] Error at MB: 60",
+    "firstError": "[mpeg4 @ 0xb68c50e00] Error at MB: 60",
     "errorLines": 424,
     "frames": 234
    },
@@ -335,7 +1436,7 @@
      "video:mpeg4",
      "audio:mp3"
     ],
-    "firstError": "[aist#0:1/mp3 @ 0xb17004600] [dec:mp3float @ 0xb1700c280] Error submitting packet to decoder: Invalid data found when processing input",
+    "firstError": "[aist#0:1/mp3 @ 0x79ec20600] [dec:mp3float @ 0x79f004280] Error submitting packet to decoder: Invalid data found when processing input",
     "errorLines": 1,
     "samples": 940032,
     "peakDb": -15.4
@@ -347,7 +1448,7 @@
      "video:mpeg4",
      "audio:mp3"
     ],
-    "firstError": "[in#0/avi @ 0xc18c24000] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
+    "firstError": "[in#0/avi @ 0x792c24000] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
     "errorLines": 1,
     "frames": 248
    },
@@ -356,7 +1457,7 @@
      "video:mpeg4",
      "audio:mp3"
     ],
-    "firstError": "[in#0/avi @ 0x910c24000] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
+    "firstError": "[in#0/avi @ 0x87ec24000] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
     "errorLines": 1,
     "samples": 4608,
     "peakDb": -59.2
@@ -408,7 +1509,7 @@
      "video:indeo4",
      "audio:pcm_u8"
     ],
-    "firstError": "[indeo4 @ 0xc48c31500] Error while decoding band: 0, plane: 0",
+    "firstError": "[indeo4 @ 0xa3ac51500] Error while decoding band: 0, plane: 0",
     "errorLines": 2,
     "frames": 100
    },
@@ -551,7 +1652,7 @@
      "video:mpeg2video",
      "audio:ac3"
     ],
-    "firstError": "[mpeg2video @ 0xb86801500] concealing 315 DC, 315 AC, 315 MV errors in I frame",
+    "firstError": "[mpeg2video @ 0xa54c71500] concealing 315 DC, 315 AC, 315 MV errors in I frame",
     "errorLines": 1,
     "frames": 181
    },
@@ -571,7 +1672,7 @@
     "streams": [
      "video:mpeg2video"
     ],
-    "firstError": "[mpeg2video @ 0x70cc50380] Invalid frame dimensions 0x0.",
+    "firstError": "[mpeg2video @ 0xa53024380] Invalid frame dimensions 0x0.",
     "errorLines": 1,
     "frames": 31
    },
@@ -579,7 +1680,7 @@
     "streams": [
      "video:mpeg2video"
     ],
-    "firstError": "[mpeg2video @ 0xc87024380] Invalid frame dimensions 0x0.",
+    "firstError": "[mpeg2video @ 0xa26c38380] Invalid frame dimensions 0x0.",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -629,7 +1730,7 @@
      "video:h264",
      "audio:aac"
     ],
-    "firstError": "[in#0/flv @ 0x7a9004000] Found invalid index entries, clearing the index.",
+    "firstError": "[in#0/flv @ 0xacec24000] Found invalid index entries, clearing the index.",
     "errorLines": 1,
     "frames": 299
    },
@@ -638,7 +1739,7 @@
      "video:h264",
      "audio:aac"
     ],
-    "firstError": "[in#0/flv @ 0xa34c24000] Found invalid index entries, clearing the index.",
+    "firstError": "[in#0/flv @ 0xa40c24000] Found invalid index entries, clearing the index.",
     "errorLines": 1,
     "samples": 444416,
     "peakDb": -14.1
@@ -659,7 +1760,7 @@
      "video:vp6f",
      "audio:nellymoser"
     ],
-    "firstError": "[aist#0:1/nellymoser @ 0x8c4c20300] [dec:nellymoser @ 0x8c4c28280] Error submitting packet to decoder: Invalid data found when processing input",
+    "firstError": "[aist#0:1/nellymoser @ 0xb2cc20300] [dec:nellymoser @ 0xb2cc28280] Error submitting packet to decoder: Invalid data found when processing input",
     "errorLines": 46,
     "samples": 280832,
     "peakDb": 0
@@ -731,7 +1832,7 @@
     "streams": [
      "video:svq3"
     ],
-    "firstError": "[null @ 0xb32c24500] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 9 >= 8",
+    "firstError": "[null @ 0xb69004500] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 9 >= 8",
     "errorLines": 1,
     "frames": 10
    },
@@ -848,7 +1949,7 @@
      "audio:roq_dpcm",
      "video:roq"
     ],
-    "firstError": "[in#0/roq @ 0x7b900c000] Error during demuxing: Invalid data found when processing input",
+    "firstError": "[in#0/roq @ 0xadf00c000] Error during demuxing: Invalid data found when processing input",
     "errorLines": 1,
     "frames": 210
    },
@@ -857,7 +1958,7 @@
      "audio:roq_dpcm",
      "video:roq"
     ],
-    "firstError": "[in#0/roq @ 0x737004000] Error during demuxing: Invalid data found when processing input",
+    "firstError": "[in#0/roq @ 0x93b004000] Error during demuxing: Invalid data found when processing input",
     "errorLines": 1,
     "samples": 258300,
     "peakDb": -0.1
@@ -907,7 +2008,7 @@
      "video:nuv",
      "audio:pcm_s16le"
     ],
-    "firstError": "[in#0/nuv @ 0xa1100c000] Error during demuxing: Invalid data found when processing input",
+    "firstError": "[in#0/nuv @ 0x79d00c000] Error during demuxing: Invalid data found when processing input",
     "errorLines": 4,
     "frames": 8
    },
@@ -916,7 +2017,7 @@
      "video:nuv",
      "audio:pcm_s16le"
     ],
-    "firstError": "[null @ 0xbdcc24500] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 662 >= 662",
+    "firstError": "[null @ 0xa4ac24500] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 662 >= 662",
     "errorLines": 2,
     "samples": 36864,
     "peakDb": 0
@@ -928,7 +2029,7 @@
      "video:none",
      "audio:siren"
     ],
-    "firstError": "[in#0/vivo @ 0x7aec24000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
+    "firstError": "[in#0/vivo @ 0xc9b004000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
     "errorLines": 4,
     "frames": 0
    },
@@ -937,7 +2038,7 @@
      "video:none",
      "audio:siren"
     ],
-    "firstError": "[in#0/vivo @ 0xb58c24000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
+    "firstError": "[in#0/vivo @ 0xb9ac28000] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
     "errorLines": 2,
     "samples": 159360,
     "peakDb": -39.6
@@ -949,7 +2050,7 @@
      "video:mdec",
      "audio:adpcm_xa"
     ],
-    "firstError": "[in#0/psxstr @ 0xa2700c000] Error during demuxing: Invalid data found when processing input",
+    "firstError": "[in#0/psxstr @ 0x9e2c28000] Error during demuxing: Invalid data found when processing input",
     "errorLines": 1,
     "frames": 89
    },
@@ -958,7 +2059,7 @@
      "video:mdec",
      "audio:adpcm_xa"
     ],
-    "firstError": "[in#0/psxstr @ 0x7acc28000] Error during demuxing: Invalid data found when processing input",
+    "firstError": "[in#0/psxstr @ 0x86300c000] Error during demuxing: Invalid data found when processing input",
     "errorLines": 1,
     "samples": 447552,
     "peakDb": -6.3
@@ -1110,7 +2211,7 @@
     "streams": [
      "audio:ape"
     ],
-    "firstError": "[ape @ 0x73ac70e00] Error decoding frame",
+    "firstError": "[ape @ 0xc56c30e00] Error decoding frame",
     "errorLines": 2,
     "samples": 27648,
     "peakDb": 0
@@ -1199,7 +2300,7 @@
      "audio:mp3",
      "subtitle:dvb_subtitle"
     ],
-    "firstError": "[in#0/mpegts @ 0xc79004000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
+    "firstError": "[in#0/mpegts @ 0x7d4c28000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
     "errorLines": 8,
     "frames": 0
    },
@@ -1209,7 +2310,7 @@
      "audio:mp3",
      "subtitle:dvb_subtitle"
     ],
-    "firstError": "[in#0/mpegts @ 0xb62c24000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
+    "firstError": "[in#0/mpegts @ 0x864c28000] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
     "errorLines": 9,
     "samples": 0,
     "peakDb": null
@@ -1261,7 +2362,7 @@
      "audio:vorbis",
      "subtitle:ass"
     ],
-    "firstError": "[null @ 0x766c24780] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 39432 >= 39264",
+    "firstError": "[null @ 0x95ec24780] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 39432 >= 39264",
     "errorLines": 46,
     "samples": 961664,
     "peakDb": 0
@@ -1293,13 +2394,13 @@
   "snes-spc": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0x8d4c28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x7f700c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0x8fd00c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x8db00c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1308,13 +2409,13 @@
   "nes-nsf-tetris-gb-rip": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0x7bf00c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xb5900c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0xb8d00c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x98900c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1323,13 +2424,13 @@
   "sega-genesis-vgz-gzip-vgm": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0x714c10000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xc0d00c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0x8fcc28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x9d7004000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1338,13 +2439,13 @@
   "c64-sid-rob-hubbard-commando": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0x8c300c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x7c100c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0xbc6c28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xa8f004000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1353,13 +2454,13 @@
   "standard-midi-file": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0xbc4c28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x90900c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0x8a0c28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x80ec28000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1368,13 +2469,13 @@
   "axelf-mod-15-sample-soundtracker-no-m-k-": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0x7fb00c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xbccc28000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0x77ac28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xbcf00c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1383,13 +2484,13 @@
   "external-xm": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0xcab00c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xb15004000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0x98cc28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x881004000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1398,13 +2499,13 @@
   "sandman-s3m": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0x9c1408000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xc1ec28000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0xa2700c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x80ec28000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1413,13 +2514,13 @@
   "for-a-change-it": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0x92cc28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x95ac28000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0x93ac28000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x730c28000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
@@ -1428,18 +2529,1603 @@
   "openmpt-test-xm": {
    "video": {
     "streams": [],
-    "firstError": "[in#0 @ 0xc4900c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0xa4d00c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "frames": 0
    },
    "audio": {
     "streams": [],
-    "firstError": "[in#0 @ 0xc5300c000] Error opening input: Invalid data found when processing input",
+    "firstError": "[in#0 @ 0x77300c000] Error opening input: Invalid data found when processing input",
     "errorLines": 3,
     "samples": 0,
     "peakDb": null
    }
   }
  },
- "wasm": {}
+ "wasm": {
+  "realvideo-3-cook": {
+   "video": {
+    "streams": [
+     "audio:cook",
+     "video:rv30"
+    ],
+    "firstError": "109 frames successfully decoded, 0 decoding errors",
+    "errorLines": 1,
+    "frames": 109,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:cook",
+     "video:rv30"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 161792,
+    "peakDb": -6,
+    "code": 0
+   }
+  },
+  "vobsub-idx-sub": {
+   "subs": {
+    "streams": [
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "subtitleKiB": 73
+   }
+  },
+  "snes-spc": {
+   "video": {
+    "streams": [],
+    "firstError": "snes-spc.spc: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "snes-spc.spc: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "realvideo-g2-svt": {
+   "video": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": "[rm @ 0xdeea30] Invalid stream index 1 for index at pos 726206",
+    "errorLines": 71,
+    "frames": 144,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": "[rm @ 0xdeea50] Invalid stream index 1 for index at pos 726206",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "realvideo-4-cook-rmvb": {
+   "video": {
+    "streams": [
+     "audio:cook",
+     "video:rv40"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 240,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:cook",
+     "video:rv40"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 880640,
+    "peakDb": -24.5,
+    "code": 0
+   }
+  },
+  "realaudio-cook": {
+   "video": {
+    "streams": [
+     "audio:cook"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:cook"
+    ],
+    "firstError": "[rm @ 0xdeea50] Failed to fully read block",
+    "errorLines": 1,
+    "samples": 487424,
+    "peakDb": -2.5,
+    "code": 0
+   }
+  },
+  "realaudio-sipr-8-5k": {
+   "video": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 88,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 80352,
+    "peakDb": -4.2,
+    "code": 0
+   }
+  },
+  "realaudio-28-8": {
+   "video": {
+    "streams": [
+     "audio:ra_288"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:ra_288"
+    ],
+    "firstError": "[rm @ 0xdeea50] Failed to fully read block",
+    "errorLines": 1,
+    "samples": 11520,
+    "peakDb": -1.3,
+    "code": 0
+   }
+  },
+  "realvideo-2-in-matroska": {
+   "video": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": "[null @ 0xe1afd0] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 114 >= 114",
+    "errorLines": 7,
+    "frames": 196,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "realvideo-2-sipr-a-v-sync-bug": {
+   "video": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 124,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:sipr",
+     "video:rv20"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 80352,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "wmv8-x8-intra": {
+   "video": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 124,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 167936,
+    "peakDb": -14.9,
+    "code": 0
+   }
+  },
+  "wmv7": {
+   "video": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv1"
+    ],
+    "firstError": "[asf @ 0xdeea30] packet fragment position invalid 0,0 not in 0",
+    "errorLines": 1,
+    "frames": 149,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:wmav2",
+     "video:wmv1"
+    ],
+    "firstError": "[asf @ 0xdeea80] packet fragment position invalid 0,0 not in 0",
+    "errorLines": 1,
+    "samples": 335872,
+    "peakDb": -5.1,
+    "code": 0
+   }
+  },
+  "wmv9-vc-1-simple-main-raw-rcv": {
+   "video": {
+    "streams": [
+     "video:wmv3"
+    ],
+    "firstError": "wmv9-vc-1-simple-main-raw-rcv.rcv: I/O error",
+    "errorLines": 1,
+    "frames": 25,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:wmv3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "ms-mpeg4-v3-divx-in-asf": {
+   "video": {
+    "streams": [
+     "video:msmpeg4v3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 14,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:msmpeg4v3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "wma-voice-11k": {
+   "video": {
+    "streams": [
+     "audio:wmavoice"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:wmavoice"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 81600,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "wma-lossless-24-bit": {
+   "video": {
+    "streams": [
+     "audio:wmalossless"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:wmalossless"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 20286,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "ms-screen-codec-2-wmv9-screen": {
+   "video": {
+    "streams": [
+     "video:mss2"
+    ],
+    "firstError": "[mss2 @ 0xdef1e0] header error",
+    "errorLines": 5,
+    "frames": 0,
+    "code": 69
+   },
+   "audio": {
+    "streams": [
+     "video:mss2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "ms-mpeg4-v1": {
+   "video": {
+    "streams": [
+     "video:msmpeg4v1"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 50,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:msmpeg4v1"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "xvid-mp3": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "[mpeg4 @ 0xe986e0] Error at MB: 60",
+    "errorLines": 424,
+    "frames": 234,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "Error while decoding stream #0:1: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 940032,
+    "peakDb": -15.4,
+    "code": 0
+   }
+  },
+  "divx-5-mp3": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "[avi @ 0xdeea30] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
+    "errorLines": 1,
+    "frames": 248,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:mp3"
+    ],
+    "firstError": "[avi @ 0xdeea50] Could not find codec parameters for stream 1 (Audio: mp3 (mp3float) (U[0][0][0] / 0x0055), 48000 Hz, 2 channels, fltp, 95 kb/s): unspecified frame size",
+    "errorLines": 1,
+    "samples": 4608,
+    "peakDb": -59.4,
+    "code": 0
+   }
+  },
+  "cinepak": {
+   "video": {
+    "streams": [
+     "video:cinepak",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 50,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:cinepak",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 115763,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "indeo-3": {
+   "video": {
+    "streams": [
+     "video:indeo3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 40,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:indeo3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "indeo-4-partial": {
+   "video": {
+    "streams": [
+     "video:indeo4",
+     "audio:pcm_u8"
+    ],
+    "firstError": "[indeo4 @ 0xdefef0] Error while decoding band: 0, plane: 0",
+    "errorLines": 2,
+    "frames": 100,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:indeo4",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 163170,
+    "peakDb": -1,
+    "code": 0
+   }
+  },
+  "indeo-5": {
+   "video": {
+    "streams": [
+     "video:indeo5",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 133,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:indeo5",
+     "audio:pcm_s16le"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 196972,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "motion-jpeg-mu-law-10-mb": {
+   "video": {
+    "streams": [
+     "video:mjpeg",
+     "audio:pcm_mulaw"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 257,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mjpeg",
+     "audio:pcm_mulaw"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 192828,
+    "peakDb": -0.2,
+    "code": 0
+   }
+  },
+  "dvcpro-hd-720p50": {
+   "video": {
+    "streams": [
+     "video:dvvideo"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 1,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:dvvideo"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "on2-vp5-speex": {
+   "video": {
+    "streams": [
+     "video:vp5",
+     "audio:speex"
+    ],
+    "firstError": "[avi @ 0xdeea30] Failed to open codec in avformat_find_stream_info",
+    "errorLines": 2,
+    "frames": 240,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:vp5",
+     "audio:speex"
+    ],
+    "firstError": "[avi @ 0xdeea50] Failed to open codec in avformat_find_stream_info",
+    "errorLines": 3,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "dvd-vob-single-frame-dvd-subs": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 1,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "mpeg-1-system-stream": {
+   "video": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 25,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "dvd-vob-mpeg-2-ac-3-5-mb": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3"
+    ],
+    "firstError": "[mpeg2video @ 0xdf89e0] concealing 315 DC, 315 AC, 315 MV errors in I frame",
+    "errorLines": 1,
+    "frames": 181,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:ac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 728064,
+    "peakDb": -14.2,
+    "code": 0
+   }
+  },
+  "mpeg-2-field-encoded-ts": {
+   "video": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": "[mpeg2video @ 0xdf34b0] Invalid frame dimensions 0x0.",
+    "errorLines": 1,
+    "frames": 31,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": "[mpeg2video @ 0xdf3480] Invalid frame dimensions 0x0.",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "dts-in-mpeg-ts": {
+   "video": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 777216,
+    "peakDb": -10.4,
+    "code": 0
+   }
+  },
+  "flash-vp6-sorenson-on2": {
+   "video": {
+    "streams": [
+     "video:vp6f"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 100,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:vp6f"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "flv-with-h-264-aac": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": "[flv @ 0xdeea40] Found invalid index entries, clearing the index.",
+    "errorLines": 1,
+    "frames": 299,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:aac"
+    ],
+    "firstError": "[flv @ 0xdeea90] Found invalid index entries, clearing the index.",
+    "errorLines": 1,
+    "samples": 444416,
+    "peakDb": -14.1,
+    "code": 0
+   }
+  },
+  "vp6f-nellymoser": {
+   "video": {
+    "streams": [
+     "video:vp6f",
+     "audio:nellymoser"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 63,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:vp6f",
+     "audio:nellymoser"
+    ],
+    "firstError": "Error while decoding stream #0:1: Invalid data found when processing input",
+    "errorLines": 46,
+    "samples": 280320,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "3gpp-h-263-amr-nb": {
+   "video": {
+    "streams": [
+     "video:h263",
+     "audio:amr_nb"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 101,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h263",
+     "audio:amr_nb"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 80160,
+    "peakDb": -0.4,
+    "code": 0
+   }
+  },
+  "3gp-h-263-phone-clip": {
+   "video": {
+    "streams": [
+     "video:h263"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 29,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h263"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "sorenson-video-1": {
+   "video": {
+    "streams": [
+     "video:svq1",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 150,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:svq1",
+     "audio:pcm_u8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 221524,
+    "peakDb": -0.1,
+    "code": 0
+   }
+  },
+  "sorenson-video-3": {
+   "video": {
+    "streams": [
+     "video:svq3"
+    ],
+    "firstError": "[null @ 0xdf2280] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 9 >= 8",
+    "errorLines": 1,
+    "frames": 10,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:svq3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "qdesign-music-2": {
+   "video": {
+    "streams": [
+     "audio:qdm2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:qdm2"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 892928,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "ima4-adpcm": {
+   "video": {
+    "streams": [
+     "audio:adpcm_ima_qt"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:adpcm_ima_qt"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 883968,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "mace-3-1": {
+   "video": {
+    "streams": [
+     "audio:mace3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:mace3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 442020,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "smacker": {
+   "video": {
+    "streams": [
+     "video:smackvideo",
+     "audio:smackaudio"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 100,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:smackvideo",
+     "audio:smackaudio"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 156552,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "bink-video": {
+   "video": {
+    "streams": [
+     "video:binkvideo"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 20,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:binkvideo"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "id-roq-quake-3-logo": {
+   "video": {
+    "streams": [
+     "audio:roq_dpcm",
+     "video:roq"
+    ],
+    "firstError": "id-roq-quake-3-logo.roq: I/O error",
+    "errorLines": 1,
+    "frames": 210,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "audio:roq_dpcm",
+     "video:roq"
+    ],
+    "firstError": "id-roq-quake-3-logo.roq: I/O error",
+    "errorLines": 1,
+    "samples": 258300,
+    "peakDb": -0.1,
+    "code": 0
+   }
+  },
+  "autodesk-flic-640x480": {
+   "video": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 27,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "autodesk-flc-320x200": {
+   "video": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 28,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:flic"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "nuppelvideo-mythtv": {
+   "video": {
+    "streams": [
+     "video:nuv",
+     "audio:pcm_s16le"
+    ],
+    "firstError": "[null @ 0xdf1000] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5 >= 5",
+    "errorLines": 4,
+    "frames": 8,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:nuv",
+     "audio:pcm_s16le"
+    ],
+    "firstError": "[null @ 0xdf1110] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 662 >= 662",
+    "errorLines": 2,
+    "samples": 36864,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "vivo-2-vivoactive": {
+   "video": {
+    "streams": [
+     "video:none",
+     "audio:siren"
+    ],
+    "firstError": "[vivo @ 0xdeea40] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "video:none",
+     "audio:siren"
+    ],
+    "firstError": "[vivo @ 0xdeea90] Could not find codec parameters for stream 0 (Video: none, none, 320x240): unknown codec",
+    "errorLines": 2,
+    "samples": 159360,
+    "peakDb": -39.6,
+    "code": 0
+   }
+  },
+  "playstation-str-mdec-xa": {
+   "video": {
+    "streams": [
+     "video:mdec",
+     "audio:adpcm_xa"
+    ],
+    "firstError": "playstation-str-mdec-xa.str: I/O error",
+    "errorLines": 1,
+    "frames": 89,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mdec",
+     "audio:adpcm_xa"
+    ],
+    "firstError": "playstation-str-mdec-xa.str: I/O error",
+    "errorLines": 1,
+    "samples": 447552,
+    "peakDb": -6.3,
+    "code": 0
+   }
+  },
+  "ac-3-5-1-448k": {
+   "video": {
+    "streams": [
+     "audio:ac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:ac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 516096,
+    "peakDb": -74.7,
+    "code": 0
+   }
+  },
+  "e-ac-3-5-1-with-spx": {
+   "video": {
+    "streams": [
+     "audio:eac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:eac3"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 433152,
+    "peakDb": -10.3,
+    "code": 0
+   }
+  },
+  "dts-es": {
+   "video": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:dts"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 896000,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "dolby-truehd-atmos-8ch": {
+   "video": {
+    "streams": [
+     "audio:truehd"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:truehd"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 40960,
+    "peakDb": -8,
+    "code": 0
+   }
+  },
+  "mlp-440-hz": {
+   "video": {
+    "streams": [
+     "audio:mlp"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:mlp"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 882000,
+    "peakDb": -12,
+    "code": 0
+   }
+  },
+  "musepack-sv8": {
+   "video": {
+    "streams": [
+     "audio:musepack8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:musepack8"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 884736,
+    "peakDb": -1.5,
+    "code": 0
+   }
+  },
+  "musepack-sv7": {
+   "video": {
+    "streams": [
+     "audio:musepack7"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:musepack7"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 884736,
+    "peakDb": -1.5,
+    "code": 0
+   }
+  },
+  "monkey-s-audio": {
+   "video": {
+    "streams": [
+     "audio:ape"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:ape"
+    ],
+    "firstError": "[ape @ 0xdf0200] Error decoding frame",
+    "errorLines": 2,
+    "samples": 27648,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "true-audio-6-6-mb": {
+   "video": {
+    "streams": [
+     "audio:tta"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:tta"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 1013760,
+    "peakDb": -0.2,
+    "code": 0
+   }
+  },
+  "amr-nb-12-2k": {
+   "video": {
+    "streams": [
+     "audio:amr_nb"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:amr_nb"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 45440,
+    "peakDb": -2.9,
+    "code": 0
+   }
+  },
+  "shorten": {
+   "video": {
+    "streams": [
+     "audio:shorten"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "audio:shorten"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 883200,
+    "peakDb": -2.7,
+    "code": 0
+   }
+  },
+  "hevc-main10-dolby-vision-p7-in-mkv": {
+   "video": {
+    "streams": [
+     "video:hevc"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 1,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:hevc"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "dvb-subtitles-in-ts": {
+   "video": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:mp3",
+     "subtitle:dvb_subtitle"
+    ],
+    "firstError": "[mpegts @ 0xdeea40] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
+    "errorLines": 4,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video",
+     "audio:mp3",
+     "subtitle:dvb_subtitle"
+    ],
+    "firstError": "[mpegts @ 0xdeea90] Could not find codec parameters for stream 0 (Video: mpeg2video ([2][0][0][0] / 0x0002), none(tv)): unspecified size",
+    "errorLines": 10,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "mpeg-2-es-with-eia-608-closed-captions": {
+   "video": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 135,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg2video"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "mpeg-4-asp-vorbis-16-ass-ssa-tracks": {
+   "video": {
+    "streams": [
+     "video:mpeg4",
+     "audio:vorbis",
+     "subtitle:ass"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 240,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:mpeg4",
+     "audio:vorbis",
+     "subtitle:ass"
+    ],
+    "firstError": "[null @ 0xe24600] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 39432 >= 39264",
+    "errorLines": 46,
+    "samples": 961664,
+    "peakDb": 0,
+    "code": 0
+   }
+  },
+  "h-264-2x-mp3-vobsub-in-mkv": {
+   "video": {
+    "streams": [
+     "video:h264",
+     "audio:mp3",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "frames": 250,
+    "code": 0
+   },
+   "audio": {
+    "streams": [
+     "video:h264",
+     "audio:mp3",
+     "subtitle:dvd_subtitle"
+    ],
+    "firstError": null,
+    "errorLines": 0,
+    "samples": 963072,
+    "peakDb": -11.5,
+    "code": 0
+   }
+  },
+  "nes-nsf-tetris-gb-rip": {
+   "video": {
+    "streams": [],
+    "firstError": "nes-nsf-tetris-gb-rip.nsf: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "nes-nsf-tetris-gb-rip.nsf: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "sega-genesis-vgz-gzip-vgm": {
+   "video": {
+    "streams": [],
+    "firstError": "sega-genesis-vgz-gzip-vgm.vgz: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "sega-genesis-vgz-gzip-vgm.vgz: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "c64-sid-rob-hubbard-commando": {
+   "video": {
+    "streams": [],
+    "firstError": "c64-sid-rob-hubbard-commando.sid: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "c64-sid-rob-hubbard-commando.sid: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "standard-midi-file": {
+   "video": {
+    "streams": [],
+    "firstError": "standard-midi-file.mid: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "standard-midi-file.mid: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "axelf-mod-15-sample-soundtracker-no-m-k-": {
+   "video": {
+    "streams": [],
+    "firstError": "axelf-mod-15-sample-soundtracker-no-m-k-.mod: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "axelf-mod-15-sample-soundtracker-no-m-k-.mod: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "external-xm": {
+   "video": {
+    "streams": [],
+    "firstError": "external-xm.xm: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "external-xm.xm: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "sandman-s3m": {
+   "video": {
+    "streams": [],
+    "firstError": "sandman-s3m.s3m: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "sandman-s3m.s3m: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "for-a-change-it": {
+   "video": {
+    "streams": [],
+    "firstError": "for-a-change-it.it: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "for-a-change-it.it: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  },
+  "openmpt-test-xm": {
+   "video": {
+    "streams": [],
+    "firstError": "openmpt-test-xm.xm: Invalid data found when processing input",
+    "errorLines": 1,
+    "frames": 0,
+    "code": 1
+   },
+   "audio": {
+    "streams": [],
+    "firstError": "openmpt-test-xm.xm: Invalid data found when processing input",
+    "errorLines": 1,
+    "samples": 0,
+    "peakDb": null,
+    "code": 1
+   }
+  }
+ }
 }

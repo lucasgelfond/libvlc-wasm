@@ -22,12 +22,18 @@
 	import RiFolderOpenLine from 'remixicon-svelte/icons/folder-open-line';
 	import RiUploadCloud2Line from 'remixicon-svelte/icons/upload-cloud-2-line';
 	import RiMusic2Line from 'remixicon-svelte/icons/music-2-line';
+	import RiDiscLine from 'remixicon-svelte/icons/disc-line';
+	import RiFolderVideoLine from 'remixicon-svelte/icons/folder-video-line';
+	import RiReplayLine from 'remixicon-svelte/icons/restart-line';
+	import { SAMPLES, loadSample, type Sample } from '$lib/samples';
 
 	const session = new Session();
 	let canvas: HTMLCanvasElement;
 	let stage: HTMLDivElement;
 	let fileInput: HTMLInputElement;
 	let subInput: HTMLInputElement;
+	let folderInput: HTMLInputElement;
+	let loadingSample = $state<string | null>(null);
 	let dragging = $state(false);
 	let fullscreen = $state(false);
 	let idle = $state(false);
@@ -70,6 +76,39 @@
 	const video = $derived(session.video.find((t) => t.selected) ?? session.video[0]);
 	const iconButton = 'text-white hover:bg-white/15 hover:text-white';
 
+	async function openSample(s: Sample) {
+		loadingSample = s.title;
+		try {
+			await openFiles(await loadSample(s));
+		} catch (e) {
+			toast.error((e as Error).message);
+		} finally {
+			loadingSample = null;
+		}
+	}
+
+	/** Files from a drop, walking into dropped folders (a VIDEO_TS folder, say). */
+	async function droppedFiles(dt: DataTransfer): Promise<File[]> {
+		const entries = [...dt.items].map((i) => i.webkitGetAsEntry?.()).filter(Boolean) as FileSystemEntry[];
+		if (!entries.some((e) => e.isDirectory)) return [...dt.files];
+		const out: File[] = [];
+		const walk = async (e: FileSystemEntry): Promise<void> => {
+			if (e.isFile) {
+				out.push(await new Promise<File>((res, rej) => (e as FileSystemFileEntry).file(res, rej)));
+			} else if (e.isDirectory) {
+				const reader = (e as FileSystemDirectoryEntry).createReader();
+				// readEntries returns the listing in batches until an empty one.
+				for (;;) {
+					const batch = await new Promise<FileSystemEntry[]>((res, rej) => reader.readEntries(res, rej));
+					if (!batch.length) break;
+					for (const c of batch) await walk(c);
+				}
+			}
+		};
+		for (const e of entries) await walk(e);
+		return out;
+	}
+
 	async function openFiles(list: FileList | File[] | null | undefined) {
 		const files = [...(list ?? [])];
 		if (!files.length) return;
@@ -92,8 +131,16 @@
 	}
 
 	function onKey(e: KeyboardEvent) {
+		session.unlockAudio();
 		if (!opened || (e.target as HTMLElement).closest('input, [role=menu], [role=slider]')) return;
 		const k = e.key;
+		// On a disc menu the arrows and Enter move between its buttons.
+		const nav = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', Enter: 'activate', ' ': 'activate' } as const;
+		if (session.inMenu && k in nav) {
+			session.navigate(nav[k as keyof typeof nav]);
+			e.preventDefault();
+			return;
+		}
 		if (k === ' ' || k === 'k') session.toggle();
 		else if (k === 'ArrowRight' || k === 'l') session.skip(k === 'l' ? 10 : 5);
 		else if (k === 'ArrowLeft' || k === 'j') session.skip(k === 'j' ? -10 : -5);
@@ -112,6 +159,7 @@
 
 <svelte:window
 	onkeydown={onKey}
+	onpointerdown={() => session.unlockAudio()}
 	ondragover={(e) => {
 		e.preventDefault();
 		dragging = true;
@@ -122,11 +170,18 @@
 	ondrop={(e) => {
 		e.preventDefault();
 		dragging = false;
-		openFiles(e.dataTransfer?.files);
+		if (e.dataTransfer) droppedFiles(e.dataTransfer).then(openFiles, (err) => toast.error(err.message));
 	}}
 />
 
 <input bind:this={fileInput} type="file" multiple class="hidden" onchange={(e) => openFiles(e.currentTarget.files)} />
+<input
+	bind:this={folderInput}
+	type="file"
+	webkitdirectory
+	class="hidden"
+	onchange={(e) => openFiles(e.currentTarget.files)}
+/>
 <input
 	bind:this={subInput}
 	type="file"
@@ -170,8 +225,8 @@
 			<canvas
 				bind:this={canvas}
 				class="absolute inset-0 size-full"
-				onclick={() => session.toggle()}
-				ondblclick={toggleFullscreen}
+				onclick={() => !session.inMenu && session.toggle()}
+				ondblclick={() => !session.inMenu && toggleFullscreen()}
 			></canvas>
 
 			{#if opened && session.tracks.length && !session.hasVideo}
@@ -184,6 +239,22 @@
 							<RiMusic2Line class="size-10" />
 						</div>
 						<p class="max-w-md truncate px-6 text-sm">{session.name}</p>
+					</div>
+				</div>
+			{/if}
+
+			{#if session.ended}
+				<div class="absolute inset-0 grid place-items-center bg-black/50">
+					<div class="flex flex-col items-center gap-3 text-center text-white">
+						<p class="text-sm font-medium">
+							{session.duration && session.time < session.duration * 0.95 ? 'The file ends here' : 'Finished'}
+						</p>
+						{#if session.duration && session.time < session.duration * 0.95}
+							<p class="max-w-xs text-xs text-white/70">
+								Its header claims {formatTime(session.duration)}, but the data stops at {formatTime(session.time)} (a truncated file).
+							</p>
+						{/if}
+						<Button variant="secondary" size="sm" onclick={() => session.toggle()}><RiReplayLine /> Play again</Button>
 					</div>
 				</div>
 			{/if}
@@ -286,6 +357,11 @@
 								<Tooltip.Content>Save frame</Tooltip.Content>
 							</Tooltip.Root>
 						{/if}
+						{#if session.hasMenu}
+							<Button variant="ghost" size="sm" class="{iconButton} gap-1.5 px-2" onclick={() => session.menu()} aria-label="Disc menu">
+								<RiDiscLine class="size-5" /> <span class="text-xs">Menu</span>
+							</Button>
+						{/if}
 						<SettingsMenu {session} bind:open={menuOpen} onsubtitlefile={() => subInput.click()} />
 						<Button variant="ghost" size="icon" class={iconButton} onclick={toggleFullscreen} aria-label="Fullscreen">
 							{#if fullscreen}<RiFullscreenExitLine class="size-5" />{:else}<RiFullscreenLine class="size-5" />{/if}
@@ -296,30 +372,57 @@
 		</div>
 
 		{#if !opened}
-			<button
-				type="button"
-				onclick={() => fileInput.click()}
-				disabled={!session.ready}
-				class="border-border hover:border-primary/60 hover:bg-muted/40 grid flex-1 place-items-center rounded-xl border-2 border-dashed p-10 text-center transition-colors disabled:cursor-wait {dragging
-					? 'border-primary bg-primary/5'
-					: ''}"
-			>
-				<div class="flex max-w-md flex-col items-center gap-4">
-					<div class="bg-muted grid size-14 place-items-center rounded-full">
-						<RiUploadCloud2Line class="text-muted-foreground size-7" />
+			<div class="flex flex-1 flex-col gap-6">
+				<div
+					role="presentation"
+					class="border-border grid place-items-center rounded-xl border-2 border-dashed p-8 text-center transition-colors {dragging
+						? 'border-primary bg-primary/5'
+						: ''}"
+				>
+					<div class="flex max-w-md flex-col items-center gap-4">
+						<div class="bg-muted grid size-14 place-items-center rounded-full">
+							<RiUploadCloud2Line class="text-muted-foreground size-7" />
+						</div>
+						<div>
+							<p class="font-medium">{session.ready ? 'Drop a video, a song, or a DVD folder' : 'Starting VLC…'}</p>
+							<p class="text-muted-foreground mt-1 text-sm text-balance">
+								RealMedia, WMV, DivX AVI, DVD images and VIDEO_TS folders, FLV, MKV with subtitles, tracker music, chiptunes and
+								more. Files are read from your disk as they play and never leave your device.
+							</p>
+						</div>
+						<div class="flex flex-wrap justify-center gap-2">
+							<Button disabled={!session.ready} onclick={() => fileInput.click()}><RiFolderOpenLine /> Choose files</Button>
+							<Button variant="outline" disabled={!session.ready} onclick={() => folderInput.click()}>
+								<RiFolderVideoLine /> Open a DVD folder
+							</Button>
+						</div>
 					</div>
-					<div>
-						<p class="font-medium">{session.ready ? 'Drop a video or audio file' : 'Starting VLC…'}</p>
-						<p class="text-muted-foreground mt-1 text-sm text-balance">
-							RealMedia, WMV, DivX AVI, VOB, FLV, MKV with subtitles, tracker music, chiptunes and more. Files never leave your
-							device.
-						</p>
-					</div>
-					<span class="bg-primary text-primary-foreground inline-flex h-9 items-center gap-2 rounded-lg px-4 text-sm font-medium">
-						<RiFolderOpenLine class="size-4" /> Choose files
-					</span>
 				</div>
-			</button>
+
+				<section class="flex flex-col gap-3">
+					<div class="flex items-baseline justify-between gap-4">
+						<h2 class="text-sm font-semibold">Or try one no browser can play</h2>
+						<a href="/formats" class="text-primary text-xs font-medium hover:underline">What can it play? →</a>
+					</div>
+					<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+						{#each SAMPLES as s (s.title)}
+							<button
+								type="button"
+								disabled={!session.ready || !!loadingSample}
+								onclick={() => openSample(s)}
+								class="border-border hover:border-primary/60 hover:bg-muted/40 flex flex-col gap-1.5 rounded-xl border p-4 text-left transition-colors disabled:cursor-wait disabled:opacity-60"
+							>
+								<span class="flex items-center justify-between gap-2 text-sm font-medium">
+									{s.title}
+									{#if loadingSample === s.title}<span class="border-muted-foreground/30 border-t-primary size-4 animate-spin rounded-full border-2"></span>{/if}
+								</span>
+								<span class="text-muted-foreground text-xs leading-relaxed">{s.plain}</span>
+								<span class="text-muted-foreground/80 mt-auto pt-1 font-mono text-[10px] leading-snug">{s.format}</span>
+							</button>
+						{/each}
+					</div>
+				</section>
+			</div>
 		{/if}
 
 		<footer class="text-muted-foreground mt-auto hidden flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:flex">
@@ -328,6 +431,8 @@
 			<span class="inline-flex items-center gap-1"><Kbd>↑</Kbd><Kbd>↓</Kbd> volume</span>
 			<span class="inline-flex items-center gap-1"><Kbd>F</Kbd> fullscreen</span>
 			<span class="inline-flex items-center gap-1"><Kbd>.</Kbd> next frame</span>
+			<span class="inline-flex items-center gap-1"><Kbd>←</Kbd><Kbd>↑</Kbd><Kbd>Enter</Kbd> on a DVD menu</span>
+			<a href="/formats" class="ml-auto hover:underline">What can it play?</a>
 		</footer>
 	</main>
 </Tooltip.Provider>
