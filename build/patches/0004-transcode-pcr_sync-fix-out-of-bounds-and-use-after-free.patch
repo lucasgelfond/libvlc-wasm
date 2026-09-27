@@ -1,0 +1,102 @@
+From: libvlc-wasm <noreply@libvlc-wasm>
+Subject: [PATCH] transcode: pcr_sync: fix out-of-bounds and use-after-free
+
+Two bugs that only the (release-disabled) asserts would catch, both hit when
+an ES starts after PCR events are queued -- RealMedia's audio, say:
+
+- A PCR event records one DTS entry per live ES, skipping deleted ones, but
+  the entries are later indexed by ES id: after a deletion they shift, and an
+  ES created after the event indexes past the end. Record one entry per id
+  (deleted ones as INVALID) and bounds-check; an ES not counted in the event
+  moves past it without completing it for the others.
+- Completing an event frees it while other ESes' last_pcr_event can still
+  point at it. Move those on to the next event when one is freed.
+
+In a wasm build (no asserts, no MMU) this was an out-of-bounds trap in about
+1 transcode in 3 of a RealVideo 4 + Cook file.
+---
+--- a/modules/stream_out/transcode/pcr_sync.c
++++ b/modules/stream_out/transcode/pcr_sync.c
+@@ -157,19 +157,23 @@
+         return VLC_ENOMEM;
+     }
+ 
++    /* One entry per ES id, deleted ones included (as INVALID): the entries
++     * are indexed by id in vlc_pcr_sync_SignalFrameOutput(). */
+     size_t entries_left = 0;
+-    struct es_data data;
+-    vlc_vector_foreach(data, &pcr_sync->es_data)
++    for (size_t i = 0; i < pcr_sync->es_data.size; ++i)
+     {
+-        if (!data.is_deleted)
++        struct es_data *data = &pcr_sync->es_data.data[i];
++        struct es_dts_entry entry = {.dts = VLC_TICK_INVALID,
++                                     .discontinuity = VLC_TICK_INVALID};
++        if (!data->is_deleted)
+         {
+-            vlc_vector_push(&event->es_last_dts_entries,
+-                            ((struct es_dts_entry){.dts = data.last_input_dts,
+-                                                   .discontinuity = data.discontinuity}));
+-            if (data.last_input_dts != VLC_TICK_INVALID)
++            entry.dts = data->last_input_dts;
++            entry.discontinuity = data->discontinuity;
++            if (data->last_input_dts != VLC_TICK_INVALID)
+                 ++entries_left;
+-            data.discontinuity = VLC_TICK_INVALID;
++            data->discontinuity = VLC_TICK_INVALID;
+         }
++        vlc_vector_push(&event->es_last_dts_entries, entry);
+     }
+ 
+     event->pcr = pcr;
+@@ -250,6 +254,17 @@
+ #define pcr_event_NextEntry(head, entry)                                                           \
+     vlc_list_next_entry_or_null(head, entry, pcr_event_t, node)
+ 
++/* Frees an event; any ES still waiting on it moves on to the next one. */
++static void pcr_sync_RemoveEvent(vlc_pcr_sync_t *pcr_sync, pcr_event_t *pcr_event)
++{
++    pcr_event_t *next = pcr_event_NextEntry(&pcr_sync->pcr_events, pcr_event);
++    for (size_t i = 0; i < pcr_sync->es_data.size; ++i)
++        if (pcr_sync->es_data.data[i].last_pcr_event == pcr_event)
++            pcr_sync->es_data.data[i].last_pcr_event = next;
++    vlc_list_remove(&pcr_event->node);
++    pcr_event_Delete(pcr_event);
++}
++
+ vlc_tick_t
+ vlc_pcr_sync_SignalFrameOutput(vlc_pcr_sync_t *pcr_sync, unsigned int id, const vlc_frame_t *frame)
+ {
+@@ -265,14 +280,19 @@
+     if (pcr_event == NULL)
+         goto no_pcr;
+ 
+-    assert(id < pcr_event->es_last_dts_entries.size);
+-
+     const vlc_tick_t pcr = pcr_event->pcr;
+ 
+     if (pcr_event->no_frame_before)
++        goto return_pcr;
++
++    /* An ES created after this PCR, or one that had no input yet when it was
++     * signalled, is not counted in entries_left: it must neither index past
++     * the entries nor complete the event on behalf of the others. */
++    if (id >= pcr_event->es_last_dts_entries.size ||
++        pcr_event->es_last_dts_entries.data[id].dts == VLC_TICK_INVALID)
+     {
+         es->last_pcr_event = pcr_event_NextEntry(&pcr_sync->pcr_events, pcr_event);
+-        goto return_pcr;
++        goto no_pcr;
+     }
+ 
+     assert(pcr_event->entries_left != 0);
+@@ -294,8 +314,7 @@
+         goto no_pcr;
+ 
+ return_pcr:
+-    vlc_list_remove(&pcr_event->node);
+-    pcr_event_Delete(pcr_event);
++    pcr_sync_RemoveEvent(pcr_sync, pcr_event);
+ 
+     vlc_mutex_unlock(&pcr_sync->lock);
+     return pcr;
