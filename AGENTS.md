@@ -149,6 +149,9 @@ playing (`player.startRecording()` / `stopRecording()`) also needs this engine.
   object `{ moduleUrl, wasmUrl }`. Cross-origin engines are started through a same-origin
   blob worker automatically.
 - **MIDI** needs a General MIDI SoundFont: `createVLC({ soundfont: '/path/to.sf2' })`.
+- **Size**: the engine is one ~24.5 MiB wasm (~7.8 MB brotli) fetched on the first
+  `createVLC()`; the SDK's own JS is ~40 KB. `import('libvlc-wasm')` lazily to keep it off a
+  page until needed. Fonts and SoundFonts given as URLs are only downloaded if VLC reads them.
 - `createVLC({ logLevel: 'debug' })` and `vlc.on('log', ...)` show VLC's own log, which is
   the first place to look when a file does not play.
 

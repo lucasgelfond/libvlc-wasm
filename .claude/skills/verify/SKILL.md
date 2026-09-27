@@ -47,12 +47,14 @@ fail with `Import #0 "env"`: don't run tests while a link runs.
 
 ```sh
 pnpm test:quick     # ~2 min: node smoke, features + sout in Chromium, colours, the app end to end
-pnpm test           # ~10 min: also WebKit and Firefox, the corpus baseline, the packed npm tarballs
+pnpm test           # ~15 min: also WebKit and Firefox, the corpus baseline, the packed npm
+                    # tarballs, and bundle sizes per way of importing (tests/bundle.mjs)
 pnpm test -- --only=features,sout --engines=webkit    # one suite, one engine
 ```
 
 Fixtures first on a fresh machine: `sh tests/make-fixtures.sh`, `sh tests/make-colors.sh`,
-`node corpus/fetch.mjs`; the DVD and Blu-ray images need Docker (see the headers of
+`node corpus/fetch.mjs` (or `node corpus/r2-sync.mjs pull` to take every corpus and FATE
+file from the project's R2 bucket in one go); the DVD and Blu-ray images need Docker (see the headers of
 `tests/make-dvd.sh` and `tests/make-bluray.sh`).
 
 Reading failures:
@@ -98,6 +100,9 @@ Compare `corpus/compat/fate-summary.json` with the copy: the overall `wasm` coun
 drop, and no folder may lose files. `corpus/compat/FATE.md` lists every failing file with
 its cause and log. Native FFmpeg/VLC columns only need re-measuring when those tools change
 (`--tool=ffmpeg,vlc`).
+
+Other suites (conformance streams, libvpx/libaom vectors, VLC's sample archive...) run the
+same way: `node corpus/compat/suite.mjs --suite=<name>` (definitions in `corpus/suites/`).
 
 ## 5. Report
 
