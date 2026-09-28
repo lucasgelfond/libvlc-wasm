@@ -29,7 +29,7 @@
 
 <!-- One box holds the whole description, and the toggle sits on its bottom
      edge, so what folds away is visibly the box's own content. -->
-<div class="text-muted-foreground border-foreground/10 bg-foreground/[0.04] max-w-3xl rounded-xl border text-sm leading-relaxed backdrop-blur-sm">
+<div class="text-muted-foreground border-foreground/10 bg-foreground/[0.04] rounded-xl border text-sm leading-relaxed backdrop-blur-sm">
 	<div class="px-4 pt-3">
 		<p>
 			libvlc-wasm compiles and patches <a {...a('https://www.videolan.org/vlc/libvlc.html')}>libvlc</a>, the internals of VLC Media Player,
