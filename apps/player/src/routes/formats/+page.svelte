@@ -5,6 +5,7 @@
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
 	import SuiteView from '$lib/components/SuiteView.svelte';
 	import ColumnChart from '$lib/components/ColumnChart.svelte';
+	import { PORTS_MATRIX } from '$lib/benchmarks';
 	import { SUITES } from '$lib/suites';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 	import RiDownload2Line from 'remixicon-svelte/icons/download-2-line';
@@ -26,6 +27,8 @@
 		{ label: 'Firefox', pick: (r) => r.browsers.firefox }
 	];
 	const SUMMARY: [string, { yes: number; tested: number }][] = COLUMNS.map((c) => [c.label, count(ROWS, c.pick)]);
+	const METHODS = (PORTS_MATRIX?.tools ?? []).filter((t) => t.notes);
+	let showMethods = $state(false);
 	// No suite is shown until one is picked: each is a long table.
 	let suite = $state('');
 	const suiteTitle = $derived(SUITES.find((s) => s.key === suite)?.title);
@@ -67,7 +70,7 @@
 			</a>
 			<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
 			<p class="text-muted-foreground text-sm">
-				What plays, measured with every tool on curated files and public test suites. Speed, size and the other ports are on the
+				What plays, measured with every tool on curated files and public test suites. Decode speed and the other web VLC ports are on the
 				<a href="/benchmarks" class="text-foreground underline underline-offset-2">benchmarks page</a>.
 			</p>
 		</header>
@@ -105,9 +108,37 @@
 								{c.label}
 							</th>
 						{/each}
-						<th class="w-28 px-4 py-3 font-medium"></th>
+						<th class="w-28 px-4 py-3 text-right font-medium">
+							{#if METHODS.length}
+								<button
+									type="button"
+									onclick={() => (showMethods = !showMethods)}
+									aria-expanded={showMethods}
+									class="hover:text-foreground inline-flex items-center gap-0.5 whitespace-nowrap"
+								>
+									How measured <span class="inline-block transition-transform {showMethods ? 'rotate-180' : ''}">⌄</span>
+								</button>
+							{/if}
+						</th>
 					</tr>
 				</thead>
+				{#if showMethods}
+					<!-- How each tool was run and what counted as playing, folded into the table's corner. -->
+					<tbody>
+						<tr class="border-border border-t">
+							<td colspan={COLUMNS.length + 2} class="px-4 py-3">
+								<dl class="flex flex-col gap-2.5">
+									{#each METHODS as t (t.key)}
+										<div>
+											<dt class="text-xs font-medium">{t.label}</dt>
+											<dd class="text-muted-foreground text-xs leading-relaxed">{t.notes}</dd>
+										</div>
+									{/each}
+								</dl>
+							</td>
+						</tr>
+					</tbody>
+				{/if}
 				{#each sections as s (s.key)}
 					<tbody>
 						<tr class="border-border border-t">

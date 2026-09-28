@@ -32,11 +32,11 @@ export type Speed = {
 export const SPEED = speed as unknown as Speed;
 
 export const SPEED_TOOLS: [key: string, label: string][] = [
-  ["ffmpegNative", "FFmpeg"],
-  ["vlcNative", "VLC 3"],
-  ["libvlcWasm", "libvlc-wasm, software"],
   ["libvlcWebCodecs", "libvlc-wasm + WebCodecs"],
+  ["libvlcWasm", "libvlc-wasm, software"],
   ["ffmpegWasm", "ffmpeg.wasm"],
+  ["vlcNative", "VLC 3"],
+  ["ffmpegNative", "FFmpeg"],
 ];
 
 const CODEC: Record<string, string> = {
