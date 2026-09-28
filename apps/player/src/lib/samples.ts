@@ -27,12 +27,12 @@ export const SAMPLES: Sample[] = [
     id: "dvd",
     label: "DVD disc image (.iso)",
     kind: "disc",
-    files: ["showcase.iso"],
-    title: "Tomorrow Vision, a DVD with motion menus",
+    files: ["design-for-dreaming.iso"],
+    title: "Design for Dreaming, on DVD",
     plain:
-      "A small DVD we authored: a looping VHS-style main menu with chrome type, a scene-select menu, a 48-second feature in three chapters with two audio tracks (the films' own sound, or a synth score) and English and Spanish subtitles, and a credits title. Click the buttons, or use the arrow keys and Enter. Footage: Design for Dreaming (1956) and Living Stereo (1958), Prelinger Archives, public domain; menus and music generated for this disc (CC0).",
+      "A small DVD authored like an archival release of 1950s films: a motion menu over the film with its own soundtrack, scene selection with a still from each chapter, two minutes of the film in three chapters with notes as English and Spanish subtitles, a bonus film and credits. Click the buttons, or use the arrow keys and Enter. Footage: Design for Dreaming (1956, MPO Productions for General Motors) and Living Stereo (1958, Jam Handy for RCA), Prelinger Archives, public domain.",
     format:
-      "DVD-Video ISO 9660 · MPEG-2 video + AC-3 audio (2 tracks) · subpicture subtitles (2) and menu buttons",
+      "DVD-Video ISO 9660 · MPEG-2 video + AC-3 audio · 2 subpicture subtitle tracks, menu buttons",
     hint: "Click a button on the menu",
   },
   {
@@ -49,21 +49,21 @@ export const SAMPLES: Sample[] = [
     id: "playstation",
     label: "PlayStation STR (.str)",
     kind: "video",
-    files: ["sintel-psx.str"],
-    title: "A PlayStation cutscene",
+    files: ["a-is-for-atom.str"],
+    title: "A 1953 cartoon as a PlayStation cutscene",
     plain:
-      "28 seconds of film encoded the way PlayStation games stored their cutscenes: pictures for the console's MDEC decoder chip, interleaved with CD-XA audio in raw CD sectors. Browsers cannot play these, and neither can desktop VLC. Footage: the Sintel trailer, (c) Blender Foundation, durian.blender.org (CC BY 3.0).",
+      "30 seconds of film encoded the way PlayStation games stored their cutscenes: pictures for the console's MDEC decoder chip, interleaved with CD-XA audio in raw CD sectors. Browsers cannot play these, and neither can desktop VLC. Footage: A Is for Atom (1953, John Sutherland Productions for General Electric), Prelinger Archives, public domain.",
     format: "PSX STR, 2352-byte sectors · MDEC (BS v2) 320x240 15 fps + XA ADPCM 37.8 kHz stereo",
   },
   {
     id: "wmv",
     label: "Windows Media (.wmv)",
     kind: "video",
-    files: ["elephants-dream.wmv"],
-    title: "An early-2000s Windows Media clip",
+    files: ["story-of-television.wmv"],
+    title: "A 1956 film as a Windows Media clip",
     plain:
-      "What Windows Media Player 7 and 8 made around 2001: a format browsers never played outside Internet Explorer plugins. Footage: Elephants Dream, (c) 2006 Blender Foundation / Netherlands Media Art Institute, www.elephantsdream.org (CC BY 2.5).",
-    format: "ASF (.wmv) · Windows Media Video 8 (WMV2) + Windows Media Audio 2 (WMA2)",
+      "What Windows Media Player 7 and 8 made around 2001: a format browsers never played outside Internet Explorer plugins. Footage: The Story of Television (1956, William J. Ganz Co. for RCA), Prelinger Archives, public domain.",
+    format: "ASF (.wmv) · Windows Media Video 8 (WMV2) 320x240 + Windows Media Audio 2 (WMA2)",
   },
   {
     id: "c64",
