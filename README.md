@@ -8,9 +8,7 @@ It handles a pretty baffling number of formats and is quite performant, making u
 
 ## Comparisons to other work
 
-libvlc-wasm exceeds native VLC 3 compatibility and is near parity with VLC 4. There's a full comparison between it, native VLC, other in-browser VLC and VLC-like libraries, and built-in browser support on the site, at [libvlc.lucasgelfond.online/formats](https://libvlc.lucasgelfond.online/formats).
-
-You can also look at its pass rate on [a ton](https://libvlc.lucasgelfond.online/tests) of test suites versus other similar packages, and how it performs against several speed benchmarks [here](https://libvlc.lucasgelfond.online/benchmarks).
+libvlc-wasm exceeds native VLC 3 compatibility and is near parity with VLC 4. See full compatibility [on the site](https://libvlc.lucasgelfond.online/formats). You can also see its [pass rate on test suites](https://libvlc.lucasgelfond.online/tests) and [speed benchmarks](https://libvlc.lucasgelfond.online/benchmarks).
 
 There's some [prior](https://code.videolan.org/jbk/vlc.js) [art](https://github.com/addyosmani/vlc.js) [here](https://github.com/Krowemoh/vlc.js) but most efforts at "VLC in the browser" use an older, prebuilt WASM bundle. Inspired by [ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm), which I co-maintain, libvlc-wasm includes the tooling to easily rebuild from source on top of VLC source code. This package also includes a pretty extensive testing harness that makes it easy to make changes or bump the source commit without lots of manual checks.
 
