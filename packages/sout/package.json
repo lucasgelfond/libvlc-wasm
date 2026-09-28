@@ -1,6 +1,6 @@
 {
   "name": "libvlc-wasm-sout",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The stream-output engine for libvlc-wasm: transcode, remux and record. A larger wasm, installed only when you need it.",
   "type": "module",
   "main": "./index.js",
@@ -26,7 +26,7 @@
   ],
   "sideEffects": false,
   "peerDependencies": {
-    "libvlc-wasm": "0.1.x"
+    "libvlc-wasm": "0.2.x"
   },
   "license": "MIT AND GPL-2.0-or-later",
   "keywords": [

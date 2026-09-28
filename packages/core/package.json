@@ -1,6 +1,6 @@
 {
   "name": "libvlc-wasm",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "VLC's playback engine (libvlc 4) compiled to WebAssembly: plays the formats browsers can't.",
   "type": "module",
   "main": "./src/index.js",
