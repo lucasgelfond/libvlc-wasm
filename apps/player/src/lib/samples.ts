@@ -30,7 +30,7 @@ export const SAMPLES: Sample[] = [
     files: ["design-for-dreaming.iso"],
     title: "Design for Dreaming, on DVD",
     plain:
-      "A small DVD authored like an archival release of 1950s films: a motion menu over the film with its own soundtrack, scene selection with a still from each chapter, two minutes of the film in three chapters with notes as English and Spanish subtitles, a bonus film and credits. Click the buttons, or use the arrow keys and Enter. Footage: Design for Dreaming (1956, MPO Productions for General Motors) and Living Stereo (1958, Jam Handy for RCA), Prelinger Archives, public domain.",
+      "A small DVD authored like an archival release of 1950s films: a motion menu over the film with its own soundtrack, scene selection with a still from each chapter, 90 seconds of the film in three chapters with notes as English and Spanish subtitles, a bonus film and credits. Click the buttons, or use the arrow keys and Enter. Footage: Design for Dreaming (1956, MPO Productions for General Motors) and Living Stereo (1958, Jam Handy for RCA), Prelinger Archives, public domain.",
     format:
       "DVD-Video ISO 9660 · MPEG-2 video + AC-3 audio · 2 subpicture subtitle tracks, menu buttons",
     hint: "Click a button on the menu",

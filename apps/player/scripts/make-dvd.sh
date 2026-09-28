@@ -2,10 +2,10 @@
 # The DVD in the sample menu (static/samples/design-for-dreaming.iso):
 # "Design for Dreaming & other films from the Prelinger Archives", authored
 # the way an archival DVD of 1950s industrial films would be --
-#   * a main menu over a full-frame motion loop from the film, with the film's
-#     own soundtrack under it: Play Film, Scene Selection, a bonus film, Credits
+#   * a main menu over a full-frame motion loop from the film (crossfaded into
+#     itself, so it never dips), with the film's own soundtrack under it: Play Film, Scene Selection, a bonus film, Credits
 #   * a scene-selection menu with a still from each chapter
-#   * the feature: two minutes of Design for Dreaming in three chapters (its
+#   * the feature: 90 seconds of Design for Dreaming in three chapters (its
 #     opening, the Kitchen of the Future, the highway of the future and its end),
 #     with notes as subtitles in English and Spanish
 #   * a bonus film (an excerpt of Living Stereo) and a credits title
@@ -29,8 +29,10 @@ trap 'rm -rf "$tmp"' EXIT
 cd "$tmp"
 q="-loglevel error -y"
 R=30000/1001
-DVD="-target ntsc-dvd -aspect 4:3 -b:a 160k -ac 2"
+DVD="-target ntsc-dvd -aspect 4:3 -b:a 128k -ac 2"
 LOOP=12.012 # one menu loop, 360 frames
+XF=1.001    # the loop's crossfade, 30 frames
+LOOPXF=13.013 XFAT=11.011 # LOOP + XF, LOOP - XF
 
 if [ -n "${SOURCES:-}" ]; then
   cp "$SOURCES/Designfo1956.mp4" dreaming.mp4
@@ -57,18 +59,18 @@ textw() { # $1 font, $2 size, $3 kerning, $4 text: its width in pixels
 }
 FINISH="scale=720:480:flags=lanczos,setsar=8/9,format=yuv420p"
 
-# -- Feature: three 40-second chapters of Design for Dreaming ---------------
+# -- Feature: three 30-second chapters of Design for Dreaming ---------------
 chapter() { # $1 index, $2 start in the film (s)
-  ffmpeg $q -ss "$2" -t 40 -i dreaming.mp4 -filter_complex \
-    "[0:v]fps=$R,scale=640:480,fade=in:0:12,fade=out:st=39.5:d=0.5[v];[0:a]aresample=48000,afade=in:d=0.4,afade=t=out:st=39.5:d=0.5[a]" \
-    -map "[v]" -map "[a]" -t 40 -c:v ffv1 -c:a pcm_s16le -ac 2 -f nut "ch$1.nut"
-  ffmpeg $q -ss 20 -i "ch$1.nut" -frames:v 1 -vf "scale=176:132:flags=lanczos" "still$1.png"
+  ffmpeg $q -ss "$2" -t 30 -i dreaming.mp4 -filter_complex \
+    "[0:v]fps=$R,scale=640:480,fade=in:0:12,fade=out:st=29.5:d=0.5[v];[0:a]aresample=48000,afade=in:d=0.4,afade=t=out:st=29.5:d=0.5[a]" \
+    -map "[v]" -map "[a]" -t 30 -c:v ffv1 -c:a pcm_s16le -ac 2 -f nut "ch$1.nut"
+  ffmpeg $q -ss 15 -i "ch$1.nut" -frames:v 1 -vf "scale=176:132:flags=lanczos" "still$1.png"
 }
 chapter 1 0     # the title card, the dream begins
 chapter 2 216   # Frigidaire's Kitchen of the Future
-chapter 3 516.7 # the highway of the future, and The End
+chapter 3 526.5 # the highway of the future, and The End
 printf "file 'ch1.nut'\nfile 'ch2.nut'\nfile 'ch3.nut'\n" > chapters.txt
-ffmpeg $q -f concat -i chapters.txt -vf "$FINISH" -t 120 $DVD -b:v 1250k -maxrate 5000k -bufsize 1835k feature.mpg
+ffmpeg $q -f concat -i chapters.txt -vf "$FINISH" -t 90 $DVD -b:v 1000k -maxrate 4000k -bufsize 1835k feature.mpg
 
 # Notes as subtitles, in English and Spanish.
 cat > en.srt <<'SRT'
@@ -83,16 +85,16 @@ A woman dreams her way into GM's Motorama,
 the company's show of cars and ideas for the future.
 
 3
-00:00:42,000 --> 00:00:48,000
+00:00:32,000 --> 00:00:38,000
 The Kitchen of the Future, by Frigidaire,
 then a division of General Motors.
 
 4
-00:00:56,000 --> 00:01:03,000
+00:00:44,000 --> 00:00:51,000
 Push-button cooking, as imagined in 1956.
 
 5
-00:01:22,000 --> 00:01:28,000
+00:01:02,000 --> 00:01:08,000
 A night drive on the highway of the future.
 SRT
 cat > es.srt <<'SRT'
@@ -107,16 +109,16 @@ Una mujer sueña que visita el Motorama de GM,
 la exposición de coches e ideas para el futuro.
 
 3
-00:00:42,000 --> 00:00:48,000
+00:00:32,000 --> 00:00:38,000
 La Cocina del Futuro, de Frigidaire,
 entonces una división de General Motors.
 
 4
-00:00:56,000 --> 00:01:03,000
+00:00:44,000 --> 00:00:51,000
 Cocinar apretando botones, tal como se imaginaba en 1956.
 
 5
-00:01:22,000 --> 00:01:28,000
+00:01:02,000 --> 00:01:08,000
 Un paseo nocturno por la autopista del futuro.
 SRT
 mkdir -p "$HOME/.spumux" && cp jost-medium.ttf "$HOME/.spumux/Jost-Medium.ttf"
@@ -134,11 +136,24 @@ spumux -s 0 sub0.xml < feature.mpg > feature_s0.mpg 2>/dev/null
 spumux -s 1 sub1.xml < feature_s0.mpg > feature_subs.mpg 2>/dev/null
 
 # -- Bonus film: Living Stereo (1958), its animation of the stereo groove ---
-ffmpeg $q -ss 64 -t 30 -i stereo.mp4 -filter_complex \
-  "[0:v]fps=$R,scale=640:480,fade=in:0:12,fade=out:st=29.5:d=0.5,$FINISH[v];[0:a]aresample=48000,afade=in:d=0.4,afade=t=out:st=29.5:d=0.5[a]" \
-  -map "[v]" -map "[a]" -t 30 $DVD -b:v 1300k -maxrate 5000k -bufsize 1835k bonus.mpg
+ffmpeg $q -ss 64 -t 20 -i stereo.mp4 -filter_complex \
+  "[0:v]fps=$R,scale=640:480,fade=in:0:12,fade=out:st=19.5:d=0.5,$FINISH[v];[0:a]aresample=48000,afade=in:d=0.4,afade=t=out:st=19.5:d=0.5[a]" \
+  -map "[v]" -map "[a]" -t 20 $DVD -b:v 900k -maxrate 4000k -bufsize 1835k bonus.mpg
 
 # -- Menus -------------------------------------------------------------------
+# A menu's footage loops without a dip: LOOP + XF seconds of film are cut
+# after the first XF, and the last XF crossfaded into those first XF, so the
+# loop's last frame runs straight into its first. Sound likewise. Only the
+# footage loops; the type and buttons are laid over it at full strength.
+# $1 video grade, $2 audio filter (both applied before the loop is made).
+loopbg() {
+  echo "[0:v]fps=$R,scale=640:480,$1,split[v1][v2];\
+    [v1]trim=start=$XF:end=$LOOPXF,setpts=PTS-STARTPTS,fps=$R[va];[v2]trim=end=$XF,setpts=PTS-STARTPTS,fps=$R[vb];\
+    [va][vb]xfade=transition=fade:duration=$XF:offset=$XFAT[bg];\
+    [0:a]aresample=48000,$2,asplit[a1][a2];\
+    [a1]atrim=start=$XF:end=$LOOPXF,asetpts=PTS-STARTPTS[aa];[a2]atrim=end=$XF,asetpts=PTS-STARTPTS[ab];\
+    [aa][ab]acrossfade=d=$XF:c1=tri:c2=tri[au]"
+}
 # A shade from the left, so the type reads over the footage.
 convert \( -size 480x200 xc:"${NIGHT}e0" \) \( -size 480x260 gradient:"${NIGHT}e0"-"${NIGHT}00" \) \
   \( -size 480x180 xc:"${NIGHT}00" \) -append -rotate -90 shade.png
@@ -151,16 +166,15 @@ B1=$1; B2=$2; B3=$3; B4=$4
 convert -size 640x480 xc:none \
   \( -size 640x480 xc:none -font "$SWASH" -pointsize 62 -fill '#000000a0' -annotate +47+101 'Design for' -annotate +47+165 'Dreaming' -blur 0x3 \) -composite \
   -font "$SWASH" -pointsize 62 -fill "$TITLE" -annotate +44+98 'Design for' -annotate +44+162 'Dreaming' \
-  -font jost-medium.ttf -pointsize 13 -kerning 2.6 -fill "$IVORY" -annotate +47+196 '& OTHER FILMS FROM THE PRELINGER ARCHIVES' \
+  -font jost-medium.ttf -pointsize 13 -kerning 2.6 -fill "$IVORY" -annotate +47+196 'AND OTHER FILMS' \
   -stroke "$GOLD" -strokewidth 1.2 -draw 'line 47,212 196,212' -stroke none \
   -font jost-medium.ttf -pointsize 18 -kerning 2 -fill "$IVORY" \
   -annotate +66+$B1 'PLAY FILM' -annotate +66+$B2 'SCENE SELECTION' \
   -annotate +66+$B3 'BONUS FILM: LIVING STEREO' -annotate +66+$B4 'CREDITS' \
   main_text.png
-ffmpeg $q -ss 516.7 -t $LOOP -i dreaming.mp4 -loop 1 -r $R -i shade.png -loop 1 -r $R -i main_text.png -filter_complex \
-  "[0:v]fps=$R,scale=640:480,eq=brightness=0.04:saturation=1.1[bg];[bg][1:v]overlay[a];[a][2:v]overlay,fade=in:0:15,fade=out:st=11.5:d=0.5,$FINISH[v];\
-   [0:a]aresample=48000,afade=in:d=0.5,afade=t=out:st=11.5:d=0.5[au]" \
-  -map "[v]" -map "[au]" -t $LOOP $DVD -b:v 2800k -maxrate 7000k -bufsize 1835k main_bg.mpg
+ffmpeg $q -ss 516.7 -t 13.1 -i dreaming.mp4 -loop 1 -r $R -i shade.png -loop 1 -r $R -i main_text.png -filter_complex \
+  "$(loopbg "eq=brightness=0.09:contrast=1.05:gamma=1.15:saturation=1.1" anull);[bg][1:v]overlay[a];[a][2:v]overlay,$FINISH[v]" \
+  -map "[v]" -map "[au]" -frames:v 360 -t $LOOP $DVD -b:v 1600k -maxrate 5000k -bufsize 1835k main_bg.mpg
 
 # Scene selection: the Motorama, dimmed, under a still of each chapter.
 convert -size 640x480 xc:none \
@@ -177,10 +191,9 @@ cap 128 '1  The Dream'
 cap 320 '2  Kitchen of the Future'
 cap 512 '3  Highway of the Future'
 convert scenes_text.png -font jost-medium.ttf -pointsize 18 -kerning 2 -fill "$IVORY" -annotate +66+402 'MAIN MENU' scenes_text.png
-ffmpeg $q -ss 60 -t $LOOP -i dreaming.mp4 -loop 1 -r $R -i dim.png -loop 1 -r $R -i scenes_text.png -filter_complex \
-  "[0:v]fps=$R,scale=640:480,gblur=sigma=2[bg];[bg][1:v]overlay[a];[a][2:v]overlay,fade=in:0:15,fade=out:st=11.5:d=0.5,$FINISH[v];\
-   [0:a]aresample=48000,volume=0.7,afade=in:d=0.5,afade=t=out:st=11.5:d=0.5[au]" \
-  -map "[v]" -map "[au]" -t $LOOP $DVD -b:v 2200k -maxrate 7000k -bufsize 1835k scenes_bg.mpg
+ffmpeg $q -ss 60 -t 13.1 -i dreaming.mp4 -loop 1 -r $R -i dim.png -loop 1 -r $R -i scenes_text.png -filter_complex \
+  "$(loopbg gblur=sigma=2 volume=0.7);[bg][1:v]overlay[a];[a][2:v]overlay,$FINISH[v]" \
+  -map "[v]" -map "[au]" -frames:v 360 -t $LOOP $DVD -b:v 1300k -maxrate 5000k -bufsize 1835k scenes_bg.mpg
 
 # Highlights (the subpicture layer): a gold arrow and underline on the chosen
 # item, a gold frame on the chosen still; coral while it is being pressed.
@@ -261,7 +274,7 @@ ffmpeg $q -ss 396 -t 20 -i dreaming.mp4 -loop 1 -r $R -t 20 -i dim.png -loop 1 -
    [2:v]format=rgba,fade=in:st=0.5:d=1:alpha=1,fade=out:st=9:d=1:alpha=1[p1];[3:v]format=rgba,fade=in:st=10.5:d=1:alpha=1,fade=out:st=18.5:d=1:alpha=1[p2];\
    [a][p1]overlay[b];[b][p2]overlay,fade=in:0:15,fade=out:st=19.5:d=0.5,$FINISH[v];\
    [0:a]aresample=48000,afade=in:d=0.5,afade=t=out:st=19.5:d=0.5[au]" \
-  -map "[v]" -map "[au]" -t 20 $DVD -b:v 1200k -maxrate 5000k -bufsize 1835k credits.mpg
+  -map "[v]" -map "[au]" -t 20 $DVD -b:v 700k -maxrate 4000k -bufsize 1835k credits.mpg
 
 printf '000000\nffffff\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n808080\n' > subs.rgb
 cat > dvd.xml <<'XML'
@@ -304,7 +317,7 @@ cat > dvd.xml <<'XML'
            The palette makes spumux's text white (index 1) edged black (0). -->
       <pgc palette="subs.rgb">
         <pre>subtitle=64;</pre>
-        <vob file="feature_subs.mpg" chapters="0,0:40,1:20"/>
+        <vob file="feature_subs.mpg" chapters="0,0:30,1:00"/>
         <post>call vmgm menu 1;</post>
       </pgc>
       <pgc>
