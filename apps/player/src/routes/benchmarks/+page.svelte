@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Tabs from '$lib/components/ui/tabs';
-	import { SPEED, SPEED_TOOLS, codecOf, PORTS, PORTS_MATRIX } from '$lib/benchmarks';
+	import { SPEED, SPEED_TOOLS, codecOf } from '$lib/benchmarks';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 
 	let threads = $state('1');
@@ -13,20 +13,6 @@
 	const fmt = (n: number | undefined) => (n == null || !isFinite(n) ? '—' : n >= 100 ? Math.round(n).toString() : n.toFixed(1));
 
 
-	const engines = PORTS_MATRIX?.engines ?? [];
-	const portTotals = $derived(
-		PORTS_MATRIX
-			? PORTS_MATRIX.tools.map((t) => ({
-					tool: t,
-					byEngine: engines.map((e) => ({
-						e,
-						plays: PORTS_MATRIX!.samples.filter((x) => x.results[t.key]?.[e]?.plays).length,
-						of: PORTS_MATRIX!.samples.length
-					}))
-				}))
-			: []
-	);
-	const ENGINE: Record<string, string> = { chromium: 'Chrome', webkit: 'Safari', firefox: 'Firefox' };
 </script>
 
 <svelte:head><title>Benchmarks · libvlc-wasm</title></svelte:head>
@@ -83,50 +69,5 @@
 		</div>
 	</section>
 
-	<section class="flex flex-col gap-4">
-		<h2 class="font-display text-2xl font-semibold tracking-tight">Other web VLC ports</h2>
-		{#if PORTS_MATRIX}
-			<div class="border-border bg-card overflow-x-auto rounded-2xl border">
-				<table class="w-full text-sm">
-					<thead class="text-muted-foreground text-left text-xs">
-						<tr><th class="px-4 py-3 font-medium">Tool</th>{#each engines as e (e)}<th class="px-3 py-3 font-medium">{ENGINE[e] ?? e}</th>{/each}</tr>
-					</thead>
-					<tbody>
-						{#each portTotals as t (t.tool.key)}
-							<tr class="border-border border-t">
-								<td class="px-4 py-2.5">
-									{#if t.tool.url}<a href={t.tool.url} target="_blank" rel="noreferrer" class="font-medium underline-offset-4 hover:underline">{t.tool.label}</a>{:else}<span class="font-medium">{t.tool.label}</span>{/if}
-								</td>
-								{#each t.byEngine as c (c.e)}<td class="px-3 py-2.5 whitespace-nowrap tabular-nums">{c.plays} / {c.of}</td>{/each}
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-		{:else}
-			<div class="border-border bg-card overflow-x-auto rounded-2xl border">
-				<table class="w-full text-sm">
-					<thead class="text-muted-foreground text-left text-xs">
-						<tr>
-							<th class="px-4 py-3 font-medium">Port</th>
-							<th class="px-3 py-3 font-medium">Video shown</th>
-							<th class="px-3 py-3 font-medium">Audible</th>
-							<th class="px-3 py-3 font-medium">Median first frame</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each PORTS as p (p.key)}
-							<tr class="border-border border-t">
-								<td class="px-4 py-2.5 font-medium">{p.port ?? p.key}{#if p.build}<span class="text-muted-foreground"> ({p.build})</span>{/if}</td>
-								<td class="px-3 py-2.5 tabular-nums">{p.summary?.videoShown ?? '—'}</td>
-								<td class="px-3 py-2.5 tabular-nums">{p.summary?.audible ?? '—'}</td>
-								<td class="px-3 py-2.5 tabular-nums">{p.summary?.medianFirstFrameMs != null ? `${p.summary.medianFirstFrameMs} ms` : '—'}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-		{/if}
-	</section>
 
 </main>

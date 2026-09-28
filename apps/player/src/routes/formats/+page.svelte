@@ -27,6 +27,20 @@
 		{ label: 'Firefox', pick: (r) => r.browsers.firefox }
 	];
 	const SUMMARY: [string, { yes: number; tested: number }][] = COLUMNS.map((c) => [c.label, count(ROWS, c.pick)]);
+	const engines = PORTS_MATRIX?.engines ?? [];
+	const portTotals = $derived(
+		PORTS_MATRIX
+			? PORTS_MATRIX.tools.map((t) => ({
+					tool: t,
+					byEngine: engines.map((e) => ({
+						e,
+						plays: PORTS_MATRIX!.samples.filter((x) => x.results[t.key]?.[e]?.plays).length,
+						of: PORTS_MATRIX!.samples.length
+					}))
+				}))
+			: []
+	);
+	const ENGINE: Record<string, string> = { chromium: 'Chrome', webkit: 'Safari', firefox: 'Firefox' };
 	const METHODS = (PORTS_MATRIX?.tools ?? []).filter((t) => t.notes);
 	let showMethods = $state(false);
 	// No suite is shown until one is picked: each is a long table.
@@ -69,10 +83,6 @@
 				<RiArrowLeftLine class="size-3.5" /> Back to the player
 			</a>
 			<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
-			<p class="text-muted-foreground text-sm">
-				What plays, measured with every tool on curated files and public test suites. Decode speed and the other web VLC ports are on the
-				<a href="/benchmarks" class="text-foreground underline underline-offset-2">benchmarks page</a>.
-			</p>
 		</header>
 
 		<ColumnChart items={SUMMARY.map(([label, c]) => ({ label, yes: c.yes, total: c.tested }))} />
@@ -167,14 +177,38 @@
 			</table>
 		</div>
 
+		<section class="flex flex-col gap-4">
+			<h2 class="font-display text-2xl font-semibold tracking-tight">Other web VLC ports</h2>
+			{#if PORTS_MATRIX}
+				<div class="border-border bg-card overflow-x-auto rounded-2xl border">
+					<table class="w-full text-sm">
+						<thead class="text-muted-foreground text-left text-xs">
+							<tr><th class="px-4 py-3 font-medium">Tool</th>{#each engines as e (e)}<th class="px-3 py-3 font-medium">{ENGINE[e] ?? e}</th>{/each}</tr>
+						</thead>
+						<tbody>
+							{#each portTotals as t (t.tool.key)}
+								<tr class="border-border border-t">
+									<td class="px-4 py-2.5">
+										{#if t.tool.url}<a href={t.tool.url} target="_blank" rel="noreferrer" class="font-medium underline-offset-4 hover:underline">{t.tool.label}</a>{:else}<span class="font-medium">{t.tool.label}</span>{/if}
+									</td>
+									{#each t.byEngine as c (c.e)}<td class="px-3 py-2.5 whitespace-nowrap tabular-nums">{c.plays} / {c.of}</td>{/each}
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			{/if}
+		</section>
+
 		{#if SUITES.length}
-			<section id="test-suites" class="flex scroll-mt-6 flex-col gap-4">
+			<section id="test-suites" class="flex scroll-mt-6 flex-col gap-4 {suite ? 'pb-16' : 'pb-[28rem]'}">
 				<h2 class="font-display text-2xl font-semibold tracking-tight">Test suites</h2>
 				<Select.Root type="single" bind:value={suite}>
 					<Select.Trigger class="w-full sm:w-96" aria-label="Test suite">
 						<span class="truncate {suiteTitle ? '' : 'text-muted-foreground'}">{suiteTitle ?? 'Choose a test suite'}</span>
 					</Select.Trigger>
-					<Select.Content class="max-h-80">
+					<!-- Always below, every suite at once: the page leaves room for it (see the section padding). -->
+					<Select.Content side="bottom" align="start" avoidCollisions={false} class="max-h-none">
 						{#each SUITES as s (s.key)}
 							<Select.Item value={s.key} label={s.title}><span class="truncate">{s.title}</span></Select.Item>
 						{/each}
