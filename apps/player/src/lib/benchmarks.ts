@@ -118,7 +118,7 @@ export const PORTS_MATRIX = Object.values(matrixFiles)[0] as
       engines: string[];
       samples: {
         id: string;
-        results: Record<string, Record<string, { plays: boolean }>>;
+        results: Record<string, Record<string, { plays: boolean; video?: boolean | null; audio?: boolean | null; note?: string | null }>>;
       }[];
     }
   | undefined;

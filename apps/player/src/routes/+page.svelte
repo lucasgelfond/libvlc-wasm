@@ -8,10 +8,7 @@
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import SidePanel from '$lib/components/SidePanel.svelte';
 	import Playlist from '$lib/components/Playlist.svelte';
-	import FormatsPopover from '$lib/components/FormatsPopover.svelte';
-	import RiListCheck3 from 'remixicon-svelte/icons/list-check-3';
-	import RiSpeedUpLine from 'remixicon-svelte/icons/speed-up-line';
-	import RiArrowRightLine from 'remixicon-svelte/icons/arrow-right-line';
+	import SiteTabs from '$lib/components/SiteTabs.svelte';
 	import SampleMenu from '$lib/components/SampleMenu.svelte';
 	import About from '$lib/components/About.svelte';
 	import cone from '$lib/assets/cone.svg';
@@ -218,11 +215,11 @@
 
 <Tooltip.Provider delayDuration={400}>
 	<main class="mx-auto flex min-h-svh max-w-[1400px] flex-col gap-4 px-4 py-4 sm:px-6">
-		<header class="flex items-center gap-3">
+		<header class="flex flex-wrap items-center gap-x-6 gap-y-3">
 			<button
 				type="button"
 				onclick={() => { session.reset(); history.replaceState(null, '', '/'); }}
-				class="flex min-w-0 flex-1 items-center gap-3 text-left"
+				class="flex max-w-xs min-w-0 items-center gap-3 text-left"
 				aria-label="Back to the start"
 			>
 				<img src={cone} alt="" class="size-9 shrink-0" />
@@ -230,31 +227,16 @@
 					<span class="font-display block truncate text-lg leading-tight font-semibold tracking-tight">{opened ? session.name : 'libvlc-wasm'}</span>
 				</span>
 			</button>
-			{#if opened}<FormatsPopover />{/if}
+			<SiteTabs />
 			{#if session.playlist.length}
-				<SampleMenu onpick={openSample} disabled={!session.ready || !!loadingSample} loading={loadingSample} />
-				<Button size="sm" onclick={() => fileInput.click()}><RiAddLine /> Add files</Button>
+				<div class="ml-auto flex items-center gap-3">
+					<SampleMenu onpick={openSample} disabled={!session.ready || !!loadingSample} loading={loadingSample} />
+					<Button size="sm" onclick={() => fileInput.click()}><RiAddLine /> Add files</Button>
+				</div>
 			{/if}
 		</header>
 
-		{#if !opened}
-			<!-- The description, and beside it the two other pages, laid on the same
-			     columns as the player and its side panel below. -->
-			<div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-				<About />
-				<nav class="grid grid-cols-2 gap-3 lg:grid-cols-1" aria-label="More">
-					{#each [{ href: '/formats', label: 'Supported formats', Icon: RiListCheck3 }, { href: '/benchmarks', label: 'Benchmarks', Icon: RiSpeedUpLine }] as l (l.href)}
-						<a
-							href={l.href}
-							class="border-foreground/10 bg-foreground/[0.04] hover:bg-foreground/[0.08] group flex items-center justify-between gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-colors"
-						>
-							<span class="flex items-center gap-2"><l.Icon class="text-muted-foreground size-4" /> {l.label}</span>
-							<RiArrowRightLine class="text-muted-foreground size-4 transition-transform group-hover:translate-x-0.5" />
-						</a>
-					{/each}
-				</nav>
-			</div>
-		{/if}
+		{#if !opened}<About />{/if}
 
 		<section class="grid flex-1 gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
 			<div class="flex min-h-0 min-w-0 flex-col gap-4">

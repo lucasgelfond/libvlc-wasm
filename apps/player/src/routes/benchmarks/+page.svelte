@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Tabs from '$lib/components/ui/tabs';
 	import { SPEED, SPEED_TOOLS, codecOf } from '$lib/benchmarks';
-	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
+	import SiteHeader from '$lib/components/SiteHeader.svelte';
 
 	let threads = $state('1');
 	// A click moves focus to the tab; the focus ring then flashed on every switch.
@@ -20,13 +20,8 @@
 
 <svelte:head><title>Benchmarks · libvlc-wasm</title></svelte:head>
 
-<main class="mx-auto flex min-h-svh max-w-6xl flex-col gap-10 px-4 py-6 sm:px-6">
-	<header class="flex flex-col gap-4">
-		<a href="/" class="text-muted-foreground hover:text-foreground inline-flex w-fit items-center gap-1 text-xs">
-			<RiArrowLeftLine class="size-3.5" /> Back to the player
-		</a>
-		<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Benchmarks</h1>
-	</header>
+<main class="mx-auto flex min-h-svh max-w-[1400px] flex-col gap-10 px-4 py-4 sm:px-6">
+	<SiteHeader />
 
 	<section class="flex flex-col gap-4">
 		<div class="flex flex-wrap items-end justify-between gap-3">

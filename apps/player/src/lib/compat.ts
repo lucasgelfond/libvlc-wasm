@@ -3,6 +3,7 @@
  * corpus/compat/build.mjs) with a plain-English line per file, shaped for the
  * "What can it play?" page.
  */
+import { PORTS_MATRIX } from './benchmarks';
 import compat from '../../../../corpus/compat/compat.json';
 import plain from '../../../../corpus/plain-english.json';
 import formatsJson from '../../../../corpus/formats.json';
@@ -66,6 +67,17 @@ function decodeCell(d: Decode, wantVideo: boolean, wantAudio: boolean): Cell {
 
 type Sample = (typeof compat.samples)[number];
 
+/**
+ * vlc.js, from the ports run (bench/compare/ports-matrix.json): jbk's published
+ * demo, the build the other vlc.js ports derive from, in Chromium.
+ */
+function vlcjsCell(id: string): Cell {
+	const r = PORTS_MATRIX?.samples.find((x) => x.id === id)?.results['jbk-demo']?.chromium;
+	if (!r) return { verdict: 'untested', note: 'not measured' };
+	const verdict: Verdict = r.plays ? 'yes' : r.video || r.audio ? 'partial' : 'no';
+	return { verdict, note: r.note ?? '' };
+}
+
 function row(s: Sample): Row {
 	const wantVideo = !!s.video && s.video !== 'none';
 	const wantAudio = !!s.audio && s.audio !== 'none';
@@ -92,10 +104,7 @@ function row(s: Sample): Row {
 		nativeVlc4: decodeCell((s as { nativeVlc4?: Decode }).nativeVlc4, wantVideo, wantAudio),
 		ffmpegWasm: decodeCell(s.ffmpegWasm as Decode, wantVideo, wantAudio),
 		ffmpeg: decodeCell(s.ffmpeg as Decode, wantVideo, wantAudio),
-		vlcjs:
-			s.vlcjs === null || s.vlcjs === undefined
-				? { verdict: 'untested', note: 'vlc.js was only measured on video samples' }
-				: { verdict: s.vlcjs ? 'yes' : 'no', note: s.vlcjs ? 'showed video' : 'no picture' },
+		vlcjs: vlcjsCell(s.id),
 		// A sample added to the manifest has no browser results until the matrix is re-measured.
 		browsers: (s.browsers ?? { chromium: null, webkit: null, firefox: null }) as Row['browsers']
 	};

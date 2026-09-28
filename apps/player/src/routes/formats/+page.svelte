@@ -1,13 +1,9 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
 	import * as Tabs from '$lib/components/ui/tabs';
-	import * as Select from '$lib/components/ui/select';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
-	import SuiteView from '$lib/components/SuiteView.svelte';
 	import ColumnChart from '$lib/components/ColumnChart.svelte';
-	import { PORTS_MATRIX } from '$lib/benchmarks';
-	import { SUITES } from '$lib/suites';
-	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
+	import SiteHeader from '$lib/components/SiteHeader.svelte';
 	import RiDownload2Line from 'remixicon-svelte/icons/download-2-line';
 	import RiSearchLine from 'remixicon-svelte/icons/search-line';
 
@@ -27,25 +23,6 @@
 		{ label: 'Firefox', pick: (r) => r.browsers.firefox }
 	];
 	const SUMMARY: [string, { yes: number; tested: number }][] = COLUMNS.map((c) => [c.label, count(ROWS, c.pick)]);
-	const engines = PORTS_MATRIX?.engines ?? [];
-	const portTotals = $derived(
-		PORTS_MATRIX
-			? PORTS_MATRIX.tools.map((t) => ({
-					tool: t,
-					byEngine: engines.map((e) => ({
-						e,
-						plays: PORTS_MATRIX!.samples.filter((x) => x.results[t.key]?.[e]?.plays).length,
-						of: PORTS_MATRIX!.samples.length
-					}))
-				}))
-			: []
-	);
-	const ENGINE: Record<string, string> = { chromium: 'Chrome', webkit: 'Safari', firefox: 'Firefox' };
-	const METHODS = (PORTS_MATRIX?.tools ?? []).filter((t) => t.notes);
-	let showMethods = $state(false);
-	// No suite is shown until one is picked: each is a long table.
-	let suite = $state('');
-	const suiteTitle = $derived(SUITES.find((s) => s.key === suite)?.title);
 
 	const rows = $derived(
 		ROWS.filter((r) => (kind === 'all' ? true : kind === 'video' ? r.hasVideo : !r.hasVideo)).filter((r) => {
@@ -77,15 +54,10 @@
 	</td>
 {/snippet}
 
-	<main class="mx-auto flex min-h-svh max-w-6xl flex-col gap-8 px-4 py-6 sm:px-6">
-		<header class="flex flex-col gap-4">
-			<a href="/" class="text-muted-foreground hover:text-foreground inline-flex w-fit items-center gap-1 text-xs">
-				<RiArrowLeftLine class="size-3.5" /> Back to the player
-			</a>
-			<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
-		</header>
+	<main class="mx-auto flex min-h-svh max-w-[1400px] flex-col gap-8 px-4 py-4 sm:px-6">
+		<SiteHeader />
 
-		<ColumnChart items={SUMMARY.map(([label, c]) => ({ label, yes: c.yes, total: c.tested }))} title="Which players support the most file formats" unit="formats" />
+		<ColumnChart items={SUMMARY.map(([label, c]) => ({ label, yes: c.yes, total: c.tested }))} unit="formats" />
 
 		<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
 			<div class="relative sm:w-80">
@@ -119,36 +91,9 @@
 							</th>
 						{/each}
 						<th class="w-28 px-4 py-3 text-right font-medium">
-							{#if METHODS.length}
-								<button
-									type="button"
-									onclick={() => (showMethods = !showMethods)}
-									aria-expanded={showMethods}
-									class="hover:text-foreground inline-flex items-center gap-0.5 whitespace-nowrap"
-								>
-									How measured <span class="inline-block transition-transform {showMethods ? 'rotate-180' : ''}">⌄</span>
-								</button>
-							{/if}
 						</th>
 					</tr>
 				</thead>
-				{#if showMethods}
-					<!-- How each tool was run and what counted as playing, folded into the table's corner. -->
-					<tbody>
-						<tr class="border-border border-t">
-							<td colspan={COLUMNS.length + 2} class="px-4 py-3">
-								<dl class="flex flex-col gap-2.5">
-									{#each METHODS as t (t.key)}
-										<div>
-											<dt class="text-xs font-medium">{t.label}</dt>
-											<dd class="text-muted-foreground text-xs leading-relaxed">{t.notes}</dd>
-										</div>
-									{/each}
-								</dl>
-							</td>
-						</tr>
-					</tbody>
-				{/if}
 				{#each sections as s (s.key)}
 					<tbody>
 						<tr class="border-border border-t">
@@ -177,46 +122,5 @@
 			</table>
 		</div>
 
-		<section class="flex flex-col gap-4">
-			<h2 class="font-display text-2xl font-semibold tracking-tight">Other web VLC ports</h2>
-			{#if PORTS_MATRIX}
-				<div class="border-border bg-card overflow-x-auto rounded-2xl border">
-					<table class="w-full text-sm">
-						<thead class="text-muted-foreground text-left text-xs">
-							<tr><th class="px-4 py-3 font-medium">Tool</th>{#each engines as e (e)}<th class="px-3 py-3 font-medium">{ENGINE[e] ?? e}</th>{/each}</tr>
-						</thead>
-						<tbody>
-							{#each portTotals as t (t.tool.key)}
-								<tr class="border-border border-t">
-									<td class="px-4 py-2.5">
-										{#if t.tool.url}<a href={t.tool.url} target="_blank" rel="noreferrer" class="font-medium underline-offset-4 hover:underline">{t.tool.label}</a>{:else}<span class="font-medium">{t.tool.label}</span>{/if}
-									</td>
-									{#each t.byEngine as c (c.e)}<td class="px-3 py-2.5 whitespace-nowrap tabular-nums">{c.plays} / {c.of}</td>{/each}
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-				</div>
-			{/if}
-		</section>
 
-		{#if SUITES.length}
-			<section id="test-suites" class="flex scroll-mt-6 flex-col gap-4 {suite ? 'pb-16' : 'pb-[28rem]'}">
-				<h2 class="font-display text-2xl font-semibold tracking-tight">Test suites</h2>
-				<Select.Root type="single" bind:value={suite}>
-					<Select.Trigger class="w-full sm:w-96" aria-label="Test suite">
-						<span class="truncate {suiteTitle ? '' : 'text-muted-foreground'}">{suiteTitle ?? 'Choose a test suite'}</span>
-					</Select.Trigger>
-					<!-- Always below, every suite at once: the page leaves room for it (see the section padding). -->
-					<Select.Content side="bottom" align="start" avoidCollisions={false} class="max-h-none">
-						{#each SUITES as s (s.key)}
-							<Select.Item value={s.key} label={s.title}><span class="truncate">{s.title}</span></Select.Item>
-						{/each}
-					</Select.Content>
-				</Select.Root>
-				{#each SUITES as s (s.key)}
-					{#if s.key === suite}<SuiteView suite={s} {query} />{/if}
-				{/each}
-			</section>
-		{/if}
 	</main>
