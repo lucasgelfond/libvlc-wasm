@@ -4,6 +4,7 @@
 	import * as Select from '$lib/components/ui/select';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
 	import SuiteView from '$lib/components/SuiteView.svelte';
+	import ColumnChart from '$lib/components/ColumnChart.svelte';
 	import { SUITES } from '$lib/suites';
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 	import RiDownload2Line from 'remixicon-svelte/icons/download-2-line';
@@ -71,24 +72,7 @@
 			</p>
 		</header>
 
-		<!-- How much of the curated corpus each tool plays, as a small column chart; the counts are in each column's tooltip. -->
-		<section class="bg-card border-border rounded-2xl border px-5 pt-6 pb-4" aria-label="Files each tool plays">
-			<div class="flex h-36 items-end gap-3 sm:gap-6">
-				{#each SUMMARY as [label, c], i (label)}
-					<div class="flex h-full min-w-0 flex-1 flex-col justify-end" title="{label}: {c.yes} of {c.tested}">
-						<div
-							class="w-full rounded-t-md {i === 0 ? 'bg-primary' : 'bg-foreground/25'}"
-							style="height: {(c.yes / c.tested) * 100}%"
-						></div>
-					</div>
-				{/each}
-			</div>
-			<div class="border-border mt-0 flex gap-3 border-t pt-2 sm:gap-6">
-				{#each SUMMARY as [label], i (label)}
-					<p class="min-w-0 flex-1 truncate text-center text-xs {i === 0 ? 'text-foreground font-medium' : 'text-muted-foreground'}">{label}</p>
-				{/each}
-			</div>
-		</section>
+		<ColumnChart items={SUMMARY.map(([label, c]) => ({ label, yes: c.yes, total: c.tested }))} />
 
 		<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
 			<div class="relative sm:w-80">

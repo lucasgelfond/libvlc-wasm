@@ -4,6 +4,7 @@
   a folder opens to its files, loaded on demand.
 -->
 <script lang="ts">
+	import ColumnChart from './ColumnChart.svelte';
 	export type Counts = { union: number } & Record<string, number>;
 	export type Suite = {
 		key: string;
@@ -57,23 +58,8 @@
 </script>
 
 <div class="flex flex-col gap-4">
-	<p class="text-muted-foreground max-w-3xl text-sm">
-		{suite.description}
-		{#if suite.source}<a href={suite.source} target="_blank" rel="noreferrer" class="text-foreground underline decoration-foreground/30 underline-offset-2">Source</a>.{/if}
-		Counted: the {suite.overall.union.toLocaleString()} files native FFmpeg or native VLC 3 can play.
-	</p>
 
-	<div class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-3 lg:grid-cols-7">
-		{#each tools as [key, label], i (key)}
-			<div class="bg-card flex flex-col gap-2 p-4">
-				<span class="font-display text-2xl leading-none font-semibold tabular-nums {i === 0 ? 'text-primary' : ''}"
-					>{Math.round(share(suite.overall[key], suite.overall.union) * 100)}%</span
-				>
-				<span class="text-muted-foreground text-xs tabular-nums">{suite.overall[key].toLocaleString()} of {suite.overall.union.toLocaleString()}</span>
-				<span class="text-sm font-medium">{label}</span>
-			</div>
-		{/each}
-	</div>
+	<ColumnChart items={tools.map(([key, label]) => ({ label, yes: suite.overall[key], total: suite.overall.union }))} />
 
 	<div class="border-border bg-card overflow-x-auto rounded-2xl border">
 		<table class="w-full min-w-[760px] text-sm">
