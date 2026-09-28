@@ -175,7 +175,7 @@
 		<div>
 			<h2 class="font-display text-2xl font-semibold tracking-tight">Parity with native VLC</h2>
 			<p class="text-muted-foreground max-w-3xl text-sm">
-				Files that play, per test suite. VLC 4 (native) is a macOS nightly of the same VLC master libvlc-wasm is built from; each suite counts the
+				Files that play, per test suite. VLC 4 is a macOS nightly of the same VLC master libvlc-wasm is built from; each suite counts the
 				files native FFmpeg or native VLC 3 plays. Details per file are on the <a href="/formats#test-suites" class="text-foreground underline underline-offset-2">formats page</a>.
 			</p>
 		</div>
@@ -184,8 +184,8 @@
 				<thead class="text-muted-foreground text-left text-xs">
 					<tr>
 						<th class="px-4 py-3 font-medium">Suite</th><th class="px-3 py-3 text-right font-medium">Files</th>
-						<th class="px-3 py-3 text-right font-medium">libvlc-wasm</th><th class="px-3 py-3 text-right font-medium">VLC 4 (native)</th>
-						<th class="px-3 py-3 text-right font-medium">VLC 3 (native)</th><th class="px-3 py-3 text-right font-medium">VLC 4 plays, libvlc-wasm not</th>
+						<th class="px-3 py-3 text-right font-medium">libvlc-wasm</th><th class="px-3 py-3 text-right font-medium">VLC 4</th>
+						<th class="px-3 py-3 text-right font-medium">VLC 3</th><th class="px-3 py-3 text-right font-medium">VLC 4 plays, libvlc-wasm not</th>
 					</tr>
 				</thead>
 				<tbody>

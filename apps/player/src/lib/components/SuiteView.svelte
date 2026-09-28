@@ -24,8 +24,8 @@
 
 	const TOOLS: [key: string, label: string][] = [
 		['wasm', 'libvlc-wasm'],
-		['vlc', 'VLC 3 (native)'],
-		['vlc4', 'VLC 4 (native)'],
+		['vlc', 'VLC 3'],
+		['vlc4', 'VLC 4'],
 		['ffmpeg', 'FFmpeg'],
 		['chromium', 'Chrome'],
 		['webkit', 'Safari'],
@@ -144,7 +144,7 @@
 										<span class="font-mono">{f.path.split('/').slice(1).join('/')}
 											<span class="text-muted-foreground">{[f.video, f.audio].filter(Boolean).join(' + ')}</span>
 											{#if f.wasmAvformat}<span class="text-emerald-500"> · plays with :demux=avformat</span>{/if}
-											{#if f.vlc4}<span class="text-muted-foreground"> · VLC 4 (native) plays it</span>{/if}
+											{#if f.vlc4}<span class="text-muted-foreground"> · VLC 4 plays it</span>{/if}
 										</span>
 										{#if f.wasmError}<span class="text-muted-foreground truncate font-mono">{f.wasmError}</span>{/if}
 									</li>

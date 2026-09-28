@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
 	import * as Tabs from '$lib/components/ui/tabs';
+	import * as Select from '$lib/components/ui/select';
 	import { ROWS, bySection, count, type Cell, type Row } from '$lib/compat';
 	import SuiteView from '$lib/components/SuiteView.svelte';
 	import { SUITES } from '$lib/suites';
@@ -15,8 +16,8 @@
 	type Column = { label: string; pick: (r: Row) => Cell | boolean | null };
 	const COLUMNS: Column[] = [
 		{ label: 'libvlc-wasm', pick: (r) => r.libvlcWasm },
-		{ label: 'VLC 3 (native)', pick: (r) => r.nativeVlc },
-		{ label: 'VLC 4 (native)', pick: (r) => r.nativeVlc4 },
+		{ label: 'VLC 3', pick: (r) => r.nativeVlc },
+		{ label: 'VLC 4', pick: (r) => r.nativeVlc4 },
 		{ label: 'ffmpeg.wasm', pick: (r) => r.ffmpegWasm },
 		{ label: 'vlc.js', pick: (r) => r.vlcjs },
 		{ label: 'Chrome', pick: (r) => r.browsers.chromium },
@@ -24,7 +25,9 @@
 		{ label: 'Firefox', pick: (r) => r.browsers.firefox }
 	];
 	const SUMMARY: [string, { yes: number; tested: number }][] = COLUMNS.map((c) => [c.label, count(ROWS, c.pick)]);
-	let suite = $state(SUITES[0]?.key ?? '');
+	// No suite is shown until one is picked: each is a long table.
+	let suite = $state('');
+	const suiteTitle = $derived(SUITES.find((s) => s.key === suite)?.title);
 
 	const rows = $derived(
 		ROWS.filter((r) => (kind === 'all' ? true : kind === 'video' ? r.hasVideo : !r.hasVideo)).filter((r) => {
@@ -41,7 +44,7 @@
 
 {#snippet mark(v: Cell | boolean | null, label: string)}
 	{@const k = verdict(v)}
-	{@const text = { yes: 'plays', partial: 'partly (one of its streams)', no: 'does not play', untested: 'not tested' }[k]}
+	{@const text = { yes: 'plays', partial: 'partly', no: 'does not play', untested: 'not tested' }[k]}
 	<td
 					class="border-background border-x-2 px-1 py-2.5 text-center {k === 'yes'
 						? 'bg-emerald-500/35 dark:bg-emerald-500/30'
@@ -68,19 +71,23 @@
 			</p>
 		</header>
 
-		<section class="border-border bg-border grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-4 lg:grid-cols-8">
-			{#each SUMMARY as [label, c], i (label)}
-				<div class="bg-card flex flex-col gap-3 p-5">
-					<div class="flex items-baseline gap-1.5">
-						<span class="font-display text-4xl leading-none font-semibold tracking-tight tabular-nums {i === 0 ? 'text-primary' : ''}">{c.yes}</span>
-						<span class="text-muted-foreground text-sm tabular-nums">of {c.tested}</span>
+		<!-- How much of the curated corpus each tool plays, as a small column chart; the counts are in each column's tooltip. -->
+		<section class="bg-card border-border rounded-2xl border px-5 pt-6 pb-4" aria-label="Files each tool plays">
+			<div class="flex h-36 items-end gap-3 sm:gap-6">
+				{#each SUMMARY as [label, c], i (label)}
+					<div class="flex h-full min-w-0 flex-1 flex-col justify-end" title="{label}: {c.yes} of {c.tested}">
+						<div
+							class="w-full rounded-t-md {i === 0 ? 'bg-primary' : 'bg-foreground/25'}"
+							style="height: {(c.yes / c.tested) * 100}%"
+						></div>
 					</div>
-					<div class="bg-muted h-1 overflow-hidden rounded-full">
-						<div class="h-full rounded-full {i === 0 ? 'bg-primary' : 'bg-foreground/35'}" style="width: {(c.yes / c.tested) * 100}%"></div>
-					</div>
-					<p class="text-sm font-medium">{label}</p>
-				</div>
-			{/each}
+				{/each}
+			</div>
+			<div class="border-border mt-0 flex gap-3 border-t pt-2 sm:gap-6">
+				{#each SUMMARY as [label], i (label)}
+					<p class="min-w-0 flex-1 truncate text-center text-xs {i === 0 ? 'text-foreground font-medium' : 'text-muted-foreground'}">{label}</p>
+				{/each}
+			</div>
 		</section>
 
 		<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -99,7 +106,7 @@
 
 		<div class="text-muted-foreground -mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
 			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-emerald-500/60"></span>plays</span>
-			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-amber-500/60"></span>partly (one of its streams)</span>
+			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-amber-500/60"></span>partly</span>
 			<span class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-red-500/50"></span>does not play</span>
 			<span class="inline-flex items-center gap-1.5"><span class="text-muted-foreground/50">n/a</span>not tested</span>
 		</div>
@@ -148,14 +155,19 @@
 		{#if SUITES.length}
 			<section id="test-suites" class="flex scroll-mt-6 flex-col gap-4">
 				<h2 class="font-display text-2xl font-semibold tracking-tight">Test suites</h2>
-				<Tabs.Root bind:value={suite}>
-					<Tabs.List class="h-auto flex-wrap">
-						{#each SUITES as s (s.key)}<Tabs.Trigger value={s.key}>{s.title}</Tabs.Trigger>{/each}
-					</Tabs.List>
-					{#each SUITES as s (s.key)}
-						<Tabs.Content value={s.key} class="pt-4"><SuiteView suite={s} {query} /></Tabs.Content>
-					{/each}
-				</Tabs.Root>
+				<Select.Root type="single" bind:value={suite}>
+					<Select.Trigger class="w-full sm:w-96" aria-label="Test suite">
+						<span class="truncate {suiteTitle ? '' : 'text-muted-foreground'}">{suiteTitle ?? 'Choose a test suite'}</span>
+					</Select.Trigger>
+					<Select.Content class="max-h-80">
+						{#each SUITES as s (s.key)}
+							<Select.Item value={s.key} label={s.title}><span class="truncate">{s.title}</span></Select.Item>
+						{/each}
+					</Select.Content>
+				</Select.Root>
+				{#each SUITES as s (s.key)}
+					{#if s.key === suite}<SuiteView suite={s} {query} />{/if}
+				{/each}
 			</section>
 		{/if}
 	</main>

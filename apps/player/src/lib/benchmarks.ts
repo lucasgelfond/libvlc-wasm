@@ -32,8 +32,8 @@ export type Speed = {
 export const SPEED = speed as unknown as Speed;
 
 export const SPEED_TOOLS: [key: string, label: string][] = [
-  ["ffmpegNative", "FFmpeg (native)"],
-  ["vlcNative", "VLC 3 (native)"],
+  ["ffmpegNative", "FFmpeg"],
+  ["vlcNative", "VLC 3"],
   ["libvlcWasm", "libvlc-wasm, software"],
   ["libvlcWebCodecs", "libvlc-wasm + WebCodecs"],
   ["ffmpegWasm", "ffmpeg.wasm"],
