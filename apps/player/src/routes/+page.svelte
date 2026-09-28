@@ -62,6 +62,10 @@
 	// picture inside it: resizing to each file's shape made the page jump
 	// between files, and between a disc's menus and its titles.
 	const aspect = 16 / 9;
+	// A press on a disc menu goes to VLC. The click event only comes after the
+	// release, when the chosen chapter may already be playing (inMenu false):
+	// judged then, the same click would pause it. Judge it by where it started.
+	let pressedInMenu = false;
 	const byTime = $derived(session.duration > 0);
 	const iconButton = 'text-white hover:bg-white/15 hover:text-white';
 	// Only when real time is missing: short clips end a frame or two before their stated length.
@@ -249,8 +253,9 @@
 					<canvas
 						bind:this={canvas}
 						class="absolute inset-0 size-full"
-						onclick={() => !session.inMenu && session.toggle()}
-						ondblclick={() => !session.inMenu && toggleFullscreen()}
+						onpointerdown={() => (pressedInMenu = session.inMenu)}
+						onclick={() => !pressedInMenu && session.toggle()}
+						ondblclick={() => !pressedInMenu && toggleFullscreen()}
 					></canvas>
 
 					{#if opened && session.tracks.length && !session.hasVideo}
