@@ -147,6 +147,7 @@
 		return [
 			`${p.decodeMsPerFrame?.toFixed(2)} ms per frame, ${p.decodeFps?.toFixed(0)} frames/s of decoding for a ${p.fps?.toFixed(3).replace(/\.?0+$/, '')} fps stream`,
 			`Decoder: ${decoder}${p.codec ? `, ${p.codec}` : ''}`,
+			...(p.current ? [] : ['Measured while it caught up (opening, seeking): threaded and hardware decoders cannot be timed while playback paces them']),
 			`Last ${p.interval.toFixed(1)} s: ${p.dropped} dropped, ${p.late} late`
 		].join('\n');
 	}

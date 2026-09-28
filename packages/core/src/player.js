@@ -758,24 +758,32 @@ export class Player extends Emitter {
   }
 
   /**
-   * @internal A 'performance' event from bridge.c's counters for the last
-   * second or so. The decoder's capacity is frames per second of the time it
-   * was busy, not frames per second of wall time (that is only the stream's
-   * frame rate). WebCodecs decodes asynchronously, so for it the busy time is
-   * how long the browser's VideoDecoder had work queued (webcodecs.c).
+   * @internal A 'performance' event from bridge.c's counters. The decoder's
+   * capacity is frames per second of the time it spent decoding, not per
+   * second of playback (that is only the stream's frame rate). Some decoders
+   * can only be timed while they catch up (frame-threaded ones, WebCodecs:
+   * build/patches/0031, native/webcodecs.c), so an interval with too little
+   * timed falls back to everything since the media started.
    */
   _performance(s) {
     const hardware = !!s.webcodecs;
-    const frames = hardware ? s.webcodecsFrames : s.videoFrames;
-    const us = hardware ? s.webcodecsUs : s.videoUs;
-    const decodeFps = frames > 0 && us > 0 ? frames / (us / 1e6) : null;
+    let frames = hardware ? s.webcodecsFrames : s.videoFrames;
+    let us = hardware ? s.webcodecsUs : s.videoUs;
+    const current = frames >= 5 && us > 0;
+    if (!current) {
+      frames = hardware ? s.webcodecsFramesTotal : s.videoFramesTotal;
+      us = hardware ? s.webcodecsUsTotal : s.videoUsTotal;
+    }
+    // A handful of frames is too few to go by.
+    if (frames < 5 || !(us > 0)) frames = us = 0;
+    const decodeFps = frames ? frames / (us / 1e6) : null;
     const video = this.tracks.find((t) => t.type === 'video' && t.selected);
     // The stream's frame rate, else what was shown (at 1x, the same thing).
     const fps = video?.fps > 0 ? video.fps : s.interval > 0 && s.displayed > 0 ? s.displayed / s.interval : null;
     return {
       decodeFps,
       realtime: decodeFps && fps ? decodeFps / fps : null,
-      decodeMsPerFrame: frames > 0 ? us / 1000 / frames : null,
+      decodeMsPerFrame: frames ? us / 1000 / frames : null,
       fps,
       dropped: s.lost,
       late: s.late,
@@ -784,6 +792,7 @@ export class Player extends Emitter {
       codec: video?.codecName ?? video?.codec ?? null,
       audioLoad: s.interval > 0 ? s.audioUs / 1e6 / s.interval : null,
       interval: s.interval,
+      current,
     };
   }
 

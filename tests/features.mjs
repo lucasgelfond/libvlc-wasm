@@ -1,5 +1,6 @@
 // Exercises every Player / VLC API with real assertions, in a headless browser
 // (silent). node tests/features.mjs [--engine=webkit]
+// VLC_ENGINE=/path/libvlc.js (served by the test server) tests another build.
 import { startServer, openHarness } from './lib/browser.mjs';
 
 const engine = process.argv.find((a) => a.startsWith('--engine='))?.split('=')[1] ?? 'chromium';
@@ -8,9 +9,10 @@ const { browser, page, consoleLines } = await openHarness(url, engine);
 const show = (r) => console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name.padEnd(52)} ${String(r.ms).padStart(5)} ms  ${r.detail}`);
 page.on('console', (m) => { if (m.text().startsWith('@@')) show(JSON.parse(m.text().slice(2))); });
 
-const results = await page.evaluate(async () => {
+const results = await page.evaluate(async (engineUrl) => {
   const G = '/corpus/media/gen/';
-  const vlc = await window.harness.ensureVLC();
+  const vlc = await window.harness.ensureVLC(engineUrl
+    ? { engine: { moduleUrl: engineUrl, wasmUrl: engineUrl.replace(/\.js$/, '.wasm') } } : {});
   const canvas = document.getElementById('c');
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const file = async (name) => new File([await (await fetch(G + name)).blob()], name.split('/').pop());
@@ -64,6 +66,25 @@ const results = await page.evaluate(async () => {
     await p.open(await file('t_chapters.mkv'));
     await waitFor(() => p.state === 'playing' && p.renderer.framesDrawn > 0, 5000, 'first frame');
     return `playing, ${p.renderer.framesDrawn} frames`;
+  });
+
+  await test('performance: pushed while playing, with decoding capacity', async () => {
+    // MPEG-2: decoded in software on every engine, and timed continuously
+    // (frame-threaded and WebCodecs decoders only while they catch up).
+    // Its own canvas: a player destroyed on the shared one takes the picture with it.
+    const q = await vlc.createPlayer({ canvas: document.createElement('canvas'), audioContext: ctx, audioDestination: mute });
+    try {
+      const got = [];
+      q.on('performance', (s) => got.push(s));
+      await q.open(await file('t_mpeg2_ac3.ts'));
+      await waitFor(() => got.some((s) => s.decodeFps > 0), 4500, 'a performance event with decodeFps');
+      const s = got.find((x) => x.decodeFps > 0);
+      assert(s.decodeMsPerFrame > 0 && s.realtime > 0 && s.fps > 0, `realtime ${s.realtime}, fps ${s.fps}`);
+      assert(s.hardware === false && s.decoder === 'software', `${s.decoder}`);
+      return `${got.length} events; ${s.decodeFps.toFixed(0)} fps of decoding, ${s.realtime.toFixed(1)}x realtime (${s.decodeMsPerFrame.toFixed(2)} ms/frame)`;
+    } finally {
+      await q.destroy();
+    }
   });
 
   await test('pause freezes the clock, play resumes it', async () => {
@@ -416,7 +437,7 @@ const results = await page.evaluate(async () => {
   });
   await ctx.close();
   return out;
-});
+}, process.env.VLC_ENGINE ?? null);
 
 const failed = results.filter((r) => !r.ok).length;
 console.log(`\n[${engine}] ${results.length - failed}/${results.length} passed`);

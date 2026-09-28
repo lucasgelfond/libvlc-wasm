@@ -71,7 +71,20 @@ player.on('timeupdate', (t) => console.log(t, player.duration));
 Events (`player.on(name, fn)` returns an unsubscribe function; `player.once(name)` is a
 promise): `statechange`, `playing`, `paused`, `ended`, `error`, `timeupdate`,
 `durationchange`, `tracks`, `chapters`, `chapterchange`, `buffering`, `volumechange`,
-`audiolevel`.
+`audiolevel`, `performance`.
+
+`performance` is pushed by the engine about once a second while playing (as often as VLC
+refreshes its statistics; never polled):
+`{ decodeFps, realtime, decodeMsPerFrame, fps, dropped, late, hardware, decoder, codec, audioLoad, current }`.
+`decodeFps` is frames decoded per second the decoder spent decoding, i.e. its capacity, and
+`realtime` is that over the stream's fps (`12` = it could decode 12× faster than it plays);
+the displayed frame rate would only ever equal the stream's. Single-threaded and
+slice-threaded software decoders (MPEG-2, WMV, most audio) are timed continuously
+(build/patches/0031). Frame-threaded ones (FFmpeg's H.264, HEVC, VP9, RealVideo...) and
+WebCodecs (`hardware: true`, native/webcodecs.c) decode out of sight and can only be timed
+while they catch up (opening, seeking): then `current` is false and the figure is the one
+measured since the media started, or null until there is one. `dropped`/`late` count
+pictures in the interval.
 
 ### Tracks and subtitles
 

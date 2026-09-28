@@ -103,7 +103,7 @@ export interface Chapters {
  * which only ever equals the stream's frame rate.
  */
 export interface PerformanceStats {
-  /** Frames per second of decoding time; null without video. */
+  /** Frames per second of decoding time; null without video, or until the decoder could be timed (see `current`). */
   decodeFps: number | null;
   /** decodeFps / the stream's fps: 12 means it decodes 12x faster than it plays. */
   realtime: number | null;
@@ -121,6 +121,14 @@ export interface PerformanceStats {
   audioLoad: number | null;
   /** Seconds this report covers. */
   interval: number;
+  /**
+   * Whether decodeFps was measured in this interval. Decoders that run their
+   * own threads (FFmpeg's frame threading for H.264, HEVC, VP9...) and
+   * WebCodecs can only be timed while they catch up (after opening or a
+   * seek), not while playback paces them; until then this is false and the
+   * figure is the one measured since the media started.
+   */
+  current: boolean;
 }
 
 export interface PlayerEvents {
