@@ -1,5 +1,5 @@
 {
- "date": "2026-09-27",
+ "date": "2026-09-28",
  "method": {
   "media": "ffprobe finds a video or audio stream (checksums, reference text and headerless raw dumps are not media)",
   "plays": "the file has video and a picture came out, or it has audio and sound came out",
@@ -28,7 +28,7 @@
     "vlcMeasured": 2186,
     "vlc4": 1702,
     "vlc4Measured": 2186,
-    "wasm": 2044,
+    "wasm": 2115,
     "wasmMeasured": 2186,
     "chromium": 518,
     "chromiumMeasured": 2186,
@@ -37,29 +37,29 @@
     "firefox": 422,
     "firefoxMeasured": 2186
    },
-   "wasmFails": 142,
-   "fixedByAvformat": 11,
+   "wasmFails": 71,
+   "fixedByAvformat": 10,
    "vlc4NotWasm": 26,
    "topCauses": [
     [
-     "no picture (decoder opened, nothing out)",
-     36
-    ],
-    [
      "decoder produced no picture (buffer deadlock prevented)",
-     21
-    ],
-    [
-     "ES not detected: plays with :demux=<es>",
-     18
-    ],
-    [
-     "avcodec get_buffer() failed (pixel format not handled by VLC's avcodec glue)",
-     17
+     15
     ],
     [
      "missing decoder (codec not in the wasm build)",
      12
+    ],
+    [
+     "demuxer choice: plays with :demux=avformat",
+     10
+    ],
+    [
+     "harness artifact? (frames drawn, flat picture)",
+     10
+    ],
+    [
+     "other / no clue in the log",
+     7
     ]
    ],
    "summary": "fate-summary.json",
