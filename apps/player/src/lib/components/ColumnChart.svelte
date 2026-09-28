@@ -3,11 +3,18 @@
   the count under its label. The first column is libvlc-wasm, in the accent colour.
 -->
 <script lang="ts">
-	let { items, label = 'Files each tool plays' }: { items: { label: string; yes: number; total: number }[]; label?: string } = $props();
+	let {
+		items,
+		title = null,
+		unit = ''
+	}: { items: { label: string; yes: number; total: number }[]; title?: string | null; unit?: string } = $props();
 	const share = (i: { yes: number; total: number }) => (i.total ? i.yes / i.total : 0);
 </script>
 
-<section class="bg-card border-border rounded-2xl border px-4 pt-5 pb-4 sm:px-5" aria-label={label}>
+<section class="bg-card border-border rounded-2xl border px-4 pt-5 pb-4 sm:px-5" aria-label={title ?? 'Files each tool plays'}>
+	{#if title}
+		<h2 class="mb-2 text-sm font-semibold">{title} <span class="text-muted-foreground font-normal">(% supported)</span></h2>
+	{/if}
 	<!-- Columns are scaled to the full height; each share sits just above its column. -->
 	<div class="flex h-40 items-end gap-2 pt-6 sm:gap-5">
 		{#each items as item, i (item.label)}
@@ -24,7 +31,7 @@
 		{#each items as item, i (item.label)}
 			<div class="min-w-0 flex-1 text-center">
 				<p class="truncate text-xs {i === 0 ? 'text-foreground font-medium' : 'text-muted-foreground'}">{item.label}</p>
-				<p class="text-muted-foreground/70 truncate text-[11px] tabular-nums">{item.yes.toLocaleString()} of {item.total.toLocaleString()}</p>
+				<p class="text-muted-foreground/70 truncate text-[11px] tabular-nums">{item.yes.toLocaleString()}/{item.total.toLocaleString()}{unit ? ` ${unit}` : ''}</p>
 			</div>
 		{/each}
 	</div>

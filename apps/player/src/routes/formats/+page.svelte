@@ -85,7 +85,7 @@
 			<h1 class="font-display text-4xl font-semibold tracking-tight sm:text-5xl">Supported formats</h1>
 		</header>
 
-		<ColumnChart items={SUMMARY.map(([label, c]) => ({ label, yes: c.yes, total: c.tested }))} />
+		<ColumnChart items={SUMMARY.map(([label, c]) => ({ label, yes: c.yes, total: c.tested }))} title="Which players support the most file formats" unit="formats" />
 
 		<div class="flex flex-col gap-3 sm:flex-row sm:items-center">
 			<div class="relative sm:w-80">

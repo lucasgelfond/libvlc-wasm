@@ -39,12 +39,6 @@
 			.filter(([name]) => !query.trim() || name.toLowerCase().includes(query.trim().toLowerCase()))
 	);
 
-	const causes = $derived(
-		Object.entries(
-			suite.failures.reduce<Record<string, Suite['failures']>>((m, f) => ((m[f.cause] ??= []).push(f), m), {})
-		).sort((a, b) => b[1].length - a[1].length)
-	);
-	let openCause = $state<string | null>(null);
 
 	let files = $state<FileRow[] | null>(null);
 	let open = $state<string | null>(null);
@@ -59,7 +53,7 @@
 
 <div class="flex flex-col gap-4">
 
-	<ColumnChart items={tools.map(([key, label]) => ({ label, yes: suite.overall[key], total: suite.overall.union }))} />
+	<ColumnChart items={tools.map(([key, label]) => ({ label, yes: suite.overall[key], total: suite.overall.union }))} unit="files" />
 
 	<div class="border-border bg-card overflow-x-auto rounded-2xl border">
 		<table class="w-full min-w-[760px] text-sm">
@@ -98,48 +92,4 @@
 			</tbody>
 		</table>
 	</div>
-
-	{#if suite.subset || suite.license}
-		<p class="text-muted-foreground max-w-3xl text-xs">
-			{#if suite.subset}Taken: {suite.subset}.{/if}
-			{#if suite.license}Licence: {suite.license}.{/if}
-			{#if suite.unplayable}{suite.unplayable} files neither FFmpeg nor VLC 3 plays are not counted.{/if}
-		</p>
-	{/if}
-
-	{#if causes.length}
-		<div class="flex flex-col gap-2">
-			<h3 class="text-sm font-semibold">Where libvlc-wasm fails ({suite.failures.length})</h3>
-			<div class="border-border bg-card divide-border divide-y overflow-hidden rounded-2xl border text-sm">
-				{#each causes as [cause, list] (cause)}
-					<div>
-						<button
-							type="button"
-							class="hover:bg-muted/30 flex w-full items-center gap-2 px-4 py-2.5 text-left"
-							aria-expanded={openCause === cause}
-							onclick={() => (openCause = openCause === cause ? null : cause)}
-						>
-							<span class="text-muted-foreground w-3 text-xs">{openCause === cause ? '▾' : '▸'}</span>
-							<span class="flex-1">{cause}</span>
-							<span class="text-muted-foreground tabular-nums">{list.length}</span>
-						</button>
-						{#if openCause === cause}
-							<ul class="bg-muted/20 flex flex-col gap-1 px-4 pt-1 pb-3 pl-9 text-xs">
-								{#each list as f (f.path)}
-									<li class="flex flex-col">
-										<span class="font-mono">{f.path.split('/').slice(1).join('/')}
-											<span class="text-muted-foreground">{[f.video, f.audio].filter(Boolean).join(' + ')}</span>
-											{#if f.wasmAvformat}<span class="text-emerald-500"> · plays with :demux=avformat</span>{/if}
-											{#if f.vlc4}<span class="text-muted-foreground"> · VLC 4 plays it</span>{/if}
-										</span>
-										{#if f.wasmError}<span class="text-muted-foreground truncate font-mono">{f.wasmError}</span>{/if}
-									</li>
-								{/each}
-							</ul>
-						{/if}
-					</div>
-				{/each}
-			</div>
-		</div>
-	{/if}
 </div>

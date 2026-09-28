@@ -4,12 +4,15 @@
 	import RiArrowLeftLine from 'remixicon-svelte/icons/arrow-left-line';
 
 	let threads = $state('1');
+	// A click moves focus to the tab; the focus ring then flashed on every switch.
+	const quietTab = 'focus-visible:ring-0 focus-visible:outline-none focus-visible:border-transparent transition-none';
 	const rows = $derived(
 		SPEED.results
 			.map((r) => ({ codec: codecOf(r.clip), clip: r.clip, run: r.runs[threads] ?? {} }))
 			.filter((r) => Object.keys(r.run).length)
 	);
-	const scaleMax = $derived(Math.max(1, ...rows.flatMap((r) => SPEED_TOOLS.map(([k]) => r.run[k]?.fps ?? 0))));
+	// One scale for both thread counts, so switching moves the bars rather than rescaling them all.
+	const scaleMax = Math.max(1, ...SPEED.results.flatMap((r) => Object.values(r.runs).flatMap((run) => SPEED_TOOLS.map(([k]) => run[k]?.fps ?? 0))));
 	const fmt = (n: number | undefined) => (n == null || !isFinite(n) ? '—' : n >= 100 ? Math.round(n).toString() : n.toFixed(1));
 
 
@@ -32,16 +35,17 @@
 			</div>
 			<Tabs.Root bind:value={threads}>
 				<Tabs.List>
-					<Tabs.Trigger value="1">1 thread</Tabs.Trigger>
-					<Tabs.Trigger value="4">4 threads</Tabs.Trigger>
+					<Tabs.Trigger value="1" class={quietTab}>1 thread</Tabs.Trigger>
+					<Tabs.Trigger value="4" class={quietTab}>4 threads</Tabs.Trigger>
 				</Tabs.List>
 			</Tabs.Root>
 		</div>
 		<div class="border-border bg-card overflow-x-auto rounded-2xl border">
-			<table class="w-full min-w-[820px] text-sm">
+			<!-- Fixed layout: the columns must not resize when the numbers change with the thread count. -->
+			<table class="w-full min-w-[820px] table-fixed text-sm">
 				<thead class="text-muted-foreground text-left text-xs">
 					<tr>
-						<th class="px-4 py-3 font-medium">Codec</th>
+						<th class="w-40 px-4 py-3 font-medium">Codec</th>
 						{#each SPEED_TOOLS as [k, label] (k)}<th class="px-3 py-3 font-medium">{label}</th>{/each}
 					</tr>
 				</thead>
@@ -55,7 +59,7 @@
 									{#if v}
 										<div class="flex items-center gap-2">
 											<div class="bg-muted h-1.5 w-20 overflow-hidden rounded-full">
-												<div class="h-full rounded-full {k.startsWith('libvlc') ? 'bg-primary' : 'bg-foreground/40'}" style="width: {(v / scaleMax) * 100}%"></div>
+												<div class="h-full rounded-full transition-[width] duration-300 {k.startsWith('libvlc') ? 'bg-primary' : 'bg-foreground/40'}" style="width: {(v / scaleMax) * 100}%"></div>
 											</div>
 											<span class="tabular-nums">{fmt(v)}</span>
 										</div>
