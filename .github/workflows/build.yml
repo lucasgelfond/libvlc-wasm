@@ -105,7 +105,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Fixtures and corpus
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick curl unzip
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick curl unzip faketime
           sh tests/make-fixtures.sh
           sh tests/make-dvd.sh
           sh tests/make-bluray.sh
