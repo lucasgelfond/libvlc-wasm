@@ -13,7 +13,6 @@
 	import About from '$lib/components/About.svelte';
 	import cone from '$lib/assets/cone.svg';
 	import { Session, formatTime } from '$lib/session.svelte';
-	import type { PerformanceStats } from 'libvlc-wasm';
 	import { SAMPLES, loadSample, type Sample } from '$lib/samples';
 	import { ROWS } from '$lib/compat';
 	import RiPlayFill from 'remixicon-svelte/icons/play-fill';
@@ -141,16 +140,6 @@
 		return out;
 	}
 
-
-	function perfTitle(p: PerformanceStats) {
-		const decoder = p.hardware ? 'hardware (WebCodecs)' : 'software (VLC)';
-		return [
-			`${p.decodeMsPerFrame?.toFixed(2)} ms per frame, ${p.decodeFps?.toFixed(0)} frames/s of decoding for a ${p.fps?.toFixed(3).replace(/\.?0+$/, '')} fps stream`,
-			`Decoder: ${decoder}${p.codec ? `, ${p.codec}` : ''}`,
-			...(p.current ? [] : ['Measured while it caught up (opening, seeking): threaded and hardware decoders cannot be timed while playback paces them']),
-			`Last ${p.interval.toFixed(1)} s: ${p.dropped} dropped, ${p.late} late`
-		].join('\n');
-	}
 
 	function toggleFullscreen() {
 		if (document.fullscreenElement) document.exitFullscreen();
@@ -353,11 +342,6 @@
 							</span>
 							{#if session.rate !== 1}<span class="ml-2 rounded bg-white/15 px-1.5 py-0.5 text-[10px] font-medium">{session.rate}×</span>{/if}
 							<div class="ml-auto flex items-center gap-1">
-								{#if session.perf?.realtime}
-									<span class="mr-1 text-xs text-white/60 tabular-nums" title={perfTitle(session.perf)} data-testid="perf">
-										decodes {session.perf.realtime.toFixed(session.perf.realtime < 10 ? 1 : 0)}× realtime{session.perf.hardware ? ' · hardware (WebCodecs)' : ''}
-									</span>
-								{/if}
 								{#if session.hasMenu}
 									<Button variant="ghost" size="sm" class="{iconButton} gap-1.5 px-2" onclick={() => session.menu()} aria-label="Disc menu">
 										<RiDiscLine class="size-5" /> <span class="text-xs">Menu</span>

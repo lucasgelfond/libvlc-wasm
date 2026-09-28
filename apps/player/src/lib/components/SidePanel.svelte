@@ -46,7 +46,20 @@
 	const statRows = $derived.by(() => {
 		const s = session.stats;
 		if (!s) return [];
+		// Pushed by the engine about once a second (the 'performance' event).
+		const p = session.perf;
+		const perf = p?.realtime
+			? [
+					['Section', 'Performance'],
+					['Decoding speed', `${p.realtime.toFixed(p.realtime < 10 ? 1 : 0)}× realtime`],
+					['Time per frame', `${p.decodeMsPerFrame?.toFixed(2)} ms`],
+					['Decoder', `${p.hardware ? 'hardware (WebCodecs)' : 'software (VLC)'}${p.codec ? `, ${p.codec}` : ''}`],
+					['Measured', p.current ? 'continuously' : 'while catching up (open, seek)'],
+					[`Dropped / late, last ${p.interval.toFixed(0)} s`, `${p.dropped} / ${p.late}`]
+				]
+			: [];
 		return [
+			...perf,
 			['Section', 'Playback'],
 			['State', STATE_NAMES[s.state] ?? String(s.state)],
 			['Position', `${formatTime(s.time)} / ${formatTime(s.length)}`],
