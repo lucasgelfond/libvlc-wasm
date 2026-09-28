@@ -27,10 +27,14 @@ npm install libvlc-wasm          # playback, probing, thumbnails
 npm install libvlc-wasm-sout     # optional: transcoding, remuxing, recording
 ```
 
+**HTML**
+
 ```html
 <script type="module">import 'libvlc-wasm/element';</script>
 <vlc-player src="old-trailer.rm" controls autoplay></vlc-player>
 ```
+
+**JavaScript**
 
 ```js
 import { createVLC } from 'libvlc-wasm';
@@ -43,6 +47,8 @@ player.on('timeupdate', (t) => console.log(t, player.duration));
 console.log(await vlc.probe(file));                // tracks and metadata, no playback
 ```
 
+**React**
+
 ```jsx
 import 'libvlc-wasm/element';
 
@@ -50,6 +56,8 @@ export function Video({ src }) {
   return <vlc-player src={src} controls style={{ width: '100%', aspectRatio: '16 / 9' }} />;
 }
 ```
+
+**Svelte**
 
 ```svelte
 <script>
