@@ -52,7 +52,8 @@
 					<a {...a('https://github.com/ffmpegwasm/ffmpeg.wasm')}>ffmpeg</a>, and <a {...a('https://github.com/dlemstra/magick-wasm')}>imagemagick</a>.
 				</p>
 				<p>
-					You can also use libvlc-wasm in your projects via <a {...a('https://www.npmjs.com/package/libvlc-wasm')}>npm</a>. Or, you can try it below!
+					You can view the <a {...a('https://github.com/lucasgelfond/libvlc-wasm')}>source code</a> or use it in your projects via
+					<a {...a('https://www.npmjs.com/package/libvlc-wasm')}>npm</a>. Or, you can try it below!
 				</p>
 				<p>Built in New York City by <a {...a('https://lucasgelfond.online')}>Lucas Gelfond</a> (and Claude!)</p>
 				</div>
