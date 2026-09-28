@@ -224,7 +224,7 @@
 			>
 				<img src={cone} alt="" class="size-9 shrink-0" />
 				<span class="min-w-0 flex-1">
-					<span class="font-display block truncate text-lg leading-tight font-semibold tracking-tight">{opened ? session.name : 'libvlc-wasm'}</span>
+					<span class="font-display block truncate text-lg leading-tight font-semibold tracking-tight">libvlc-wasm</span>
 				</span>
 			</button>
 			<SiteTabs />
