@@ -271,6 +271,12 @@ static void on_tracks(void *o, libvlc_list_action_t a, libvlc_track_type_t t, co
 static void on_track_selected(void *o, libvlc_track_type_t t, const char *un, const char *sel)
 { (void) un; emit(((wv_player_t *)o)->id, EV_TRACK_SELECTED, t, 0, sel); }
 static void on_titles(void *o) { emit(((wv_player_t *)o)->id, EV_TITLES, 0, 0, NULL); }
+/* A DVD's scenes menu jumps straight into a chapter of another title: VLC
+ * then reports a new title, and the chapter event that follows can still
+ * carry the menu's title index. The page refetches the list, which says
+ * which title is current (and so whether a menu is showing). */
+static void on_title_selected(void *o, const libvlc_title_description_t *t, unsigned idx)
+{ (void) t; (void) idx; emit(((wv_player_t *)o)->id, EV_TITLES, 0, 0, NULL); }
 /* `c` is not read: the player can report a chapter the title's list does not
  * have (a Blu-ray going from a title back to its menu announces the menu with
  * the old title's chapter), and then it points past the list -- VLC only
@@ -321,6 +327,7 @@ static const struct libvlc_media_player_cbs player_cbs = {
     .on_track_list_changed = on_tracks,
     .on_track_selection_changed = on_track_selected,
     .on_titles_changed = on_titles,
+    .on_title_selection_changed = on_title_selected,
     .on_chapter_selection_changed = on_chapter,
     .on_media_parsed = on_parsed,
     .on_media_meta_changed = on_meta,
