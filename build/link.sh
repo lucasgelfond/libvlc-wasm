@@ -2,6 +2,10 @@
 # Links VLC's static archives, our webaudio module and the bridge into
 # libvlc.js + libvlc.wasm. Runs inside the build container (./build.sh link).
 set -eu
+# The VLC tree can belong to another user than the one running this (CI
+# restores /cache from its cache, owned by the runner): git then refuses it as
+# "dubious ownership". Trust it for this process only.
+export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0='*'
 SUFFIX=; [ "${VARIANT:-default}" != default ] && SUFFIX=-$VARIANT
 
 . /opt/emsdk/emsdk_env.sh >/dev/null 2>&1

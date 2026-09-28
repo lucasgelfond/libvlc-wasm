@@ -6,6 +6,10 @@
 # VLC builds touch tens of thousands of files and a macOS bind mount makes that
 # several times slower. Only the finished archives are copied to /work/.cache/vlc-out.
 set -eu
+# The VLC tree can belong to another user than the one running this (CI
+# restores /cache from its cache, owned by the runner): git then refuses it as
+# "dubious ownership". Trust it for this process only.
+export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0='*'
 SUFFIX=; [ "${VARIANT:-default}" != default ] && SUFFIX=-$VARIANT
 
 VLC_REPO=${VLC_REPO:-https://code.videolan.org/videolan/vlc.git}
