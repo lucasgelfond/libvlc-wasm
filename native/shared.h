@@ -111,6 +111,17 @@ typedef struct wv_window
     unsigned reporting;           /* reports in progress, made outside lock */
 } wv_window_t;
 
+/* C only, not read by JavaScript. WebCodecs decodes asynchronously, so the
+ * time its decode calls take (VLC's own decode statistics) says nothing about
+ * the browser's decoder: webcodecs.c measures it here instead, one per player,
+ * found through the "webcodecs-stats" variable. */
+typedef struct wv_decode_stats
+{
+    _Atomic uint64_t busy_us;     /* time the VideoDecoder decoded flat out, in us */
+    _Atomic uint64_t frames;      /* frames it produced in that time */
+    _Atomic int32_t active;       /* WebCodecs decoders open */
+} wv_decode_stats_t;
+
 /* The indices above are hardcoded in packages/core/src/layout.js and
  * audio-worklet.js: fail the build rather than the page if they drift. */
 #define WV_AT(type, field, index) \

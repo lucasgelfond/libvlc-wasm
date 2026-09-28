@@ -75,7 +75,31 @@ typedef struct
     vlc_fourcc_t out_chroma;
     unsigned    out_w, out_h;
     int         out_colour;
+    /* Throughput, for the player's performance readout (shared.h). */
+    wv_decode_stats_t *stats;
+    vlc_tick_t  last_output;
+    bool        backlog;     /* at the last output, packets were waiting */
 } decoder_sys_t;
+
+/* The browser's decoder is a black box that holds frames until later packets
+ * arrive (to put them in display order), so the time from a packet to its
+ * frame says nothing: while playback paces the input, every frame comes out
+ * just after the next packet goes in. Only while it has a backlog -- as many
+ * packets in flight as Decode lets it have, far more than it holds for
+ * reordering -- is it decoding flat out, and then the gaps between its frames
+ * are its throughput. That happens when VLC catches up (after opening, or
+ * decoding up to a seek's target) rather than while it keeps pace, so the
+ * figure is only updated then. Called with the lock held, after a frame. */
+static void count_output(decoder_sys_t *sys)
+{
+    vlc_tick_t now = vlc_tick_now();
+    if (sys->backlog) {
+        atomic_fetch_add(&sys->stats->busy_us, US_FROM_VLC_TICK(now - sys->last_output));
+        atomic_fetch_add(&sys->stats->frames, 1);
+    }
+    sys->last_output = now;
+    sys->backlog = sys->inflight >= MAX_INFLIGHT - 1;
+}
 
 /* --- called from JS, on the runtime thread ------------------------------- */
 
@@ -124,6 +148,8 @@ EMSCRIPTEN_KEEPALIVE void wv_wc_push(decoder_sys_t *sys, uint32_t gen, uint8_t *
     };
     if (sys->inflight > 0)
         sys->inflight--;
+    if (sys->stats != NULL)
+        count_output(sys);
     vlc_cond_broadcast(&sys->wait);
     vlc_mutex_unlock(&sys->lock);
 }
@@ -134,6 +160,7 @@ EMSCRIPTEN_KEEPALIVE void wv_wc_drained(decoder_sys_t *sys, uint32_t gen)
     if (gen == sys->gen) {
         sys->drained = true;
         sys->inflight = 0;
+        sys->backlog = false;
     }
     vlc_cond_broadcast(&sys->wait);
     vlc_mutex_unlock(&sys->lock);
@@ -417,6 +444,7 @@ static void Flush(decoder_t *dec)
         free(sys->queue[k].data);
     sys->queued = 0;
     sys->inflight = 0;
+    sys->backlog = false;
     sys->need_key = true;
     vlc_mutex_unlock(&sys->lock);
     MAIN_THREAD_ASYNC_EM_ASM({ Module["wvWc"].reset($0, $1); }, sys, gen);
@@ -527,6 +555,9 @@ static int Open(vlc_object_t *obj)
         return VLC_EGENERIC;
     }
     msg_Dbg(dec, "decoding %s with WebCodecs", codec);
+    sys->stats = var_InheritAddress(dec, "webcodecs-stats");
+    if (sys->stats != NULL)
+        atomic_fetch_add(&sys->stats->active, 1);
 
     es_format_Copy(&dec->fmt_out, dec->fmt_in);
     dec->fmt_out.i_cat = VIDEO_ES;
@@ -539,8 +570,11 @@ static void Close(vlc_object_t *obj)
 {
     decoder_t *dec = (decoder_t *)obj;
     decoder_sys_t *sys = dec->p_sys;
+    if (sys->stats != NULL)
+        atomic_fetch_sub(&sys->stats->active, 1);
     vlc_mutex_lock(&sys->lock);
     sys->gen++; /* anything still in flight is dropped by wv_wc_push */
+    sys->stats = NULL; /* the player's, which may go before JS frees sys */
     for (unsigned k = 0; k < sys->queued; k++)
         free(sys->queue[k].data);
     sys->queued = 0;

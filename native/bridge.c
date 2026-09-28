@@ -90,7 +90,7 @@ enum {
     EV_STATE = 1, EV_BUFFERING, EV_POSITION, EV_LENGTH, EV_TRACKS,
     EV_TRACK_SELECTED, EV_RATE, EV_CAPS, EV_VOUT, EV_STOPPING, EV_META,
     EV_CHAPTER, EV_TITLES, EV_VOLUME, EV_MUTE, EV_PARSED, EV_MEDIA_CHANGED,
-    EV_RECORDING, EV_PROGRAMS, EV_NEXT_FRAME,
+    EV_RECORDING, EV_PROGRAMS, EV_NEXT_FRAME, EV_PERF,
     EV_LOG = 100,
 };
 
@@ -133,6 +133,15 @@ typedef struct
     wv_ring_t ring;
     wv_video_t video;
     wv_window_t window;
+    /* Performance readout (EV_PERF), sampled from the time callbacks. */
+    wv_decode_stats_t webcodecs;  /* filled by webcodecs.c */
+    pthread_mutex_t media_lock;   /* guards media */
+    libvlc_media_t *media;        /* the current media, for its statistics */
+    pthread_mutex_t perf_lock;    /* guards the rest; taken with trylock */
+    _Atomic libvlc_time_t perf_date;
+    atomic_bool perf_reset;       /* a new media: take a new baseline */
+    libvlc_media_stats_t perf_stats;
+    uint64_t perf_wc_busy, perf_wc_frames, perf_wc_base_busy, perf_wc_base_frames;
 } wv_player_t;
 
 /* --- audio: selected webaudio module reads p->ring through "amem-data" ------ */
@@ -149,6 +158,78 @@ static void on_buffering(void *o, float b) { emit(((wv_player_t *)o)->id, EV_BUF
 static void on_rate(void *o, float r) { emit(((wv_player_t *)o)->id, EV_RATE, r, 0, NULL); }
 static void on_caps(void *o, libvlc_capability_t old, libvlc_capability_t caps)
 { (void) old; emit(((wv_player_t *)o)->id, EV_CAPS, caps, 0, NULL); }
+/* About once a second while playing: what decoding cost, over the last
+ * interval and since the media started. The page turns it into rates. Run
+ * from the clock's time updates and from the input thread's position reports
+ * (on_position): either can stop coming while the other goes on (a DVD menu
+ * has no clock, some demuxers report no position). A report waits until the
+ * statistics have moved, so none come while paused. */
+#define PERF_PERIOD_US 1000000
+static void perf_sample(wv_player_t *p)
+{
+    libvlc_time_t now = libvlc_clock();
+    if (now - p->perf_date < PERF_PERIOD_US || pthread_mutex_trylock(&p->perf_lock) != 0)
+        return;
+    if (now - p->perf_date < PERF_PERIOD_US) {
+        pthread_mutex_unlock(&p->perf_lock);
+        return;
+    }
+    pthread_mutex_lock(&p->media_lock);
+    libvlc_media_t *m = p->media ? libvlc_media_retain(p->media) : NULL;
+    pthread_mutex_unlock(&p->media_lock);
+    libvlc_media_stats_t st;
+    bool ok = m != NULL && libvlc_media_get_stats(m, &st);
+    if (m != NULL)
+        libvlc_media_release(m);
+    const libvlc_media_stats_t *o = &p->perf_stats;
+    if (ok && (st.i_decoded_video != o->i_decoded_video || st.i_decoded_audio != o->i_decoded_audio)) {
+        uint64_t wc_busy = atomic_load(&p->webcodecs.busy_us);
+        uint64_t wc_frames = atomic_load(&p->webcodecs.frames);
+        /* A new media starts its counters from zero: its first report only
+         * takes the baseline. */
+        bool fresh = !atomic_exchange(&p->perf_reset, false) && p->perf_date != 0 &&
+                     st.i_decoded_video >= o->i_decoded_video &&
+                     st.i_decode_video_frames >= o->i_decode_video_frames &&
+                     st.i_decoded_audio >= o->i_decoded_audio;
+        if (fresh) {
+            json_t j = {0};
+            json_obj(&j);
+            json_knum(&j, "interval", (now - p->perf_date) / 1e6);
+            json_knum(&j, "videoFrames", st.i_decode_video_frames - o->i_decode_video_frames);
+            json_knum(&j, "videoUs", st.i_decode_video_time_us - o->i_decode_video_time_us);
+            json_knum(&j, "videoFramesTotal", st.i_decode_video_frames);
+            json_knum(&j, "videoUsTotal", st.i_decode_video_time_us);
+            json_knum(&j, "audioBlocks", st.i_decode_audio_blocks - o->i_decode_audio_blocks);
+            json_knum(&j, "audioUs", st.i_decode_audio_time_us - o->i_decode_audio_time_us);
+            json_knum(&j, "decoded", st.i_decoded_video - o->i_decoded_video);
+            json_knum(&j, "displayed", st.i_displayed_pictures - o->i_displayed_pictures);
+            json_knum(&j, "late", st.i_late_pictures - o->i_late_pictures);
+            json_knum(&j, "lost", st.i_lost_pictures - o->i_lost_pictures);
+            json_knum(&j, "audioLost", st.i_lost_abuffers - o->i_lost_abuffers);
+            json_kbool(&j, "webcodecs", atomic_load(&p->webcodecs.active) > 0);
+            json_knum(&j, "webcodecsFrames", wc_frames - p->perf_wc_frames);
+            json_knum(&j, "webcodecsUs", wc_busy - p->perf_wc_busy);
+            json_knum(&j, "webcodecsFramesTotal", wc_frames - p->perf_wc_base_frames);
+            json_knum(&j, "webcodecsUsTotal", wc_busy - p->perf_wc_base_busy);
+            json_end_obj(&j);
+            char *s = json_take(&j);
+            emit(p->id, EV_PERF, 0, 0, s);
+            free(s);
+        } else {
+            /* The baseline. The media's own counters start from zero, so its
+             * totals keep what came before (opening, filling the buffers);
+             * WebCodecs' are the player's, and start from the last report. */
+            p->perf_wc_base_busy = p->perf_wc_busy;
+            p->perf_wc_base_frames = p->perf_wc_frames;
+        }
+        p->perf_stats = st;
+        p->perf_wc_busy = wc_busy;
+        p->perf_wc_frames = wc_frames;
+        p->perf_date = now;
+    }
+    pthread_mutex_unlock(&p->perf_lock);
+}
+
 /* Time comes from the player's clock (libvlc_media_player_watch_time), not
  * on_position_changed: that also relays what demuxers answer DEMUX_GET_TIME
  * with, which for some is their read position -- libbluray's runs half a
@@ -156,6 +237,7 @@ static void on_caps(void *o, libvlc_capability_t old, libvlc_capability_t caps)
  * forth. The page interpolates between points. */
 static void on_time_update(void *o, const libvlc_media_player_time_point_t *v)
 {
+    perf_sample(o);
     libvlc_time_t ts;
     double pos;
     /* Interpolated to now: a point can be dated in the past or future (the
@@ -180,6 +262,9 @@ static const struct libvlc_media_player_watch_time_cbs time_cbs = {
     .on_seek = on_time_seek,
 };
 #define TIME_PERIOD_US 100000 /* at most 10 updates a second */
+/* Not used for time (see on_time_update), only as the input thread's tick. */
+static void on_position(void *o, libvlc_time_t t, double pos)
+{ (void) t; (void) pos; perf_sample(o); }
 static void on_length(void *o, libvlc_time_t len) { emit(((wv_player_t *)o)->id, EV_LENGTH, (double)len, 0, NULL); }
 static void on_tracks(void *o, libvlc_list_action_t a, libvlc_track_type_t t, const char *id)
 { emit(((wv_player_t *)o)->id, EV_TRACKS, a, t, id); }
@@ -199,7 +284,20 @@ static void on_stopping(void *o, libvlc_media_t *m, libvlc_stopping_reason_t r)
 { (void) m; emit(((wv_player_t *)o)->id, EV_STOPPING, r, 0, NULL); }
 static void on_meta(void *o, libvlc_media_t *m) { (void) m; emit(((wv_player_t *)o)->id, EV_META, 0, 0, NULL); }
 static void on_parsed(void *o, libvlc_media_t *m) { (void) m; emit(((wv_player_t *)o)->id, EV_PARSED, 0, 0, NULL); }
-static void on_media_changed(void *o, libvlc_media_t *m) { (void) m; emit(((wv_player_t *)o)->id, EV_MEDIA_CHANGED, 0, 0, NULL); }
+static void on_media_changed(void *o, libvlc_media_t *m)
+{
+    wv_player_t *p = o;
+    if (m != NULL)
+        libvlc_media_retain(m);
+    pthread_mutex_lock(&p->media_lock);
+    libvlc_media_t *old = p->media;
+    p->media = m;
+    pthread_mutex_unlock(&p->media_lock);
+    atomic_store(&p->perf_reset, true);
+    if (old != NULL)
+        libvlc_media_release(old);
+    emit(p->id, EV_MEDIA_CHANGED, 0, 0, NULL);
+}
 static void on_volume(void *o, float v) { emit(((wv_player_t *)o)->id, EV_VOLUME, v, 0, NULL); }
 static void on_mute(void *o, bool m) { emit(((wv_player_t *)o)->id, EV_MUTE, m, 0, NULL); }
 static void on_recording(void *o, bool rec, const char *path)
@@ -218,6 +316,7 @@ static const struct libvlc_media_player_cbs player_cbs = {
     .on_buffering_changed = on_buffering,
     .on_rate_changed = on_rate,
     .on_capabilities_changed = on_caps,
+    .on_position_changed = on_position,
     .on_length_changed = on_length,
     .on_track_list_changed = on_tracks,
     .on_track_selection_changed = on_track_selected,
@@ -421,6 +520,8 @@ static void api_player_new(wv_call_t *c)
     p->inst = wi;
     atomic_store(&p->video.front, -1);
     atomic_store(&p->video.reading, -1);
+    pthread_mutex_init(&p->media_lock, NULL);
+    pthread_mutex_init(&p->perf_lock, NULL);
 
     wv_ring_t *r = &p->ring;
     r->magic = WV_RING_MAGIC;
@@ -451,6 +552,8 @@ static void api_player_new(wv_call_t *c)
     var_SetAddress(obj, "webwindow-data", &p->window);
     var_Create(obj, "window", VLC_VAR_STRING);
     var_SetString(obj, "window", "webwindow");
+    var_Create(obj, "webcodecs-stats", VLC_VAR_ADDRESS);
+    var_SetAddress(obj, "webcodecs-stats", &p->webcodecs);
     libvlc_audio_set_callbacks(p->mp, audio_unused_play, NULL, NULL, NULL, NULL, r);
     libvlc_audio_output_set(p->mp, "webaudio");
     libvlc_media_player_watch_time(p->mp, TIME_PERIOD_US, &time_cbs, p);
@@ -462,6 +565,8 @@ static void api_player_release(wv_call_t *c)
     wv_player_t *p = P;
     libvlc_media_player_unwatch_time(p->mp);
     libvlc_media_player_release(p->mp);
+    if (p->media != NULL)
+        libvlc_media_release(p->media);
     free(p->ring.data);
     free(p);
 }
