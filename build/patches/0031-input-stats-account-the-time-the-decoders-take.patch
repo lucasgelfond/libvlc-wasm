@@ -1,0 +1,417 @@
+From effb05040f17e386594437cdf3dc02fa27b5e061 Mon Sep 17 00:00:00 2001
+From: Lucas Gelfond <lucas.gelfond@gmail.com>
+Date: Sun, 27 Sep 2026 19:11:18 -0400
+Subject: [PATCH] input: stats: account the time the decoders take
+
+The statistics count decoded pictures and audio buffers, but not what
+decoding them cost, so a player cannot tell how much headroom it has:
+the displayed frame rate only ever matches the stream's until it fails.
+
+Time each pf_decode call and add it, with the pictures or audio buffers
+the call queued, per ES category to the input statistics. libvlc
+exposes them in libvlc_media_stats_t; frames over time is the decoder's
+throughput.
+
+Getting and queuing output buffers happens inside pf_decode and is
+where the outputs pace playback (a full picture pool, pause,
+buffering), so that time is subtracted: it is not decoding.
+
+A decoder with worker threads of its own (frame threading) decodes
+outside the call, and its workers wait for output buffers where the
+call cannot see it, so its calls only measure throughput while it works
+flat out. Only calls that run back to back, with no worker waiting for
+the output, are timed, and not the first ones of such a run, which
+return pictures decoded ahead. While playback paces such a decoder,
+nothing is timed, rather than a time that means nothing.
+---
+ include/vlc/libvlc_media.h |  11 ++++
+ include/vlc_input_item.h   |   6 ++
+ lib/media.c                |   6 ++
+ src/input/decoder.c        | 116 ++++++++++++++++++++++++++++++++++++-
+ src/input/decoder.h        |   3 +
+ src/input/es_out.c         |  37 ++++++++++++
+ src/input/input_internal.h |   4 ++
+ src/input/stats.c          |  12 ++++
+ 8 files changed, 194 insertions(+), 1 deletion(-)
+
+diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
+index 2f042ed..6fd299c 100644
+--- a/include/vlc/libvlc_media.h
++++ b/include/vlc/libvlc_media.h
+@@ -113,6 +113,17 @@ typedef struct libvlc_media_stats_t
+     /* Decoders */
+     uint64_t     i_decoded_video;
+     uint64_t     i_decoded_audio;
++    /** Time the decoders spent decoding, in microseconds, and the pictures
++     * (audio buffers) they produced in that time: frames over time is their
++     * throughput, where i_decoded_video over the playback time is only the
++     * stream's rate. Decoders with threads of their own (frame threading)
++     * are only timed while they decode flat out (catching up after a seek),
++     * not while playback paces them. An asynchronous (hardware) decoder only
++     * accounts for the time taken to submit its input. */
++    uint64_t     i_decode_video_time_us;
++    uint64_t     i_decode_video_frames;
++    uint64_t     i_decode_audio_time_us;
++    uint64_t     i_decode_audio_blocks;
+ 
+     /* Video Output */
+     uint64_t     i_displayed_pictures;
+diff --git a/include/vlc_input_item.h b/include/vlc_input_item.h
+index 0b03bc7..c79f895 100644
+--- a/include/vlc_input_item.h
++++ b/include/vlc_input_item.h
+@@ -554,6 +554,12 @@ struct input_stats_t
+     /* Decoders */
+     uint64_t i_decoded_audio;
+     uint64_t i_decoded_video;
++    /* Time the decoders took (see libvlc_media_stats_t), and what they
++     * decoded in that time */
++    vlc_tick_t i_decode_audio_time;
++    uint64_t i_decode_audio_blocks;
++    vlc_tick_t i_decode_video_time;
++    uint64_t i_decode_video_frames;
+ 
+     /* Vout */
+     uint64_t i_displayed_pictures;
+diff --git a/lib/media.c b/lib/media.c
+index 750fd96..c701fba 100644
+--- a/lib/media.c
++++ b/lib/media.c
+@@ -521,6 +521,12 @@ bool libvlc_media_get_stats(libvlc_media_t *p_md,
+ 
+     p_stats->i_decoded_video = p_itm_stats->i_decoded_video;
+     p_stats->i_decoded_audio = p_itm_stats->i_decoded_audio;
++    p_stats->i_decode_video_time_us =
++        US_FROM_VLC_TICK(p_itm_stats->i_decode_video_time);
++    p_stats->i_decode_video_frames = p_itm_stats->i_decode_video_frames;
++    p_stats->i_decode_audio_time_us =
++        US_FROM_VLC_TICK(p_itm_stats->i_decode_audio_time);
++    p_stats->i_decode_audio_blocks = p_itm_stats->i_decode_audio_blocks;
+ 
+     p_stats->i_displayed_pictures = p_itm_stats->i_displayed_pictures;
+     p_stats->i_late_pictures = p_itm_stats->i_late_pictures;
+diff --git a/src/input/decoder.c b/src/input/decoder.c
+index 0988eb6..1236e79 100644
+--- a/src/input/decoder.c
++++ b/src/input/decoder.c
+@@ -181,6 +181,15 @@ struct vlc_input_decoder_t
+     vlc_meta_t     *p_description;
+     atomic_int     reload;
+ 
++    /* Decode time statistics (see DecoderThread_DecodeBlock) */
++    vlc_tick_t     output_time;    /* in output calls on the decoder thread */
++    vlc_tick_t     decode_end;     /* when the last pf_decode call returned */
++    unsigned       decode_run;     /* timeable pf_decode calls in a row */
++    atomic_bool    output_threaded; /* output calls came from elsewhere */
++    atomic_uint    output_foreign; /* output calls in progress elsewhere */
++    atomic_uint    output_waited;  /* output calls elsewhere that waited */
++    atomic_uint    output_queued;  /* pictures or audio buffers queued */
++
+     /* fifo */
+     block_fifo_t *p_fifo;
+ 
+@@ -624,6 +633,39 @@ static void MouseEvent( const vlc_mouse_t *newmouse, void *user_data )
+ /*****************************************************************************
+  * Buffers allocation callbacks for the decoders
+  *****************************************************************************/
++/* Calls of a threaded decoder in a row before they are timed */
++#define DECODE_RUN_WARMUP 8
++
++/* The decoder whose pf_decode this thread is running */
++static thread_local vlc_input_decoder_t *decoder_running;
++
++static vlc_tick_t OutputBegin( vlc_input_decoder_t *p_owner )
++{
++    if( decoder_running != p_owner )
++    {
++        atomic_store_explicit( &p_owner->output_threaded, true,
++                               memory_order_relaxed );
++        atomic_fetch_add_explicit( &p_owner->output_foreign, 1,
++                                   memory_order_relaxed );
++    }
++    return vlc_tick_now();
++}
++
++static void OutputEnd( vlc_input_decoder_t *p_owner, vlc_tick_t start )
++{
++    vlc_tick_t elapsed = vlc_tick_now() - start;
++    if( decoder_running == p_owner )
++    {
++        p_owner->output_time += elapsed;
++        return;
++    }
++    if( elapsed >= VLC_TICK_FROM_MS(1) )
++        atomic_fetch_add_explicit( &p_owner->output_waited, 1,
++                                   memory_order_relaxed );
++    atomic_fetch_sub_explicit( &p_owner->output_foreign, 1,
++                               memory_order_relaxed );
++}
++
+ static int ModuleThread_UpdateAudioFormat( decoder_t *p_dec )
+ {
+     vlc_input_decoder_t *p_owner = dec_get_owner( p_dec );
+@@ -989,6 +1031,17 @@ static vlc_decoder_device * ModuleThread_GetDecoderDevice( decoder_t *p_dec )
+     return dec_device;
+ }
+ 
++static int ModuleThread_UpdateVideoFormatTimed( decoder_t *p_dec,
++                                                vlc_video_context *vctx )
++{
++    /* Starting a video output is output time too */
++    vlc_input_decoder_t *p_owner = dec_get_owner( p_dec );
++    vlc_tick_t start = OutputBegin( p_owner );
++    int ret = ModuleThread_UpdateVideoFormat( p_dec, vctx );
++    OutputEnd( p_owner, start );
++    return ret;
++}
++
+ static picture_t *ModuleThread_NewVideoBuffer( decoder_t *p_dec )
+ {
+     vlc_input_decoder_t *p_owner = dec_get_owner( p_dec );
+@@ -996,7 +1049,9 @@ static picture_t *ModuleThread_NewVideoBuffer( decoder_t *p_dec )
+     assert( p_owner->video.vout );
+     assert( p_owner->video.out_pool );
+ 
++    vlc_tick_t start = OutputBegin( p_owner );
+     picture_t *pic = picture_pool_Wait( p_owner->video.out_pool );
++    OutputEnd( p_owner, start );
+ 
+     if (pic)
+     {
+@@ -1565,6 +1620,7 @@ static void ModuleThread_QueueVideo( decoder_t *p_dec, picture_t *p_pic )
+     assert( p_pic );
+     vlc_input_decoder_t *p_owner = dec_get_owner( p_dec );
+     assert( p_owner->cat == VIDEO_ES );
++    vlc_tick_t start = OutputBegin( p_owner );
+     struct vlc_tracer *tracer = vlc_object_get_tracer( &p_dec->obj );
+ 
+     if ( tracer != NULL )
+@@ -1590,6 +1646,9 @@ static void ModuleThread_QueueVideo( decoder_t *p_dec, picture_t *p_pic )
+ 
+     decoder_Notify(p_owner, on_new_video_stats, 1, vout_lost, displayed, vout_late);
+     vlc_fifo_Unlock(p_owner->p_fifo);
++    atomic_fetch_add_explicit( &p_owner->output_queued, 1,
++                               memory_order_relaxed );
++    OutputEnd( p_owner, start );
+ }
+ 
+ static vlc_decoder_device * thumbnailer_get_device( decoder_t *p_dec )
+@@ -1701,6 +1760,7 @@ static void ModuleThread_QueueAudio( decoder_t *p_dec, vlc_frame_t *p_aout_buf )
+ {
+     vlc_input_decoder_t *p_owner = dec_get_owner( p_dec );
+     assert( p_owner->cat == AUDIO_ES );
++    vlc_tick_t start = OutputBegin( p_owner );
+     struct vlc_tracer *tracer = vlc_object_get_tracer( &p_dec->obj );
+ 
+     if ( tracer != NULL && p_aout_buf != NULL )
+@@ -1724,6 +1784,9 @@ static void ModuleThread_QueueAudio( decoder_t *p_dec, vlc_frame_t *p_aout_buf )
+ 
+     decoder_Notify(p_owner, on_new_audio_stats, 1, aout_lost, played);
+     vlc_fifo_Unlock(p_owner->p_fifo);
++    atomic_fetch_add_explicit( &p_owner->output_queued, 1,
++                               memory_order_relaxed );
++    OutputEnd( p_owner, start );
+ }
+ 
+ static void ModuleThread_PlaySpu( vlc_input_decoder_t *p_owner, subpicture_t *p_subpic )
+@@ -1793,9 +1856,53 @@ static void DecoderThread_DecodeBlock( vlc_input_decoder_t *p_owner, vlc_frame_t
+                             frame->i_pts, frame->i_dts );
+     }
+ 
++    /* Time the call for the statistics, less the time its output took:
++     * getting and queuing output buffers is where the outputs pace playback
++     * (a full picture pool, pause, buffering), not decoding.
++     *
++     * A decoder with worker threads of its own (frame threading: they are
++     * what gets its output buffers) decodes outside this call, so its time
++     * only means something while the decoder works flat out: calls in a row,
++     * back to back, with no worker waiting for the output. Other calls, and
++     * the first DECODE_RUN_WARMUP - 1 of a run (they return pictures decoded
++     * ahead), are not timed. */
++    unsigned foreign = atomic_load_explicit( &p_owner->output_foreign,
++                                             memory_order_relaxed );
++    unsigned waited = atomic_load_explicit( &p_owner->output_waited,
++                                            memory_order_relaxed );
++    unsigned queued = atomic_load_explicit( &p_owner->output_queued,
++                                            memory_order_relaxed );
++    vlc_tick_t output_time = p_owner->output_time;
++    vlc_input_decoder_t *running = decoder_running;
++    decoder_running = p_owner;
++    vlc_tick_t start = vlc_tick_now();
++
+     int ret = p_dec->pf_decode( p_dec, frame );
+ 
++    vlc_tick_t end = vlc_tick_now();
++    decoder_running = running;
++    vlc_tick_t elapsed = end - start - ( p_owner->output_time - output_time );
++    queued = atomic_load_explicit( &p_owner->output_queued,
++                                   memory_order_relaxed ) - queued;
++    if( !atomic_load_explicit( &p_owner->output_threaded,
++                               memory_order_relaxed ) )
++        p_owner->decode_run = DECODE_RUN_WARMUP;
++    else if( foreign != 0 ||
++        atomic_load_explicit( &p_owner->output_foreign,
++                              memory_order_relaxed ) != 0 ||
++        atomic_load_explicit( &p_owner->output_waited,
++                              memory_order_relaxed ) != waited )
++        p_owner->decode_run = 0;
++    else if( p_owner->decode_end == VLC_TICK_INVALID ||
++             start - p_owner->decode_end > VLC_TICK_FROM_MS(1) )
++        p_owner->decode_run = 1;
++    else if( p_owner->decode_run < DECODE_RUN_WARMUP )
++        p_owner->decode_run++;
++    p_owner->decode_end = end;
++
+     vlc_fifo_Lock(p_owner->p_fifo);
++    if( p_owner->decode_run == DECODE_RUN_WARMUP )
++        decoder_Notify(p_owner, on_decode_time, elapsed, queued);
+     switch( ret )
+     {
+         case VLCDEC_SUCCESS:
+@@ -2117,7 +2224,7 @@ static const struct decoder_owner_callbacks dec_video_cbs =
+ {
+     .video = {
+         .get_device = ModuleThread_GetDecoderDevice,
+-        .format_update = ModuleThread_UpdateVideoFormat,
++        .format_update = ModuleThread_UpdateVideoFormatTimed,
+         .buffer_new = ModuleThread_NewVideoBuffer,
+         .queue = ModuleThread_QueueVideo,
+         .queue_cc = ModuleThread_QueueCc,
+@@ -2206,6 +2313,13 @@ CreateDecoder( vlc_object_t *p_parent, const struct vlc_input_decoder_cfg *cfg )
+     p_owner->flushing = false;
+     p_owner->b_draining = false;
+     atomic_init( &p_owner->reload, RELOAD_NO_REQUEST );
++    p_owner->output_time = 0;
++    p_owner->decode_end = VLC_TICK_INVALID;
++    p_owner->decode_run = 0;
++    atomic_init( &p_owner->output_threaded, false );
++    atomic_init( &p_owner->output_foreign, 0 );
++    atomic_init( &p_owner->output_waited, 0 );
++    atomic_init( &p_owner->output_queued, 0 );
+     p_owner->b_idle = false;
+     p_owner->cat = fmt->i_cat;
+ 
+diff --git a/src/input/decoder.h b/src/input/decoder.h
+index 5fd28f9..6d0ecc4 100644
+--- a/src/input/decoder.h
++++ b/src/input/decoder.h
+@@ -52,6 +52,9 @@ struct vlc_input_decoder_callbacks {
+                                void *userdata);
+     void (*on_new_audio_stats)(vlc_input_decoder_t *decoder, unsigned decoded,
+                                unsigned lost, unsigned played, void *userdata);
++    /* time a pf_decode call took, less its output, and what it queued */
++    void (*on_decode_time)(vlc_input_decoder_t *decoder, vlc_tick_t elapsed,
++                           unsigned queued, void *userdata);
+     void (*frame_next_status)(vlc_input_decoder_t *decoder, int status,
+                               void *userdata);
+     void (*frame_next_need_data)(vlc_input_decoder_t *decoder, bool need_data,
+diff --git a/src/input/es_out.c b/src/input/es_out.c
+index 06af53f..eefa00f 100644
+--- a/src/input/es_out.c
++++ b/src/input/es_out.c
+@@ -516,6 +516,42 @@ decoder_on_new_audio_stats(vlc_input_decoder_t *decoder, unsigned decoded, unsig
+                               memory_order_relaxed);
+ }
+ 
++static void
++decoder_on_decode_time(vlc_input_decoder_t *decoder, vlc_tick_t elapsed,
++                       unsigned queued, void *userdata)
++{
++    (void) decoder;
++
++    es_out_id_t *id = userdata;
++    struct vlc_input_es_out *out = id->out;
++    es_out_sys_t *p_sys = PRIV(&out->out);
++
++    if (!p_sys->p_input)
++        return;
++
++    struct input_stats *stats = input_priv(p_sys->p_input)->stats;
++    if (!stats)
++        return;
++
++    switch (id->id.i_cat)
++    {
++        case VIDEO_ES:
++            atomic_fetch_add_explicit(&stats->decode_video_time, elapsed,
++                                      memory_order_relaxed);
++            atomic_fetch_add_explicit(&stats->decode_video_frames, queued,
++                                      memory_order_relaxed);
++            break;
++        case AUDIO_ES:
++            atomic_fetch_add_explicit(&stats->decode_audio_time, elapsed,
++                                      memory_order_relaxed);
++            atomic_fetch_add_explicit(&stats->decode_audio_blocks, queued,
++                                      memory_order_relaxed);
++            break;
++        default:
++            break;
++    }
++}
++
+ static void
+ decoder_frame_next_status(vlc_input_decoder_t *decoder, int status,
+                               void *userdata)
+@@ -626,6 +662,7 @@ static const struct vlc_input_decoder_callbacks decoder_cbs = {
+     .on_thumbnail_ready = decoder_on_thumbnail_ready,
+     .on_new_video_stats = decoder_on_new_video_stats,
+     .on_new_audio_stats = decoder_on_new_audio_stats,
++    .on_decode_time = decoder_on_decode_time,
+     .frame_next_status = decoder_frame_next_status,
+     .frame_next_need_data = decoder_frame_next_need_data,
+     .frame_previous_status = decoder_frame_previous_status,
+diff --git a/src/input/input_internal.h b/src/input/input_internal.h
+index 88b3f3e..ef40574 100644
+--- a/src/input/input_internal.h
++++ b/src/input/input_internal.h
+@@ -775,6 +775,10 @@ struct input_stats {
+     atomic_uintmax_t demux_discontinuity;
+     atomic_uintmax_t decoded_audio;
+     atomic_uintmax_t decoded_video;
++    atomic_uintmax_t decode_audio_time;
++    atomic_uintmax_t decode_audio_blocks;
++    atomic_uintmax_t decode_video_time;
++    atomic_uintmax_t decode_video_frames;
+     atomic_uintmax_t played_abuffers;
+     atomic_uintmax_t lost_abuffers;
+     atomic_uintmax_t displayed_pictures;
+diff --git a/src/input/stats.c b/src/input/stats.c
+index e96f61a..7daadf8 100644
+--- a/src/input/stats.c
++++ b/src/input/stats.c
+@@ -63,6 +63,10 @@ struct input_stats *input_stats_Create(void)
+     atomic_init(&stats->demux_discontinuity, 0);
+     atomic_init(&stats->decoded_audio, 0);
+     atomic_init(&stats->decoded_video, 0);
++    atomic_init(&stats->decode_audio_time, 0);
++    atomic_init(&stats->decode_audio_blocks, 0);
++    atomic_init(&stats->decode_video_time, 0);
++    atomic_init(&stats->decode_video_frames, 0);
+     atomic_init(&stats->played_abuffers, 0);
+     atomic_init(&stats->lost_abuffers, 0);
+     atomic_init(&stats->displayed_pictures, 0);
+@@ -97,6 +101,10 @@ void input_stats_Compute(struct input_stats *stats, input_stats_t *st)
+     /* Aout */
+     st->i_decoded_audio = atomic_load_explicit(&stats->decoded_audio,
+                                                memory_order_relaxed);
++    st->i_decode_audio_time = atomic_load_explicit(&stats->decode_audio_time,
++                                                   memory_order_relaxed);
++    st->i_decode_audio_blocks = atomic_load_explicit(
++                    &stats->decode_audio_blocks, memory_order_relaxed);
+     st->i_played_abuffers = atomic_load_explicit(&stats->played_abuffers,
+                                                  memory_order_relaxed);
+     st->i_lost_abuffers = atomic_load_explicit(&stats->lost_abuffers,
+@@ -105,6 +113,10 @@ void input_stats_Compute(struct input_stats *stats, input_stats_t *st)
+     /* Vouts */
+     st->i_decoded_video = atomic_load_explicit(&stats->decoded_video,
+                                                memory_order_relaxed);
++    st->i_decode_video_time = atomic_load_explicit(&stats->decode_video_time,
++                                                   memory_order_relaxed);
++    st->i_decode_video_frames = atomic_load_explicit(
++                    &stats->decode_video_frames, memory_order_relaxed);
+     st->i_displayed_pictures = atomic_load_explicit(&stats->displayed_pictures,
+                                                     memory_order_relaxed);
+     st->i_late_pictures = atomic_load_explicit(&stats->late_pictures,
+-- 
+2.50.1 (Apple Git-155)
+
