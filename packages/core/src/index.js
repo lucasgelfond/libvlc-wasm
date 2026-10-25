@@ -31,6 +31,8 @@ const LEVEL_NAMES = ['debug', 'debug', 'info', 'warn', 'error'];
  * @property {string|URL} [moduleUrl] load the engine from this libvlc*.js instead (self-hosting).
  * @property {string|URL} [soundfont] a General MIDI .sf2 file; without one, .mid files
  *   do not play (VLC synthesises MIDI with FluidSynth). Fetched once at startup.
+ * @property {number} [httpCache] bytes of each http(s) source kept in memory, in 1 MiB
+ *   chunks; older ones are fetched again if read again. Default: 64 MiB.
  * @property {(string|URL)[]|false} [fonts] font files for subtitles; the first is the
  *   default face. Default: the bundled Noto Sans. `false` skips fonts (no subtitles).
  */
@@ -48,6 +50,10 @@ export async function createVLC(opts = {}) {
       '  Cross-Origin-Opener-Policy: same-origin\n  Cross-Origin-Embedder-Policy: require-corp\n' +
       '(see README: "Serving").',
     );
+  }
+  // NaN would compare false against every length and keep the whole file.
+  if (opts.httpCache !== undefined && !(typeof opts.httpCache === 'number' && opts.httpCache > 0)) {
+    throw new TypeError(`httpCache must be a positive number of bytes, not ${String(opts.httpCache)}`);
   }
   const vlc = new VLC(opts);
   await vlc._start();
@@ -102,7 +108,7 @@ export class VLC extends Emitter {
       : this.opts.moduleUrl ? String(this.opts.moduleUrl) : undefined;
     const wasmUrl = engine?.wasmUrl ?? this.opts.wasmUrl;
     const { version, layout, fonts: fontFiles, soundfont } = await this._rpc('init', {
-      threads, fonts, moduleUrl,
+      threads, fonts, moduleUrl, httpCache: this.opts.httpCache,
       soundfont: this.opts.soundfont ? String(this.opts.soundfont) : undefined,
       wasmUrl: wasmUrl ? String(wasmUrl) : undefined,
     });

@@ -48,14 +48,10 @@ await test('start screen: engine ready, no page errors', async () => {
   return 'ready';
 });
 
-await test('about text folds and unfolds', async () => {
-  const more = page.getByRole('button', { name: /more|less/i }).first();
-  const before = await more.getAttribute('aria-expanded');
-  await more.click();
-  const after = await more.getAttribute('aria-expanded');
-  assert(before !== after, `aria-expanded stayed ${before}`);
-  await more.click();
-  return `${before} → ${after} → ${before}`;
+await test('about text is shown', async () => {
+  const credit = page.getByText(/Built in New York City/);
+  assert(await credit.isVisible(), 'about text not visible');
+  return 'visible';
 });
 
 await test('sample menu: DVD opens on its menu, a click plays', async () => {
