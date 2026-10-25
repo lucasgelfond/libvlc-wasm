@@ -18,6 +18,9 @@ on:
       profile:
         description: release or debug
         default: release
+      corpus_debug:
+        description: corpus sample ids (comma-separated) to play with VLC's debug log, instead of the test suites
+        required: false
 
 concurrency:
   group: build-${{ github.ref }}
@@ -121,12 +124,24 @@ jobs:
       # without a GPU), and its Web Audio needs a sound device to start: a
       # PulseAudio null sink, which plays nowhere.
       - name: pnpm test
+        if: inputs.corpus_debug == ''
         run: |
           pulseaudio -D --exit-idle-time=-1
           pactl load-module module-null-sink sink_name=silent
           pactl set-default-sink silent
           xvfb-run -a pnpm test
         env: { FIREFOX_HEADED: 1 }
+      # A manual run's samples with VLC's whole debug log, one file per sample
+      # in the test-results artifact (corpus/results/debug/logs).
+      - name: Corpus debug
+        if: inputs.corpus_debug != ''
+        env: { IDS: '${{ inputs.corpus_debug }}' }
+        run: |
+          printf '%s' "$IDS" | grep -Eqx '[A-Za-z0-9_.,-]+' || { echo "::error::bad sample ids '$IDS'"; exit 1; }
+          pulseaudio -D --exit-idle-time=-1
+          pactl load-module module-null-sink sink_name=silent
+          pactl set-default-sink silent
+          node tests/verify-corpus.mjs --engines=chromium --only="$IDS" --log=debug --out=corpus/results/debug
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:

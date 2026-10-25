@@ -13,7 +13,9 @@ const vlcLogs = [];
 async function ensureVLC(opts = {}) {
   if (vlc) return vlc;
   vlc = await createVLC({ logLevel: 'warn', ...opts });
-  vlc.on('log', (l) => { vlcLogs.push(`${l.level}: ${l.message}`); if (vlcLogs.length > 400) vlcLogs.shift(); });
+  // A debug log is the whole module probe: keep all of it.
+  const cap = opts.logLevel === 'debug' ? 50000 : 400;
+  vlc.on('log', (l) => { vlcLogs.push(`${l.level}: ${l.message}`); if (vlcLogs.length > cap) vlcLogs.shift(); });
   log(`VLC ${vlc.version.version} ready in ${vlc.startupMs.toFixed(0)} ms`);
   return vlc;
 }
@@ -64,7 +66,7 @@ function canvasStats() {
  * Plays `url` through libvlc-wasm for `seconds` and reports what happened.
  * @param {{ url: string, seconds?: number, rate?: number, audio?: boolean, options?: string[] }} c
  */
-async function playCase({ url, seconds = 4, rate = 1, audio = true, options = [], seekTo, subtitles, snapshot = false, vlcOptions }) {
+async function playCase({ url, seconds = 4, rate = 1, audio = true, options = [], seekTo, subtitles, snapshot = false, vlcOptions, fullLog = false }) {
   await ensureVLC(vlcOptions);
   vlcLogs.length = 0;
   const file = await fetchBlob(url);
@@ -153,7 +155,7 @@ async function playCase({ url, seconds = 4, rate = 1, audio = true, options = []
     analyserRms: +maxRms.toFixed(4),
   };
   res.stats = stats;
-  res.logs = vlcLogs.slice(-40);
+  res.logs = fullLog ? vlcLogs.slice() : vlcLogs.slice(-40);
   await player.destroy();
   if (ctx) await ctx.close();
   return res;
