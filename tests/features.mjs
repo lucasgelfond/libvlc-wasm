@@ -293,6 +293,27 @@ const results = await page.evaluate(async (engineUrl) => {
     return `${p.renderer.framesDrawn - before} new frames, ${p.tracks.map((t) => t.codec.trim()).join('+')}`;
   });
 
+  await test('http(s) URL with a 1 MiB cache re-reads evicted chunks', async () => {
+    // A 10 MB file through a one-chunk cache: every chunk is dropped once
+    // passed, so seeking back has to fetch it again and still decode.
+    const small = await window.harness.createVLC({ ...(engineUrl
+      ? { engine: { moduleUrl: engineUrl, wasmUrl: engineUrl.replace(/\.js$/, '.wasm') } } : {}), httpCache: 1 << 20, threads: 8 });
+    const q = await small.createPlayer({ canvas: document.createElement('canvas'), audio: false });
+    try {
+      await q.open(new URL(G + 't_long_subs.mkv', location.href).href);
+      await waitFor(() => q.duration > 0 && q.renderer.framesDrawn > 5, 6000, 'frames from the URL');
+      await q.seek(q.duration * 0.9);
+      await waitFor(() => q.currentTime > q.duration * 0.85, 6000, 'playing near the end');
+      await q.seek(0.5);
+      const before = q.renderer.framesDrawn;
+      await waitFor(() => q.currentTime < q.duration * 0.5 && q.renderer.framesDrawn > before + 5, 6000, 'frames after seeking back');
+      return `${q.renderer.framesDrawn - before} frames after seeking back to ${q.currentTime.toFixed(1)} s`;
+    } finally {
+      await q.destroy();
+      await small.destroy();
+    }
+  });
+
   await test('aspect ratio, crop and picture adjustments change the picture', async () => {
     await p.open(await file('t_mpeg2_ac3.ts'));
     await waitFor(() => p.renderer.framesDrawn > 2, 5000, 'frames');

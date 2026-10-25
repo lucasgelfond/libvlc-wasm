@@ -8,6 +8,7 @@ let engine = null;
 let FS = null;
 let mountSeq = 0;
 const mounts = new Map(); // mrl -> mountpoint, released with the source
+let httpCacheChunks = 64; // 1 MiB chunks of each http(s) source kept in memory
 
 const post = (msg, transfer) => self.postMessage(msg, transfer ?? []);
 
@@ -32,6 +33,37 @@ function safeFile(f, fallback) {
 }
 
 /**
+ * An Emscripten lazy file (synchronous ranged XHR, 1 MiB at a time) whose
+ * chunk cache is bounded: Emscripten keeps every chunk it fetched until the
+ * file is unlinked, so playing an 8 GB file through would hold 8 GB. The least
+ * recently read chunks are dropped; reading one again is another range
+ * request. The data getter is only installed on first access, so it is
+ * wrapped as it is set.
+ */
+function createLazyFile(dir, name, url) {
+  const node = FS.createLazyFile(dir, name, url, true, false);
+  const lazy = node.contents;
+  if (!lazy?.setDataGetter) return node; // no XHR (Node): a plain URL node
+  const setDataGetter = lazy.setDataGetter.bind(lazy);
+  lazy.setDataGetter = (getter) => {
+    const recent = [];
+    let last = -1;
+    setDataGetter((chunk) => {
+      // Called once per byte read: only the chunk changing costs anything.
+      if (chunk !== last) {
+        last = chunk;
+        const at = recent.indexOf(chunk);
+        if (at !== -1) recent.splice(at, 1);
+        recent.push(chunk);
+        if (recent.length > httpCacheChunks) delete lazy.chunks[recent.shift()];
+      }
+      return getter(chunk);
+    });
+  };
+  return node;
+}
+
+/**
  * Makes any supported source reachable by VLC and returns its MRL.
  * File/Blob are mounted with WORKERFS: VLC reads them lazily through
  * FileReaderSync, so a 4 GB file costs no memory up front. Bytes go into
@@ -51,7 +83,7 @@ async function toMrl(src) {
       let last = url.pathname.split('/').pop();
       try { last = decodeURIComponent(last); } catch { /* malformed escape: keep it raw */ }
       const name = safeName(last, 'stream');
-      FS.createLazyFile(dir, name, src, true, false);
+      createLazyFile(dir, name, src);
       const mrl = `file://${dir}/${encodeURIComponent(name)}`;
       mounts.set(mrl, { dir, kind: 'lazy', path: `${dir}/${name}` });
       return mrl;
@@ -107,7 +139,8 @@ function release(mrl) {
 }
 
 const methods = {
-  async init({ threads, wasmUrl, fonts = [], soundfont, moduleUrl }) {
+  async init({ threads, wasmUrl, fonts = [], soundfont, moduleUrl, httpCache }) {
+    if (httpCache != null) httpCacheChunks = Math.max(1, Math.ceil(httpCache / (1024 * 1024)));
     // Another build of the engine (e.g. libvlc-sout.js, the transcoding
     // variant) is loaded from a URL, so bundlers do not have to know about it.
     const factory = moduleUrl ? (await import(/* @vite-ignore */ moduleUrl)).default : createDefaultModule;
@@ -151,7 +184,7 @@ const methods = {
     for (const u of fonts) {
       if (!lazy(u)) continue;
       const name = nameOf(u, 'font.ttf');
-      FS.createLazyFile('/fonts', name, new URL(u, self.location.href).href, true, false);
+      createLazyFile('/fonts', name, new URL(u, self.location.href).href);
       installed.push(`/fonts/${name}`);
     }
     for (const [name, bytes] of await fontData) {
@@ -164,7 +197,7 @@ const methods = {
       FS.mkdir('/soundfonts');
       soundfontPath = '/soundfonts/default.sf2';
       if (sfData) FS.writeFile(soundfontPath, await sfData);
-      else FS.createLazyFile('/soundfonts', 'default.sf2', new URL(soundfont, self.location.href).href, true, false);
+      else createLazyFile('/soundfonts', 'default.sf2', new URL(soundfont, self.location.href).href);
     }
     return { version, layout: engine.layout, fonts: installed, soundfont: soundfontPath };
   },

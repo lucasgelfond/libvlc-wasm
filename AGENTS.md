@@ -56,6 +56,8 @@ player.on('timeupdate', (t) => console.log(t, player.duration));
 - Files are **read in place, never uploaded or copied whole**: a `File` is mounted and read
   by range, so multi-GB files are fine.
 - URLs are streamed with HTTP range requests. The server must allow CORS for the page.
+  The last 64 MiB read stays in memory, older parts are fetched again if read again:
+  `createVLC({ httpCache: bytes })` changes that.
 - The picture is drawn with WebGL into the canvas; audio goes through Web Audio.
   `createPlayer({ audio: false })` plays silently with no `AudioContext`.
 - Browsers only start audio after a user gesture. Call `open()`/`play()` from a click, or

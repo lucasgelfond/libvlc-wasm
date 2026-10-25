@@ -175,7 +175,7 @@ async function thumb(url, opts) {
   return { ms, width, height, jpeg: b64 };
 }
 
-window.harness = { ensureVLC, nativeCheck, playCase, probe, thumb, get vlc() { return vlc; } };
+window.harness = { createVLC, ensureVLC, nativeCheck, playCase, probe, thumb, get vlc() { return vlc; } };
 window.harnessReady = true;
 
 const q = new URLSearchParams(location.search).get('file');

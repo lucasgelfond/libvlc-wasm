@@ -13,7 +13,9 @@
       "audio": "Cook",
       "whyBrowserCant": "RealMedia container and Real codecs are not supported by any browser",
       "notes": null,
-      "test": {},
+      "test": {
+        "knownIssue": "GitHub CI runners decode it slower than real time, so its audio check fails there; plays in real time locally"
+      },
       "sha256": "e448c7720cff6a2eec9c20ce12d577c5d5c2d6748ecd4acc09102e3e08c67106"
     },
     {
@@ -1097,7 +1099,9 @@
       "audio": "MOD (modplug/openmpt)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
       "notes": null,
-      "test": {},
+      "test": {
+        "knownIssue": "does not play on GitHub CI runners only: the MOD demuxer is not picked there (issue #3); plays on macOS and Linux arm64"
+      },
       "sha256": "6a3270a492a8da932cfc45debb9d992be2ce9aa8d2662fb5b78ca17e6e09cb64"
     },
     {

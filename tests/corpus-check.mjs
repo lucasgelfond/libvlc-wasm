@@ -32,6 +32,8 @@ try {
   for (const id of lost) {
     const r = results.find((x) => x.id === id);
     console.log(`FAIL  ${id.padEnd(50)} ${r ? JSON.stringify(r.vlc.checks) + ' ' + (r.vlc.error ?? '') : 'missing from the run'}`);
+    // VLC's own log is the first place to look; the results file is temporary.
+    for (const line of r?.vlc.logs ?? []) console.log(`      ${line}`);
   }
   for (const id of gained) console.log(`NEW   ${id} now plays (raise the baseline: --update-baseline)`);
   console.log(`\n[corpus] ${passing.length}/${results.length} play; ${baseline.length - lost.length}/${baseline.length} of the baseline`);

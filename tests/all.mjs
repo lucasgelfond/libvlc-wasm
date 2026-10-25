@@ -19,6 +19,7 @@ const SUITES = [
   ...engines.map((e) => ['features', 'tests/features.mjs', [`--engine=${e}`], 'corpus/media/gen/t_bluray.iso']),
   ...engines.map((e) => ['sout', 'tests/sout.mjs', [`--engine=${e}`], 'packages/sout/wasm/libvlc-sout.wasm']),
   ['colors', 'tests/colors.mjs', [], 'bench/media/colors/i420.mpg'],
+  ['memory', 'tests/http-cache.mjs', [], 'packages/core/wasm/libvlc.wasm'],
   ['app', 'tests/app.mjs', [], 'apps/player/node_modules'],
   ['samples', 'tests/samples.mjs', [], 'apps/player/node_modules'],
   ...(quick ? [] : [['corpus', 'tests/corpus-check.mjs', [], 'corpus/media/realmedia']]),
@@ -31,7 +32,7 @@ function runSuite(script, args) {
     const child = spawn('node', [script, ...args], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '';
     child.stdout.on('data', (d) => { out += d; process.stdout.write(d); });
-    child.stderr.on('data', (d) => { out += d; });
+    child.stderr.on('data', (d) => { out += d; process.stderr.write(d); });
     child.on('exit', (code) => resolve({ code, out }));
   });
 }
