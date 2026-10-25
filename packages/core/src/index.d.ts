@@ -24,6 +24,11 @@ export interface VLCOptions {
   moduleUrl?: string | URL;
   /** A General MIDI SoundFont (.sf2); needed to play .mid files. */
   soundfont?: string | URL;
+  /**
+   * Bytes of each http(s) source kept in memory, in 1 MiB chunks. Older chunks are
+   * dropped and fetched again with a range request if read again. Default: 64 MiB.
+   */
+  httpCache?: number;
 }
 
 export interface Track {

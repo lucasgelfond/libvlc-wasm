@@ -38,15 +38,28 @@ if (writeHashes) {
   process.exit(0);
 }
 
+// Sample hosts drop connections from CI runners now and then: retry network
+// errors and 429/5xx a few times, backing off, before calling a file failed.
+async function download(url) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const r = await fetch(url, { redirect: 'follow' });
+      if (r.ok) return new Uint8Array(await r.arrayBuffer());
+      if (attempt >= 4 || !(r.status === 429 || r.status >= 500)) throw Object.assign(new Error(`HTTP ${r.status}`), { final: true });
+    } catch (e) {
+      if (e.final || attempt >= 4) throw e;
+    }
+    await new Promise((r) => setTimeout(r, 2000 * attempt));
+  }
+}
+
 let ok = 0, skipped = 0, failed = 0;
 async function run(job) {
   const out = resolve(here, 'media', job.file);
   if (existsSync(out) && statSync(out).size > 0) { skipped++; return; }
   mkdirSync(dirname(out), { recursive: true });
   try {
-    const r = await fetch(job.url, { redirect: 'follow' });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const bytes = new Uint8Array(await r.arrayBuffer());
+    const bytes = await download(job.url);
     const got = job.sha256 && sha256(bytes);
     if (got && got !== job.sha256) throw new Error(`sha256 ${got}, expected ${job.sha256}`);
     writeFileSync(out, bytes);

@@ -68,7 +68,8 @@ your own Web Audio graph.
 `source` is a `File`, `Blob`, `ArrayBuffer`/typed array, an `http(s)` URL or a VLC MRL.
 Files are **not copied**: they are mounted with Emscripten's WORKERFS and VLC reads
 them on demand, so a 4 GB file costs nothing up front. URLs are read with ranged
-requests (the server must allow CORS and `Range`). Pass an array to mount files
+requests (the server must allow CORS and `Range`), keeping the last 64 MiB read in
+memory (`createVLC({ httpCache: bytes })` to change it). Pass an array to mount files
 that reference each other — `[idx, sub]`, `[cue, bin]` — the first is opened.
 
 DVDs: open an `.iso`, or the files of a `VIDEO_TS` folder (from `<input webkitdirectory>`) as an

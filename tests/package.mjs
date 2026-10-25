@@ -50,7 +50,7 @@ window.convert = async () => {
   run('npm', ['install', '--no-audit', '--no-fund', '--loglevel=error'], app);
   run('npx', ['vite', 'build', '--logLevel', 'error'], app);
   const port = 5800 + Math.floor(Math.random() * 500);
-  server = spawn('npx', ['vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'], { cwd: app, stdio: ['ignore', 'pipe', 'pipe'] });
+  server = spawn('npx', ['vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'], { cwd: app, stdio: ['ignore', 'pipe', 'pipe'], detached: true });
   await new Promise((ok, fail) => {
     const t = setTimeout(() => fail(new Error('vite preview did not start')), 30000);
     server.stdout.on('data', (d) => { if (String(d).includes(String(port))) { clearTimeout(t); ok(); } });
@@ -68,6 +68,8 @@ window.convert = async () => {
   console.log(`\n[${engine}] ${ok ? 1 : 0}/1 passed`);
   process.exitCode = ok ? 0 : 1;
 } finally {
-  server?.kill();
+  // npx runs vite as a child of its own: kill the whole group, or vite keeps
+  // the pipes open and this script never exits.
+  if (server) try { process.kill(-server.pid); } catch { /* already gone */ }
   rmSync(tmp, { recursive: true, force: true });
 }

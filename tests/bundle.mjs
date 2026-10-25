@@ -18,6 +18,10 @@ import { tmpdir } from 'node:os';
 import { join, resolve, extname } from 'node:path';
 import { root, launchMuted } from './lib/browser.mjs';
 
+// npx runs vite as a child of its own: kill the whole group, or vite keeps
+// the pipes open and this script never exits.
+const stop = (p) => { try { process.kill(-p.pid); } catch { /* already gone */ } };
+
 const keep = process.argv.includes('--keep');
 const tmp = mkdtempSync(join(tmpdir(), 'libvlc-wasm-bundle-'));
 const sh = (cmd, args, cwd) => execFileSync(cmd, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] }).toString();
@@ -103,7 +107,7 @@ try {
 
     // What the page downloads, before and after run().
     const port = 6200 + Math.floor(Math.random() * 500);
-    const server = spawn('npx', ['vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'], { cwd: app, stdio: ['ignore', 'pipe', 'pipe'] });
+    const server = spawn('npx', ['vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'], { cwd: app, stdio: ['ignore', 'pipe', 'pipe'], detached: true });
     servers.push(server);
     await new Promise((ok, bad) => {
       const t = setTimeout(() => bad(new Error('preview did not start')), 30000);
@@ -126,7 +130,7 @@ try {
     const after = fetched.reduce((a, x) => a + x.len, 0);
     const fontFetched = fetched.some((x) => /NotoSans/.test(x.path));
     await page.close();
-    server.kill();
+    stop(server);
 
     const checks = [
       [!/^error|no frames|empty/.test(result), `works (${result})`],
@@ -144,7 +148,7 @@ try {
   console.log(`\n[bundle] ${rows.length - failed}/${rows.length} passed`);
   process.exitCode = failed ? 1 : 0;
 } finally {
-  for (const s of servers) s.kill();
+  for (const s of servers) stop(s);
   if (!keep) rmSync(tmp, { recursive: true, force: true });
   else console.log(`kept ${tmp}`);
 }

@@ -47,7 +47,10 @@ const SILENCE = () => {
 
 /** A browser that never makes a sound: every test and benchmark launches through here. */
 export async function launchMuted(engine = 'chromium', opts = {}) {
-  const launch = { headless: opts.headless ?? true };
+  // Headless Firefox on Linux gets no WebGL without a GPU, and the player
+  // needs WebGL2: CI runs it headed under Xvfb instead (FIREFOX_HEADED=1).
+  const headed = engine === 'firefox' && !!process.env.FIREFOX_HEADED;
+  const launch = { headless: opts.headless ?? !headed };
   if (engine === 'chromium') {
     launch.args = ['--autoplay-policy=no-user-gesture-required', '--mute-audio', '--enable-features=SharedArrayBuffer'];
     if (opts.channel) launch.channel = opts.channel;
