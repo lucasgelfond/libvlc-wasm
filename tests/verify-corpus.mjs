@@ -18,13 +18,16 @@ const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, ...
 const nativeEngines = (args.engines ?? 'chromium').split(',');
 const wasmEngines = (args['wasm-engines'] ?? 'chromium').split(',');
 const primaryEngine = wasmEngines.includes('chromium') ? 'chromium' : wasmEngines[0];
-const only = args.only;
+// --only=id[,id...] or a category. --log=debug keeps VLC's whole log for
+// every sample, written to <out>/logs/<id>.log.
+const only = typeof args.only === 'string' ? args.only.split(',') : null;
+const logLevel = typeof args.log === 'string' ? args.log : null;
 const seconds = +(args.seconds ?? 4);
 
 const manifest = JSON.parse(readFileSync(`${root}/corpus/manifest.json`, 'utf8'));
 let reference = {};
 try { reference = JSON.parse(readFileSync(`${root}/corpus/reference.json`, 'utf8')); } catch { console.warn('no corpus/reference.json; run node corpus/reference.mjs'); }
-const samples = manifest.samples.filter((s) => !only || s.category === only || s.id === only);
+const samples = manifest.samples.filter((s) => !only || only.includes(s.category) || only.includes(s.id));
 // --out keeps a test run's results out of the committed corpus/results.
 const outDir = args.out ? resolve(args.out) : `${root}/corpus/results`;
 mkdirSync(`${outDir}/shots`, { recursive: true });
@@ -48,7 +51,7 @@ for (const engine of nativeEngines) {
 // 2. libvlc-wasm, in each --wasm-engines browser.
 // Another build may relink packages/core/wasm mid-run; a page that loaded a half-written module
 // fails with 'Import #0 "env"' and is simply reopened.
-const SOUNDFONT = { soundfont: '/corpus/media/assets/TimGM6mb.sf2' };
+const SOUNDFONT = { soundfont: '/corpus/media/assets/TimGM6mb.sf2', ...(logLevel ? { logLevel } : {}) };
 async function openVlc(engine) {
   for (let attempt = 0; ; attempt++) {
     const h = await openHarness(url, engine);
@@ -108,7 +111,7 @@ for (const engine of wasmEngines) {
     for (let attempt = 0; ; attempt++) {
       try {
         r = await Promise.race([
-          h.page.evaluate((cc) => window.harness.playCase({ ...cc, seconds: cc.seconds, snapshot: true }), { ...c, seconds }),
+          h.page.evaluate((cc) => window.harness.playCase({ ...cc, seconds: cc.seconds, snapshot: true }), { ...c, seconds, fullLog: !!logLevel }),
           new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), (seconds + 25) * 1000)),
         ]);
       } catch (e) {
@@ -121,6 +124,10 @@ for (const engine of wasmEngines) {
       if (!/Import #0 "env"/.test(r.error ?? '') || attempt >= 2) break;
     }
     const vlc = judge(s, r);
+    if (logLevel) {
+      mkdirSync(`${outDir}/logs`, { recursive: true });
+      writeFileSync(`${outDir}/logs/${s.id}.${engine}.log`, `${(r.logs ?? []).join('\n')}\n`);
+    }
     out[s.id] = { vlc, snapshot: r.snapshot ?? null, wallMs: Date.now() - t0 };
     const nat = Object.entries(native[s.id] ?? {}).map(([e, v]) => `${e[0]}:${v.ok ? 'Y' : 'n'}`).join(' ');
     const tag = vlc.passed ? 'PASS' : vlc.expectedFailure ? 'XFAIL' : vlc.knownIssue ? 'KNOWN' : 'FAIL';
@@ -192,7 +199,7 @@ if (only && args.merge) {
   prev.rerunDate = new Date().toISOString();
   writeFileSync(`${outDir}/results.json`, JSON.stringify(prev, null, 1));
 } else if (only) {
-  writeFileSync(`${outDir}/partial-${only}.json`, JSON.stringify({ date: new Date().toISOString(), nativeEngines, wasmEngines, results }, null, 1));
+  writeFileSync(`${outDir}/partial-${only.join('+')}.json`, JSON.stringify({ date: new Date().toISOString(), nativeEngines, wasmEngines, results }, null, 1));
 } else {
   writeFileSync(`${outDir}/results.json`, JSON.stringify({ date: new Date().toISOString(), nativeEngines, wasmEngines, results }, null, 1));
 }

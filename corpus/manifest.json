@@ -1098,10 +1098,8 @@
       "video": null,
       "audio": "MOD (modplug/openmpt)",
       "whyBrowserCant": "Tracker/chiptune/synth format; needs an emulator or synth, not a codec",
-      "notes": null,
-      "test": {
-        "knownIssue": "does not play on GitHub CI runners only: the MOD demuxer is not picked there (issue #3); plays on macOS and Linux arm64"
-      },
+      "notes": "modarchive no longer serves it (moduleid 32394 answers \"Invalid ID Error\"): CI takes it from the project R2 bucket, and fetch.mjs fails rather than keep a wrong file",
+      "test": {},
       "sha256": "6a3270a492a8da932cfc45debb9d992be2ce9aa8d2662fb5b78ca17e6e09cb64"
     },
     {

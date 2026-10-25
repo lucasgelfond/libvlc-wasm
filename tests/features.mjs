@@ -118,18 +118,28 @@ const results = await page.evaluate(async (engineUrl) => {
   });
 
   await test('rate 2x doubles clock speed', async () => {
+    // The tests after this one expect the main player playing, as it did here.
     await p.seek(0.5); await sleep(300);
-    p.rate = 2;
-    await waitFor(() => p.rate === 2, 2000, 'ratechange');
-    // Audio already queued for the speakers still plays at 1x: the clock,
-    // which follows what is heard, turns 2x once it has drained.
-    await sleep(600);
-    const t0 = p._time, w0 = performance.now();
-    await sleep(1200);
-    const speed = (p._time - t0) / ((performance.now() - w0) / 1000);
-    p.rate = 1;
-    assert(speed > 1.6 && speed < 2.4, `speed ${speed.toFixed(2)}`);
-    return `measured ${speed.toFixed(2)}x`;
+    // Its own player (and canvas) on a longer file: at 2x the measurement
+    // needs ~6 s of media.
+    const q = await vlc.createPlayer({ canvas: document.createElement('canvas'), audioContext: ctx, audioDestination: mute });
+    try {
+      await q.open(await file('t_long_subs.mkv'));
+      await waitFor(() => q.state === 'playing' && q.duration > 0, 5000, 'playing');
+      q.rate = 2;
+      await waitFor(() => q.rate === 2, 2000, 'ratechange');
+      // Audio already queued for the speakers still plays at 1x: the clock,
+      // which follows what is heard, turns 2x once it has drained, then
+      // catches up. Over 1.2 s that read 1.8x or 2.5x; over 2.4 s it is 2.0-2.15x.
+      await sleep(600);
+      const t0 = q._time, w0 = performance.now();
+      await sleep(2400);
+      const speed = (q._time - t0) / ((performance.now() - w0) / 1000);
+      assert(speed > 1.6 && speed < 2.4, `speed ${speed.toFixed(2)}`);
+      return `measured ${speed.toFixed(2)}x`;
+    } finally {
+      await q.destroy();
+    }
   });
 
   await test('AB loop keeps time inside [1, 2]', async () => {

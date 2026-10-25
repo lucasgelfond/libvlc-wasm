@@ -3,7 +3,9 @@
 //   node corpus/fetch.mjs realmedia  one category
 //   node corpus/fetch.mjs --write-hashes   record the sha256 of every file
 //                                          already in media/ into manifest.json
-// An entry with a sha256 is checked on download; a mismatch is not written.
+// An entry with a sha256 is checked, on download and when already present
+// (a copy synced from R2, or one fetched before a host changed what it serves);
+// a mismatch is not written.
 import { readFileSync, mkdirSync, existsSync, statSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
@@ -20,7 +22,7 @@ const jobs = [];
 for (const s of manifest.samples) {
   if (only && s.category !== only && s.id !== only) continue;
   if (!s.url) continue; // generated locally (s.generated names the script)
-  jobs.push({ id: s.id, url: s.url, file: s.file, entry: s });
+  jobs.push({ id: s.id, url: s.url, file: s.file, sha256: s.sha256, entry: s });
   for (const c of s.companions ?? []) jobs.push({ id: `${s.id} (companion)`, ...c, entry: c });
 }
 for (const a of manifest.assets ?? []) jobs.push({ ...a, entry: a });
@@ -56,7 +58,10 @@ async function download(url) {
 let ok = 0, skipped = 0, failed = 0;
 async function run(job) {
   const out = resolve(here, 'media', job.file);
-  if (existsSync(out) && statSync(out).size > 0) { skipped++; return; }
+  if (existsSync(out) && statSync(out).size > 0) {
+    if (!job.sha256 || sha256(readFileSync(out)) === job.sha256) { skipped++; return; }
+    console.error(`  ${job.file}: present but its sha256 does not match; downloading again`);
+  }
   mkdirSync(dirname(out), { recursive: true });
   try {
     const bytes = await download(job.url);

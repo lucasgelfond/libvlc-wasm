@@ -18,6 +18,9 @@ on:
       profile:
         description: release or debug
         default: release
+      corpus_debug:
+        description: corpus sample ids (comma-separated) to play with VLC's debug log, instead of the test suites
+        required: false
 
 concurrency:
   group: build-${{ github.ref }}
@@ -103,6 +106,21 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with: { node-version: 24, cache: pnpm }
       - run: pnpm install --frozen-lockfile
+      # The corpus from the project's R2 bucket (one host instead of dozens,
+      # some of which drop runners or no longer serve a file); fetch.mjs then
+      # fills any gap from the original hosts and checks every sha256. Forks
+      # get no secrets and download everything.
+      - name: Corpus from R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT: ${{ secrets.CLOUDFLARE_S3_ENDPOINT_URL }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          if [ -z "$AWS_ACCESS_KEY_ID" ]; then echo "no R2 credentials; fetch.mjs downloads the corpus"; exit 0; fi
+          aws s3 sync s3://libvlc-wasm-media/media/ corpus/media/ --endpoint-url "$R2_ENDPOINT" \
+            --exclude 'gen/*' --exclude 'everyday/*' --only-show-errors
+          du -sh corpus/media
       - name: Fixtures and corpus
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg dvdauthor genisoimage imagemagick curl unzip faketime pulseaudio
@@ -121,12 +139,24 @@ jobs:
       # without a GPU), and its Web Audio needs a sound device to start: a
       # PulseAudio null sink, which plays nowhere.
       - name: pnpm test
+        if: inputs.corpus_debug == ''
         run: |
           pulseaudio -D --exit-idle-time=-1
           pactl load-module module-null-sink sink_name=silent
           pactl set-default-sink silent
           xvfb-run -a pnpm test
         env: { FIREFOX_HEADED: 1 }
+      # A manual run's samples with VLC's whole debug log, one file per sample
+      # in the test-results artifact (corpus/results/debug/logs).
+      - name: Corpus debug
+        if: inputs.corpus_debug != ''
+        env: { IDS: '${{ inputs.corpus_debug }}' }
+        run: |
+          printf '%s' "$IDS" | grep -Eqx '[A-Za-z0-9_.,-]+' || { echo "::error::bad sample ids '$IDS'"; exit 1; }
+          pulseaudio -D --exit-idle-time=-1
+          pactl load-module module-null-sink sink_name=silent
+          pactl set-default-sink silent
+          node tests/verify-corpus.mjs --engines=chromium --only="$IDS" --log=debug --out=corpus/results/debug
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
